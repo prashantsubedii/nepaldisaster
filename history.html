@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Disaster History — NepalDisaster.com</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Archivo+Narrow:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<a href="#main" class="skip">Skip to content</a>
+<div class="ticker" aria-label="News ticker"><div class="ticker__tag"><span class="sq"></span>LIVE</div><div class="ticker__view"><div class="ticker__track" id="tickerTrack"></div></div></div>
+<header class="hd">
+  <div class="wrap hd__row">
+    <a class="brand" href="index.html"><span class="brand__mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2 3 6v6c0 5 3.8 8.4 9 10 5.2-1.6 9-5 9-10V6l-9-4Z" stroke="#fff" stroke-width="1.6"/><path d="M12 7v6M12 16h.01" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></span><span class="brand__id"><span class="brand__name">NEPALDISASTER<span class="dot">.com</span></span><span class="brand__sub" data-i18n="brand.sub">National Emergency Information Service</span></span></a>
+    <div class="hd__spacer"></div>
+    <div class="hd__tools">
+      <div class="clock"><div class="l" data-i18n="clock.l">NPT · Kathmandu</div><div class="v mono" data-clock>--:--:--</div></div>
+      <div class="lang" role="group" aria-label="Language"><button data-lang="en" aria-pressed="true">EN</button><button data-lang="ne" aria-pressed="false">नेपाली</button></div>
+      <button class="hd__burger" id="burger" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+    </div>
+  </div>
+  <nav class="nav" aria-label="Primary"><div class="wrap"><div class="nav__inner" id="navInner">
+    <a href="index.html" data-i18n="nav.home">Home</a>
+      <a href="news.html" data-i18n="nav.news">Live News</a>
+    <a href="stats.html" data-i18n="nav.stats">Situation</a>
+    <a href="alerts.html" data-i18n="nav.alerts">Alert Map</a>
+    <a href="missing.html" data-i18n="nav.missing">Missing Persons</a>
+    <a href="relief.html" data-i18n="nav.relief">Relief Fund</a>
+    <a href="history.html" aria-current="page" data-i18n="nav.history">History</a>
+  </div></div></nav>
+</header>
+<div class="eas" role="status" aria-live="polite"><div class="eas__inner"><span class="eas__sq" aria-hidden="true"></span><span class="eas__label" data-i18n="eas.label">Active Event</span><span class="eas__msg" data-eas>—</span><span class="eas__time mono" data-elapsed>--:--:-- NPT</span></div></div>
+
+<div class="pagehead"><div class="pagehead__in">
+  <span class="eyebrow" data-i18n="nav.history">History</span>
+  <h1 data-i18n="page.history.h">Disaster History</h1>
+  <p data-i18n="page.history.p">Selected major disasters in Nepal — for record and preparedness.</p>
+</div></div>
+
+<main id="main"><section><div class="wrap"><div id="histList"></div></div></section></main>
+
+<footer class="foot">
+  <div class="wrap foot__top">
+    <div><div class="foot__brand"><span class="brand__mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2 3 6v6c0 5 3.8 8.4 9 10 5.2-1.6 9-5 9-10V6l-9-4Z" stroke="#fff" stroke-width="1.6"/><path d="M12 7v6M12 16h.01" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></span><span class="brand__id"><span class="brand__name">NEPALDISASTER<span class="dot">.com</span></span><span class="brand__sub" data-i18n="brand.sub">National Emergency Information Service</span></span></div><p data-i18n="foot.about"></p></div>
+    <div><h4 data-i18n="foot.sections">Sections</h4><a href="index.html" data-i18n="nav.home">Home</a><a href="alerts.html" data-i18n="nav.alerts">Alert Map</a><a href="missing.html" data-i18n="nav.missing">Missing Persons</a><a href="relief.html" data-i18n="nav.relief">Relief Fund</a></div>
+    <div><h4 data-i18n="foot.sources">Official Sources</h4><a href="https://bipadportal.gov.np" target="_blank" rel="noopener">BIPAD Portal (NDRRMA)</a><a href="https://nepalpolice.gov.np" target="_blank" rel="noopener">Nepal Police</a></div>
+  </div>
+  <div class="wrap foot__bar"><span>© <span data-year>2026</span> NEPALDISASTER.COM</span><span data-i18n="foot.verify">Data provisional · Verify official sources before acting</span></div>
+</footer>
+<script src="assets/app.js"></script>
+</body>
+</html>
