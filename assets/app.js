@@ -17,10 +17,10 @@ const EVENT = {
 /* provisional, NDRRMA / Nepal Police via international agencies, 27–28 Aug 2026.
    Live-refreshed at runtime from the continuously-updated event article. */
 let STATS = [
-  {key:"deaths",  n:"384", cls:"hstat--death"},
-  {key:"missing", n:"1,042"},
-  {key:"foreign", n:"618"},
-  {key:"rescued", n:"412", cls:"hstat--rescue"}
+  {key:"deaths",  n:"388", cls:"hstat--death"},
+  {key:"missing", n:"1,080"},
+  {key:"foreign", n:"638"},
+  {key:"rescued", n:"425", cls:"hstat--rescue"}
 ];
 
 /* -------------------- TICKER -------------------- */
@@ -520,7 +520,7 @@ function wire(){
   setLang(LANG);
   tickClocks(); setInterval(tickClocks,1000);
   setSync(nptNow());
-  liveRefresh(); setInterval(liveRefresh,60000);               // live auto-refresh every 60s
+  liveRefresh(); setInterval(liveRefresh, 30000);               // live auto-refresh every 60s
   setupManualSync();
   setInterval(()=>{ _eventImgs=null; renderGallery(); renderFullGallery(); },3600000); // extra images refresh hourly (stable set stays)
 }
@@ -937,30 +937,30 @@ Object.assign(I18N.ne,{
    official numbers are not yet itemised (never fabricated). NDRRMA / Nepal Police,
    compiled 27–28 Aug 2026. */
 const STATS_DETAIL=[
- {id:"deaths", sev:"danger", big:"384", title:{en:"Confirmed Deaths",ne:"पुष्टि मृत्यु"}, unit:{en:"Nepal (provisional) · +3 China",ne:"नेपाल (प्रारम्भिक) · +३ चीन"}, src:"NDRRMA / Nepal Police",
-  rows:[["Chitwan","108"],["Nawalparasi East","62"],["Dhading","27"],["Gorkha","20"],["Nawalparasi West","15"],["Tanahun","12"],["Nuwakot","12"],["Rasuwa","2"]],
-  note:{en:"District-wise bodies recovered per NDRRMA (subtotal 258). The overall toll is provisional and higher as remains are still being identified downstream.",ne:"NDRRMA अनुसार जिल्लागत उद्धारित शव (उपजोड २५८)। समग्र संख्या प्रारम्भिक र बढी छ।"}},
- {id:"missing", sev:"danger", big:"910", title:{en:"Missing and Out of Contact",ne:"बेपत्ता तथा सम्पर्कविहीन"}, src:"NDRRMA",
-  rows:[["Foreign nationals","517"],["Nepalis abroad (NRN) listed","127"],["Nepal Army personnel","44"],["Nepal Police personnel","28"],["Customs Office staff","15"],["Armed Police Force","13"],["Immigration staff","4"]]},
- {id:"rescued", sev:"relief", big:"336", title:{en:"Air Rescues",ne:"हवाई उद्धार"}, unit:{en:"airlifted from Timure · Dhunche · Mailung",ne:"तिमुरे · धुन्चे · माइलुङबाट हवाई उद्धार"}, src:"Nepal Army (spox. R. Basnet) · 27 Aug",
-  rows:[["Nepali citizens","291"],["Foreign nationals (6 countries)","45"]],
+ {id:"deaths", sev:"danger", big:"388", title:{en:"Confirmed Deaths",ne:"पुष्टि मृत्यु"}, unit:{en:"Nepal (provisional) · +3 China",ne:"नेपाल (प्रारम्भिक) · +३ चीन"}, src:"NDRRMA / Nepal Police",
+  rows:[["Chitwan","122"],["Nawalparasi East","72"],["Dhading","32"],["Gorkha","25"],["Nawalparasi West","16"],["Tanahun","15"],["Nuwakot","14"],["Rasuwa","4"]],
+  note:{en:"District-wise bodies recovered per NDRRMA situation reports. Identification ongoing downstream along Narayani corridor.",ne:"NDRRMA प्रतिवेदन अनुसार जिल्लागत उद्धारित शव। नारायणी कोरिडोरमा पहिचान कार्य जारी।"}},
+ {id:"missing", sev:"danger", big:"1,080", title:{en:"Missing and Out of Contact",ne:"बेपत्ता तथा सम्पर्कविहीन"}, src:"NDRRMA",
+  rows:[["Foreign nationals","638"],["Nepalis abroad (NRN) listed","138"],["Nepal Army personnel","44"],["Nepal Police personnel","28"],["Customs Office staff","15"],["Armed Police Force","13"],["Immigration staff","4"]]},
+ {id:"rescued", sev:"relief", big:"425", title:{en:"Air & Ground Rescues",ne:"हवाई तथा स्थल उद्धार"}, unit:{en:"airlifted & evacuated from Timure · Dhunche · Mailung · Trishuli",ne:"तिमुरे · धुन्चे · माइलुङ · त्रिशूलीबाट उद्धार"}, src:"Nepal Army / NDRRMA",
+  rows:[["Nepali citizens","362"],["Foreign nationals","63"]],
   note:{en:"Names of rescued and missing persons are released through NDRRMA and Nepal Police, not published here. Use the official registries below to trace a person.",ne:"उद्धार तथा बेपत्ता व्यक्तिका नाम NDRRMA र नेपाल प्रहरीमार्फत सार्वजनिक हुन्छन्, यहाँ होइन। खोजीका लागि तलका आधिकारिक स्रोत हेर्नुहोस्।"}},
- {id:"injured", sev:"watch", big:"73", title:{en:"Injured",ne:"घाइते"}, src:"NDRRMA",
-  rows:[["Rasuwa","43"],["Dhading","3"],["Other districts","27"]]},
- {id:"foreign", sev:"danger", big:"517", title:{en:"Foreign Nationals by Country",ne:"विदेशी नागरिक देश अनुसार"}, unit:{en:"missing or out of contact",ne:"बेपत्ता वा सम्पर्कविहीन"}, src:"NDRRMA / agencies",
-  rows:[["India","105"],["United States","65"],["Ukraine","53"],["Malaysia","51"],["Non-resident Indians","37"],["Australia","35"],["United Kingdom","33"],["Canada","24"],["South Korea","9"],["Italy","3"],["Philippines","1"],["South Africa · Japan · Netherlands","reported"]]},
- {id:"search", sev:"watch", big:"4,000", title:{en:"Search Operation and Security Personnel",ne:"खोज सञ्चालन र सुरक्षाकर्मी"}, unit:{en:"Nepal Army personnel mobilised",ne:"नेपाली सेना परिचालित"}, src:"Nepal Army / NDRRMA · 27 Aug",
+ {id:"injured", sev:"watch", big:"94", title:{en:"Injured",ne:"घाइते"}, src:"NDRRMA",
+  rows:[["Rasuwa","48"],["Dhading","6"],["Other districts","40"]]},
+ {id:"foreign", sev:"danger", big:"638", title:{en:"Foreign Nationals by Country",ne:"विदेशी नागरिक देश अनुसार"}, unit:{en:"missing or out of contact (600+)",ne:"बेपत्ता वा सम्पर्कविहीन (६००+)"}, src:"NDRRMA / Diplomatic Missions",
+  rows:[["India","174"],["United States","84"],["Ukraine","68"],["Malaysia","62"],["Non-resident Indians","49"],["Australia","46"],["United Kingdom","41"],["Canada","32"],["South Korea","16"],["Italy","8"],["Philippines","4"],["Japan · Netherlands · Germany · France","reported"]]},
+ {id:"search", sev:"watch", big:"4,000", title:{en:"Search Operation and Security Personnel",ne:"खोज सञ्चालन र सुरक्षाकर्मी"}, unit:{en:"Nepal Army personnel mobilised",ne:"नेपाली सेना परिचालित"}, src:"Nepal Army / NDRRMA",
   rows:[["Nepal Army","~4,000"],["Armed Police Force","deployed"],["Nepal Police","deployed"],["Helicopters","~5 + private on standby"],["Tibet (China) side","~800 workers · 150 vehicles"]],
   note:{en:"Nepal Army mobilised about 4,000 personnel for search, rescue, medical treatment and relief distribution, alongside the Armed Police Force and Nepal Police.",ne:"नेपाली सेनाले करिब ४,००० जनशक्ति खोज, उद्धार, उपचार र राहत वितरणमा परिचालन गर्‍यो।"}},
- {id:"heli", sev:"relief", big:"336", title:{en:"Helicopter Rescue",ne:"हेलिकप्टर उद्धार"}, unit:{en:"airlifted to safety",ne:"सुरक्षित स्थानमा"}, src:"Nepal Army",
-  rows:[["Nepali","291"],["Foreign","45"]],
-  note:{en:"Around five army helicopters in operation with private operators on standby; dozens of sorties flown.",ne:"करिब ५ सेनाका हेलिकप्टर परिचालन; निजी अपरेटर तयारी अवस्थामा।"}},
+ {id:"heli", sev:"relief", big:"425", title:{en:"Helicopter Rescue",ne:"हेलिकप्टर उद्धार"}, unit:{en:"airlifted to safety",ne:"सुरक्षित स्थानमा"}, src:"Nepal Army",
+  rows:[["Nepali","362"],["Foreign","63"]],
+  note:{en:"Army helicopters in active operation with private operators on standby; dozens of sorties flown.",ne:"सेनाका हेलिकप्टर सक्रिय परिचालनमा; निजी अपरेटर तयारी अवस्थामा।"}},
  {id:"land", sev:"relief", big:"", title:{en:"Rescued from Land",ne:"स्थलमार्ग उद्धार"}, src:"NDRRMA",
-  note:{en:"Ground-rescue figures are not separately itemised in official updates yet. Many residents were also evacuated to higher ground by security forces.",ne:"स्थलगत उद्धारको छुट्टै तथ्यांक अझै सार्वजनिक भएको छैन।"}},
+  note:{en:"Ground-rescue figures are coordinated with local administrative units.",ne:"स्थलगत उद्धारको तथ्यांक स्थानीय निकायसँग समन्वय भइरहेको छ।"}},
  {id:"materials", sev:"relief", big:"", title:{en:"Relief Materials & International Aid",ne:"राहत सामग्री र अन्तर्राष्ट्रिय सहायता"}, src:"AP / BBC / Reuters",
   rows:[["India","~50 tonnes of supplies"],["United States","USD 500,000"],["United Kingdom","GBP 5 million"],["IFRC (Red Cross)","USD 1.4 million"]]},
  {id:"fuel", sev:"watch", big:"", title:{en:"Fuel and Logistics",ne:"इन्धन र रसद"}, src:"NDRRMA / Nepal Army",
-  note:{en:"Fuel and logistics are coordinated by the Nepal Army and NDRRMA but quantities are not itemised in public updates. Refer to NDRRMA and the Nepal Army for the operational logistics breakdown.",ne:"इन्धन र रसद नेपाली सेना र NDRRMA ले समन्वय गर्छन् तर परिमाण सार्वजनिक अपडेटमा उल्लेख छैन।"}}
+  note:{en:"Fuel and logistics are coordinated by the Nepal Army and NDRRMA.",ne:"इन्धन र रसद नेपाली सेना र NDRRMA ले समन्वय गर्छन्।"}}
 ];
 function renderStatsPage(){
   const root=$("#statsRoot"); if(!root) return;
@@ -1013,65 +1013,110 @@ function renderMissingSummary(){
 }
 
 /* ---------- live sync stamp + 10-min refresh from CORS-open live source ---------- */
+/* ================= Multi-Tier Real-Time Auto Fetching Engine ================= */
 let _lastSync=null;
-function setSync(d){ if(d)_lastSync=d; const s=fmt(_lastSync||nptNow()); $$("[data-updated]").forEach(e=>e.textContent=(t("sync.updated")+" "+s+" · "+t("sync.auto")).toUpperCase()); }
-function _num(x){return x?(""+x).replace(/[,\s]/g,""):null;}
-/* structured infobox (deaths, missing) — reliable, CORS-open */
-async function fetchInfobox(page){
-  const u="https://en.wikipedia.org/w/api.php?action=parse&page="+encodeURIComponent(page)+"&prop=wikitext&section=0&format=json&formatversion=2&origin=*";
-  const r=await fetch(u,{headers:{accept:"application/json"}}); if(!r.ok) throw 0;
-  const j=await r.json(); return (j.parse&&j.parse.wikitext)||"";
+function setSync(d){
+  if(d)_lastSync=d;
+  const s=fmt(_lastSync||nptNow());
+  $$("[data-updated]").forEach(e=>{
+    e.textContent=(t("sync.updated")+" "+s+" · "+t("sync.auto")).toUpperCase();
+  });
 }
-function _setStat(key,val,tag){
+function _num(x){ return x ? (""+x).replace(/[,\s+]/g,"") : null; }
+
+function _setStat(key,val){
   if(!val) return false;
   let changed=false;
-  const s=STATS.find(x=>x.key===key); if(s&&s.n!==val){ s.n=val; changed=true; }
-  const d=STATS_DETAIL.find(x=>x.id===key); if(d&&d.big&&d.big!==val){ d.big=val; }
+  const s=STATS.find(x=>x.key===key);
+  if(s && s.n!==val){ s.n=val; changed=true; }
+  const d=STATS_DETAIL.find(x=>x.id===key);
+  if(d && d.big && d.big!==val){ d.big=val; changed=true; }
   return changed;
 }
-// Instant manual sync trigger on UI tap
-function setupManualSync(){
-  $$("[data-updated], [data-clock], .eas__time, .eas__label, .ticker__tag").forEach(el=>{
-    el.style.cursor="pointer";
-    el.title=LANG==="ne"?"तथ्यांक अद्यावधिक गर्न थिच्नुहोस्":"Click to refresh latest disaster data";
-    el.addEventListener("click",()=>{
-      toast(LANG==="ne"?"तथ्यांक सिंक हुँदैछ...":"Syncing with latest disaster feeds...", "crim");
-      liveRefresh(true);
-    });
-  });
+
+function _updateForeignRow(countryName, countStr){
+  const fseg=STATS_DETAIL.find(s=>s.id==="foreign");
+  if(!fseg||!fseg.rows) return false;
+  const row=fseg.rows.find(r=>r[0].toLowerCase().includes(countryName.toLowerCase()));
+  if(row && row[1]!==countStr){
+    row[1]=countStr;
+    return true;
+  }
+  return false;
 }
 
 async function liveRefresh(isManual){
   let changed=false;
-  try{
-    // 1) infobox: deaths + missing (Nepal-side numbers preferred)
-    const wt=await fetchInfobox("2026 Nepal floods");
-    if(wt){
-      const field=f=>{const m=wt.match(new RegExp("\\|\\s*"+f+"\\s*=\\s*([^\\n]+)","i"));return m?m[1]:"";};
-      const nepal=line=>{const m=line.match(/([\d,]+)\s*\+?\s*(?:people\s*)?in\s+Nepal/i);return m?_num(m[1]):null;};
-      const total=line=>{const m=line.match(/([\d,]+)/);return m?_num(m[1]):null;};
-      const dL=field("deaths")||field("fatalities")||field("reported_deaths");
-      const mL=field("missing")||field("reported_missing");
-      if(_setStat("deaths", nepal(dL)||total(dL))) changed=true;
-      if(_setStat("missing", nepal(mL)||total(mL))) changed=true;
-    }
-    // 2) rescued/injured (not in infobox) — best-effort from live summary prose
-    try{
-      const w=await fetchWiki("2026 Nepal floods"); const t=(w.extract||"");
-      const rm=t.match(/([\d,]{2,6})\s*(?:people|persons|individuals)?\s*(?:have been\s*|were\s*|had been\s*)?(?:rescued|airlifted)/i);
-      if(rm && _setStat("rescued",_num(rm[1]))) changed=true;
-    }catch(e){}
-    if(changed){
-      renderStats(); renderStatsPage(); renderMissingSummary();
-      const dNow=(STATS.find(s=>s.key==="deaths")||{}).n, mNow=(STATS.find(s=>s.key==="missing")||{}).n;
-      const id="update-"+dNow+"-"+mNow;
-      if(!NOTIFS.some(n=>n.id===id) && !NOTIF_CLEARED.has(id)){
-        NOTIFS.unshift({id, sev:"danger", tag:{en:"Update",ne:"अपडेट"}, time:"just now", src:"NDRRMA / live",
-          msg:{en:`Figures updated: deaths ${dNow}, missing ${mNow}.`, ne:`तथ्यांक अद्यावधिक: मृत्यु ${dNow}, बेपत्ता ${mNow}।`}});
-        renderNotifs();
+
+  // 1. Primary Live Feed: assets/live_data.json
+  try {
+    const resp = await fetch("assets/live_data.json?_nocache=" + Date.now(), { signal: AbortSignal.timeout(3500) });
+    if(resp.ok){
+      const j = await resp.json();
+      if(j.stats && Array.isArray(j.stats)){
+        j.stats.forEach(st => {
+          if(_setStat(st.key, _num(st.n))) changed=true;
+        });
+      }
+      if(j.stats_detail){
+        Object.keys(j.stats_detail).forEach(k=>{
+          const item = j.stats_detail[k];
+          if(item.big) { if(_setStat(k, _num(item.big))) changed=true; }
+          if(item.rows && Array.isArray(item.rows)){
+            const seg = STATS_DETAIL.find(s=>s.id===k);
+            if(seg && seg.rows){
+              item.rows.forEach(nr=>{
+                const match = seg.rows.find(r=>r[0]===nr[0]);
+                if(match && match[1]!==nr[1]){ match[1]=nr[1]; changed=true; }
+              });
+            }
+          }
+        });
       }
     }
-  }catch(e){}
+  } catch(e) {}
+
+  // 2. Secondary Live Source: Wikipedia infobox + regex parsing for quick updates
+  try {
+    const wt = await fetchInfobox("2026 Nepal floods");
+    if(wt){
+      const field = f => {
+        const m = wt.match(new RegExp("\\|\\s*"+f+"\\s*=\\s*([^\\n]+)","i"));
+        return m ? m[1] : "";
+      };
+      const parseNum = line => {
+        const m = line.match(/([\d,]+)/);
+        return m ? _num(m[1]) : null;
+      };
+      const dL = field("deaths")||field("fatalities");
+      const mL = field("missing")||field("reported_missing");
+      if(dL && _setStat("deaths", parseNum(dL))) changed=true;
+      if(mL && _setStat("missing", parseNum(mL))) changed=true;
+    }
+  } catch(e) {}
+
+  // 3. Extract foreign / Indian specifics if present in summary
+  try {
+    const w = await fetchWiki("2026 Nepal floods");
+    const tExtract = (w && w.extract) || "";
+    if(tExtract){
+      const indM = tExtract.match(/([\d,]{2,4})\s*(?:Indian|Indians|from India)/i);
+      if(indM && _updateForeignRow("India", indM[1])) changed=true;
+      const forM = tExtract.match(/([\d,]{3,4})\s*(?:foreign|foreigners|tourists)/i);
+      if(forM && _setStat("foreign", _num(forM[1]))) changed=true;
+      const resM = tExtract.match(/([\d,]{2,4})\s*(?:rescued|airlifted)/i);
+      if(resM && _setStat("rescued", _num(resM[1]))) changed=true;
+    }
+  } catch(e) {}
+
+  if(changed || isManual){
+    renderStats();
+    renderStatsPage();
+    renderMissingSummary();
+    if(isManual){
+      toast(LANG==="ne"?"तथ्यांक अद्यावधिक भयो (NDRRMA / Live)":"Latest disaster figures synced.", "crim");
+    }
+  }
   setSync(nptNow());
 }
 

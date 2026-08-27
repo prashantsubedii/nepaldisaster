@@ -1294,3 +1294,165 @@ html, body {
 .hd__burger.is-active svg {
   stroke: #fff !important;
 }
+
+/* =========================================================================
+   ANIMATIONS & VISUAL POLISH (v17)
+   Smooth entry, interactive hover feedback, status pulses, and zero-overflow
+   ========================================================================= */
+
+/* Universal zero-overflow & symmetric box model */
+html, body {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+  box-sizing: border-box !important;
+  position: relative !important;
+}
+
+/* Fix .wrap across all pages so content is never shifted left */
+.wrap {
+  width: 100% !important;
+  max-width: var(--maxw) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  box-sizing: border-box !important;
+}
+
+@media (max-width: 540px) {
+  .wrap {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+}
+
+/* Footer full alignment fix */
+.foot {
+  background: var(--slate) !important;
+  color: #C9CDD2 !important;
+  border-top: 1px solid var(--line-dark) !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.foot .wrap {
+  margin: 0 auto !important;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
+@media (max-width: 540px) {
+  .foot .wrap {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+}
+
+.foot__top {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 28px;
+  padding: 36px 0 28px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.foot__brand {
+  display: flex !important;
+  gap: 12px !important;
+  align-items: flex-start !important;
+  margin-bottom: 12px !important;
+  width: 100% !important;
+}
+
+.foot__brand .brand__mark {
+  width: 36px !important;
+  height: 36px !important;
+  flex: 0 0 36px !important;
+  background: var(--crimson) !important;
+  display: grid !important;
+  place-items: center !important;
+  border-radius: 2px !important;
+}
+
+.foot__brand .brand__name {
+  font-size: 1.18rem !important;
+  color: #fff !important;
+  display: inline-block !important;
+  font-family: var(--f-display) !important;
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+  white-space: nowrap !important;
+  line-height: 1 !important;
+}
+
+.foot__brand .brand__sub {
+  color: #8A9199 !important;
+  font-size: 0.58rem !important;
+  margin-top: 5px !important;
+}
+
+.foot__bar {
+  border-top: 1px solid var(--line-dark) !important;
+  padding: 16px 0 !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: 12px !important;
+  flex-wrap: wrap !important;
+  width: 100% !important;
+}
+
+@media (max-width: 800px) {
+  .foot__top {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 24px !important;
+  }
+}
+@media (max-width: 540px) {
+  .foot__top {
+    grid-template-columns: 1fr !important;
+    gap: 22px !important;
+    padding: 24px 0 20px !important;
+  }
+  .foot__bar {
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 8px !important;
+  }
+}
+
+/* Animations & transitions */
+.news, .pcard, .sd, .mcard, .hl, .fund, .msum {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.15s ease !important;
+  will-change: transform;
+}
+
+.news:hover, .pcard:hover, .hl:hover, .mcard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+/* Live pulse animation on ticker & live badges */
+.ticker__tag .sq, .livechip i {
+  animation: liveDotPulse 1.8s infinite ease-in-out;
+}
+@keyframes liveDotPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(0.8); opacity: 0.4; }
+}
+
+/* Card entry animation */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero__stats, .grid-hl, .grid-news, .sd-grid, .mgrid, .msum {
+  animation: fadeInUp 0.35s ease-out;
+}

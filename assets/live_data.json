@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-27T23:25:00+05:45",
+  "updated_at": "2026-08-27T23:35:00+05:45",
   "event": {
     "code": "FL-2026-0826",
     "since": "2026-08-26T08:37:00+05:45",
@@ -8,32 +8,170 @@
       "ne": "२०२६ नेपाल बाढी"
     },
     "region": {
-      "en": "Rasuwa · Nuwakot · Trishuli corridor",
-      "ne": "रसुवा · नुवाकोट · त्रिशूली कोरिडोर"
+      "en": "Rasuwa · Nuwakot · Trishuli corridor · Chitwan",
+      "ne": "रसुवा · नुवाकोट · त्रिशूली कोरिडोर · चितवन"
     },
     "eas": {
-      "en": "Trishuli corridor glacial surge. Search & rescue operations active across Rasuwa, Nuwakot, Dhading, Chitwan.",
-      "ne": "त्रिशूली कोरिडोरमा हिमनदी बाढी। रसुवा, नुवाकोट, धादिङ, चितवनमा खोजी तथा उद्धार जारी।"
+      "en": "Trishuli corridor glacial flood. Active search & relief across Rasuwa, Nuwakot, Dhading, Chitwan. Foreign missing crossed 600+ (Indians 170+).",
+      "ne": "त्रिशूली कोरिडोरमा हिमनदी बाढी। रसुवा, नुवाकोट, धादिङ र चितवनमा खोजी तथा राहत जारी। बेपत्ता विदेशी ६००+ (भारतीय १७०+) पुग्यो।"
     }
   },
   "stats": [
     {
       "key": "deaths",
-      "n": "384",
+      "n": "388",
       "cls": "hstat--death"
     },
     {
       "key": "missing",
-      "n": "1,042"
+      "n": "1,080"
     },
     {
       "key": "foreign",
-      "n": "618"
+      "n": "638"
     },
     {
       "key": "rescued",
-      "n": "412",
+      "n": "425",
       "cls": "hstat--rescue"
     }
-  ]
+  ],
+  "stats_detail": {
+    "deaths": {
+      "big": "388",
+      "rows": [
+        [
+          "Chitwan",
+          "122"
+        ],
+        [
+          "Nawalparasi East",
+          "72"
+        ],
+        [
+          "Dhading",
+          "32"
+        ],
+        [
+          "Gorkha",
+          "25"
+        ],
+        [
+          "Nawalparasi West",
+          "16"
+        ],
+        [
+          "Tanahun",
+          "15"
+        ],
+        [
+          "Nuwakot",
+          "14"
+        ],
+        [
+          "Rasuwa",
+          "4"
+        ]
+      ]
+    },
+    "missing": {
+      "big": "1,080",
+      "rows": [
+        [
+          "Foreign nationals",
+          "638"
+        ],
+        [
+          "Nepalis abroad (NRN) listed",
+          "138"
+        ],
+        [
+          "Nepal Army personnel",
+          "44"
+        ],
+        [
+          "Nepal Police personnel",
+          "28"
+        ],
+        [
+          "Customs Office staff",
+          "15"
+        ],
+        [
+          "Armed Police Force",
+          "13"
+        ],
+        [
+          "Immigration staff",
+          "4"
+        ]
+      ]
+    },
+    "rescued": {
+      "big": "425",
+      "rows": [
+        [
+          "Nepali citizens",
+          "362"
+        ],
+        [
+          "Foreign nationals",
+          "63"
+        ]
+      ]
+    },
+    "foreign": {
+      "big": "638",
+      "rows": [
+        [
+          "India",
+          "174"
+        ],
+        [
+          "United States",
+          "84"
+        ],
+        [
+          "Ukraine",
+          "68"
+        ],
+        [
+          "Malaysia",
+          "62"
+        ],
+        [
+          "Non-resident Indians",
+          "49"
+        ],
+        [
+          "Australia",
+          "46"
+        ],
+        [
+          "United Kingdom",
+          "41"
+        ],
+        [
+          "Canada",
+          "32"
+        ],
+        [
+          "South Korea",
+          "16"
+        ],
+        [
+          "Italy",
+          "8"
+        ],
+        [
+          "Philippines",
+          "4"
+        ],
+        [
+          "Japan · Netherlands · Germany · France",
+          "reported"
+        ]
+      ]
+    }
+  }
 }

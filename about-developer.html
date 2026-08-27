@@ -19,9 +19,10 @@
 <style>
 .dev-container-wrap {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 60px 20px 80px;
+  padding: 50px 20px 70px;
   min-height: 48vh;
 }
 .dev-profile-card {
@@ -113,6 +114,32 @@
     line-height: 1.65;
   }
 }
+
+.dev-contrib-section {
+  margin-top: 38px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  text-align: center;
+  width: 100%;
+}
+.dev-contrib-title {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: clamp(1.05rem, 2.8vw, 1.35rem);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--ink);
+  margin: 0;
+}
+@media (max-width: 520px) {
+  .dev-contrib-section {
+    margin-top: 28px;
+    padding-top: 18px;
+  }
+  .dev-contrib-title {
+    font-size: 0.95rem;
+  }
+}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"ProfilePage","name":"About the Developer — NepalDisaster.com","url":"https://www.nepaldisaster.com/about-developer.html","mainEntity":{"@type":"Person","name":"Prashant Subedi","url":"https://prashantsubedi.info.np","image":"https://www.prashantsubedi.info.np/assets/images/profile.jpg","jobTitle":"AI/ML Engineer & Researcher","description":"Aspiring AI/ML Engineer and Researcher from Gaindakot, Nepal. Built NepalDisaster.com as a civic information service.","nationality":"Nepali","alumniOf":[{"@type":"CollegeOrUniversity","name":"Lumbini ICT Campus (Tribhuvan University)"}],"sameAs":["https://github.com/prashantsubedii","https://linkedin.com/in/prashantsubedii","https://twitter.com/prashantsubedii"]}}
@@ -173,6 +200,9 @@
             Prashant Subedi is an aspiring AI/ML Engineer and Researcher from Gaindakot, Nepal, currently pursuing a B.Sc. in Computer Science and Information Technology (CSIT) at Lumbini ICT Campus, Tribhuvan University. He engineers intelligent systems powered by machine learning and deep learning, turning research ideas into real, usable software. He built NepalDisaster.com as an open civic information service during the August 2026 Nepal floods to provide fast, accurate, bilingual disaster information to the public.
           </p>
         </div>
+      </div>
+      <div class="dev-contrib-section">
+        <h3 class="dev-contrib-title">Contributed By: Aayush Gaire and Codyza.com</h3>
       </div>
     </div>
   </div>
