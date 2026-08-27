@@ -492,7 +492,7 @@ function wire(){
   setLang(LANG);
   tickClocks(); setInterval(tickClocks,1000);
   setSync(nptNow());
-  liveRefresh(); setInterval(liveRefresh,600000);              // data every 10 min
+  liveRefresh(); setInterval(liveRefresh,120000);              // data every 2 min
   setInterval(()=>{ _eventImgs=null; renderGallery(); renderFullGallery(); },3600000); // extra images refresh hourly (stable set stays)
 }
 function doShare(mode){
@@ -881,7 +881,7 @@ async function newsDetail(root,id){
 Object.assign(I18N.en,{
   "stat.tap":I18N.en["stat.tap"]||"Tap for breakdown →",
   "news.back2":"← Back","news.prev":"‹ Prev","news.next":"Next ›",
-  "sync.updated":"Synced","sync.auto":"auto 10 min","eas.onset":"Elapsed since onset","nav.stats":"Details",
+  "sync.updated":"Synced","sync.auto":"auto 2 min","eas.onset":"Elapsed since onset","nav.stats":"Details","nav.seo":"SEO Page","nav.about":"About Dev",
   "page.stats.h":"Detailed Situation Figures","page.stats.p":"Category-wise breakdown from NDRRMA and Nepal Police, compiled from published situation reports. All figures are provisional and being revised.",
   "stats.src":"Source","stats.na":"Awaiting official figures — see the NDRRMA situation report.","stats.official":"NDRRMA situation report ↗","stats.fb":"NDRRMA updates (Facebook) ↗",
   "stats.disclaimer":"Provisional figures, 27–28 August 2026. Totals differ between sources and update frequently. This page does not replace official NDRRMA / Nepal Police bulletins. Verify before republishing.",
@@ -893,7 +893,7 @@ Object.assign(I18N.en,{
 });
 Object.assign(I18N.ne,{
   "news.back2":"← फर्कनुहोस्","news.prev":"‹ अघिल्लो","news.next":"अर्को ›",
-  "sync.updated":"सिंक","sync.auto":"स्वतः १० मिनेट","eas.onset":"घटना भएको","nav.stats":"विवरण",
+  "sync.updated":"सिंक","sync.auto":"स्वतः २ मिनेट","eas.onset":"घटना भएको","nav.stats":"विवरण",
   "page.stats.h":"विस्तृत अवस्था तथ्यांक","page.stats.p":"NDRRMA र नेपाल प्रहरीका प्रकाशित प्रतिवेदनबाट वर्गअनुसार विवरण। सबै तथ्यांक प्रारम्भिक र संशोधन हुँदै।",
   "stats.src":"स्रोत","stats.na":"आधिकारिक तथ्यांक प्रतीक्षामा — NDRRMA प्रतिवेदन हेर्नुहोस्।","stats.official":"NDRRMA प्रतिवेदन ↗","stats.fb":"NDRRMA अपडेट (फेसबुक) ↗",
   "stats.disclaimer":"प्रारम्भिक तथ्यांक, २७–२८ अगस्ट २०२६। स्रोत अनुसार फरक पर्छ र बारम्बार अद्यावधिक हुन्छ। आधिकारिक NDRRMA / नेपाल प्रहरी विवरणसँग रुजु गर्नुहोस्।",
