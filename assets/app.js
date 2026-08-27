@@ -218,6 +218,13 @@ let LANG = (()=>{ try{return localStorage.getItem("nd_lang")||"en";}catch(e){ret
 const t = k => (I18N[LANG] && I18N[LANG][k]) || (I18N.en[k]||k);
 const TL = o => (o && (o[LANG]||o.en)) || "";
 
+/* Convert Arabic/Western digits → Devanagari digits when LANG==="ne" */
+function toNepDigits(str){
+  if(LANG !== "ne") return str;
+  const map = {"0":"०","1":"१","2":"२","3":"३","4":"४","5":"५","6":"६","7":"७","8":"८","9":"९"};
+  return String(str).replace(/[0-9]/g, d => map[d]||d);
+}
+
 function setLang(lang){
   LANG = (lang==="ne")?"ne":"en";
   try{localStorage.setItem("nd_lang",LANG);}catch(e){}
@@ -239,12 +246,7 @@ function copy(text){ if(navigator.clipboard) navigator.clipboard.writeText(text)
 
 /* ---- clock (NPT) ---- */
 function nptNow(){const n=new Date();return new Date(n.getTime()+n.getTimezoneOffset()*60000+(5*60+45)*60000);}
-function fmt(d){const p=n=>String(n).padStart(2,"0");return p(d.getHours())+":"+p(d.getMinutes())+":"+p(d.getSeconds());}
-function elapsedStr(){
-  const ms=Date.now()-new Date(EVENT.since).getTime(); if(ms<0) return "";
-  const m=Math.floor(ms/60000), d=Math.floor(m/1440), h=Math.floor((m%1440)/60), mm=m%60;
-  return (t("eas.onset")+" "+d+"d "+h+"h "+mm+"m").toUpperCase();
-}
+function fmt(d){const p=n=>String(n).padStart(2,"0");const s=p(d.getHours())+":"+p(d.getMinutes())+":"+p(d.getSeconds());return LANG==="ne"?toNepDigits(s):s;}
 function tickClocks(){const d=nptNow();$$("[data-clock]").forEach(e=>e.textContent=fmt(d));$$("[data-elapsed]").forEach(e=>e.textContent=elapsedStr());}
 
 /* ---- phone icon ---- */
@@ -266,7 +268,7 @@ function renderStats(){
   const wrap=$("#heroStats"); if(!wrap) return;
   wrap.innerHTML=STATS.map(s=>`
     <a class="hstat ${s.cls||''}" href="stats.html#${s.key}" aria-label="${esc(t("stat."+s.key))}">
-      <div class="n mono">${esc(s.n)}</div>
+      <div class="n mono">${esc(toNepDigits(s.n))}</div>
       <div class="lbl">${esc(t("stat."+s.key))}</div>
       <div class="hstat__go">${esc(t("stat.tap"))}</div>
     </a>`).join("");
@@ -994,10 +996,10 @@ function renderStatsPage(){
     <div class="sd-grid">${STATS_DETAIL.map(s=>`
       <section class="sd" id="${s.id}">
         <div class="sd__head sd--${s.sev}">
-          ${s.big?`<div class="sd__n mono">${esc(s.big)}</div>`:""}
+          ${s.big?`<div class="sd__n mono">${esc(toNepDigits(s.big))}</div>`:""}
           <div><div class="sd__t">${esc(TL(s.title))}</div>${s.unit?`<div class="sd__u mono">${esc(TL(s.unit))}</div>`:""}</div>
         </div>
-        ${s.rows?`<table class="sd__table">${s.rows.map(r=>`<tr><td>${esc(r[0])}</td><td class="mono">${esc(r[1])}</td></tr>`).join("")}</table>`:""}
+        ${s.rows?`<table class="sd__table">${s.rows.map(r=>`<tr><td>${esc(r[0])}</td><td class="mono">${esc(toNepDigits(r[1]))}</td></tr>`).join("")}</table>`:""}
         ${s.note?`<p class="sd__note">${esc(TL(s.note))}</p>`:(!s.rows?`<p class="sd__note">${esc(t("stats.na"))}</p>`:"")}
         <div class="sd__src">${esc(t("stats.src"))} · ${esc(s.src)}</div>
       </section>`).join("")}</div>`;

@@ -3,11 +3,11 @@
   "short_name": "NepalDisaster",
   "description": "Live Nepal flood and disaster situation reporting.",
   "icons": [
-    { "src": "/favicon/favicon.svg", "type": "image/svg+xml", "sizes": "any" },
-    { "src": "/favicon/favicon-192.png", "type": "image/png", "sizes": "192x192" },
-    { "src": "/favicon/favicon-512.png", "type": "image/png", "sizes": "512x512" }
+    { "src": "favicon/favicon.svg", "type": "image/svg+xml", "sizes": "any" },
+    { "src": "favicon/favicon-192.png", "type": "image/png", "sizes": "192x192" },
+    { "src": "favicon/favicon-512.png", "type": "image/png", "sizes": "512x512" }
   ],
-  "start_url": "/",
+  "start_url": ".",
   "display": "standalone",
   "background_color": "#0f1117",
   "theme_color": "#C8102E"
