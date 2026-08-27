@@ -794,7 +794,7 @@ async function fetchWiki(title){
 /* ---------- notifications ---------- */
 const BELL='<svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>';
 function injectChrome(){
-  // bell in header tools
+  // bell in header tools (desktop)
   const tools=$(".hd__tools");
   if(tools && !$("#bell")){
     const b=document.createElement("button");
@@ -802,6 +802,25 @@ function injectChrome(){
     b.innerHTML=BELL+'<span class="badge mono" id="bellBadge">0</span>';
     const burger=$("#burger"); tools.insertBefore(b, burger||null);
     b.addEventListener("click",notifOpen);
+  }
+
+  // mobile alert item inside nav dropdown
+  const navInner=$("#navInner");
+  if(navInner && !$("#mobileNavAlert")){
+    const mobAlert=document.createElement("a");
+    mobAlert.href="#alerts";
+    mobAlert.className="nav__alert-item";
+    mobAlert.id="mobileNavAlert";
+    mobAlert.innerHTML=`
+      <span class="nav__alert-left">${BELL} <span data-i18n="notif.h">Live Alerts</span></span>
+      <span class="badge mono" id="mobileBellBadge">0</span>
+    `;
+    mobAlert.addEventListener("click",(e)=>{
+      e.preventDefault();
+      setBurger(false);
+      notifOpen();
+    });
+    navInner.insertBefore(mobAlert, navInner.firstChild);
   }
   // panel + scrim
   if(!$("#notif")){
