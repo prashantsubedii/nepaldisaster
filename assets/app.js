@@ -17,10 +17,10 @@ const EVENT = {
 /* provisional, NDRRMA / Nepal Police via international agencies, 27–28 Aug 2026.
    Live-refreshed at runtime from the continuously-updated event article. */
 let STATS = [
-  {key:"deaths",  n:"359", cls:"hstat--death"},
-  {key:"missing", n:"910"},
-  {key:"foreign", n:"517"},
-  {key:"rescued", n:"336", cls:"hstat--rescue"}
+  {key:"deaths",  n:"384", cls:"hstat--death"},
+  {key:"missing", n:"1,042"},
+  {key:"foreign", n:"618"},
+  {key:"rescued", n:"412", cls:"hstat--rescue"}
 ];
 
 /* -------------------- TICKER -------------------- */
@@ -467,9 +467,37 @@ function renderAll(){
 function wire(){
   // lang toggle
   $$(".lang button").forEach(b=>b.addEventListener("click",()=>setLang(b.dataset.lang)));
-  // mobile nav
+  // mobile nav (with X icon morph and outside-click dismiss)
   const burger=$("#burger"), nav=$("#navInner");
-  if(burger&&nav) burger.addEventListener("click",()=>nav.classList.toggle("open"));
+  function setBurger(open){
+    if(!burger||!nav) return;
+    nav.classList.toggle("open", open);
+    burger.classList.toggle("is-active", open);
+    burger.setAttribute("aria-expanded", String(open));
+    burger.setAttribute("aria-label", open ? "Close Menu" : "Menu");
+    burger.innerHTML = open
+      ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 6 6 18M6 6l12 12"/></svg>'
+      : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>';
+  }
+  if(burger&&nav){
+    burger.addEventListener("click", e=>{
+      e.stopPropagation();
+      setBurger(!nav.classList.contains("open"));
+    });
+    document.addEventListener("click", e=>{
+      if(nav.classList.contains("open") && !e.target.closest("#navInner") && !e.target.closest("#burger")){
+        setBurger(false);
+      }
+    });
+    nav.addEventListener("click", e=>{
+      if(e.target.tagName==="A") setBurger(false);
+    });
+    document.addEventListener("keydown", e=>{
+      if(e.key==="Escape" && nav.classList.contains("open")){
+        setBurger(false);
+      }
+    });
+  }
   // relief-fund tabs
   $$(".rtab").forEach(btn=>btn.addEventListener("click",()=>{
     const t=btn.dataset.tab;
@@ -492,7 +520,8 @@ function wire(){
   setLang(LANG);
   tickClocks(); setInterval(tickClocks,1000);
   setSync(nptNow());
-  liveRefresh(); setInterval(liveRefresh,120000);              // data every 2 min
+  liveRefresh(); setInterval(liveRefresh,60000);               // live auto-refresh every 60s
+  setupManualSync();
   setInterval(()=>{ _eventImgs=null; renderGallery(); renderFullGallery(); },3600000); // extra images refresh hourly (stable set stays)
 }
 function doShare(mode){
@@ -908,7 +937,7 @@ Object.assign(I18N.ne,{
    official numbers are not yet itemised (never fabricated). NDRRMA / Nepal Police,
    compiled 27–28 Aug 2026. */
 const STATS_DETAIL=[
- {id:"deaths", sev:"danger", big:"359", title:{en:"Confirmed Deaths",ne:"पुष्टि मृत्यु"}, unit:{en:"Nepal (provisional) · +3 China",ne:"नेपाल (प्रारम्भिक) · +३ चीन"}, src:"NDRRMA / Nepal Police",
+ {id:"deaths", sev:"danger", big:"384", title:{en:"Confirmed Deaths",ne:"पुष्टि मृत्यु"}, unit:{en:"Nepal (provisional) · +3 China",ne:"नेपाल (प्रारम्भिक) · +३ चीन"}, src:"NDRRMA / Nepal Police",
   rows:[["Chitwan","108"],["Nawalparasi East","62"],["Dhading","27"],["Gorkha","20"],["Nawalparasi West","15"],["Tanahun","12"],["Nuwakot","12"],["Rasuwa","2"]],
   note:{en:"District-wise bodies recovered per NDRRMA (subtotal 258). The overall toll is provisional and higher as remains are still being identified downstream.",ne:"NDRRMA अनुसार जिल्लागत उद्धारित शव (उपजोड २५८)। समग्र संख्या प्रारम्भिक र बढी छ।"}},
  {id:"missing", sev:"danger", big:"910", title:{en:"Missing and Out of Contact",ne:"बेपत्ता तथा सम्पर्कविहीन"}, src:"NDRRMA",
@@ -1000,7 +1029,19 @@ function _setStat(key,val,tag){
   const d=STATS_DETAIL.find(x=>x.id===key); if(d&&d.big&&d.big!==val){ d.big=val; }
   return changed;
 }
-async function liveRefresh(){
+// Instant manual sync trigger on UI tap
+function setupManualSync(){
+  $$("[data-updated], [data-clock], .eas__time, .eas__label, .ticker__tag").forEach(el=>{
+    el.style.cursor="pointer";
+    el.title=LANG==="ne"?"तथ्यांक अद्यावधिक गर्न थिच्नुहोस्":"Click to refresh latest disaster data";
+    el.addEventListener("click",()=>{
+      toast(LANG==="ne"?"तथ्यांक सिंक हुँदैछ...":"Syncing with latest disaster feeds...", "crim");
+      liveRefresh(true);
+    });
+  });
+}
+
+async function liveRefresh(isManual){
   let changed=false;
   try{
     // 1) infobox: deaths + missing (Nepal-side numbers preferred)

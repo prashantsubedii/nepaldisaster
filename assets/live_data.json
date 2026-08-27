@@ -1,0 +1,39 @@
+{
+  "updated_at": "2026-08-27T23:25:00+05:45",
+  "event": {
+    "code": "FL-2026-0826",
+    "since": "2026-08-26T08:37:00+05:45",
+    "title": {
+      "en": "2026 Nepal Floods",
+      "ne": "२०२६ नेपाल बाढी"
+    },
+    "region": {
+      "en": "Rasuwa · Nuwakot · Trishuli corridor",
+      "ne": "रसुवा · नुवाकोट · त्रिशूली कोरिडोर"
+    },
+    "eas": {
+      "en": "Trishuli corridor glacial surge. Search & rescue operations active across Rasuwa, Nuwakot, Dhading, Chitwan.",
+      "ne": "त्रिशूली कोरिडोरमा हिमनदी बाढी। रसुवा, नुवाकोट, धादिङ, चितवनमा खोजी तथा उद्धार जारी।"
+    }
+  },
+  "stats": [
+    {
+      "key": "deaths",
+      "n": "384",
+      "cls": "hstat--death"
+    },
+    {
+      "key": "missing",
+      "n": "1,042"
+    },
+    {
+      "key": "foreign",
+      "n": "618"
+    },
+    {
+      "key": "rescued",
+      "n": "412",
+      "cls": "hstat--rescue"
+    }
+  ]
+}
