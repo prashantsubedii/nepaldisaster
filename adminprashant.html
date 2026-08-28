@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; frame-ancestors 'none'; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self'; connect-src 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Admin · NepalDisaster.com</title>
+<link rel="icon" type="image/svg+xml" href="favicon/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{ --crimson:#C8102E; --ink:#16181c; --paper:#f5f6f8; --line:#e2e5ea; --muted:#6b7280; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font-family:"IBM Plex Sans",system-ui,sans-serif; background:var(--paper); color:var(--ink); }
+  .mono{ font-family:"IBM Plex Mono",monospace; }
+  .wrap{ max-width:1000px; margin:0 auto; padding:24px 18px; }
+  /* login */
+  .login{ min-height:100vh; display:flex; align-items:center; justify-content:center; }
+  .login__card{ background:#fff; border:1px solid var(--line); border-radius:8px; padding:32px; width:100%; max-width:380px; box-shadow:0 8px 30px rgba(0,0,0,.06); }
+  .login__card h1{ font-family:Archivo,sans-serif; font-size:1.3rem; margin:0 0 4px; }
+  .login__card p{ color:var(--muted); font-size:.85rem; margin:0 0 22px; }
+  label{ display:block; font-size:.78rem; font-weight:600; text-transform:uppercase; letter-spacing:.04em; color:var(--muted); margin:14px 0 6px; }
+  input{ width:100%; padding:11px 12px; border:1px solid var(--line); border-radius:5px; font-size:.95rem; font-family:inherit; }
+  input:focus{ outline:2px solid var(--crimson); outline-offset:-1px; border-color:var(--crimson); }
+  button{ font-family:inherit; cursor:pointer; }
+  .btn{ width:100%; margin-top:22px; padding:12px; background:var(--crimson); color:#fff; border:none; border-radius:5px; font-weight:700; font-size:.95rem; }
+  .btn:disabled{ opacity:.6; cursor:not-allowed; }
+  .err{ color:var(--crimson); font-size:.85rem; margin-top:14px; min-height:1.2em; font-weight:600; }
+  /* dashboard */
+  .top{ background:var(--ink); color:#fff; }
+  .top .wrap{ display:flex; align-items:center; justify-content:space-between; padding:16px 18px; }
+  .top h1{ font-family:Archivo,sans-serif; font-size:1.05rem; margin:0; letter-spacing:.02em; }
+  .top .lo{ background:transparent; border:1px solid rgba(255,255,255,.3); color:#fff; padding:7px 14px; border-radius:5px; font-size:.82rem; font-weight:600; }
+  .kpis{ display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; margin:6px 0 26px; }
+  .kpi{ background:#fff; border:1px solid var(--line); border-radius:8px; padding:18px 20px; }
+  .kpi .n{ font-family:Archivo,sans-serif; font-size:2rem; font-weight:800; line-height:1; }
+  .kpi .l{ color:var(--muted); font-size:.78rem; text-transform:uppercase; letter-spacing:.05em; margin-top:8px; font-weight:600; }
+  .cols{ display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+  @media(max-width:720px){ .cols{ grid-template-columns:1fr; } }
+  .panel{ background:#fff; border:1px solid var(--line); border-radius:8px; padding:20px; }
+  .panel h2{ font-family:Archivo,sans-serif; font-size:1rem; margin:0 0 14px; display:flex; justify-content:space-between; align-items:baseline; }
+  .panel h2 span{ font-size:.75rem; color:var(--muted); font-weight:500; }
+  .row{ display:flex; align-items:center; gap:10px; padding:7px 0; border-bottom:1px solid #f0f2f5; font-size:.9rem; }
+  .row:last-child{ border-bottom:none; }
+  .row .name{ flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .row .bar{ height:6px; background:var(--crimson); border-radius:3px; min-width:2px; }
+  .row .val{ font-family:"IBM Plex Mono",monospace; font-weight:600; width:56px; text-align:right; }
+  .empty{ color:var(--muted); font-size:.85rem; padding:10px 0; }
+  .note{ color:var(--muted); font-size:.78rem; margin:22px 0 0; line-height:1.5; }
+  .hidden{ display:none; }
+  .spark{ display:flex; align-items:flex-end; gap:3px; height:60px; margin-top:6px; }
+  .spark div{ flex:1; background:var(--crimson); opacity:.75; border-radius:2px 2px 0 0; min-height:2px; }
+</style>
+</head>
+<body>
+
+<!-- LOGIN VIEW -->
+<div id="loginView" class="login">
+  <form id="loginForm" class="login__card" autocomplete="off">
+    <h1>Admin Access</h1>
+    <p>NepalDisaster.com — authorised personnel only.</p>
+    <label for="email">Email</label>
+    <input id="email" name="email" type="email" autocomplete="username" required />
+    <label for="password">Password</label>
+    <input id="password" name="password" type="password" autocomplete="current-password" required />
+    <button class="btn" id="loginBtn" type="submit">Sign in</button>
+    <div class="err" id="loginErr" role="alert"></div>
+  </form>
+</div>
+
+<!-- DASHBOARD VIEW -->
+<div id="dashView" class="hidden">
+  <div class="top"><div class="wrap">
+    <h1>NepalDisaster.com · Visitor Analytics</h1>
+    <button class="lo" id="logoutBtn" type="button">Sign out</button>
+  </div></div>
+  <div class="wrap">
+    <div class="kpis">
+      <div class="kpi"><div class="n mono" id="kUniques">—</div><div class="l">Real Visitors (unique)</div></div>
+      <div class="kpi"><div class="n mono" id="kPageviews">—</div><div class="l">Total Pageviews</div></div>
+      <div class="kpi"><div class="n mono" id="kCountries">—</div><div class="l">Countries</div></div>
+      <div class="kpi"><div class="n mono" id="kNepal">—</div><div class="l">Nepal Visits</div></div>
+    </div>
+
+    <div class="panel" style="margin-bottom:22px">
+      <h2>Visits — last 14 days <span id="dailyTotal"></span></h2>
+      <div class="spark" id="spark"></div>
+    </div>
+
+    <div class="cols">
+      <div class="panel">
+        <h2>Top Countries <span>by pageviews</span></h2>
+        <div id="countries"><div class="empty">Loading…</div></div>
+      </div>
+      <div class="panel">
+        <h2>Nepal — Cities <span>NP visitors</span></h2>
+        <div id="cities"><div class="empty">Loading…</div></div>
+      </div>
+    </div>
+
+    <p class="note">
+      Data is aggregated and privacy-first: country and city come from Vercel's
+      server-side geo lookup, unique visitors from an anonymous per-browser id.
+      No IP addresses, names, or gender are collected or stored — a visitor's
+      gender is not available from a web request and is intentionally not tracked.
+    </p>
+  </div>
+</div>
+
+<script src="assets/admin.js"></script>
+</body>
+</html>
