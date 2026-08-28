@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-28T16:45:00+05:45",
+  "updated_at": "2026-08-28T17:30:00+05:45",
   "event": {
     "code": "FL-2026-0826",
     "since": "2026-08-26T08:37:00+05:45",
@@ -9,24 +9,24 @@
       "ne": "रसुवा · नुवाकोट · त्रिशूली कोरिडोर · चितवन"
     },
     "eas": {
-      "en": "Trishuli corridor glacial flood. Nepal Police confirm 489 dead, 2,847+ missing (Nepal); 1,545+ rescued. Search and relief ongoing. Evacuation continuing.",
-      "ne": "त्रिशूली कोरिडोरमा हिमनदी बाढी। नेपाल प्रहरीले ४८९ मृत्यु, २,८४७+ बेपत्ता (नेपाल) पुष्टि; १,५४५+ उद्धार। खोजी तथा राहत जारी। खाली गरण जारी।"
+      "en": "Trishuli corridor glacial flood. Nepal Police confirm 538 dead, 977 missing (Nepal side); 1,545+ rescued. Search and relief ongoing. Evacuation of downstream areas continuing.",
+      "ne": "त्रिशूली कोरिडोरमा हिमनदी बाढी। नेपाल प्रहरीले ५३८ मृत्यु, ९७७ बेपत्ता (नेपालतर्फ) पुष्टि; १,५४५+ उद्धार। खोजी तथा राहत जारी। अनुप्रवाह क्षेत्रको खाली गरण जारी।"
     }
   },
   "stats": [
-    { "key": "deaths",  "n": "489", "cls": "hstat--death" },
-    { "key": "missing", "n": "2,847" },
+    { "key": "deaths",  "n": "538", "cls": "hstat--death" },
+    { "key": "missing", "n": "977" },
     { "key": "foreign", "n": "542" },
     { "key": "rescued", "n": "1,545", "cls": "hstat--rescue" }
   ],
   "stats_detail": {
     "deaths": {
-      "big": "489",
-      "rows": [ ["Nepal (confirmed)", "489"] ]
+      "big": "538",
+      "rows": [ ["Nepal (confirmed)", "538"], ["Bodies recovered", "258"] ]
     },
     "missing": {
-      "big": "2,847",
-      "rows": [ ["Rasuwa district", "1,245"], ["Nuwakot district", "892"], ["Dhading district", "456"], ["Chitwan district", "254"] ]
+      "big": "977",
+      "rows": [ ["Nepal — missing / out of contact", "977"] ]
     },
     "rescued": {
       "big": "1,545",

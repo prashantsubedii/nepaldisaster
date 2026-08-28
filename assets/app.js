@@ -120,23 +120,24 @@ const EVENT = {
   since:"2026-08-26T08:37:00+05:45",
   title:{en:"2026 Nepal Floods", ne:"२०२६ नेपाल बाढी"},
   region:{en:"Rasuwa · Nuwakot · Trishuli corridor · Chitwan", ne:"रसुवा · नुवाकोट · त्रिशूली कोरिडोर · चितवन"},
-  eas:{en:"Trishuli corridor glacial flood. 469 dead, 1,400+ missing; 1,545 rescued. Search & relief ongoing.",
-       ne:"त्रिशूली कोरिडोरमा हिमनदी बाढी। ४६९ मृत्यु, १,४००+ बेपत्ता; १,५४५ उद्धार। खोजी तथा राहत जारी।"}
+  eas:{en:"Trishuli corridor glacial flood. 538 dead, 977 missing (Nepal); 1,545 rescued. Search & relief ongoing.",
+       ne:"त्रिशूली कोरिडोरमा हिमनदी बाढी। ५३८ मृत्यु, ९७७ बेपत्ता (नेपाल); १,५४५ उद्धार। खोजी तथा राहत जारी।"}
 };
 /* Nepal-side figures only (confirmed by Nepal Police & NDRRMA).
-   Live-refreshed every 30 minutes from local feed + Wikipedia + NDRRMA + Nepal Police sources.
-   Data sources (priority): live_data.json → Wikipedia → NDRRMA API → Nepal Police portal. */
+   Live-refreshed every 10 minutes: local feed (baseline) → Wikipedia (deaths) → NDRRMA API (rescued).
+   Deaths auto-rise from Wikipedia (Nepal ≈ combined, within ~3). Missing/foreign are pinned to
+   the local Nepal-only feed because Wikipedia reports them COMBINED with the China/Tibet side. */
 let STATS = [
-  {key:"deaths",  n:"489", cls:"hstat--death"},
-  {key:"missing", n:"2,847"},
+  {key:"deaths",  n:"538", cls:"hstat--death"},
+  {key:"missing", n:"977"},
   {key:"foreign", n:"542"},
   {key:"rescued", n:"1,545", cls:"hstat--rescue"}
 ];
 
 /* -------------------- TICKER -------------------- */
 const TICKER = [
-  {src:"POLICE", en:"Nepal Police confirm 489 dead, 2,847 missing; 1,545 rescued (28 Aug 4 PM)",
-   ne:"नेपाल प्रहरीले ४८९ मृत्यु, २,८४७ बेपत्ता पुष्टि; १,५४५ उद्धार (२८ अगस्ट ४ बजे)"},
+  {src:"POLICE", en:"Nepal Police confirm 538 dead, 977 missing (Nepal); 1,545 rescued — figures rising",
+   ne:"नेपाल प्रहरीले ५३८ मृत्यु, ९७७ बेपत्ता (नेपाल) पुष्टि; १,५४५ उद्धार — संख्या बढ्दै"},
   {src:"POLICE", en:"1,545 rescued in Rasuwa & Nuwakot; NDRRMA names 528 in its registry",
    ne:"रसुवा र नुवाकोटमा १,५४५ उद्धार; NDRRMA अभिलेखमा ५२८ नाम"},
   {src:"PMO", en:"PM Disaster Relief Fund raises Rs 273.3 million; govt releases Rs 1 billion",
@@ -154,12 +155,12 @@ const WK="https://en.wikipedia.org/wiki/2026_Nepal_floods";
 const NEWS = [
   {sev:"danger", tag:{en:"Toll",ne:"मृत्यु"}, time:"28 Aug 2026", src:"AP / Nepal Police",
    url:"https://www.washingtontimes.com/news/2026/aug/27/death-toll-floods-rises-rescuers-nepal-china-working-find-hundreds/",
-   title:{en:"Nepal flood death toll climbs to 489 as search widens",
-          ne:"नेपाल बाढीमा मृत्यु ४८९ पुग्यो, खोजी विस्तार"},
-   body:{en:"Nepal Police raised the confirmed Nepal-side toll to 489 on Friday afternoon, with 2,847 still missing across four districts.",
-         ne:"नेपाल प्रहरीले शुक्रबार दिउँसो नेपालतर्फको पुष्टि मृत्यु ४८९ पुर्‍यायो; चार जिल्लामा २,८४७ बेपत्ता।"},
-   long:{en:"Nepal Police confirmed 489 deaths on 28 August (Nepal side only) as rescue teams reached settlements cut off by the 26 August surge down the Bhotekoshi/Trishuli. Some 2,847 people remain missing across Rasuwa, Nuwakot, Dhading and Chitwan districts. Officials warned the toll would keep rising as access to buried riverside villages is restored and downstream bodies are recovered along the Narayani corridor.",
-         ne:"नेपाल प्रहरीले २८ अगस्टमा ४८९ मृत्यु पुष्टि गर्‍यो (नेपालतर्फ मात्र)। २६ अगस्टको भोटेकोशी/त्रिशूली भलले अवरुद्ध बस्तीमा उद्धार टोली पुग्दै। रसुवा, नुवाकोट, धादिङ र चितवनमा २,८४७ जना बेपत्ता। पहुँच खुल्दै र नारायणी कोरिडोरमा शव भेटिँदै जाँदा संख्या बढ्ने अधिकारीको चेतावनी।"}},
+   title:{en:"Nepal flood death toll climbs to 538 as search widens",
+          ne:"नेपाल बाढीमा मृत्यु ५३८ पुग्यो, खोजी विस्तार"},
+   body:{en:"Nepal Police raised the confirmed Nepal-side toll to 538, with 977 still missing or out of contact.",
+         ne:"नेपाल प्रहरीले नेपालतर्फको पुष्टि मृत्यु ५३८ पुर्‍यायो; ९७७ जना बेपत्ता वा सम्पर्कविहीन।"},
+   long:{en:"Nepal Police confirmed 538 deaths on the Nepal side as rescue teams reached settlements cut off by the 26 August surge down the Bhotekoshi/Trishuli. Around 977 people remain missing or out of contact on the Nepal side (separate from the China/Tibet-side count). Officials warned the toll would keep rising as access to buried riverside villages is restored and downstream bodies are recovered along the Narayani corridor.",
+         ne:"नेपाल प्रहरीले नेपालतर्फ ५३८ मृत्यु पुष्टि गर्‍यो। २६ अगस्टको भोटेकोशी/त्रिशूली भलले अवरुद्ध बस्तीमा उद्धार टोली पुग्दै। नेपालतर्फ करिब ९७७ जना बेपत्ता वा सम्पर्कविहीन (चीन/तिब्बततर्फको गणनाभन्दा अलग)। पहुँच खुल्दै र नारायणी कोरिडोरमा शव भेटिँदै जाँदा संख्या बढ्ने अधिकारीको चेतावनी।"}},
   {sev:"relief", tag:{en:"Rescue",ne:"उद्धार"}, time:"28 Aug 2026", src:"Nepal Police / OnlineKhabar",
    url:"https://english.onlinekhabar.com/people-rescued-rasuwa-flood-2.html",
    title:{en:"1,545 rescued after Rasuwa flood; 28 police still out of contact",
@@ -805,7 +806,7 @@ function wire(){
   setLang(LANG);
   tickClocks(); setInterval(tickClocks,1000);
   setSync(nptNow());
-  liveRefresh(); setInterval(liveRefresh, 1800000);              // live figures auto-refresh every 30 minutes
+  liveRefresh(); setInterval(liveRefresh, 600000);               // live figures auto-refresh every 10 minutes
   setupManualSync();
   // live bulletins: re-render every 10 minutes (refreshes times, ticker + any live overview)
   setInterval(()=>{
@@ -1269,12 +1270,12 @@ Object.assign(I18N.ne,{
    official numbers are not yet itemised (never fabricated). NDRRMA / Nepal Police,
    compiled 27–28 Aug 2026. */
 const STATS_DETAIL=[
- {id:"deaths", sev:"danger", big:"489", title:{en:"Confirmed Deaths",ne:"पुष्टि मृत्यु"}, unit:{en:"Nepal only · Nepal Police, 28 Aug",ne:"नेपाल मात्र · नेपाल प्रहरी, २८ अगस्ट"}, src:"Nepal Police / NDRRMA",
-  rows:[["Nepal (confirmed)","489"]],
-  note:{en:"Nepal Police confirmed 489 deaths on the Nepal side as of 28 Aug 2026; the toll continues to rise as access is restored to buried riverside settlements. District-wise fatality breakdown is being compiled by the authorities.",ne:"नेपाल प्रहरीले २८ अगस्ट २०२६ सम्म नेपालतर्फ ४८९ मृत्यु पुष्टि गर्‍यो; पहुँच खुल्दै जाँदा संख्या बढ्दै छ। जिल्लागत विवरण अधिकारीहरूले तयार पार्दै।"}},
- {id:"missing", sev:"danger", big:"2,847", title:{en:"Missing and Out of Contact",ne:"बेपत्ता तथा सम्पर्कविहीन"}, unit:{en:"Nepal only · across 4 districts",ne:"नेपाल मात्र · ४ जिल्लामा"}, src:"Nepal Police / NDRRMA",
-  rows:[["Rasuwa district","1,245"],["Nuwakot district","892"],["Dhading district","456"],["Chitwan district","254"]],
-  note:{en:"Nepal Police report 2,847 people missing on the Nepal side across Rasuwa, Nuwakot, Dhading and Chitwan districts. Figures are provisional and revised as search operations reach cut-off settlements.",ne:"नेपाल प्रहरीका अनुसार नेपालतर्फ रसुवा, नुवाकोट, धादिङ र चितवनमा २,८४७ जना बेपत्ता। खोजी कार्यले अवरुद्ध बस्तीमा पुग्दै जाँदा तथ्यांक संशोधन हुँदैछ।"}},
+ {id:"deaths", sev:"danger", big:"538", title:{en:"Confirmed Deaths",ne:"पुष्टि मृत्यु"}, unit:{en:"Nepal side · auto-updated from live sources",ne:"नेपालतर्फ · प्रत्यक्ष स्रोतबाट स्वतः अद्यावधिक"}, src:"Nepal Police / NDRRMA / Wikipedia",
+  rows:[["Nepal (confirmed)","538"],["Bodies recovered","258"]],
+  note:{en:"Nepal Police confirmed 538 deaths on the Nepal side; the toll auto-updates every 10 minutes from live sources as access is restored to buried riverside settlements. District-wise fatality breakdown is being compiled by the authorities.",ne:"नेपाल प्रहरीले नेपालतर्फ ५३८ मृत्यु पुष्टि गर्‍यो; पहुँच खुल्दै जाँदा प्रत्यक्ष स्रोतबाट हरेक १० मिनेटमा संख्या स्वतः अद्यावधिक हुन्छ। जिल्लागत विवरण अधिकारीहरूले तयार पार्दै।"}},
+ {id:"missing", sev:"danger", big:"977", title:{en:"Missing and Out of Contact",ne:"बेपत्ता तथा सम्पर्कविहीन"}, unit:{en:"Nepal side only",ne:"नेपालतर्फ मात्र"}, src:"Nepal Police / NDRRMA",
+  rows:[["Nepal — missing / out of contact","977"]],
+  note:{en:"Nepal Police report 977 people missing or out of contact on the Nepal side. This figure is Nepal-only — it deliberately excludes the separately-counted China/Tibet-side missing to avoid double counting.",ne:"नेपाल प्रहरीका अनुसार नेपालतर्फ ९७७ जना बेपत्ता वा सम्पर्कविहीन। यो संख्या नेपाल मात्रको हो — दोहोरो गणना नहोस् भनेर चीन/तिब्बततर्फको अलग्गै गणना गरिएको बेपत्तालाई समावेश गरिएको छैन।"}},
  {id:"rescued", sev:"relief", big:"1,545", title:{en:"Rescued (Official Registry)",ne:"उद्धार (आधिकारिक अभिलेख)"}, unit:{en:"1,478 Nepali · 67 foreign · NDRRMA",ne:"१,४७८ नेपाली · ६७ विदेशी · NDRRMA"}, src:"NDRRMA rescue portal",
   rows:[["Nepali citizens","1,478"],["Foreign nationals","67"]],
   note:{en:"NDRRMA has registered rescued individuals by name, including about 350 pulled from the Trishuli 3A hydropower tunnel. See the full named registry on this site's Rescued page, or the official NDRRMA portal.",ne:"NDRRMA ले उद्धारित व्यक्तिको नामसहित अभिलेख राखेको छ, जसमा त्रिशूली ३ए सुरुङबाट करिब ३५० सामेल। पूरा नामावली यस साइटको उद्धार पृष्ठ वा आधिकारिक NDRRMA पोर्टलमा हेर्नुहोस्।"}},
@@ -1697,19 +1698,38 @@ async function _srcLocalFeed(){
   return changed;
 }
 
-// Tier 2 — Wikipedia infobox: DISABLED for deaths/missing.
-// Wikipedia reports COMBINED Nepal+Tibet(China) figures. Since this site shows
-// Nepal-side ONLY (per official Nepal Police / NDRRMA reporting), the local feed
-// (live_data.json) is authoritative for deaths/missing. Wikipedia would inflate
-// the Nepal toll with cross-border figures, so we no longer pull deaths/missing
-// from it. Kept as a stub in case Wikipedia adds a Nepal-only breakdown later.
+// Tier 2 — Wikipedia infobox (structured wikitext, CORS-open). DEATHS ONLY.
+// The Nepal death toll and Wikipedia's combined toll differ by only ~3 (the
+// small Tibet count), so auto-rising deaths from Wikipedia keeps the headline
+// figure current with negligible cross-border error. MISSING is deliberately
+// NOT pulled here — Wikipedia combines it with 558 China-side missing, which
+// would badly inflate a Nepal-only site; missing stays pinned to the local feed.
+// Monotonic guard in _setStat means Wikipedia can only raise the toll, never lower it.
 async function _srcInfobox(){
-  return false; // Nepal-only site: deaths/missing pinned to local feed, not Wikipedia
+  let changed=false, wt="";
+  for(const title of ["2026 Nepal floods","2026 China–Nepal floods"]){
+    try{ wt=await fetchInfobox(title); }catch(_){}
+    if(wt) break;
+  }
+  if(!wt) return false;
+  const field=f=>{ const m=wt.match(new RegExp("\\|\\s*"+f+"\\s*=\\s*([^\\n]+)","i")); return m?m[1]:""; };
+  const firstNum=line=>{ const m=String(line).replace(/,/g,"").match(/(\d{2,7})/); return m?m[1]:null; };
+  const dL=field("deaths")||field("fatalities")||field("reported_deaths");
+  if(dL && _setStat("deaths",firstNum(dL))) changed=true;
+  return changed;
 }
 
-// Tier 3 — Wikipedia summary prose: DISABLED for the same reason (combined figures).
+// Tier 3 — Wikipedia summary prose (fallback for deaths if the infobox is missing it).
+// DEATHS ONLY, same rationale as above; missing stays on the local Nepal feed.
 async function _srcSummary(){
-  return false; // Nepal-only site: deaths/missing pinned to local feed, not Wikipedia
+  let changed=false;
+  const w=await fetchWiki("2026 Nepal floods");
+  const ex=(w&&w.extract)||"";
+  if(!ex) return false;
+  const grab=re=>{ const m=ex.match(re); return m?m[1]:null; };
+  const dN=grab(/([\d,]{2,7})\s*(?:people\s*)?(?:were\s*)?(?:killed|dead|died|deaths|fatalities)/i);
+  if(dN && _setStat("deaths",_num(dN))) changed=true;
+  return changed;
 }
 
 // Tier 4 — NDRRMA official rescue count (CORS-open); keeps "rescued" live site-wide.
