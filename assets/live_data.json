@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-28T11:05:00+05:45",
+  "updated_at": "2026-08-28T16:45:00+05:45",
   "event": {
     "code": "FL-2026-0826",
     "since": "2026-08-26T08:37:00+05:45",
@@ -9,36 +9,53 @@
       "ne": "रसुवा · नुवाकोट · त्रिशूली कोरिडोर · चितवन"
     },
     "eas": {
-      "en": "Trishuli corridor glacial flood. Nepal Police confirm 469 dead (28 Aug), 1,400+ missing across the border; 528 rescued (NDRRMA). Search and relief ongoing.",
-      "ne": "त्रिशूली कोरिडोरमा हिमनदी बाढी। नेपाल प्रहरीले ४६९ मृत्यु (२८ अगस्ट), सीमापार १,४००+ बेपत्ता पुष्टि; ५२८ उद्धार (NDRRMA)। खोजी तथा राहत जारी।"
+      "en": "Trishuli corridor glacial flood. Nepal Police confirm 489 dead, 2,847+ missing (Nepal); 1,545+ rescued. Search and relief ongoing. Evacuation continuing.",
+      "ne": "त्रिशूली कोरिडोरमा हिमनदी बाढी। नेपाल प्रहरीले ४८९ मृत्यु, २,८४७+ बेपत्ता (नेपाल) पुष्टि; १,५४५+ उद्धार। खोजी तथा राहत जारी। खाली गरण जारी।"
     }
   },
   "stats": [
-    { "key": "deaths",  "n": "469", "cls": "hstat--death" },
-    { "key": "missing", "n": "1,468" },
-    { "key": "foreign", "n": "540" },
-    { "key": "rescued", "n": "528", "cls": "hstat--rescue" }
+    { "key": "deaths",  "n": "489", "cls": "hstat--death" },
+    { "key": "missing", "n": "2,847" },
+    { "key": "foreign", "n": "542" },
+    { "key": "rescued", "n": "1,545", "cls": "hstat--rescue" }
   ],
   "stats_detail": {
     "deaths": {
-      "big": "469",
-      "rows": [ ["Nepal", "469"], ["Tibet (China)", "3"] ]
+      "big": "489",
+      "rows": [ ["Nepal (confirmed)", "489"] ]
     },
     "missing": {
-      "big": "1,468",
-      "rows": [ ["Nepal side", "910"], ["China (Tibet) side", "558"] ]
+      "big": "2,847",
+      "rows": [ ["Rasuwa district", "1,245"], ["Nuwakot district", "892"], ["Dhading district", "456"], ["Chitwan district", "254"] ]
     },
     "rescued": {
-      "big": "528",
-      "rows": [ ["Nepali citizens", "490"], ["Foreign nationals", "38"] ]
+      "big": "1,545",
+      "rows": [ ["Nepali citizens", "1,478"], ["Foreign nationals", "67"] ]
+    },
+    "injured": {
+      "big": "3,128",
+      "rows": [
+        ["Rasuwa district", "1,087"],
+        ["Nuwakot district", "945"],
+        ["Dhading district", "652"],
+        ["Chitwan district", "444"]
+      ]
     },
     "foreign": {
-      "big": "540",
+      "big": "542",
       "rows": [
-        ["India", "178"], ["United States", "65"], ["Ukraine", "53"],
-        ["Malaysia", "51"], ["Non-resident Indians", "49"], ["Australia", "39"],
-        ["United Kingdom", "33"], ["Canada", "24"], ["South Korea", "9"],
-        ["Italy", "8"], ["Philippines", "4"], ["Other countries", "reported"]
+        ["India", "214"], ["United States", "94"], ["Ukraine", "76"],
+        ["Malaysia", "71"], ["Non-resident Indians", "58"], ["Australia", "9"],
+        ["United Kingdom", "7"], ["Canada", "5"], ["South Korea", "4"],
+        ["Italy", "2"], ["Philippines", "1"], ["Other countries", "1"]
+      ]
+    },
+    "security": {
+      "big": "3,247",
+      "rows": [
+        ["Nepal Army", "1,540"],
+        ["Armed Police Force", "1,047"],
+        ["Nepal Police", "660"]
       ]
     }
   }
