@@ -1865,7 +1865,7 @@ html[lang="ne"] .rfund__seg { text-transform: none; letter-spacing: 0; font-fami
 .rfund__ttl { font-family: var(--f-cond); text-transform: uppercase; letter-spacing: .08em; font-weight: 700; font-size: .72rem; color: var(--muted); margin-bottom: 12px; }
 html[lang="ne"] .rfund__ttl { text-transform: none; letter-spacing: 0; font-family: var(--f-np); }
 .rfund__donors { display: grid; grid-template-columns: 1fr 1fr; gap: 9px 24px; }
-.rfund__row { display: grid; grid-template-columns: 150px 1fr 76px; gap: 10px; align-items: center; }
+.rfund__row { display: grid; grid-template-columns: 172px 1fr 78px; gap: 10px; align-items: center; }
 .rfund__nm { font-size: .82rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 html[lang="ne"] .rfund__nm { font-family: var(--f-np); }
 .rfund__track { height: 9px; background: var(--paper-3); border: 1px solid var(--line); border-radius: 1px; overflow: hidden; }

@@ -1481,7 +1481,7 @@ function renderReliefCollected(){
       <div class="rfund__ttl">${esc(t("rfund.top"))}</div>
       <div class="rfund__donors">
         ${donors.map(d=>{const pct=Math.max(4,Math.round(d.amt/max*100));return `
-          <div class="rfund__row"><span class="rfund__nm">${esc(TL(d.name))}</span><span class="rfund__track"><span class="rfund__fill" style="width:${pct}%"></span></span><span class="rfund__amt mono">${esc(M(fmtMoney(d.amt)))}</span></div>`;}).join("")}
+          <div class="rfund__row"><span class="rfund__nm" title="${esc(TL(d.name))}">${esc(TL(d.name))}</span><span class="rfund__track"><span class="rfund__fill" style="width:${pct}%"></span></span><span class="rfund__amt mono">${esc(M(fmtMoney(d.amt)))}</span></div>`;}).join("")}
       </div>
       <p class="rfund__note">${esc(t("rfund.note"))} <span class="mono">${esc(t("rfund.updated"))}: ${esc(M(rc.updated))}</span></p>
     </div>`;
