@@ -5,6 +5,24 @@
    ========================================================================= */
 "use strict";
 
+/* -------------------- SECURITY: anti-clickjacking frame-buster --------------------
+   Meta CSP frame-ancestors is ignored when set via <meta>, and X-Frame-Options
+   can only be sent as an HTTP header. This is a defence-in-depth guard so the site
+   cannot be silently framed/overlaid by a malicious page (clickjacking). Real
+   header-level protection is also shipped in the repo _headers file. */
+(function frameGuard(){
+  try{
+    if(window.top !== window.self){
+      // If we are framed by a different origin, break out.
+      window.top.location = window.self.location;
+    }
+  }catch(e){
+    // Cross-origin access threw → we are definitely framed by another origin.
+    document.documentElement.style.display = "none";
+    try{ window.top.location = window.self.location; }catch(_){}
+  }
+})();
+
 /* -------------------- EVENT + STATS (provisional, sourced) -------------------- */
 const EVENT = {
   code:"FL-2026-0826",
@@ -17,9 +35,9 @@ const EVENT = {
 /* provisional, NDRRMA / Nepal Police via international agencies, 27–28 Aug 2026.
    Live-refreshed at runtime from the continuously-updated event article. */
 let STATS = [
-  {key:"deaths",  n:"388", cls:"hstat--death"},
-  {key:"missing", n:"1,080"},
-  {key:"foreign", n:"638"},
+  {key:"deaths",  n:"469", cls:"hstat--death"},
+  {key:"missing", n:"1,468"},
+  {key:"foreign", n:"668"},
   {key:"rescued", n:"425", cls:"hstat--rescue"}
 ];
 
@@ -148,7 +166,7 @@ const I18N = {
   "hero.note":"Provisional figures from Nepal and Chinese authorities via international agencies (26–27 Aug 2026). Counts vary by source and are being revised — not final. Verify against official NDRRMA / Nepal Police bulletins.",
   "hero.help":"Emergency Helplines","hero.report":"Report an Incident",
   "stat.deaths":"Confirmed Deaths","stat.missing":"Reported Missing","stat.foreign":"Foreign Nationals Missing","stat.rescued":"Rescued",
-  "stat.sub.deaths":"Nepal · provisional","stat.sub.missing":"incl. 517 foreign","stat.sub.foreign":"tourists & NRNs","stat.sub.rescued":"by air · NDRRMA","stat.tap":"Tap for breakdown →",
+  "stat.sub.deaths":"Nepal 389 · +3 China","stat.sub.missing":"incl. 668 foreign","stat.sub.foreign":"tourists & NRNs","stat.sub.rescued":"by air · NDRRMA","stat.tap":"Tap for breakdown →",
   "sec.hl.eye":"Call for Help · Toll-free 24×7","sec.hl.h":"Emergency Helplines",
   "hl.national":"National","hl.district":"Affected Districts","hl.more":"All helplines →",
   "hl.note":"Source: NDRRMA emergency helpline notice. If a line is busy, dial 100 (Police) or 102 (Ambulance).",
@@ -181,7 +199,7 @@ const I18N = {
   "hero.note":"नेपाल र चीनका अधिकारीहरूबाट अन्तर्राष्ट्रिय संस्थामार्फत प्राप्त प्रारम्भिक तथ्यांक (२६–२७ अगस्ट २०२६)। स्रोत अनुसार फरक पर्न सक्छ र संशोधन हुँदैछ — अन्तिम होइन। आधिकारिक विवरणसँग रुजु गर्नुहोस्।",
   "hero.help":"आपत्कालीन हेल्पलाइन","hero.report":"घटना जानकारी दिनुहोस्",
   "stat.deaths":"पुष्टि भएका मृत्यु","stat.missing":"बेपत्ता","stat.foreign":"बेपत्ता विदेशी नागरिक","stat.rescued":"उद्धार",
-  "stat.sub.deaths":"नेपाल · प्रारम्भिक","stat.sub.missing":"५१७ विदेशीसहित","stat.sub.foreign":"पर्यटक र गैरआवासीय","stat.sub.rescued":"हवाई · NDRRMA","stat.tap":"विस्तृत विवरण →",
+  "stat.sub.deaths":"नेपाल ३८९ · +३ चीन","stat.sub.missing":"६६८ विदेशीसहित","stat.sub.foreign":"पर्यटक र गैरआवासीय","stat.sub.rescued":"हवाई · NDRRMA","stat.tap":"विस्तृत विवरण →",
   "sec.hl.eye":"सहयोगका लागि सम्पर्क · निःशुल्क २४×७","sec.hl.h":"आपत्कालीन हेल्पलाइन",
   "hl.national":"राष्ट्रिय","hl.district":"प्रभावित जिल्लाहरू","hl.more":"सबै हेल्पलाइन →",
   "hl.note":"स्रोत: NDRRMA आपत्कालीन हेल्पलाइन सूचना। व्यस्त भए १०० (प्रहरी) वा १०२ (एम्बुलेन्स) मा फोन गर्नुहोस्।",
@@ -247,6 +265,18 @@ function copy(text){ if(navigator.clipboard) navigator.clipboard.writeText(text)
 /* ---- clock (NPT) ---- */
 function nptNow(){const n=new Date();return new Date(n.getTime()+n.getTimezoneOffset()*60000+(5*60+45)*60000);}
 function fmt(d){const p=n=>String(n).padStart(2,"0");const s=p(d.getHours())+":"+p(d.getMinutes())+":"+p(d.getSeconds());return LANG==="ne"?toNepDigits(s):s;}
+/* ---- elapsed since event onset (restores the EAS strip timer) ---- */
+function elapsedStr(){
+  const since = Date.parse(EVENT.since);
+  if(isNaN(since)) return "";
+  let s = Math.max(0, Math.floor((Date.now() - since) / 1000));
+  const d = Math.floor(s/86400); s -= d*86400;
+  const h = Math.floor(s/3600);  s -= h*3600;
+  const m = Math.floor(s/60);    s -= m*60;
+  const p = n => String(n).padStart(2,"0");
+  const core = (d>0 ? d+"d " : "") + p(h)+":"+p(m)+":"+p(s);
+  return LANG==="ne" ? toNepDigits(core) : core;
+}
 function tickClocks(){const d=nptNow();$$("[data-clock]").forEach(e=>e.textContent=fmt(d));$$("[data-elapsed]").forEach(e=>e.textContent=elapsedStr());}
 
 /* ---- phone icon ---- */
@@ -465,22 +495,25 @@ function renderAll(){
   renderNotifs(); renderGallery(); renderFullGallery(); renderNewsPage(); renderStatsPage(); renderMissingSummary(); setSync();
 }
 
+/* ---- mobile nav / hamburger (module scope so injectChrome can also call it) ---- */
+const BURGER_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>';
+const CLOSE_ICON  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 6 6 18M6 6l12 12"/></svg>';
+function setBurger(open){
+  const burger=$("#burger"), nav=$("#navInner");
+  if(!burger||!nav) return;
+  nav.classList.toggle("open", open);
+  burger.classList.toggle("is-active", open);
+  burger.setAttribute("aria-expanded", String(open));
+  burger.setAttribute("aria-label", open ? "Close Menu" : "Menu");
+  burger.innerHTML = open ? CLOSE_ICON : BURGER_ICON;
+}
+
 /* ---- global wiring ---- */
 function wire(){
   // lang toggle
   $$(".lang button").forEach(b=>b.addEventListener("click",()=>setLang(b.dataset.lang)));
   // mobile nav (with X icon morph and outside-click dismiss)
   const burger=$("#burger"), nav=$("#navInner");
-  function setBurger(open){
-    if(!burger||!nav) return;
-    nav.classList.toggle("open", open);
-    burger.classList.toggle("is-active", open);
-    burger.setAttribute("aria-expanded", String(open));
-    burger.setAttribute("aria-label", open ? "Close Menu" : "Menu");
-    burger.innerHTML = open
-      ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 6 6 18M6 6l12 12"/></svg>'
-      : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>';
-  }
   if(burger&&nav){
     burger.addEventListener("click", e=>{
       e.stopPropagation();
@@ -789,8 +822,21 @@ async function heroSlideshow(){
 /* ---------- Wikipedia summary (CORS-open) ---------- */
 async function fetchWiki(title){
   const u="https://en.wikipedia.org/api/rest_v1/page/summary/"+encodeURIComponent(title);
-  const r=await fetch(u,{headers:{accept:"application/json"}}); if(!r.ok) throw 0;
+  const r=await fetch(u,{headers:{accept:"application/json"},signal:AbortSignal.timeout(5000)}); if(!r.ok) throw 0;
   return r.json();
+}
+
+/* ---------- Wikipedia raw wikitext for infobox parsing (CORS-open via origin=*) ----------
+   Restores the previously-undefined fetchInfobox() that the live engine relied on. */
+async function fetchInfobox(title){
+  const u="https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&rvslots=main&rvlimit=1&formatversion=2&format=json&origin=*&titles="+encodeURIComponent(title);
+  const r=await fetch(u,{headers:{accept:"application/json"},signal:AbortSignal.timeout(6000)}); if(!r.ok) throw 0;
+  const j=await r.json();
+  const pages=(j.query&&j.query.pages)||[];
+  const page=Array.isArray(pages)?pages[0]:Object.values(pages)[0];
+  const rev=page&&page.revisions&&page.revisions[0];
+  const content=rev&&(rev.slots&&rev.slots.main?rev.slots.main.content:rev.content);
+  return content||"";
 }
 
 /* ---------- notifications ---------- */
@@ -958,18 +1004,18 @@ Object.assign(I18N.ne,{
    official numbers are not yet itemised (never fabricated). NDRRMA / Nepal Police,
    compiled 27–28 Aug 2026. */
 const STATS_DETAIL=[
- {id:"deaths", sev:"danger", big:"388", title:{en:"Confirmed Deaths",ne:"पुष्टि मृत्यु"}, unit:{en:"Nepal (provisional) · +3 China",ne:"नेपाल (प्रारम्भिक) · +३ चीन"}, src:"NDRRMA / Nepal Police",
+ {id:"deaths", sev:"danger", big:"392", title:{en:"Confirmed Deaths",ne:"पुष्टि मृत्यु"}, unit:{en:"Nepal 389 · +3 China (provisional)",ne:"नेपाल ३८९ · +३ चीन (प्रारम्भिक)"}, src:"NDRRMA / Nepal Police / Wikipedia",
   rows:[["Chitwan","122"],["Nawalparasi East","72"],["Dhading","32"],["Gorkha","25"],["Nawalparasi West","16"],["Tanahun","15"],["Nuwakot","14"],["Rasuwa","4"]],
-  note:{en:"District-wise bodies recovered per NDRRMA situation reports. Identification ongoing downstream along Narayani corridor.",ne:"NDRRMA प्रतिवेदन अनुसार जिल्लागत उद्धारित शव। नारायणी कोरिडोरमा पहिचान कार्य जारी।"}},
- {id:"missing", sev:"danger", big:"1,080", title:{en:"Missing and Out of Contact",ne:"बेपत्ता तथा सम्पर्कविहीन"}, src:"NDRRMA",
-  rows:[["Foreign nationals","638"],["Nepalis abroad (NRN) listed","138"],["Nepal Army personnel","44"],["Nepal Police personnel","28"],["Customs Office staff","15"],["Armed Police Force","13"],["Immigration staff","4"]]},
+  note:{en:"District-wise bodies recovered per NDRRMA situation reports. Identification ongoing downstream along Narayani corridor. Total rises as access is restored — auto-synced from the live event feed.",ne:"NDRRMA प्रतिवेदन अनुसार जिल्लागत उद्धारित शव। नारायणी कोरिडोरमा पहिचान कार्य जारी। पहुँच खुल्दै जाँदा कुल संख्या बढ्दै — प्रत्यक्ष फिडबाट स्वतः अद्यावधिक।"}},
+ {id:"missing", sev:"danger", big:"1,468", title:{en:"Missing and Out of Contact",ne:"बेपत्ता तथा सम्पर्कविहीन"}, unit:{en:"Nepal 910 · China 558 (provisional)",ne:"नेपाल ९१० · चीन ५५८ (प्रारम्भिक)"}, src:"NDRRMA",
+  rows:[["Foreign nationals","668"],["Nepalis abroad (NRN) listed","138"],["Nepal Army personnel","44"],["Nepal Police personnel","28"],["Customs Office staff","15"],["Armed Police Force","13"],["Immigration staff","4"]]},
  {id:"rescued", sev:"relief", big:"425", title:{en:"Air & Ground Rescues",ne:"हवाई तथा स्थल उद्धार"}, unit:{en:"airlifted & evacuated from Timure · Dhunche · Mailung · Trishuli",ne:"तिमुरे · धुन्चे · माइलुङ · त्रिशूलीबाट उद्धार"}, src:"Nepal Army / NDRRMA",
   rows:[["Nepali citizens","362"],["Foreign nationals","63"]],
   note:{en:"Names of rescued and missing persons are released through NDRRMA and Nepal Police, not published here. Use the official registries below to trace a person.",ne:"उद्धार तथा बेपत्ता व्यक्तिका नाम NDRRMA र नेपाल प्रहरीमार्फत सार्वजनिक हुन्छन्, यहाँ होइन। खोजीका लागि तलका आधिकारिक स्रोत हेर्नुहोस्।"}},
  {id:"injured", sev:"watch", big:"94", title:{en:"Injured",ne:"घाइते"}, src:"NDRRMA",
   rows:[["Rasuwa","48"],["Dhading","6"],["Other districts","40"]]},
- {id:"foreign", sev:"danger", big:"638", title:{en:"Foreign Nationals by Country",ne:"विदेशी नागरिक देश अनुसार"}, unit:{en:"missing or out of contact (600+)",ne:"बेपत्ता वा सम्पर्कविहीन (६००+)"}, src:"NDRRMA / Diplomatic Missions",
-  rows:[["India","174"],["United States","84"],["Ukraine","68"],["Malaysia","62"],["Non-resident Indians","49"],["Australia","46"],["United Kingdom","41"],["Canada","32"],["South Korea","16"],["Italy","8"],["Philippines","4"],["Japan · Netherlands · Germany · France","reported"]]},
+ {id:"foreign", sev:"danger", big:"668", title:{en:"Foreign Nationals by Country",ne:"विदेशी नागरिक देश अनुसार"}, unit:{en:"missing or out of contact · 34 countries (668)",ne:"बेपत्ता वा सम्पर्कविहीन · ३४ देश (६६८)"}, src:"NDRRMA / Diplomatic Missions",
+  rows:[["India","178"],["United States","65"],["Ukraine","53"],["Malaysia","51"],["Non-resident Indians","49"],["Australia","35"],["United Kingdom","33"],["Canada","24"],["South Korea","9"],["Italy","8"],["Philippines","4"],["Other countries (20+)","reported"]]},
  {id:"search", sev:"watch", big:"4,000", title:{en:"Search Operation and Security Personnel",ne:"खोज सञ्चालन र सुरक्षाकर्मी"}, unit:{en:"Nepal Army personnel mobilised",ne:"नेपाली सेना परिचालित"}, src:"Nepal Army / NDRRMA",
   rows:[["Nepal Army","~4,000"],["Armed Police Force","deployed"],["Nepal Police","deployed"],["Helicopters","~5 + private on standby"],["Tibet (China) side","~800 workers · 150 vehicles"]],
   note:{en:"Nepal Army mobilised about 4,000 personnel for search, rescue, medical treatment and relief distribution, alongside the Armed Police Force and Nepal Police.",ne:"नेपाली सेनाले करिब ४,००० जनशक्ति खोज, उद्धार, उपचार र राहत वितरणमा परिचालन गर्‍यो।"}},
