@@ -166,7 +166,7 @@ const I18N = {
   "hero.note":"Provisional figures from Nepal and Chinese authorities via international agencies (26–27 Aug 2026). Counts vary by source and are being revised — not final. Verify against official NDRRMA / Nepal Police bulletins.",
   "hero.help":"Emergency Helplines","hero.report":"Report an Incident",
   "stat.deaths":"Confirmed Deaths","stat.missing":"Reported Missing","stat.foreign":"Foreign Nationals Missing","stat.rescued":"Rescued",
-  "stat.sub.deaths":"Nepal 389 · +3 China","stat.sub.missing":"incl. 668 foreign","stat.sub.foreign":"tourists & NRNs","stat.sub.rescued":"by air · NDRRMA","stat.tap":"Tap for breakdown →",
+  "stat.sub.deaths":"Nepal Police · rising","stat.sub.missing":"incl. 668 foreign","stat.sub.foreign":"tourists & NRNs","stat.sub.rescued":"by air · NDRRMA","stat.tap":"Tap for breakdown →",
   "sec.hl.eye":"Call for Help · Toll-free 24×7","sec.hl.h":"Emergency Helplines",
   "hl.national":"National","hl.district":"Affected Districts","hl.more":"All helplines →",
   "hl.note":"Source: NDRRMA emergency helpline notice. If a line is busy, dial 100 (Police) or 102 (Ambulance).",
@@ -199,7 +199,7 @@ const I18N = {
   "hero.note":"नेपाल र चीनका अधिकारीहरूबाट अन्तर्राष्ट्रिय संस्थामार्फत प्राप्त प्रारम्भिक तथ्यांक (२६–२७ अगस्ट २०२६)। स्रोत अनुसार फरक पर्न सक्छ र संशोधन हुँदैछ — अन्तिम होइन। आधिकारिक विवरणसँग रुजु गर्नुहोस्।",
   "hero.help":"आपत्कालीन हेल्पलाइन","hero.report":"घटना जानकारी दिनुहोस्",
   "stat.deaths":"पुष्टि भएका मृत्यु","stat.missing":"बेपत्ता","stat.foreign":"बेपत्ता विदेशी नागरिक","stat.rescued":"उद्धार",
-  "stat.sub.deaths":"नेपाल ३८९ · +३ चीन","stat.sub.missing":"६६८ विदेशीसहित","stat.sub.foreign":"पर्यटक र गैरआवासीय","stat.sub.rescued":"हवाई · NDRRMA","stat.tap":"विस्तृत विवरण →",
+  "stat.sub.deaths":"नेपाल प्रहरी · बढ्दै","stat.sub.missing":"६६८ विदेशीसहित","stat.sub.foreign":"पर्यटक र गैरआवासीय","stat.sub.rescued":"हवाई · NDRRMA","stat.tap":"विस्तृत विवरण →",
   "sec.hl.eye":"सहयोगका लागि सम्पर्क · निःशुल्क २४×७","sec.hl.h":"आपत्कालीन हेल्पलाइन",
   "hl.national":"राष्ट्रिय","hl.district":"प्रभावित जिल्लाहरू","hl.more":"सबै हेल्पलाइन →",
   "hl.note":"स्रोत: NDRRMA आपत्कालीन हेल्पलाइन सूचना। व्यस्त भए १०० (प्रहरी) वा १०२ (एम्बुलेन्स) मा फोन गर्नुहोस्।",
@@ -1004,7 +1004,7 @@ Object.assign(I18N.ne,{
    official numbers are not yet itemised (never fabricated). NDRRMA / Nepal Police,
    compiled 27–28 Aug 2026. */
 const STATS_DETAIL=[
- {id:"deaths", sev:"danger", big:"392", title:{en:"Confirmed Deaths",ne:"पुष्टि मृत्यु"}, unit:{en:"Nepal 389 · +3 China (provisional)",ne:"नेपाल ३८९ · +३ चीन (प्रारम्भिक)"}, src:"NDRRMA / Nepal Police / Wikipedia",
+ {id:"deaths", sev:"danger", big:"469", title:{en:"Confirmed Deaths",ne:"पुष्टि मृत्यु"}, unit:{en:"Nepal Police · provisional & rising",ne:"नेपाल प्रहरी · प्रारम्भिक, बढ्दै"}, src:"Nepal Police / NDRRMA",
   rows:[["Chitwan","122"],["Nawalparasi East","72"],["Dhading","32"],["Gorkha","25"],["Nawalparasi West","16"],["Tanahun","15"],["Nuwakot","14"],["Rasuwa","4"]],
   note:{en:"District-wise bodies recovered per NDRRMA situation reports. Identification ongoing downstream along Narayani corridor. Total rises as access is restored — auto-synced from the live event feed.",ne:"NDRRMA प्रतिवेदन अनुसार जिल्लागत उद्धारित शव। नारायणी कोरिडोरमा पहिचान कार्य जारी। पहुँच खुल्दै जाँदा कुल संख्या बढ्दै — प्रत्यक्ष फिडबाट स्वतः अद्यावधिक।"}},
  {id:"missing", sev:"danger", big:"1,468", title:{en:"Missing and Out of Contact",ne:"बेपत्ता तथा सम्पर्कविहीन"}, unit:{en:"Nepal 910 · China 558 (provisional)",ne:"नेपाल ९१० · चीन ५५८ (प्रारम्भिक)"}, src:"NDRRMA",
@@ -1090,14 +1090,37 @@ function setSync(d){
   });
 }
 function _num(x){ return x ? (""+x).replace(/[,\s+]/g,"") : null; }
+function _int(x){ const n=parseInt(String(x==null?"":x).replace(/[^0-9]/g,""),10); return isNaN(n)?0:n; }
+function _fmtInt(x){ return String(_int(x)).replace(/\B(?=(\d{3})+(?!\d))/g,","); }
+
+/* cumulative tolls must never move backwards when a lagging source reports lower */
+const CUMULATIVE = new Set(["deaths","missing","foreign","rescued","injured"]);
+function _currentStat(key){
+  const s=STATS.find(x=>x.key===key);
+  if(s) return _int(s.n);
+  const d=STATS_DETAIL.find(x=>x.id===key);
+  return d?_int(d.big):0;
+}
+/* accept an incoming figure only if it is plausible and (for tolls) not a downgrade.
+   This is what lets a fast local feed stay correct even when Wikipedia lags. */
+function _acceptStat(key,val){
+  const v=_int(val); if(v<=0) return false;
+  const c=_currentStat(key);
+  if(CUMULATIVE.has(key)){
+    if(v<c) return false;              // a slow source can't lower a rising toll
+    if(c>0 && v>c*6) return false;     // reject an implausible spike (bad parse)
+  }
+  return true;
+}
 
 function _setStat(key,val){
-  if(!val) return false;
+  if(!_acceptStat(key,val)) return false;
+  const disp=_fmtInt(val);
   let changed=false;
   const s=STATS.find(x=>x.key===key);
-  if(s && s.n!==val){ s.n=val; changed=true; }
+  if(s && s.n!==disp){ s.n=disp; changed=true; }
   const d=STATS_DETAIL.find(x=>x.id===key);
-  if(d && d.big && d.big!==val){ d.big=val; changed=true; }
+  if(d && d.big!==undefined && d.big!=="" && d.big!==disp){ d.big=disp; changed=true; }
   return changed;
 }
 
