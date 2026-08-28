@@ -1,0 +1,18 @@
+# Security headers for static hosting.
+# Works on Netlify and Cloudflare Pages out of the box. On GitHub Pages / Apache/
+# Nginx this file is ignored — replicate these as real response headers there.
+# The per-page <meta> CSP is the portable fallback; these are the authoritative
+# header-level controls (X-Frame-Options / frame-ancestors etc. only work as headers).
+
+/*
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; frame-ancestors 'none'; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; script-src 'self' https://unpkg.com; connect-src 'self' https://en.wikipedia.org https://commons.wikimedia.org https://ndrrma.gov.np
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=(), usb=(), interest-cohort=()
+  Cross-Origin-Opener-Policy: same-origin
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+
+# Never let the live feed be cached stale — it must always fetch fresh figures.
+/assets/live_data.json
+  Cache-Control: no-store, max-age=0
