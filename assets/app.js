@@ -383,7 +383,7 @@ const I18N = {
   "nav.home":"Home","nav.alerts":"Alert Map","nav.missing":"Missing Persons","nav.relief":"Relief Fund","nav.history":"History",
   "eas.label":"Active Event","clock.l":"NPT · Kathmandu",
   "hero.eyebrow":"Active Disaster · Live Situation",
-  "hero.note":"Provisional Nepal-side figures confirmed by Nepal Police and NDRRMA (28 Aug 2026). Counts are being revised as search operations continue — not final. Verify against official Nepal Police / NDRRMA bulletins.",
+  "hero.note":"Provisional Nepal-side figures confirmed by Nepal Police and NDRRMA (as of {date}). Counts auto-update and are being revised as search operations continue — not final. Verify against official Nepal Police / NDRRMA bulletins.",
   "hero.help":"Emergency Helplines","hero.report":"Report an Incident",
   "stat.deaths":"Confirmed Deaths","stat.missing":"Reported Missing","stat.foreign":"Foreign Nationals Missing","stat.rescued":"Rescued",
   "stat.sub.deaths":"Nepal Police · rising","stat.sub.missing":"incl. 668 foreign","stat.sub.foreign":"tourists & NRNs","stat.sub.rescued":"by air · NDRRMA","stat.tap":"Tap for breakdown →",
@@ -416,7 +416,7 @@ const I18N = {
   "nav.home":"गृह","nav.alerts":"चेतावनी नक्सा","nav.missing":"बेपत्ता व्यक्ति","nav.relief":"राहत कोष","nav.history":"इतिहास",
   "eas.label":"सक्रिय विपद्","clock.l":"नेपाली समय · काठमाडौं",
   "hero.eyebrow":"सक्रिय विपद् · पछिल्लो अवस्था",
-  "hero.note":"नेपाल प्रहरी र NDRRMA द्वारा पुष्टि गरिएको नेपालतर्फको प्रारम्भिक तथ्यांक (२८ अगस्ट २०२६)। खोजी कार्य जारी रहेकाले संशोधन हुँदैछ — अन्तिम होइन। आधिकारिक नेपाल प्रहरी / NDRRMA विवरणसँग रुजु गर्नुहोस्।",
+  "hero.note":"नेपाल प्रहरी र NDRRMA द्वारा पुष्टि गरिएको नेपालतर्फको प्रारम्भिक तथ्यांक ({date} सम्म)। तथ्यांक स्वतः अद्यावधिक हुन्छ र खोजी कार्य जारी रहेकाले संशोधन हुँदैछ — अन्तिम होइन। आधिकारिक नेपाल प्रहरी / NDRRMA विवरणसँग रुजु गर्नुहोस्।",
   "hero.help":"आपत्कालीन हेल्पलाइन","hero.report":"घटना जानकारी दिनुहोस्",
   "stat.deaths":"पुष्टि भएका मृत्यु","stat.missing":"बेपत्ता","stat.foreign":"बेपत्ता विदेशी नागरिक","stat.rescued":"उद्धार",
   "stat.sub.deaths":"नेपाल प्रहरी · बढ्दै","stat.sub.missing":"६६८ विदेशीसहित","stat.sub.foreign":"पर्यटक र गैरआवासीय","stat.sub.rescued":"हवाई · NDRRMA","stat.tap":"विस्तृत विवरण →",
@@ -463,11 +463,20 @@ function toNepDigits(str){
   return String(str).replace(/[0-9]/g, d => map[d]||d);
 }
 
+/* Replace live tokens in UI strings. {date} → today's date in NPT, so the
+   "as of ..." note advances by itself each day instead of being hardcoded. */
+function applyTokens(s){
+  if(!s || s.indexOf("{date}")<0) return s;
+  let d;
+  try{ d=nptNow().toLocaleDateString(LANG==="ne"?"ne-NP":"en-GB",{day:"numeric",month:"long",year:"numeric"}); }
+  catch(_){ d=nptNow().toDateString(); }
+  return s.replace(/\{date\}/g, d);
+}
 function setLang(lang){
   LANG = (lang==="ne")?"ne":"en";
   try{localStorage.setItem("nd_lang",LANG);}catch(e){}
   document.documentElement.setAttribute("lang",LANG);
-  $$("[data-i18n]").forEach(el=>{ el.textContent = t(el.getAttribute("data-i18n")); });
+  $$("[data-i18n]").forEach(el=>{ el.textContent = applyTokens(t(el.getAttribute("data-i18n"))); });
   $$("[data-i18n-ph]").forEach(el=>{ el.setAttribute("placeholder", t(el.getAttribute("data-i18n-ph"))); });
   $$(".lang button").forEach(b=>b.setAttribute("aria-pressed", String(b.dataset.lang===LANG)));
   renderAll();
@@ -503,9 +512,36 @@ function tickClocks(){const d=nptNow();$$("[data-clock]").forEach(e=>e.textConte
 const PH='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8.1 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7a2 2 0 0 1 1.7 2Z"/></svg>';
 
 /* ---- renderers (guarded by element presence) ---- */
+/* Live headlines pulled from /api/news (Google News RSS, server-side + cached).
+   Null until the first fetch resolves; the ticker & news grid fall back to the
+   built-in bulletins whenever it is empty or the fetch fails. */
+let LIVE_NEWS=null;
+function newsDate(n){
+  if(!n||!n.ts) return "";
+  try{ return new Date(n.ts).toLocaleDateString(LANG==="ne"?"ne-NP":"en-GB",{day:"numeric",month:"short",year:"numeric"}); }
+  catch(_){ return ""; }
+}
+async function fetchLiveNews(){
+  try{
+    const r=await fetch("/api/news",{signal:AbortSignal.timeout(9000)});
+    if(!r.ok) return;
+    const j=await r.json();
+    if(j && Array.isArray(j.items) && j.items.length){
+      LIVE_NEWS=j.items;
+      renderTicker();
+      renderNews(document.body.dataset.newsLimit?+document.body.dataset.newsLimit:0);
+      renderNewsPage();
+    }
+  }catch(_){ /* keep built-in bulletins */ }
+}
 function renderTicker(){
   const track=$("#tickerTrack"); if(!track) return;
-  const items=TICKER.map(x=>`<span class="ticker__item"><span class="src">${esc(x.src)}</span>${esc(TL(x))}</span>`).join("");
+  let items;
+  if(LIVE_NEWS && LIVE_NEWS.length){
+    items=LIVE_NEWS.slice(0,14).map(n=>`<span class="ticker__item"><span class="src">${esc((n.source||"NEWS").toUpperCase().slice(0,24))}</span>${esc(n.title)}</span>`).join("");
+  }else{
+    items=TICKER.map(x=>`<span class="ticker__item"><span class="src">${esc(x.src)}</span>${esc(TL(x))}</span>`).join("");
+  }
   track.innerHTML=items+items;
 }
 function renderEvent(){
@@ -568,6 +604,20 @@ document.addEventListener("error", e=>{
 const THUMB_PH='<div class="ph"><svg viewBox="0 0 48 48"><path d="M4 34c4-6 8-6 12 0s8 6 12 0 8-6 12 0"/><path d="M4 24c4-6 8-6 12 0s8 6 12 0 8-6 12 0" opacity=".5"/><path d="M10 14 24 6l14 8"/></svg></div>';
 function renderNews(limit){
   const g=$("#newsGrid"); if(!g) return;
+  // Live headlines take priority — real, dated, auto-updating.
+  if(LIVE_NEWS && LIVE_NEWS.length){
+    const live = limit?LIVE_NEWS.slice(0,limit):LIVE_NEWS;
+    g.innerHTML=live.map(n=>`
+      <a class="news news--watch news--live" href="${esc(n.url)}" target="_blank" rel="noopener" aria-label="${esc(n.title)}">
+        <div class="news__body">
+          <div class="news__meta"><span class="tagsq tagsq--watch">${esc(t("news.live"))}</span><span class="news__time mono">${esc(newsDate(n))}</span></div>
+          <h3>${esc(n.title)}</h3>
+          <div class="news__src">SRC · ${esc(n.source)}</div>
+          <div class="news__read">${esc(t("news.source"))} ↗</div>
+        </div>
+      </a>`).join("");
+    return;
+  }
   const list = limit?NEWS.slice(0,limit):NEWS;
   g.innerHTML=list.map(n=>{const id=NEWS.indexOf(n);return `
     <article class="news news--${n.sev}" data-news="${id}" tabindex="0" role="link" aria-label="${esc(TL(n.title))}">
@@ -808,7 +858,9 @@ function wire(){
   setSync(nptNow());
   liveRefresh(); setInterval(liveRefresh, 600000);               // live figures auto-refresh every 10 minutes
   setupManualSync();
-  // live bulletins: re-render every 10 minutes (refreshes times, ticker + any live overview)
+  fetchLiveNews();                                                // pull live headlines now…
+  setInterval(fetchLiveNews, 600000);                            // …and every 10 minutes
+  // re-render bulletins every 10 minutes (refreshes relative times / fallback content)
   setInterval(()=>{
     renderTicker();
     renderNews(document.body.dataset.newsLimit?+document.body.dataset.newsLimit:0);
@@ -846,7 +898,7 @@ function doShare(mode){
    v3 ADDITIONS — notifications, GLOF alert, live images, gallery, news page
    ========================================================================= */
 Object.assign(I18N.en,{
-  "news.read":"Read full bulletin",
+  "news.read":"Read full bulletin","news.live":"LIVE",
   "notif.h":"Alerts","notif.eye":"Signal Feed","notif.clear":"Clear all","notif.empty":"No active alerts.","notif.count":"active",
   "glof.tag":"GLOF Watch",
   "gallery.eye":"From the Affected Areas","gallery.h":"Ground Gallery","gallery.load":"Loading photos…","gallery.none":"Photos could not be loaded right now. See the official article.","gallery.loadall":"View all photos →","page.gallery.h":"Photo Gallery","page.gallery.p":"Photographs from the affected areas, from published news sources and Wikimedia. Verify context independently.",
@@ -856,7 +908,7 @@ Object.assign(I18N.en,{
   "relief.scan":"Scan to donate","relief.fonepay":"Fonepay — PM Disaster Relief Fund","relief.fonepay.p":"Scan this Fonepay QR with any Nepali banking or wallet app to donate to the Prime Minister's relief fund."
 });
 Object.assign(I18N.ne,{
-  "news.read":"पूरा बुलेटिन पढ्नुहोस्",
+  "news.read":"पूरा बुलेटिन पढ्नुहोस्","news.live":"प्रत्यक्ष",
   "notif.h":"अलर्टहरू","notif.eye":"सिग्नल फिड","notif.clear":"सबै हटाउनुहोस्","notif.empty":"कुनै सक्रिय अलर्ट छैन।","notif.count":"सक्रिय",
   "glof.tag":"GLOF सतर्कता",
   "gallery.eye":"प्रभावित क्षेत्रबाट","gallery.h":"स्थलगत ग्यालरी","gallery.load":"तस्बिर लोड हुँदै…","gallery.none":"अहिले तस्बिर लोड हुन सकेन। आधिकारिक लेख हेर्नुहोस्।","gallery.loadall":"सबै तस्बिर हेर्नुहोस् →","page.gallery.h":"तस्बिर ग्यालरी","page.gallery.p":"प्रभावित क्षेत्रका तस्बिरहरू, प्रकाशित समाचार र विकिमिडियाबाट। सन्दर्भ स्वतन्त्र रुजु गर्नुहोस्।",
@@ -1610,8 +1662,18 @@ const RELIEF_COLLECTED = {
     {name:{en:"Reliance Sugar & Chemicals",ne:"रिलायन्स सुगर"}, amt:1}
   ]
 };
+/* Money formatter. Amounts are in millions of rupees.
+   English → million / billion (Rs 273.3M, Rs 1.27B).
+   Nepali  → लाख / करोड / अरब / खर्ब (the Nepali number system). */
 function fmtMoney(m){
-  if(m>=1000){ let b=(m/1000); return "Rs "+(b%1===0?b:b.toFixed(2))+"B"; }
+  const trim=v=>v%1===0?String(v):v.toFixed(2).replace(/\.?0+$/,"");
+  if(LANG==="ne"){
+    if(m>=100000) return "रु "+trim(m/100000)+" खर्ब";   // kharba = 100 billion
+    if(m>=1000)   return "रु "+trim(m/1000)+" अरब";       // arba   = 1 billion
+    if(m>=10)     return "रु "+trim(m/10)+" करोड";        // crore  = 10 million
+    return "रु "+trim(m*10)+" लाख";                        // lakh   = 0.1 million
+  }
+  if(m>=1000) return "Rs "+trim(m/1000)+"B";
   return "Rs "+(m%1===0?m:m.toFixed(1))+"M";
 }
 function renderReliefCollected(){
