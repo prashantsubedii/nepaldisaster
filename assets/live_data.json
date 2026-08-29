@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-29T18:45:00+05:45",
+  "updated_at": "2026-08-29T21:30:00+05:45",
   "event": {
     "code": "FL-2026-0826",
     "since": "2026-08-26T08:37:00+05:45",
@@ -9,20 +9,20 @@
       "ne": "रसुवा · नुवाकोट · त्रिशूली कोरिडोर · चितवन"
     },
     "eas": {
-      "en": "Trishuli corridor glacial flood. Nepal Police confirm 626 dead, 2,426 missing (Nepal side); 2,189 rescued (NDRRMA). Search, body management and relief ongoing.",
-      "ne": "त्रिशूली कोरिडोरमा हिमनदी बाढी। नेपाल प्रहरीले ६२६ मृत्यु, २,४२६ बेपत्ता (नेपालतर्फ) पुष्टि; २,१८९ उद्धार (NDRRMA)। खोजी, शव व्यवस्थापन र राहत जारी।"
+      "en": "Trishuli corridor glacial flood. Nepal Police confirm 675 dead, 2,426 missing (Nepal side); 6,633 rescued (2,189 named — NDRRMA). Search, body management and relief ongoing.",
+      "ne": "त्रिशूली कोरिडोरमा हिमनदी बाढी। नेपाल प्रहरीले ६७५ मृत्यु, २,४२६ बेपत्ता (नेपालतर्फ) पुष्टि; ६,६३३ उद्धार (२,१८९ नामावली — NDRRMA)। खोजी, शव व्यवस्थापन र राहत जारी।"
     }
   },
   "stats": [
-    { "key": "deaths",  "n": "626", "cls": "hstat--death" },
+    { "key": "deaths",  "n": "675", "cls": "hstat--death" },
     { "key": "missing", "n": "2,426" },
     { "key": "foreign", "n": "668" },
-    { "key": "rescued", "n": "2,189", "cls": "hstat--rescue" }
+    { "key": "rescued", "n": "6,633", "cls": "hstat--rescue" }
   ],
   "stats_detail": {
     "deaths": {
-      "big": "626",
-      "rows": [ ["Nepal (Nepal Police confirmed)", "626"] ]
+      "big": "675",
+      "rows": [ ["Nepal (Nepal Police confirmed)", "675"] ]
     },
     "missing": {
       "big": "2,426",
@@ -30,7 +30,7 @@
     },
     "rescued": {
       "big": "2,189",
-      "rows": [ ["Nepali citizens", "2,034"], ["Foreign nationals", "155"] ]
+      "rows": [ ["Total rescued (all)", "6,633"], ["Named in registry", "2,189"], ["Nepali (named)", "2,034"], ["Foreign (named)", "155"] ]
     },
     "injured": {
       "big": "1,473",
