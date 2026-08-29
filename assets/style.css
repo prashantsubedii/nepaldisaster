@@ -1139,6 +1139,9 @@ html[lang="ne"] .notif__h h3 { text-transform: none; font-family: var(--f-np); }
 .notif__bar .lbl { font-family: var(--f-cond); text-transform: uppercase; letter-spacing: .08em; font-size: .66rem; font-weight: 700; color: var(--muted); }
 html[lang="ne"] .notif__bar .lbl { text-transform: none; letter-spacing: 0; font-family: var(--f-np); }
 .notif__clear { font-family: var(--f-cond); text-transform: uppercase; letter-spacing: .05em; font-weight: 700; font-size: .68rem; background: transparent; border: 1px solid var(--line-strong); color: var(--ink-2); padding: 5px 9px; border-radius: 2px; cursor: pointer; }
+.notif__enable { font-family: var(--f-cond); text-transform: uppercase; letter-spacing: .04em; font-weight: 700; font-size: .68rem; background: var(--crimson); border: 1px solid var(--crimson); color: #fff; padding: 5px 9px; border-radius: 2px; cursor: pointer; margin-left: auto; }
+.notif__enable[hidden] { display: none; }
+.notif__enable:hover { filter: brightness(1.08); }
 .notif__clear:hover { border-color: var(--crimson); color: var(--crimson); }
 html[lang="ne"] .notif__clear { text-transform: none; letter-spacing: 0; font-family: var(--f-np); }
 .notif__list { overflow-y: auto; flex: 1; }

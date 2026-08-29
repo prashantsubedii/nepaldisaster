@@ -901,7 +901,7 @@ function doShare(mode){
    ========================================================================= */
 Object.assign(I18N.en,{
   "news.read":"Read full bulletin","news.live":"LIVE",
-  "notif.h":"Alerts","notif.eye":"Signal Feed","notif.clear":"Clear all","notif.empty":"No active alerts.","notif.count":"active",
+  "notif.h":"Alerts","notif.eye":"Signal Feed","notif.clear":"Clear all","notif.empty":"No active alerts.","notif.count":"active","notif.enable":"🔔 Notify me",
   "glof.tag":"GLOF Watch",
   "gallery.eye":"From the Affected Areas","gallery.h":"Ground Gallery","gallery.load":"Loading photos…","gallery.none":"Photos could not be loaded right now. See the official article.","gallery.loadall":"View all photos →","page.gallery.h":"Photo Gallery","page.gallery.p":"Photographs from the affected areas, from published news sources and Wikimedia. Verify context independently.",
   "page.news.h":"Live Bulletins","page.news.p":"Detailed reporting on the current disaster, compiled from published and official sources. Verify independently.",
@@ -911,7 +911,7 @@ Object.assign(I18N.en,{
 });
 Object.assign(I18N.ne,{
   "news.read":"पूरा बुलेटिन पढ्नुहोस्","news.live":"प्रत्यक्ष",
-  "notif.h":"अलर्टहरू","notif.eye":"सिग्नल फिड","notif.clear":"सबै हटाउनुहोस्","notif.empty":"कुनै सक्रिय अलर्ट छैन।","notif.count":"सक्रिय",
+  "notif.h":"अलर्टहरू","notif.eye":"सिग्नल फिड","notif.clear":"सबै हटाउनुहोस्","notif.empty":"कुनै सक्रिय अलर्ट छैन।","notif.count":"सक्रिय","notif.enable":"🔔 सूचना पाउनुहोस्",
   "glof.tag":"GLOF सतर्कता",
   "gallery.eye":"प्रभावित क्षेत्रबाट","gallery.h":"स्थलगत ग्यालरी","gallery.load":"तस्बिर लोड हुँदै…","gallery.none":"अहिले तस्बिर लोड हुन सकेन। आधिकारिक लेख हेर्नुहोस्।","gallery.loadall":"सबै तस्बिर हेर्नुहोस् →","page.gallery.h":"तस्बिर ग्यालरी","page.gallery.p":"प्रभावित क्षेत्रका तस्बिरहरू, प्रकाशित समाचार र विकिमिडियाबाट। सन्दर्भ स्वतन्त्र रुजु गर्नुहोस्।",
   "page.news.h":"प्रत्यक्ष बुलेटिन","page.news.p":"हालको विपद्बारे प्रकाशित र आधिकारिक स्रोतबाट संकलित विस्तृत समाचार। स्वतन्त्र रुजु गर्नुहोस्।",
@@ -950,6 +950,40 @@ const NOTIF_CLEARED=(()=>{try{return new Set(JSON.parse(localStorage.getItem("nd
    a new alert automatically. */
 let LIVE_ALERTS=[];
 function activeNotifs(){ return LIVE_ALERTS.concat(NOTIFS).filter(n=>!NOTIF_CLEARED.has(n.id)); }
+
+/* ---- OS push notifications for new flood alerts (opt-in, in-tab) ----
+   Fires a real desktop/mobile notification when a genuinely new alert id
+   appears — works whenever the site is open, including when the tab is
+   unfocused or backgrounded. Ids already seen are remembered so nothing
+   re-fires, and the very first load never spams (it just records what exists). */
+const NOTIF_SEEN=(()=>{try{return new Set(JSON.parse(localStorage.getItem("nd_notif_seen")||"[]"));}catch(e){return new Set();}})();
+let NOTIF_PRIMED = NOTIF_SEEN.size>0;   // false only on the very first ever visit
+function _saveSeen(){ try{localStorage.setItem("nd_notif_seen",JSON.stringify([...NOTIF_SEEN].slice(-200)));}catch(e){} }
+function notifSupported(){ return typeof window!=="undefined" && "Notification" in window; }
+function notifGranted(){ return notifSupported() && Notification.permission==="granted"; }
+function fireOSNotif(n){
+  if(!notifGranted()) return;
+  try{
+    const os=new Notification(LANG==="ne"?"नेपाल बाढी अलर्ट":"Nepal flood alert",{
+      body:TL(n.msg).slice(0,180), tag:n.id, icon:"favicon/favicon-192.png", badge:"favicon/favicon-32.png"
+    });
+    os.onclick=()=>{ try{window.focus();}catch(_){} if(n.url) window.open(n.url,"_blank","noopener"); os.close(); };
+  }catch(_){}
+}
+function requestNotifPerm(){
+  if(!notifSupported()){ toast(LANG==="ne"?"यो ब्राउजरले सूचना समर्थन गर्दैन।":"This browser doesn't support notifications."); return; }
+  Notification.requestPermission().then(p=>{
+    updateNotifEnableBtn();
+    if(p==="granted") toast(LANG==="ne"?"बाढी अलर्ट सूचना सक्रिय भयो।":"Flood-alert notifications enabled.","crim");
+  }).catch(()=>{});
+}
+function updateNotifEnableBtn(){
+  const b=$("#notifEnable"); if(!b) return;
+  const hide = !notifSupported() || Notification.permission==="granted" || Notification.permission==="denied";
+  b.hidden = hide;
+  b.textContent = t("notif.enable");
+}
+
 async function fetchLiveAlerts(){
   try{
     const r=await fetch("/api/alerts",{signal:AbortSignal.timeout(9000)});
@@ -963,6 +997,11 @@ async function fetchLiveAlerts(){
           tag:{en:"Flood alert · "+lvl, ne:"बाढी अलर्ट · "+lvl}, time:when, src:"GDACS · UN/EC",
           msg:{en:a.description||a.title, ne:a.description||a.title} };
       });
+      // Notify only about alerts we've never seen — and never on the first visit.
+      const fresh=LIVE_ALERTS.filter(a=>!NOTIF_SEEN.has(a.id) && !NOTIF_CLEARED.has(a.id));
+      if(NOTIF_PRIMED) fresh.slice(0,3).forEach(fireOSNotif);
+      LIVE_ALERTS.forEach(a=>NOTIF_SEEN.add(a.id));
+      NOTIF_PRIMED=true; _saveSeen();
       renderNotifs();
     }
   }catch(_){ /* keep built-in advisories */ }
@@ -1216,16 +1255,18 @@ function injectChrome(){
     const scrim=document.createElement("div"); scrim.className="scrim"; scrim.id="scrim"; document.body.appendChild(scrim);
     const p=document.createElement("aside"); p.className="notif"; p.id="notif"; p.setAttribute("aria-label","Alerts"); p.setAttribute("aria-hidden","true");
     p.innerHTML=`<div class="notif__h"><div><span class="eyebrow" data-i18n="notif.eye">Signal Feed</span><h3 data-i18n="notif.h">Alerts</h3></div><button class="notif__x" id="notifX" aria-label="Close">✕</button></div>
-      <div class="notif__bar"><span class="lbl"><span id="notifCount">0</span> <span data-i18n="notif.count">active</span></span><button class="notif__clear" id="notifClear" data-i18n="notif.clear">Clear all</button></div>
+      <div class="notif__bar"><span class="lbl"><span id="notifCount">0</span> <span data-i18n="notif.count">active</span></span><button class="notif__enable" id="notifEnable" data-i18n="notif.enable" hidden>Enable alerts</button><button class="notif__clear" id="notifClear" data-i18n="notif.clear">Clear all</button></div>
       <div class="notif__list" id="notifList"></div>`;
     document.body.appendChild(p);
     scrim.addEventListener("click",notifClose);
     $("#notifX").addEventListener("click",notifClose);
     $("#notifClear").addEventListener("click",clearNotifs);
+    $("#notifEnable").addEventListener("click",requestNotifPerm);
     document.addEventListener("keydown",e=>{if(e.key==="Escape"&&$("#notif").classList.contains("open"))notifClose();});
   }
+  updateNotifEnableBtn();
 }
-function notifOpen(){const p=$("#notif"),s=$("#scrim"); if(!p)return; p.classList.add("open");s.classList.add("open");p.setAttribute("aria-hidden","false");$("#notifX").focus();}
+function notifOpen(){const p=$("#notif"),s=$("#scrim"); if(!p)return; p.classList.add("open");s.classList.add("open");p.setAttribute("aria-hidden","false");updateNotifEnableBtn();$("#notifX").focus();}
 function notifClose(){const p=$("#notif"),s=$("#scrim"); if(!p)return; p.classList.remove("open");s.classList.remove("open");p.setAttribute("aria-hidden","true");const b=$("#bell");b&&b.focus();}
 function renderNotifs(){
   const items=activeNotifs();
