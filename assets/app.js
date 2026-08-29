@@ -597,7 +597,7 @@ document.addEventListener("error", e=>{
   if(!(img instanceof HTMLImageElement) || !img.dataset || !img.dataset.fallback) return;
   switch(img.dataset.fallback){
     case "hl": if(img.parentNode) img.parentNode.innerHTML=window.__hlfallback(img); break;
-    case "avatar": { img.style.display="none"; const ph=document.getElementById("devAvatarPh"); if(ph) ph.style.display="grid"; break; }
+    case "avatar": { img.style.display="none"; const ph=(img.parentNode&&img.parentNode.querySelector(".person__ph, .dev-avatar-ph"))||document.getElementById("devAvatarPh"); if(ph){ ph.hidden=false; ph.style.display="grid"; } break; }
     case "qr": { img.style.display="none"; const fb=document.getElementById("qrFallback"); if(fb) fb.style.display="block"; break; }
   }
 }, true);
