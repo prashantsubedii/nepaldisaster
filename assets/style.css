@@ -1736,7 +1736,9 @@ html[lang="ne"] .rescue__kpi .l { text-transform: none; letter-spacing: 0; font-
 html[lang="ne"] .rescue__chip { font-family: var(--f-np); }
 .rescue__chip b { color: var(--relief); }
 .rescue__bar { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-bottom: 14px; }
-.rescue__filters { display: flex; gap: 8px; flex-wrap: wrap; }
+.rescue__filters { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.rescue__statussel { font-family: var(--f-mono); font-size: .8rem; padding: 6px 10px; border: 1px solid var(--line-strong); border-radius: 2px; background: var(--paper); color: var(--ink); cursor: pointer; }
+.rescue__statussel:focus { outline: 2px solid var(--crimson); outline-offset: 1px; }
 .rescue__search { margin-left: auto; flex: 1; min-width: 180px; max-width: 320px; }
 .rescue__tablewrap {
   border: 1px solid var(--line); border-radius: 2px; background: var(--paper-2); overflow-x: auto;
