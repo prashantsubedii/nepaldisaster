@@ -25,20 +25,23 @@ function toSorted(hgetall) {
 module.exports = async (req, res) => {
   if (!isAuthed(req)) { res.status(401).json({ error: 'Unauthorized' }); return; }
   try {
-    const [pv, uniques, countries, npCities, daily] = await Promise.all([
+    const [pv, uniques, countries, npCities, daily, hourly] = await Promise.all([
       cmd(['GET', 'stats:pageviews']),
       cmd(['PFCOUNT', 'stats:uniques']),
       cmd(['HGETALL', 'stats:countries']),
       cmd(['HGETALL', 'stats:cities:NP']),
-      cmd(['HGETALL', 'stats:daily'])
+      cmd(['HGETALL', 'stats:daily']),
+      cmd(['HGETALL', 'stats:hourly'])
     ]);
+    const chrono = a => a.sort((x, y) => (x[0] < y[0] ? -1 : 1));
     res.setHeader('Cache-Control', 'no-store');
     res.status(200).json({
       pageviews: Number(pv) || 0,
       uniques: Number(uniques) || 0,
       countries: toSorted(countries),
       nepalCities: mergeCities(toSorted(npCities)),
-      daily: toSorted(daily).sort((a, b) => (a[0] < b[0] ? -1 : 1)).slice(-14)
+      daily: chrono(toSorted(daily)).slice(-28),     // last 28 days (3d/7d/28d ranges)
+      hourly: chrono(toSorted(hourly)).slice(-72)     // last 72 hours (1h/24h ranges)
     });
   } catch (e) {
     res.status(500).json({ error: 'Failed to load stats' });

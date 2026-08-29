@@ -15,6 +15,8 @@
   var LAST_AT = 0;           // when we last loaded (ms)
   var COUNTRY_SORT = 'count';
   var COUNTRY_Q = '';
+  var RANGE = '7d';       // 1h | 24h | 3d | 7d | 28d
+  var SHOW_MA = false;    // 7-point moving average overlay
   var timer = null, clockTimer = null;
 
   /* ---------- helpers ---------- */
@@ -98,20 +100,50 @@
     wrap.appendChild(kpiCard(fmt(peak), 'Peak day', 'k--green'));
   }
 
-  /* ---------- area chart (14-day) ---------- */
+  /* ---------- time-range series + labels ---------- */
   var validDate = function (s) { return /^\d{4}-\d{2}-\d{2}$/.test(s); };
-  function shortDate(s) { return validDate(s) ? s.slice(5) : ''; }
-  function renderArea(daily) {
+  var validHour = function (s) { return /^\d{4}-\d{2}-\d{2}T\d{2}$/.test(s); };
+  function xlabel(key, gran) {
+    if (gran === 'h') return validHour(key) ? key.slice(11) + ':00' : '';
+    return validDate(key) ? key.slice(5) : '';
+  }
+  function tiplabel(key, gran) {
+    if (gran === 'h') return validHour(key) ? key.slice(0, 10) + ' ' + key.slice(11) + ':00' : '';
+    return validDate(key) ? key : '';
+  }
+  function seriesForRange(d) {
+    var hourly = d.hourly || [], daily = d.daily || [];
+    switch (RANGE) {
+      case '1h': return { pts: hourly.slice(-1), gran: 'h', label: 'last hour' };
+      case '24h': return { pts: hourly.slice(-24), gran: 'h', label: 'last 24 hours' };
+      case '3d': return { pts: daily.slice(-3), gran: 'd', label: 'last 3 days' };
+      case '28d': return { pts: daily.slice(-28), gran: 'd', label: 'last 28 days' };
+      default: return { pts: daily.slice(-7), gran: 'd', label: 'last 7 days' };
+    }
+  }
+  function movingAvg(vals, w) {
+    return vals.map(function (_, i) {
+      var a = Math.max(0, i - w + 1), s = 0, c = 0;
+      for (var j = a; j <= i; j++) { s += vals[j]; c++; }
+      return s / c;
+    });
+  }
+
+  /* ---------- visits chart (range-aware) ---------- */
+  function renderArea(d) {
     var host = document.getElementById('areaChart'); host.textContent = '';
     var tip = document.getElementById('areaTip');
-    if (!daily || !daily.length) { host.appendChild(el('div', 'empty', 'No visits recorded yet.')); return; }
+    var ser = seriesForRange(d), rows = ser.pts, gran = ser.gran;
+    var total = rows.reduce(function (s, r) { return s + r[1]; }, 0);
+    document.getElementById('rangeTotal').textContent = fmt(total) + ' visits · ' + ser.label;
+    if (!rows.length) { host.appendChild(el('div', 'empty', gran === 'h' ? 'Collecting hourly data…' : 'No visits recorded yet.')); return; }
     var W = 720, H = 210, padL = 34, padR = 12, padT = 12, padB = 26;
     var iw = W - padL - padR, ih = H - padT - padB;
-    var n = daily.length;
-    var max = daily.reduce(function (m, r) { return Math.max(m, r[1]); }, 1);
+    var n = rows.length;
+    var max = rows.reduce(function (m, r) { return Math.max(m, r[1]); }, 1);
     var x = function (i) { return padL + (n === 1 ? iw / 2 : (i / (n - 1)) * iw); };
     var y = function (v) { return padT + ih - (v / max) * ih; };
-    var pts = daily.map(function (r, i) { return [x(i), y(r[1])]; });
+    var pts = rows.map(function (r, i) { return [x(i), y(r[1])]; });
     var line = pts.map(function (p, i) { return (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join(' ');
     var area = 'M' + padL + ' ' + (padT + ih) + ' ' + line.replace('M', 'L') + ' L' + x(n - 1).toFixed(1) + ' ' + (padT + ih);
     var grid = '', labY = '';
@@ -121,10 +153,16 @@
       labY += '<text x="' + (padL - 6) + '" y="' + (gy + 3).toFixed(1) + '" text-anchor="end" font-size="9" fill="var(--muted)">' + Math.round(max - (max / 3) * g) + '</text>';
     }
     var dots = pts.map(function (p) { return '<circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="2.6" fill="var(--crimson)"/>'; }).join('');
+    var maPath = '';
+    if (SHOW_MA && n >= 3) {
+      var ma = movingAvg(rows.map(function (r) { return r[1]; }), 7);
+      maPath = '<path d="' + ma.map(function (v, i) { return (i ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(v).toFixed(1); }).join(' ') +
+        '" fill="none" stroke="var(--accent-2)" stroke-width="1.8" stroke-dasharray="5 4"/>';
+    }
     var xlabels = '';
-    daily.forEach(function (r, i) {
-      if (n <= 8 || i % 2 === 0 || i === n - 1) {
-        xlabels += '<text x="' + x(i).toFixed(1) + '" y="' + (H - 8) + '" text-anchor="middle" font-size="9" fill="var(--muted)">' + shortDate(r[0]) + '</text>';
+    rows.forEach(function (r, i) {
+      if (n <= 8 || i % Math.ceil(n / 8) === 0 || i === n - 1) {
+        xlabels += '<text x="' + x(i).toFixed(1) + '" y="' + (H - 8) + '" text-anchor="middle" font-size="9" fill="var(--muted)">' + xlabel(r[0], gran) + '</text>';
       }
     });
     host.innerHTML =
@@ -135,22 +173,44 @@
       grid + labY +
       '<path d="' + area + '" fill="url(#ag)"/>' +
       '<path d="' + line + '" fill="none" stroke="var(--crimson)" stroke-width="2.2" stroke-linejoin="round"/>' +
-      dots + xlabels + '</svg>';
-    // hover columns
-    daily.forEach(function (r, i) {
+      maPath + dots + xlabels + '</svg>';
+    // hover overlay (rebuilt each render, scoped to the plot host only)
+    var old = host.querySelector('.hlayer'); if (old) old.remove();
+    var layer = document.createElement('div'); layer.className = 'hlayer';
+    layer.style.cssText = 'position:absolute;left:0;right:0;top:0;bottom:0;';
+    host.style.position = 'relative';
+    rows.forEach(function (r, i) {
       var seg = document.createElement('div');
-      seg.style.cssText = 'position:absolute;top:0;bottom:22px;width:' + (100 / n) + '%;left:' + (i / n * 100) + '%;';
+      seg.style.cssText = 'position:absolute;top:0;bottom:0;width:' + (100 / n) + '%;left:' + (i / n * 100) + '%;';
       seg.addEventListener('mouseenter', function () {
-        tip.textContent = (validDate(r[0]) ? r[0] : '') + ' · ' + fmt(r[1]) + ' views';
-        tip.style.left = ((x(i) / W) * 100) + '%';
-        tip.style.top = ((y(r[1]) / H) * 100) + '%';
+        tip.textContent = tiplabel(r[0], gran) + ' · ' + fmt(r[1]) + ' views';
+        var h2 = document.getElementById('areaChart');
+        tip.style.left = (h2.offsetLeft + (x(i) / W) * h2.offsetWidth) + 'px';
+        tip.style.top = (h2.offsetTop + (y(r[1]) / H) * h2.offsetHeight - 6) + 'px';
         tip.style.opacity = '1';
       });
       seg.addEventListener('mouseleave', function () { tip.style.opacity = '0'; });
-      host.parentNode.appendChild(seg);
+      layer.appendChild(seg);
     });
-    var total = daily.reduce(function (s, r) { return s + r[1]; }, 0);
-    document.getElementById('dailyTotal').textContent = fmt(total) + ' total';
+    host.appendChild(layer);
+  }
+
+  /* ---------- activity by hour of day (replaces flag strip) ---------- */
+  function renderHourOfDay(hourly) {
+    var host = document.getElementById('hourChart'); host.textContent = '';
+    if (!hourly || !hourly.length) { host.appendChild(el('div', 'empty', 'Collecting hourly data…')); return; }
+    var byHour = new Array(24).fill(0);
+    hourly.forEach(function (r) { if (validHour(r[0])) byHour[parseInt(r[0].slice(11), 10)] += r[1]; });
+    var max = byHour.reduce(function (m, v) { return Math.max(m, v); }, 1);
+    var peak = byHour.indexOf(max);
+    var bars = '', lab = '', bw = 100 / 24;
+    byHour.forEach(function (v, i) {
+      var h = (v / max) * 108;
+      var col = i === peak ? 'var(--crimson)' : 'var(--accent-2)';
+      bars += '<rect x="' + (i * bw + bw * 0.15) + '%" y="' + (120 - h) + '" width="' + (bw * 0.7) + '%" height="' + h.toFixed(1) + '" rx="2" fill="' + col + '"><title>' + (i < 10 ? '0' + i : i) + ':00 — ' + v + ' views</title></rect>';
+      if (i % 3 === 0) lab += '<text x="' + ((i + 0.5) * bw) + '%" y="134" text-anchor="middle" font-size="8" fill="var(--muted)">' + i + '</text>';
+    });
+    host.innerHTML = '<svg viewBox="0 0 400 140" preserveAspectRatio="none">' + bars + lab + '</svg>';
   }
 
   /* ---------- donut (Nepal vs international) ---------- */

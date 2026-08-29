@@ -117,6 +117,15 @@
   .hidden{ display:none; }
   .flags-strip{ display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; }
   .flags-strip img{ width:26px; height:19px; border-radius:3px; object-fit:cover; box-shadow:0 0 0 1px rgba(0,0,0,.08); }
+  .chk{ display:inline-flex; align-items:center; gap:6px; font-size:.78rem; color:var(--muted); margin:0; text-transform:none; letter-spacing:0; font-weight:500; cursor:pointer; }
+  .chk input{ width:auto; margin:0; accent-color:var(--crimson); }
+  .insights{ display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:12px; }
+  .insight{ border:1px solid var(--line); border-radius:11px; padding:14px 15px; background:var(--line-2); }
+  .insight .ic{ font-size:1.05rem; }
+  .insight .t{ font-size:.72rem; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); font-weight:600; margin:6px 0 3px; }
+  .insight .v{ font-family:Archivo,sans-serif; font-weight:700; font-size:1.05rem; line-height:1.25; }
+  .insight .v small{ font-weight:500; color:var(--muted); font-size:.82rem; }
+  #hourChart svg{ height:150px; }
 </style>
 </head>
 <body>
@@ -142,6 +151,7 @@
     <span class="spacer"></span>
     <span class="live" id="liveLbl"><span class="live__dot"></span> updated just now</span>
     <button class="tbtn" id="refreshBtn" title="Refresh now"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-2.6-6.4M21 4v5h-5"/></svg> Refresh</button>
+    <button class="tbtn" id="copyBtn" title="Copy summary to clipboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg> Copy</button>
     <button class="tbtn" id="exportBtn" title="Export CSV"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 21h16"/></svg> CSV</button>
     <button class="tbtn" id="themeBtn" title="Toggle theme"><svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg></button>
     <button class="tbtn lo" id="logoutBtn" type="button">Sign out</button>
@@ -152,8 +162,17 @@
 
     <div class="grid g2" style="margin-bottom:18px">
       <div class="panel chartwrap">
-        <h2>Visits — last 14 days <span class="sub" id="dailyTotal"></span></h2>
-        <p class="cap" id="dailyCap">Daily pageviews</p>
+        <h2>Visits over time <span class="sub" id="rangeTotal"></span></h2>
+        <div class="toolbar" style="flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:8px">
+          <div class="seg" id="rangeSeg">
+            <button data-range="1h">1h</button>
+            <button data-range="24h">24h</button>
+            <button data-range="3d">3d</button>
+            <button data-range="7d" class="on">7d</button>
+            <button data-range="28d">28d</button>
+          </div>
+          <label class="chk"><input type="checkbox" id="maToggle"> 7-pt avg</label>
+        </div>
         <div id="areaChart"></div>
         <div class="tip" id="areaTip"></div>
       </div>
@@ -167,15 +186,20 @@
 
     <div class="grid g2b" style="margin-bottom:18px">
       <div class="panel">
-        <h2>Visits by weekday <span class="sub">last 14 days</span></h2>
+        <h2>Activity by hour of day <span class="sub">UTC · last 72h</span></h2>
+        <p class="cap">When visitors typically arrive</p>
+        <div id="hourChart"></div>
+      </div>
+      <div class="panel">
+        <h2>Visits by weekday <span class="sub">last 28 days</span></h2>
         <p class="cap">Which days people check in</p>
         <div id="weekday"></div>
       </div>
-      <div class="panel">
-        <h2>Global reach <span class="sub" id="reachCount"></span></h2>
-        <p class="cap">Every country that has visited</p>
-        <div class="flags-strip" id="reachStrip"></div>
-      </div>
+    </div>
+
+    <div class="panel" style="margin-bottom:18px">
+      <h2>Insights <span class="sub">auto-generated</span></h2>
+      <div id="insights" class="insights"></div>
     </div>
 
     <div class="grid g2b">

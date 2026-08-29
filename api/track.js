@@ -31,14 +31,17 @@ module.exports = async (req, res) => {
     if (typeof body === 'string') { try { body = JSON.parse(body); } catch (_) { body = {}; } }
     const vid = clean(body && body.v, 64) || 'anon';
 
-    const day = new Date().toISOString().slice(0, 10);
+    const now = new Date().toISOString();
+    const day = now.slice(0, 10);        // YYYY-MM-DD  → daily buckets (3d/7d/28d ranges)
+    const hour = now.slice(0, 13);       // YYYY-MM-DDTHH → hourly buckets (last-hour / 24h ranges)
 
     await pipeline([
       ['INCR', 'stats:pageviews'],
       ['PFADD', 'stats:uniques', vid],
       ['HINCRBY', 'stats:countries', country, 1],
       ['HINCRBY', 'stats:cities:' + country, city, 1],
-      ['HINCRBY', 'stats:daily', day, 1]
+      ['HINCRBY', 'stats:daily', day, 1],
+      ['HINCRBY', 'stats:hourly', hour, 1]
     ]);
   } catch (_) {
     /* swallow — analytics must never surface an error to visitors */
