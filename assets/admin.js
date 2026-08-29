@@ -250,14 +250,45 @@
     host.innerHTML = '<svg viewBox="0 0 300 104" preserveAspectRatio="none" style="height:120px">' + bars + lab + '</svg>';
   }
 
-  /* ---------- reach flag strip ---------- */
-  function renderReach(countries) {
-    var host = document.getElementById('reachStrip'); host.textContent = '';
-    document.getElementById('reachCount').textContent = (countries || []).length + ' countries';
-    (countries || []).slice(0, 60).forEach(function (c) {
-      if (flagUrl(c[0])) { var img = flagImg(c[0], 26); img.title = cname(c[0]) + ' · ' + fmt(c[1]); host.appendChild(img); }
-    });
-    if (!host.childNodes.length) host.appendChild(el('div', 'empty', 'No visits yet.'));
+  /* ---------- auto-generated insights ---------- */
+  function insightCard(icon, title, value, sub) {
+    var c = el('div', 'insight');
+    c.appendChild(el('div', 'ic', icon));
+    c.appendChild(el('div', 't', title));
+    var v = el('div', 'v'); v.appendChild(document.createTextNode(value));
+    if (sub) { v.appendChild(document.createTextNode(' ')); v.appendChild(el('small', null, sub)); }
+    c.appendChild(v);
+    return c;
+  }
+  function renderInsights(d) {
+    var host = document.getElementById('insights'); host.textContent = '';
+    var daily = d.daily || [], hourly = d.hourly || [], countries = d.countries || [];
+    // busiest day
+    var busy = daily.reduce(function (b, r) { return r[1] > b[1] ? r : b; }, ['—', 0]);
+    var wk = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    var busyLbl = validDate(busy[0]) ? wk[new Date(busy[0] + 'T00:00:00Z').getUTCDay()] + ' ' + busy[0].slice(5) : '—';
+    host.appendChild(insightCard('📈', 'Busiest day', fmt(busy[1]), 'views · ' + busyLbl));
+    // peak hour of day
+    var byHour = new Array(24).fill(0);
+    hourly.forEach(function (r) { if (validHour(r[0])) byHour[parseInt(r[0].slice(11), 10)] += r[1]; });
+    var peakH = byHour.indexOf(Math.max.apply(null, byHour.concat([0])));
+    var peakHasData = byHour.some(function (v) { return v > 0; });
+    host.appendChild(insightCard('🕐', 'Peak hour (UTC)', peakHasData ? (peakH < 10 ? '0' + peakH : peakH) + ':00' : '—', peakHasData ? fmt(byHour[peakH]) + ' views' : 'collecting'));
+    // week over week
+    var last7 = daily.slice(-7).reduce(function (s, r) { return s + r[1]; }, 0);
+    var prev7 = daily.slice(-14, -7).reduce(function (s, r) { return s + r[1]; }, 0);
+    var wowTxt = '—', wowSub = 'vs prior 7d';
+    if (prev7) { var w = Math.round((last7 - prev7) / prev7 * 100); wowTxt = (w >= 0 ? '+' : '') + w + '%'; }
+    host.appendChild(insightCard('🔁', 'Week over week', wowTxt, wowSub));
+    // average per day
+    var avg = daily.length ? Math.round(daily.reduce(function (s, r) { return s + r[1]; }, 0) / daily.length) : 0;
+    host.appendChild(insightCard('📊', 'Avg / day', fmt(avg), 'over ' + daily.length + 'd'));
+    // top country share
+    var totC = countries.reduce(function (s, r) { return s + r[1]; }, 0);
+    var top = countries[0] || ['—', 0];
+    host.appendChild(insightCard('🌍', 'Top country', cname(top[0]), Math.round(pct(top[1], totC)) + '% share'));
+    // reach
+    host.appendChild(insightCard('🚩', 'Global reach', fmt(countries.length), 'countries'));
   }
 
   /* ---------- country table (flags + search + sort) ---------- */
@@ -310,10 +341,11 @@
     DATA = d; LAST_AT = Date.now();
     var np = (d.countries || []).find(function (c) { return c[0] === 'NP'; });
     renderKPIs(d);
-    renderArea(d.daily);
+    renderArea(d);
     renderDonut(np ? np[1] : 0, d.pageviews || 0);
     renderWeekday(d.daily);
-    renderReach(d.countries);
+    renderHourOfDay(d.hourly);
+    renderInsights(d);
     renderCountries();
     renderCities(d.nepalCities);
     tickClock();
@@ -341,6 +373,28 @@
     a.download = 'nepaldisaster-analytics-' + new Date().toISOString().slice(0, 10) + '.csv';
     document.body.appendChild(a); a.click(); a.remove();
     setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+  }
+
+  /* ---------- copy summary ---------- */
+  function copySummary() {
+    if (!DATA) return;
+    var np = (DATA.countries || []).find(function (c) { return c[0] === 'NP'; });
+    var lines = [
+      'NepalDisaster.com — analytics summary (' + new Date().toISOString().slice(0, 16).replace('T', ' ') + ' UTC)',
+      'Unique visitors: ' + fmt(DATA.uniques),
+      'Total pageviews: ' + fmt(DATA.pageviews),
+      'Countries reached: ' + (DATA.countries || []).length,
+      'Nepal visits: ' + fmt(np ? np[1] : 0) + ' (' + Math.round(pct(np ? np[1] : 0, DATA.pageviews)) + '%)',
+      'Top countries: ' + (DATA.countries || []).slice(0, 5).map(function (c) { return cname(c[0]) + ' ' + c[1]; }).join(', '),
+      'Top NP cities: ' + (DATA.nepalCities || []).slice(0, 5).map(function (c) { return c[0] + ' ' + c[1]; }).join(', ')
+    ];
+    var txt = lines.join('\n'), btn = document.getElementById('copyBtn');
+    var done = function () { btn.textContent = 'Copied ✓'; setTimeout(loadCopyIcon, 1400); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done, done);
+    else { var ta = document.createElement('textarea'); ta.value = txt; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); } catch (e) {} ta.remove(); done(); }
+  }
+  function loadCopyIcon() {
+    document.getElementById('copyBtn').innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg> Copy';
   }
 
   /* ---------- theme ---------- */
@@ -402,6 +456,15 @@
   });
   document.getElementById('refreshBtn').addEventListener('click', loadStats);
   document.getElementById('exportBtn').addEventListener('click', toCSV);
+  document.getElementById('copyBtn').addEventListener('click', copySummary);
+  document.getElementById('maToggle').addEventListener('change', function (e) { SHOW_MA = e.target.checked; if (DATA) renderArea(DATA); });
+  Array.prototype.forEach.call(document.querySelectorAll('#rangeSeg button'), function (b) {
+    b.addEventListener('click', function () {
+      RANGE = b.getAttribute('data-range');
+      Array.prototype.forEach.call(document.querySelectorAll('#rangeSeg button'), function (x) { x.classList.toggle('on', x === b); });
+      if (DATA) renderArea(DATA);
+    });
+  });
   document.getElementById('themeBtn').addEventListener('click', function () {
     var cur = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
     applyTheme(cur === 'dark' ? 'light' : 'dark');
