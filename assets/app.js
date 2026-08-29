@@ -120,15 +120,15 @@ const EVENT = {
   since:"2026-08-26T08:37:00+05:45",
   title:{en:"2026 Nepal Floods", ne:"२०२६ नेपाल बाढी"},
   region:{en:"Rasuwa · Nuwakot · Trishuli corridor · Chitwan", ne:"रसुवा · नुवाकोट · त्रिशूली कोरिडोर · चितवन"},
-  eas:{en:"Trishuli corridor glacial flood. 619 dead, 2,426 missing (Nepal); 2,189 rescued. Search & relief ongoing.",
-       ne:"त्रिशूली कोरिडोरमा हिमनदी बाढी। ६१९ मृत्यु, २,४२६ बेपत्ता (नेपाल); २,१८९ उद्धार। खोजी तथा राहत जारी।"}
+  eas:{en:"Trishuli corridor glacial flood. 626 dead, 2,426 missing (Nepal); 2,189 rescued. Search & relief ongoing.",
+       ne:"त्रिशूली कोरिडोरमा हिमनदी बाढी। ६२६ मृत्यु, २,४२६ बेपत्ता (नेपाल); २,१८९ उद्धार। खोजी तथा राहत जारी।"}
 };
 /* Nepal-side figures only. Live-refreshed every 10 minutes: local feed (baseline)
    → Wikipedia PROSE (deaths/missing, which states Nepal figures separately from Tibet)
    → NDRRMA API (rescued, live Nepal registry). The Wikipedia INFOBOX is NOT used —
    it reports Nepal+Tibet COMBINED, which is what previously inflated the toll. */
 let STATS = [
-  {key:"deaths",  n:"619", cls:"hstat--death"},
+  {key:"deaths",  n:"626", cls:"hstat--death"},
   {key:"missing", n:"2,426"},
   {key:"foreign", n:"542"},
   {key:"rescued", n:"2,189", cls:"hstat--rescue"}
@@ -136,8 +136,8 @@ let STATS = [
 
 /* -------------------- TICKER -------------------- */
 const TICKER = [
-  {src:"POLICE", en:"Nepal Police confirm 619 dead, 2,426 missing (Nepal); 2,189 rescued — figures rising",
-   ne:"नेपाल प्रहरीले ६१९ मृत्यु, २,४२६ बेपत्ता (नेपाल) पुष्टि; २,१८९ उद्धार — संख्या बढ्दै"},
+  {src:"POLICE", en:"Nepal Police confirm 626 dead, 2,426 missing (Nepal); 2,189 rescued — figures rising",
+   ne:"नेपाल प्रहरीले ६२६ मृत्यु, २,४२६ बेपत्ता (नेपाल) पुष्टि; २,१८९ उद्धार — संख्या बढ्दै"},
   {src:"NDRRMA", en:"NDRRMA names 2,189 rescued in its official registry — 2,034 Nepali, 155 foreign",
    ne:"NDRRMA अभिलेखमा २,१८९ उद्धारितको नाम — २,०३४ नेपाली, १५५ विदेशी"},
   {src:"PMO", en:"PM Disaster Relief Fund raises Rs 273.3 million; govt releases Rs 1 billion",
@@ -155,12 +155,12 @@ const WK="https://en.wikipedia.org/wiki/2026_Nepal_floods";
 const NEWS = [
   {sev:"danger", tag:{en:"Toll",ne:"मृत्यु"}, time:"28 Aug 2026", src:"AP / Nepal Police",
    url:"https://www.washingtontimes.com/news/2026/aug/27/death-toll-floods-rises-rescuers-nepal-china-working-find-hundreds/",
-   title:{en:"Nepal flood death toll climbs to 619 as body management continues",
-          ne:"नेपाल बाढीमा मृत्यु ६१९ पुग्यो, शव व्यवस्थापन जारी"},
-   body:{en:"Nepal Police raised the confirmed Nepal-side toll to 619, with 2,426 still missing or out of contact.",
-         ne:"नेपाल प्रहरीले नेपालतर्फको पुष्टि मृत्यु ६१९ पुर्‍यायो; २,४२६ जना बेपत्ता वा सम्पर्कविहीन।"},
-   long:{en:"Nepal Police confirmed 619 deaths on the Nepal side as rescue and body-management teams reached settlements cut off by the 26 August surge down the Bhotekoshi/Trishuli. Around 2,426 people remain missing or out of contact on the Nepal side (separate from the China/Tibet-side count). Officials warned the toll would keep rising as access to buried riverside villages is restored and downstream bodies are recovered along the Narayani corridor.",
-         ne:"नेपाल प्रहरीले नेपालतर्फ ६१९ मृत्यु पुष्टि गर्‍यो। २६ अगस्टको भोटेकोशी/त्रिशूली भलले अवरुद्ध बस्तीमा उद्धार र शव व्यवस्थापन टोली पुग्दै। नेपालतर्फ करिब २,४२६ जना बेपत्ता वा सम्पर्कविहीन (चीन/तिब्बततर्फको गणनाभन्दा अलग)। पहुँच खुल्दै र नारायणी कोरिडोरमा शव भेटिँदै जाँदा संख्या बढ्ने अधिकारीको चेतावनी।"}},
+   title:{en:"Nepal flood death toll climbs to 626 as body management continues",
+          ne:"नेपाल बाढीमा मृत्यु ६२६ पुग्यो, शव व्यवस्थापन जारी"},
+   body:{en:"Nepal Police raised the confirmed Nepal-side toll to 626, with 2,426 still missing or out of contact.",
+         ne:"नेपाल प्रहरीले नेपालतर्फको पुष्टि मृत्यु ६२६ पुर्‍यायो; २,४२६ जना बेपत्ता वा सम्पर्कविहीन।"},
+   long:{en:"Nepal Police confirmed 626 deaths on the Nepal side as rescue and body-management teams reached settlements cut off by the 26 August surge down the Bhotekoshi/Trishuli. Around 2,426 people remain missing or out of contact on the Nepal side (separate from the China/Tibet-side count). Officials warned the toll would keep rising as access to buried riverside villages is restored and downstream bodies are recovered along the Narayani corridor.",
+         ne:"नेपाल प्रहरीले नेपालतर्फ ६२६ मृत्यु पुष्टि गर्‍यो। २६ अगस्टको भोटेकोशी/त्रिशूली भलले अवरुद्ध बस्तीमा उद्धार र शव व्यवस्थापन टोली पुग्दै। नेपालतर्फ करिब २,४२६ जना बेपत्ता वा सम्पर्कविहीन (चीन/तिब्बततर्फको गणनाभन्दा अलग)। पहुँच खुल्दै र नारायणी कोरिडोरमा शव भेटिँदै जाँदा संख्या बढ्ने अधिकारीको चेतावनी।"}},
   {sev:"relief", tag:{en:"Rescue",ne:"उद्धार"}, time:"28 Aug 2026", src:"Nepal Police / OnlineKhabar",
    url:"https://english.onlinekhabar.com/people-rescued-rasuwa-flood-2.html",
    title:{en:"1,545 rescued after Rasuwa flood; 28 police still out of contact",
@@ -1322,9 +1322,9 @@ Object.assign(I18N.ne,{
    official numbers are not yet itemised (never fabricated). NDRRMA / Nepal Police,
    compiled 27–28 Aug 2026. */
 const STATS_DETAIL=[
- {id:"deaths", sev:"danger", big:"619", title:{en:"Confirmed Deaths",ne:"पुष्टि मृत्यु"}, unit:{en:"Nepal side · auto-updated from live sources",ne:"नेपालतर्फ · प्रत्यक्ष स्रोतबाट स्वतः अद्यावधिक"}, src:"Nepal Police / NDRRMA / Wikipedia",
-  rows:[["Nepal (Nepal Police confirmed)","619"]],
-  note:{en:"Nepal Police confirmed 619 deaths on the Nepal side; the toll auto-updates every 10 minutes from live sources as access is restored to buried riverside settlements and body-management operations recover more victims downstream.",ne:"नेपाल प्रहरीले नेपालतर्फ ६१९ मृत्यु पुष्टि गर्‍यो; पहुँच खुल्दै र शव व्यवस्थापन जारी रहँदा प्रत्यक्ष स्रोतबाट हरेक १० मिनेटमा संख्या स्वतः अद्यावधिक हुन्छ।"}},
+ {id:"deaths", sev:"danger", big:"626", title:{en:"Confirmed Deaths",ne:"पुष्टि मृत्यु"}, unit:{en:"Nepal side · auto-updated from live sources",ne:"नेपालतर्फ · प्रत्यक्ष स्रोतबाट स्वतः अद्यावधिक"}, src:"Nepal Police / NDRRMA / Wikipedia",
+  rows:[["Nepal (Nepal Police confirmed)","626"]],
+  note:{en:"Nepal Police confirmed 626 deaths on the Nepal side; the toll auto-updates every 10 minutes from live sources as access is restored to buried riverside settlements and body-management operations recover more victims downstream.",ne:"नेपाल प्रहरीले नेपालतर्फ ६२६ मृत्यु पुष्टि गर्‍यो; पहुँच खुल्दै र शव व्यवस्थापन जारी रहँदा प्रत्यक्ष स्रोतबाट हरेक १० मिनेटमा संख्या स्वतः अद्यावधिक हुन्छ।"}},
  {id:"missing", sev:"danger", big:"2,426", title:{en:"Missing and Out of Contact",ne:"बेपत्ता तथा सम्पर्कविहीन"}, unit:{en:"Nepal side only",ne:"नेपालतर्फ मात्र"}, src:"Nepal Police / NDRRMA",
   rows:[["Nepal — missing / out of contact","2,426"]],
   note:{en:"Nepal Police report 2,426 people missing or out of contact on the Nepal side. This figure is Nepal-only — it excludes the separately-counted China/Tibet-side missing. It moves in both directions as people are found dead or rescued.",ne:"नेपाल प्रहरीका अनुसार नेपालतर्फ २,४२६ जना बेपत्ता वा सम्पर्कविहीन। यो संख्या नेपाल मात्रको हो — चीन/तिब्बततर्फको अलग गणनालाई समावेश गरिएको छैन। मानिस मृत वा उद्धार भेटिँदै जाँदा यो घट्न वा बढ्न सक्छ।"}},
@@ -1809,30 +1809,35 @@ async function _srcLocalFeed(){
 
 // Tier 2 — Wikipedia INFOBOX: intentionally DISABLED. The infobox reports the
 // Nepal+Tibet(China) COMBINED toll (e.g. 623 deaths / 2,980 missing), which is
-// exactly what previously inflated this Nepal-only site (623 shown vs 619 real).
+// exactly what previously inflated this Nepal-only site (623 shown vs 626 real).
 // We parse the Nepal-specific figures from the prose instead (Tier 3).
 async function _srcInfobox(){
   return false;
 }
 
-// Tier 3 — Wikipedia summary PROSE. The article states Nepal figures BEFORE the
-// Tibet ones, e.g. "616 deaths and 2,426 missing were confirmed in Nepal with an
-// additional 7 dead and 554 missing in the Tibet Autonomous Region." We grab the
-// FIRST death/missing number, which is the Nepal-side one — giving a Nepal-only,
-// auto-updating toll. Deaths are cumulative (only rise); missing can rise or fall.
+// Tier 3 — Wikipedia FULL article text (explaintext), parsed for the Nepal-only
+// casualty sentence, e.g. "At least 626 deaths and 2,426 missing were confirmed
+// in Nepal with an additional 7 dead and 554 missing in the Tibet Autonomous
+// Region." Matching that exact "…confirmed in Nepal" phrasing guarantees we get
+// the Nepal-side figure, never the Tibet one — and it auto-updates as editors
+// revise the article. The REST summary (lead paragraph) is NOT used: it doesn't
+// carry these numbers. Deaths only rise (cumulative); missing can move both ways.
 async function _srcSummary(){
+  let txt="";
+  try{
+    const url="https://en.wikipedia.org/w/api.php?action=query&prop=extracts&explaintext=1&format=json&titles=2026%20Nepal%20floods&origin=*";
+    const r=await fetch(url,{signal:AbortSignal.timeout(6000)});
+    if(r.ok){ const j=await r.json(); const pgs=j.query&&j.query.pages; if(pgs){ const p=pgs[Object.keys(pgs)[0]]; txt=(p&&p.extract)||""; } }
+  }catch(_){}
+  if(!txt) return false;
   let changed=false;
-  const w=await fetchWiki("2026 Nepal floods");
-  const ex=(w&&w.extract)||"";
-  if(!ex) return false;
-  // Only trust the Nepal-side sentence: cut the text at the first mention of Tibet/China
-  // so a stray Tibet number can never be picked up.
-  const nepalPart=ex.split(/\b(?:Tibet|China|Chinese)\b/i)[0] || ex;
-  const grab=re=>{ const m=nepalPart.match(re); return m?m[1]:null; };
-  const dN=grab(/([\d,]{2,7})\s*(?:people\s*)?(?:were\s*)?(?:killed|dead|died|deaths|fatalities)/i);
-  const mN=grab(/([\d,]{2,7})\s*(?:people\s*)?(?:were\s*)?(?:reported\s*)?(?:missing|unaccounted)/i);
-  if(dN && _setStat("deaths",_num(dN))) changed=true;
-  if(mN && _setStat("missing",_num(mN))) changed=true;
+  const dm=txt.match(/([\d,]{2,7})\s+deaths?\s+and\s+([\d,]{2,7})\s+(?:people\s+)?(?:were\s+)?missing\s+(?:were\s+)?confirmed\s+in\s+Nepal/i);
+  if(dm){
+    if(_setStat("deaths",_num(dm[1]))) changed=true;
+    if(_setStat("missing",_num(dm[2]))) changed=true;
+  }
+  const inj=txt.match(/([\d,]{2,7})\s+(?:people\s+)?were\s+injured/i);
+  if(inj && _setStat("injured",_num(inj[1]))) changed=true;
   return changed;
 }
 

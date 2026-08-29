@@ -9,20 +9,20 @@
       "ne": "रसुवा · नुवाकोट · त्रिशूली कोरिडोर · चितवन"
     },
     "eas": {
-      "en": "Trishuli corridor glacial flood. Nepal Police confirm 619 dead, 2,426 missing (Nepal side); 2,189 rescued (NDRRMA). Search, body management and relief ongoing.",
-      "ne": "त्रिशूली कोरिडोरमा हिमनदी बाढी। नेपाल प्रहरीले ६१९ मृत्यु, २,४२६ बेपत्ता (नेपालतर्फ) पुष्टि; २,१८९ उद्धार (NDRRMA)। खोजी, शव व्यवस्थापन र राहत जारी।"
+      "en": "Trishuli corridor glacial flood. Nepal Police confirm 626 dead, 2,426 missing (Nepal side); 2,189 rescued (NDRRMA). Search, body management and relief ongoing.",
+      "ne": "त्रिशूली कोरिडोरमा हिमनदी बाढी। नेपाल प्रहरीले ६२६ मृत्यु, २,४२६ बेपत्ता (नेपालतर्फ) पुष्टि; २,१८९ उद्धार (NDRRMA)। खोजी, शव व्यवस्थापन र राहत जारी।"
     }
   },
   "stats": [
-    { "key": "deaths",  "n": "619", "cls": "hstat--death" },
+    { "key": "deaths",  "n": "626", "cls": "hstat--death" },
     { "key": "missing", "n": "2,426" },
     { "key": "foreign", "n": "542" },
     { "key": "rescued", "n": "2,189", "cls": "hstat--rescue" }
   ],
   "stats_detail": {
     "deaths": {
-      "big": "619",
-      "rows": [ ["Nepal (Nepal Police confirmed)", "619"] ]
+      "big": "626",
+      "rows": [ ["Nepal (Nepal Police confirmed)", "626"] ]
     },
     "missing": {
       "big": "2,426",
