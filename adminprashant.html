@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; frame-ancestors 'none'; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self'; connect-src 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; frame-ancestors 'none'; img-src 'self' data: https://flagcdn.com; font-src 'self' https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self'; connect-src 'self'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="robots" content="noindex, nofollow, noarchive">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,49 +10,113 @@
 <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root{ --crimson:#C8102E; --ink:#16181c; --paper:#f5f6f8; --line:#e2e5ea; --muted:#6b7280; }
+  :root{
+    --crimson:#C8102E; --crimson-soft:#e8536a;
+    --bg:#eef1f5; --card:#ffffff; --ink:#14161a; --ink-2:#3a4150;
+    --muted:#6b7280; --line:#e4e8ee; --line-2:#eef1f5;
+    --accent:#177a4c; --accent-2:#2563eb; --amber:#b45309;
+    --shadow:0 1px 2px rgba(16,24,40,.04),0 8px 24px rgba(16,24,40,.06);
+    --grid:#eaeef3;
+  }
+  [data-theme="dark"]{
+    --bg:#0d0f13; --card:#161a21; --ink:#eef1f6; --ink-2:#c2c9d6;
+    --muted:#8b93a3; --line:#242a34; --line-2:#1c2129;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    --grid:#222834; --crimson-soft:#ff6f84;
+  }
   *{ box-sizing:border-box; }
-  body{ margin:0; font-family:"IBM Plex Sans",system-ui,sans-serif; background:var(--paper); color:var(--ink); }
-  .mono{ font-family:"IBM Plex Mono",monospace; }
-  .wrap{ max-width:1000px; margin:0 auto; padding:24px 18px; }
-  /* login */
-  .login{ min-height:100vh; display:flex; align-items:center; justify-content:center; }
-  .login__card{ background:#fff; border:1px solid var(--line); border-radius:8px; padding:32px; width:100%; max-width:380px; box-shadow:0 8px 30px rgba(0,0,0,.06); }
-  .login__card h1{ font-family:Archivo,sans-serif; font-size:1.3rem; margin:0 0 4px; }
+  html,body{ margin:0; }
+  body{ font-family:"IBM Plex Sans",system-ui,-apple-system,sans-serif; background:var(--bg); color:var(--ink); -webkit-font-smoothing:antialiased; transition:background .25s,color .25s; }
+  .mono{ font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums; }
+  .wrap{ max-width:1200px; margin:0 auto; padding:22px 20px 60px; }
+  a{ color:var(--accent-2); }
+
+  /* ---------- login ---------- */
+  .login{ min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px; }
+  .login__card{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:34px; width:100%; max-width:390px; box-shadow:var(--shadow); }
+  .login__card h1{ font-family:Archivo,sans-serif; font-size:1.4rem; margin:0 0 4px; }
   .login__card p{ color:var(--muted); font-size:.85rem; margin:0 0 22px; }
-  label{ display:block; font-size:.78rem; font-weight:600; text-transform:uppercase; letter-spacing:.04em; color:var(--muted); margin:14px 0 6px; }
-  input{ width:100%; padding:11px 12px; border:1px solid var(--line); border-radius:5px; font-size:.95rem; font-family:inherit; }
+  label{ display:block; font-size:.74rem; font-weight:600; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); margin:14px 0 6px; }
+  input{ width:100%; padding:11px 13px; border:1px solid var(--line); border-radius:9px; font-size:.95rem; font-family:inherit; background:var(--card); color:var(--ink); }
   input:focus{ outline:2px solid var(--crimson); outline-offset:-1px; border-color:var(--crimson); }
   button{ font-family:inherit; cursor:pointer; }
-  .btn{ width:100%; margin-top:22px; padding:12px; background:var(--crimson); color:#fff; border:none; border-radius:5px; font-weight:700; font-size:.95rem; }
+  .btn{ width:100%; margin-top:22px; padding:12px; background:var(--crimson); color:#fff; border:none; border-radius:9px; font-weight:700; font-size:.95rem; }
   .btn:disabled{ opacity:.6; cursor:not-allowed; }
   .err{ color:var(--crimson); font-size:.85rem; margin-top:14px; min-height:1.2em; font-weight:600; }
-  /* dashboard */
-  .top{ background:var(--ink); color:#fff; }
-  .top .wrap{ display:flex; align-items:center; justify-content:space-between; padding:16px 18px; }
-  .top h1{ font-family:Archivo,sans-serif; font-size:1.05rem; margin:0; letter-spacing:.02em; }
-  .top .lo{ background:transparent; border:1px solid rgba(255,255,255,.3); color:#fff; padding:7px 14px; border-radius:5px; font-size:.82rem; font-weight:600; }
-  .kpis{ display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; margin:6px 0 26px; }
-  .kpi{ background:#fff; border:1px solid var(--line); border-radius:8px; padding:18px 20px; }
-  .kpi .n{ font-family:Archivo,sans-serif; font-size:2rem; font-weight:800; line-height:1; }
-  .kpi .l{ color:var(--muted); font-size:.78rem; text-transform:uppercase; letter-spacing:.05em; margin-top:8px; font-weight:600; }
-  .cols{ display:grid; grid-template-columns:1fr 1fr; gap:22px; }
-  @media(max-width:720px){ .cols{ grid-template-columns:1fr; } }
-  .panel{ background:#fff; border:1px solid var(--line); border-radius:8px; padding:20px; }
-  .panel h2{ font-family:Archivo,sans-serif; font-size:1rem; margin:0 0 14px; display:flex; justify-content:space-between; align-items:baseline; }
-  .panel h2 span{ font-size:.75rem; color:var(--muted); font-weight:500; }
-  .row{ display:flex; align-items:center; gap:10px; padding:7px 0; border-bottom:1px solid #f0f2f5; font-size:.9rem; }
+
+  /* ---------- top bar ---------- */
+  .top{ position:sticky; top:0; z-index:20; background:color-mix(in srgb,var(--card) 88%,transparent); backdrop-filter:blur(10px); border-bottom:1px solid var(--line); }
+  .top__in{ max-width:1200px; margin:0 auto; display:flex; align-items:center; gap:14px; padding:12px 20px; }
+  .brand{ display:flex; align-items:center; gap:10px; font-family:Archivo,sans-serif; font-weight:800; font-size:1.02rem; letter-spacing:.01em; }
+  .brand .dot{ width:9px;height:9px;border-radius:50%;background:var(--crimson); box-shadow:0 0 0 4px color-mix(in srgb,var(--crimson) 20%,transparent); }
+  .spacer{ flex:1; }
+  .live{ display:inline-flex; align-items:center; gap:7px; font-size:.76rem; color:var(--muted); font-weight:600; }
+  .live__dot{ width:8px;height:8px;border-radius:50%;background:var(--accent); animation:pulse 2s infinite; }
+  @keyframes pulse{ 0%,100%{opacity:1} 50%{opacity:.3} }
+  .tbtn{ display:inline-flex; align-items:center; gap:7px; background:var(--card); border:1px solid var(--line); color:var(--ink-2); padding:8px 12px; border-radius:9px; font-size:.82rem; font-weight:600; }
+  .tbtn:hover{ border-color:var(--crimson); color:var(--crimson); }
+  .tbtn svg{ width:15px; height:15px; }
+  .top .lo{ background:var(--crimson); border:none; color:#fff; }
+  .top .lo:hover{ filter:brightness(1.05); }
+
+  /* ---------- KPIs ---------- */
+  .kpis{ display:grid; grid-template-columns:repeat(auto-fit,minmax(168px,1fr)); gap:14px; margin:22px 0; }
+  .kpi{ background:var(--card); border:1px solid var(--line); border-radius:13px; padding:16px 18px; box-shadow:var(--shadow); position:relative; overflow:hidden; }
+  .kpi::before{ content:""; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--accent-2); opacity:.9; }
+  .kpi.k--red::before{ background:var(--crimson); } .kpi.k--green::before{ background:var(--accent); } .kpi.k--amber::before{ background:var(--amber); }
+  .kpi .n{ font-family:Archivo,sans-serif; font-size:1.85rem; font-weight:800; line-height:1; letter-spacing:-.01em; }
+  .kpi .l{ color:var(--muted); font-size:.72rem; text-transform:uppercase; letter-spacing:.05em; margin-top:9px; font-weight:600; }
+  .kpi .trend{ position:absolute; top:14px; right:14px; font-size:.72rem; font-weight:700; padding:2px 7px; border-radius:20px; }
+  .trend.up{ color:var(--accent); background:color-mix(in srgb,var(--accent) 14%,transparent); }
+  .trend.down{ color:var(--crimson); background:color-mix(in srgb,var(--crimson) 12%,transparent); }
+  .trend.flat{ color:var(--muted); background:color-mix(in srgb,var(--muted) 14%,transparent); }
+
+  /* ---------- panels / grid ---------- */
+  .grid{ display:grid; gap:18px; }
+  .grid.g2{ grid-template-columns:1.4fr 1fr; }
+  .grid.g2b{ grid-template-columns:1fr 1fr; }
+  @media(max-width:860px){ .grid.g2,.grid.g2b{ grid-template-columns:1fr; } }
+  .panel{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px; box-shadow:var(--shadow); min-width:0; }
+  .panel h2{ font-family:Archivo,sans-serif; font-size:1rem; margin:0 0 4px; display:flex; justify-content:space-between; align-items:baseline; gap:10px; }
+  .panel h2 .sub{ font-size:.74rem; color:var(--muted); font-weight:500; }
+  .panel .cap{ color:var(--muted); font-size:.76rem; margin:0 0 14px; }
+
+  /* rows / bars */
+  .row{ display:flex; align-items:center; gap:11px; padding:8px 0; border-bottom:1px solid var(--line-2); font-size:.9rem; }
   .row:last-child{ border-bottom:none; }
+  .row .rank{ width:18px; color:var(--muted); font-size:.75rem; text-align:right; }
+  .row .flag{ width:22px; height:16px; border-radius:3px; object-fit:cover; box-shadow:0 0 0 1px rgba(0,0,0,.08); flex:0 0 auto; background:var(--line); }
   .row .name{ flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  .row .bar{ height:6px; background:var(--crimson); border-radius:3px; min-width:2px; }
-  .row .val{ font-family:"IBM Plex Mono",monospace; font-weight:600; width:56px; text-align:right; }
-  .empty{ color:var(--muted); font-size:.85rem; padding:10px 0; }
-  .note{ color:var(--muted); font-size:.78rem; margin:22px 0 0; line-height:1.5; }
+  .row .name .code{ color:var(--muted); font-size:.72rem; margin-left:6px; }
+  .row .track{ flex:0 0 34%; height:8px; background:var(--line-2); border-radius:6px; overflow:hidden; }
+  .row .bar{ height:100%; background:linear-gradient(90deg,var(--crimson),var(--crimson-soft)); border-radius:6px; min-width:3px; }
+  .row .val{ font-family:"IBM Plex Mono",monospace; font-weight:600; width:52px; text-align:right; }
+  .row .pct{ width:44px; text-align:right; color:var(--muted); font-size:.76rem; }
+  .empty{ color:var(--muted); font-size:.85rem; padding:16px 0; text-align:center; }
+
+  .toolbar{ display:flex; gap:8px; margin:2px 0 12px; }
+  .toolbar input{ padding:8px 11px; border-radius:8px; font-size:.85rem; }
+  .seg{ display:inline-flex; border:1px solid var(--line); border-radius:8px; overflow:hidden; }
+  .seg button{ background:var(--card); border:none; color:var(--muted); padding:8px 11px; font-size:.78rem; font-weight:600; }
+  .seg button.on{ background:var(--crimson); color:#fff; }
+
+  svg{ display:block; width:100%; overflow:visible; }
+  #areaChart svg{ max-height:240px; }
+  #donut svg{ height:200px; width:auto; margin:0 auto; }
+  #weekday svg{ height:130px; }
+  .chartwrap{ position:relative; }
+  .tip{ position:absolute; pointer-events:none; background:var(--ink); color:var(--card); font-size:.72rem; padding:5px 9px; border-radius:7px; white-space:nowrap; opacity:0; transform:translate(-50%,-8px); transition:opacity .12s; font-weight:600; z-index:5; }
+
+  .legend{ display:flex; gap:16px; flex-wrap:wrap; margin-top:12px; font-size:.8rem; }
+  .legend span{ display:inline-flex; align-items:center; gap:7px; color:var(--ink-2); }
+  .legend i{ width:11px; height:11px; border-radius:3px; }
+
+  .note{ color:var(--muted); font-size:.78rem; margin:24px 0 0; line-height:1.55; }
   .hidden{ display:none; }
-  .spark{ display:flex; align-items:flex-end; gap:3px; height:60px; margin-top:6px; }
-  .spark div{ flex:1; background:var(--crimson); opacity:.75; border-radius:2px 2px 0 0; min-height:2px; }
+  .flags-strip{ display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; }
+  .flags-strip img{ width:26px; height:19px; border-radius:3px; object-fit:cover; box-shadow:0 0 0 1px rgba(0,0,0,.08); }
 </style>
 </head>
 <body>
@@ -73,39 +137,70 @@
 
 <!-- DASHBOARD VIEW -->
 <div id="dashView" class="hidden">
-  <div class="top"><div class="wrap">
-    <h1>NepalDisaster.com · Visitor Analytics</h1>
-    <button class="lo" id="logoutBtn" type="button">Sign out</button>
+  <div class="top"><div class="top__in">
+    <span class="brand"><span class="dot"></span> NepalDisaster · Analytics</span>
+    <span class="spacer"></span>
+    <span class="live" id="liveLbl"><span class="live__dot"></span> updated just now</span>
+    <button class="tbtn" id="refreshBtn" title="Refresh now"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-2.6-6.4M21 4v5h-5"/></svg> Refresh</button>
+    <button class="tbtn" id="exportBtn" title="Export CSV"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 21h16"/></svg> CSV</button>
+    <button class="tbtn" id="themeBtn" title="Toggle theme"><svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg></button>
+    <button class="tbtn lo" id="logoutBtn" type="button">Sign out</button>
   </div></div>
+
   <div class="wrap">
-    <div class="kpis">
-      <div class="kpi"><div class="n mono" id="kUniques">—</div><div class="l">Real Visitors (unique)</div></div>
-      <div class="kpi"><div class="n mono" id="kPageviews">—</div><div class="l">Total Pageviews</div></div>
-      <div class="kpi"><div class="n mono" id="kCountries">—</div><div class="l">Countries</div></div>
-      <div class="kpi"><div class="n mono" id="kNepal">—</div><div class="l">Nepal Visits</div></div>
+    <div class="kpis" id="kpis"></div>
+
+    <div class="grid g2" style="margin-bottom:18px">
+      <div class="panel chartwrap">
+        <h2>Visits — last 14 days <span class="sub" id="dailyTotal"></span></h2>
+        <p class="cap" id="dailyCap">Daily pageviews</p>
+        <div id="areaChart"></div>
+        <div class="tip" id="areaTip"></div>
+      </div>
+      <div class="panel chartwrap">
+        <h2>Audience split <span class="sub">by pageviews</span></h2>
+        <p class="cap">Nepal vs international</p>
+        <div id="donut"></div>
+        <div class="legend" id="donutLegend"></div>
+      </div>
     </div>
 
-    <div class="panel" style="margin-bottom:22px">
-      <h2>Visits — last 14 days <span id="dailyTotal"></span></h2>
-      <div class="spark" id="spark"></div>
-    </div>
-
-    <div class="cols">
+    <div class="grid g2b" style="margin-bottom:18px">
       <div class="panel">
-        <h2>Top Countries <span>by pageviews</span></h2>
+        <h2>Visits by weekday <span class="sub">last 14 days</span></h2>
+        <p class="cap">Which days people check in</p>
+        <div id="weekday"></div>
+      </div>
+      <div class="panel">
+        <h2>Global reach <span class="sub" id="reachCount"></span></h2>
+        <p class="cap">Every country that has visited</p>
+        <div class="flags-strip" id="reachStrip"></div>
+      </div>
+    </div>
+
+    <div class="grid g2b">
+      <div class="panel">
+        <h2>Top countries <span class="sub">by pageviews</span></h2>
+        <div class="toolbar">
+          <input id="countrySearch" type="search" placeholder="Filter countries…" style="flex:1" />
+          <div class="seg" id="countrySort">
+            <button data-sort="count" class="on">Top</button>
+            <button data-sort="name">A–Z</button>
+          </div>
+        </div>
         <div id="countries"><div class="empty">Loading…</div></div>
       </div>
       <div class="panel">
-        <h2>Nepal — Cities <span>NP visitors</span></h2>
+        <h2>Nepal — cities <span class="sub">NP visitors</span></h2>
+        <p class="cap">Same-place names merged (e.g. Bharatpur / Chitwan)</p>
         <div id="cities"><div class="empty">Loading…</div></div>
       </div>
     </div>
 
     <p class="note">
-      Data is aggregated and privacy-first: country and city come from Vercel's
-      server-side geo lookup, unique visitors from an anonymous per-browser id.
-      No IP addresses, names, or gender are collected or stored — a visitor's
-      gender is not available from a web request and is intentionally not tracked.
+      Privacy-first &amp; aggregate: country and city come from Vercel's server-side geo
+      lookup; unique visitors from an anonymous per-browser id. No IP addresses, names,
+      or gender are collected or stored. Flags via flagcdn.com. Auto-refreshes every 45s.
     </p>
   </div>
 </div>

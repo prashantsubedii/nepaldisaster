@@ -1393,9 +1393,9 @@ const STATS_DETAIL=[
  {id:"missing", sev:"danger", big:"2,426", title:{en:"Missing and Out of Contact",ne:"बेपत्ता तथा सम्पर्कविहीन"}, unit:{en:"Nepal side only",ne:"नेपालतर्फ मात्र"}, src:"Nepal Police / NDRRMA",
   rows:[["Nepal — missing / out of contact","2,426"]],
   note:{en:"Nepal Police report {n} people missing or out of contact on the Nepal side. This figure is Nepal-only — it excludes the separately-counted China/Tibet-side missing. It moves in both directions as people are found dead or rescued.",ne:"नेपाल प्रहरीका अनुसार नेपालतर्फ {n} जना बेपत्ता वा सम्पर्कविहीन। यो संख्या नेपाल मात्रको हो — चीन/तिब्बततर्फको अलग गणनालाई समावेश गरिएको छैन। मानिस मृत वा उद्धार भेटिँदै जाँदा यो घट्न वा बढ्न सक्छ।"}},
- {id:"rescued", sev:"relief", big:"2,189", title:{en:"Rescued — Named Registry",ne:"उद्धार — नामावली अभिलेख"}, unit:{en:"of 6,633 rescued in total · NDRRMA",ne:"कुल ६,६३३ उद्धारमध्ये · NDRRMA"}, src:"NDRRMA rescue portal",
-  rows:[["Total rescued (all)","6,633"],["Named in registry","2,189"],["Nepali (named)","2,034"],["Foreign (named)","155"]],
-  note:{en:"NDRRMA reports 6,633 people rescued in total. Of these, 2,189 are individually named in the public registry (2,034 Nepali, 155 foreign) for family tracing — the searchable list on this site's Rescued page. Both figures auto-update live from the NDRRMA API; the total is shown on the home page.",ne:"NDRRMA का अनुसार कुल ६,६३३ जना उद्धार। यसमध्ये २,१८९ जनाको नाम सार्वजनिक नामावलीमा (२,०३४ नेपाली, १५५ विदेशी) परिवार खोजीका लागि — यस साइटको उद्धार पृष्ठमा खोजयोग्य। दुवै संख्या NDRRMA API बाट प्रत्यक्ष अद्यावधिक; कुल संख्या गृहपृष्ठमा देखाइन्छ।"}},
+ {id:"rescued", sev:"relief", big:"6,633", title:{en:"Rescued",ne:"उद्धार"}, unit:{en:"total rescued · NDRRMA · 2,189 individually named",ne:"कुल उद्धार · NDRRMA · २,१८९ जनाको नाम"}, src:"NDRRMA rescue portal",
+  rows:[["Total rescued","6,633"],["Named in registry","2,189"],["— of these, Nepali","2,034"],["— of these, foreign","155"]],
+  note:{en:"NDRRMA reports 6,633 people rescued in total. Of those, 2,189 are so far individually named in the public registry — and of that named group, 2,034 are Nepali and 155 are foreign nationals. The full searchable name list is on this site's Rescued page. All figures auto-update live from the NDRRMA API.",ne:"NDRRMA का अनुसार कुल ६,६३३ जना उद्धार। तीमध्ये अहिलेसम्म २,१८९ जनाको नाम सार्वजनिक नामावलीमा — र त्यो नामावलीमध्ये २,०३४ नेपाली र १५५ विदेशी नागरिक। पूरा खोजयोग्य नामावली यस साइटको उद्धार पृष्ठमा। सबै संख्या NDRRMA API बाट प्रत्यक्ष अद्यावधिक।"}},
  {id:"injured", sev:"watch", big:"1,473", title:{en:"Injured",ne:"घाइते"}, unit:{en:"Nepal side",ne:"नेपालतर्फ"}, src:"Nepal Police / Health Ministry",
   rows:[["Nepal — injured","1,473"]],
   note:{en:"{n} injured people are receiving treatment across hospitals in the affected districts and Kathmandu. Nepal Police and the Health Ministry continue to update the count.",ne:"प्रभावित जिल्ला र काठमाडौंका अस्पतालमा {n} घाइतेको उपचार जारी। नेपाल प्रहरी र स्वास्थ्य मन्त्रालयले संख्या अद्यावधिक गर्दै।"}},
@@ -1846,7 +1846,7 @@ function _setRescueRegistry(grandTotal, named, nepali, foreign){
   let ch=false;
   const putBig=v=>{ if(v!=null && _int(v)>0){ const s=_fmtInt(v); if(d.big!==s){ d.big=s; ch=true; } } };
   const putRow=(i,v)=>{ if(v!=null && _int(v)>0 && d.rows[i]){ const s=_fmtInt(v); if(d.rows[i][1]!==s){ d.rows[i][1]=s; ch=true; } } };
-  putBig(named);
+  putBig(grandTotal||named);           // headline = TOTAL rescued (falls back to named if the total feed is down)
   putRow(0,grandTotal); putRow(1,named); putRow(2,nepali); putRow(3,foreign);
   return ch;
 }

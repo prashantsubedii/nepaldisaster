@@ -5,6 +5,7 @@
 
 const { isAuthed } = require('../lib/auth');
 const { cmd } = require('../lib/kv');
+const { mergeCities } = require('../lib/geo');
 
 /* Upstash HGETALL returns a flat array [field, val, field, val, ...].
    Normalise to sorted [ [field, count], ... ] descending by count. */
@@ -36,7 +37,7 @@ module.exports = async (req, res) => {
       pageviews: Number(pv) || 0,
       uniques: Number(uniques) || 0,
       countries: toSorted(countries),
-      nepalCities: toSorted(npCities),
+      nepalCities: mergeCities(toSorted(npCities)),
       daily: toSorted(daily).sort((a, b) => (a[0] < b[0] ? -1 : 1)).slice(-14)
     });
   } catch (e) {

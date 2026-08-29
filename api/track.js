@@ -7,6 +7,7 @@
    Always returns 204 so it can never break page loads. */
 
 const { pipeline } = require('../lib/kv');
+const { canonCity } = require('../lib/geo');
 
 /* Strip anything that isn't a letter/number/basic punctuation, cap length —
    defends the KV key/field space against junk or injection attempts. */
@@ -24,7 +25,7 @@ module.exports = async (req, res) => {
 
     let rawCity = req.headers['x-vercel-ip-city'] || '';
     try { rawCity = decodeURIComponent(rawCity); } catch (_) { /* keep as-is */ }
-    const city = clean(rawCity, 64) || 'Unknown';
+    const city = canonCity(clean(rawCity, 64)) || 'Unknown';
 
     let body = req.body;
     if (typeof body === 'string') { try { body = JSON.parse(body); } catch (_) { body = {}; } }

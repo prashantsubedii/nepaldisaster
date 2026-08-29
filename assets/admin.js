@@ -1,8 +1,8 @@
 'use strict';
-/* Admin panel client logic. Contains NO credentials and NO auth decisions —
-   it simply talks to the server-side API. The server decides who is allowed in;
-   this script only reflects that. All rendering uses safe DOM APIs (no innerHTML
-   with server strings) so hostile city/country values can never inject markup. */
+/* Admin analytics dashboard — client logic only. Contains NO credentials and NO
+   auth decisions; the server (/api/stats behind a signed cookie) decides access.
+   Untrusted strings (country/city names) are rendered with textContent ONLY.
+   Charts embed numbers and validated YYYY-MM-DD dates only — never name strings. */
 
 (function () {
   var loginView = document.getElementById('loginView');
@@ -11,103 +11,351 @@
   var errEl = document.getElementById('loginErr');
   var loginBtn = document.getElementById('loginBtn');
 
+  var DATA = null;            // last stats payload
+  var LAST_AT = 0;           // when we last loaded (ms)
+  var COUNTRY_SORT = 'count';
+  var COUNTRY_Q = '';
+  var timer = null, clockTimer = null;
+
+  /* ---------- helpers ---------- */
   function show(view) {
     loginView.classList.toggle('hidden', view !== 'login');
     dashView.classList.toggle('hidden', view !== 'dash');
   }
-
   function fmt(n) { return (Number(n) || 0).toLocaleString('en-US'); }
+  function el(tag, cls, txt) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (txt != null) e.textContent = txt;
+    return e;
+  }
+  function pct(part, whole) { whole = whole || 0; return whole ? (part / whole * 100) : 0; }
 
-  /* Build a labelled bar row with textContent only (XSS-safe). */
-  function barRow(name, value, max) {
-    var row = document.createElement('div'); row.className = 'row';
-    var nm = document.createElement('div'); nm.className = 'name'; nm.textContent = name;
-    var barWrap = document.createElement('div'); barWrap.style.flex = '0 0 120px';
-    var bar = document.createElement('div'); bar.className = 'bar';
-    bar.style.width = Math.max(2, Math.round((value / (max || 1)) * 120)) + 'px';
-    barWrap.appendChild(bar);
-    var val = document.createElement('div'); val.className = 'val'; val.textContent = fmt(value);
-    row.appendChild(nm); row.appendChild(barWrap); row.appendChild(val);
-    return row;
+  /* ISO-3166 alpha-2 → display name (common set; falls back to the code). */
+  var CNAME = {
+    NP:'Nepal', IN:'India', US:'United States', CN:'China', AU:'Australia', GB:'United Kingdom',
+    CA:'Canada', DE:'Germany', FR:'France', JP:'Japan', KR:'South Korea', MY:'Malaysia',
+    UA:'Ukraine', IT:'Italy', ES:'Spain', NL:'Netherlands', RU:'Russia', BR:'Brazil',
+    AE:'UAE', SA:'Saudi Arabia', QA:'Qatar', KW:'Kuwait', BH:'Bahrain', OM:'Oman',
+    SG:'Singapore', HK:'Hong Kong', TW:'Taiwan', TH:'Thailand', ID:'Indonesia', PH:'Philippines',
+    VN:'Vietnam', BD:'Bangladesh', PK:'Pakistan', LK:'Sri Lanka', BT:'Bhutan', MM:'Myanmar',
+    IL:'Israel', TR:'Turkey', EG:'Egypt', ZA:'South Africa', NG:'Nigeria', KE:'Kenya',
+    SE:'Sweden', NO:'Norway', DK:'Denmark', FI:'Finland', PL:'Poland', CZ:'Czechia',
+    AT:'Austria', CH:'Switzerland', BE:'Belgium', IE:'Ireland', PT:'Portugal', GR:'Greece',
+    HU:'Hungary', RO:'Romania', MX:'Mexico', AR:'Argentina', CL:'Chile', CO:'Colombia',
+    NZ:'New Zealand', XX:'Unknown'
+  };
+  function cname(cc) { return CNAME[cc] || cc || '—'; }
+  function flagUrl(cc) {
+    var c = String(cc || '').toLowerCase();
+    return /^[a-z]{2}$/.test(c) ? 'https://flagcdn.com/48x36/' + c + '.png' : '';
+  }
+  function flagImg(cc, w) {
+    var img = document.createElement('img');
+    img.className = 'flag'; img.width = w || 22; img.alt = '';
+    var u = flagUrl(cc);
+    if (u) { img.src = u; img.addEventListener('error', function () { img.style.visibility = 'hidden'; }); }
+    else { img.style.visibility = 'hidden'; }
+    return img;
   }
 
-  function renderList(el, rows, emptyMsg) {
-    el.textContent = '';
-    if (!rows || !rows.length) {
-      var e = document.createElement('div'); e.className = 'empty';
-      e.textContent = emptyMsg || 'No data yet.'; el.appendChild(e); return;
+  /* ---------- KPI cards ---------- */
+  function trendBadge(today, yest) {
+    var b = el('span', 'trend');
+    if (!yest) { b.className = 'trend flat'; b.textContent = '—'; return b; }
+    var d = (today - yest) / yest * 100;
+    if (Math.abs(d) < 0.5) { b.className = 'trend flat'; b.textContent = '0%'; }
+    else if (d > 0) { b.className = 'trend up'; b.textContent = '▲ ' + Math.round(d) + '%'; }
+    else { b.className = 'trend down'; b.textContent = '▼ ' + Math.round(Math.abs(d)) + '%'; }
+    return b;
+  }
+  function kpiCard(value, label, cls, badge) {
+    var c = el('div', 'kpi' + (cls ? ' ' + cls : ''));
+    c.appendChild(el('div', 'n mono', value));
+    c.appendChild(el('div', 'l', label));
+    if (badge) c.appendChild(badge);
+    return c;
+  }
+  function renderKPIs(d) {
+    var wrap = document.getElementById('kpis'); wrap.textContent = '';
+    var countries = d.countries || [];
+    var daily = d.daily || [];
+    var np = countries.find(function (c) { return c[0] === 'NP'; });
+    var npv = np ? np[1] : 0;
+    var pv = d.pageviews || 0, uq = d.uniques || 0;
+    var today = daily.length ? daily[daily.length - 1][1] : 0;
+    var yest = daily.length > 1 ? daily[daily.length - 2][1] : 0;
+    var peak = daily.reduce(function (m, r) { return Math.max(m, r[1]); }, 0);
+    var ppv = uq ? (pv / uq) : 0;
+
+    wrap.appendChild(kpiCard(fmt(uq), 'Real visitors (unique)'));
+    wrap.appendChild(kpiCard(fmt(pv), 'Total pageviews'));
+    wrap.appendChild(kpiCard(fmt(countries.length), 'Countries reached', 'k--green'));
+    wrap.appendChild(kpiCard(fmt(npv), 'Nepal visits', 'k--red'));
+    wrap.appendChild(kpiCard(ppv.toFixed(1), 'Pageviews / visitor', 'k--amber'));
+    wrap.appendChild(kpiCard(Math.round(pct(npv, pv)) + '%', 'Nepal share', 'k--red'));
+    wrap.appendChild(kpiCard(fmt(today), 'Today', null, trendBadge(today, yest)));
+    wrap.appendChild(kpiCard(fmt(peak), 'Peak day', 'k--green'));
+  }
+
+  /* ---------- area chart (14-day) ---------- */
+  var validDate = function (s) { return /^\d{4}-\d{2}-\d{2}$/.test(s); };
+  function shortDate(s) { return validDate(s) ? s.slice(5) : ''; }
+  function renderArea(daily) {
+    var host = document.getElementById('areaChart'); host.textContent = '';
+    var tip = document.getElementById('areaTip');
+    if (!daily || !daily.length) { host.appendChild(el('div', 'empty', 'No visits recorded yet.')); return; }
+    var W = 720, H = 210, padL = 34, padR = 12, padT = 12, padB = 26;
+    var iw = W - padL - padR, ih = H - padT - padB;
+    var n = daily.length;
+    var max = daily.reduce(function (m, r) { return Math.max(m, r[1]); }, 1);
+    var x = function (i) { return padL + (n === 1 ? iw / 2 : (i / (n - 1)) * iw); };
+    var y = function (v) { return padT + ih - (v / max) * ih; };
+    var pts = daily.map(function (r, i) { return [x(i), y(r[1])]; });
+    var line = pts.map(function (p, i) { return (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join(' ');
+    var area = 'M' + padL + ' ' + (padT + ih) + ' ' + line.replace('M', 'L') + ' L' + x(n - 1).toFixed(1) + ' ' + (padT + ih);
+    var grid = '', labY = '';
+    for (var g = 0; g <= 3; g++) {
+      var gy = padT + (ih / 3) * g;
+      grid += '<line x1="' + padL + '" y1="' + gy.toFixed(1) + '" x2="' + (W - padR) + '" y2="' + gy.toFixed(1) + '" stroke="var(--grid)" stroke-width="1"/>';
+      labY += '<text x="' + (padL - 6) + '" y="' + (gy + 3).toFixed(1) + '" text-anchor="end" font-size="9" fill="var(--muted)">' + Math.round(max - (max / 3) * g) + '</text>';
     }
-    var max = rows[0][1] || 1;
-    rows.slice(0, 12).forEach(function (r) { el.appendChild(barRow(r[0], r[1], max)); });
-  }
-
-  function renderSpark(rows) {
-    var el = document.getElementById('spark'); el.textContent = '';
-    if (!rows || !rows.length) return;
-    var max = rows.reduce(function (m, r) { return Math.max(m, r[1]); }, 1);
-    var total = 0;
-    rows.forEach(function (r) {
-      total += r[1];
-      var d = document.createElement('div');
-      d.style.height = Math.max(2, Math.round((r[1] / max) * 60)) + 'px';
-      d.title = r[0] + ': ' + fmt(r[1]);
-      el.appendChild(d);
+    var dots = pts.map(function (p) { return '<circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="2.6" fill="var(--crimson)"/>'; }).join('');
+    var xlabels = '';
+    daily.forEach(function (r, i) {
+      if (n <= 8 || i % 2 === 0 || i === n - 1) {
+        xlabels += '<text x="' + x(i).toFixed(1) + '" y="' + (H - 8) + '" text-anchor="middle" font-size="9" fill="var(--muted)">' + shortDate(r[0]) + '</text>';
+      }
     });
+    host.innerHTML =
+      '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img">' +
+      '<defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1">' +
+      '<stop offset="0" stop-color="var(--crimson)" stop-opacity="0.35"/>' +
+      '<stop offset="1" stop-color="var(--crimson)" stop-opacity="0.02"/></linearGradient></defs>' +
+      grid + labY +
+      '<path d="' + area + '" fill="url(#ag)"/>' +
+      '<path d="' + line + '" fill="none" stroke="var(--crimson)" stroke-width="2.2" stroke-linejoin="round"/>' +
+      dots + xlabels + '</svg>';
+    // hover columns
+    daily.forEach(function (r, i) {
+      var seg = document.createElement('div');
+      seg.style.cssText = 'position:absolute;top:0;bottom:22px;width:' + (100 / n) + '%;left:' + (i / n * 100) + '%;';
+      seg.addEventListener('mouseenter', function () {
+        tip.textContent = (validDate(r[0]) ? r[0] : '') + ' · ' + fmt(r[1]) + ' views';
+        tip.style.left = ((x(i) / W) * 100) + '%';
+        tip.style.top = ((y(r[1]) / H) * 100) + '%';
+        tip.style.opacity = '1';
+      });
+      seg.addEventListener('mouseleave', function () { tip.style.opacity = '0'; });
+      host.parentNode.appendChild(seg);
+    });
+    var total = daily.reduce(function (s, r) { return s + r[1]; }, 0);
     document.getElementById('dailyTotal').textContent = fmt(total) + ' total';
   }
 
+  /* ---------- donut (Nepal vs international) ---------- */
+  function renderDonut(npv, pv) {
+    var host = document.getElementById('donut'); host.textContent = '';
+    var leg = document.getElementById('donutLegend'); leg.textContent = '';
+    var intl = Math.max(0, pv - npv);
+    var R = 60, C = 2 * Math.PI * R, npFrac = pv ? npv / pv : 0;
+    var npLen = (C * npFrac).toFixed(1);
+    host.innerHTML =
+      '<svg viewBox="0 0 180 150" role="img">' +
+      '<g transform="translate(90,75) rotate(-90)">' +
+      '<circle r="' + R + '" fill="none" stroke="var(--accent-2)" stroke-width="22"/>' +
+      '<circle r="' + R + '" fill="none" stroke="var(--crimson)" stroke-width="22" ' +
+      'stroke-dasharray="' + npLen + ' ' + C.toFixed(1) + '"/></g>' +
+      '<text x="90" y="72" text-anchor="middle" font-size="26" font-weight="800" fill="var(--ink)" font-family="Archivo,sans-serif">' + Math.round(npFrac * 100) + '%</text>' +
+      '<text x="90" y="90" text-anchor="middle" font-size="10" fill="var(--muted)">from Nepal</text></svg>';
+    var l1 = el('span'); l1.appendChild(Object.assign(document.createElement('i'), { style: 'background:var(--crimson)' }));
+    l1.appendChild(document.createTextNode('Nepal · ' + fmt(npv))); leg.appendChild(l1);
+    var l2 = el('span'); l2.appendChild(Object.assign(document.createElement('i'), { style: 'background:var(--accent-2)' }));
+    l2.appendChild(document.createTextNode('International · ' + fmt(intl))); leg.appendChild(l2);
+  }
+
+  /* ---------- weekday pattern ---------- */
+  function renderWeekday(daily) {
+    var host = document.getElementById('weekday'); host.textContent = '';
+    if (!daily || !daily.length) { host.appendChild(el('div', 'empty', 'No data yet.')); return; }
+    var names = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], sums = [0, 0, 0, 0, 0, 0, 0];
+    daily.forEach(function (r) { if (validDate(r[0])) { var d = new Date(r[0] + 'T00:00:00Z').getUTCDay(); sums[d] += r[1]; } });
+    var max = sums.reduce(function (m, v) { return Math.max(m, v); }, 1);
+    var bars = '', lab = '', bw = 100 / 7;
+    sums.forEach(function (v, i) {
+      var h = (v / max) * 74, cx = (i + 0.5) * bw;
+      bars += '<rect x="' + (i * bw + bw * 0.18) + '%" y="' + (86 - h) + '" width="' + (bw * 0.64) + '%" height="' + h.toFixed(1) + '" rx="3" fill="var(--accent)"><title>' + names[i] + ': ' + v + '</title></rect>';
+      lab += '<text x="' + cx + '%" y="98" text-anchor="middle" font-size="9" fill="var(--muted)">' + names[i] + '</text>';
+    });
+    host.innerHTML = '<svg viewBox="0 0 300 104" preserveAspectRatio="none" style="height:120px">' + bars + lab + '</svg>';
+  }
+
+  /* ---------- reach flag strip ---------- */
+  function renderReach(countries) {
+    var host = document.getElementById('reachStrip'); host.textContent = '';
+    document.getElementById('reachCount').textContent = (countries || []).length + ' countries';
+    (countries || []).slice(0, 60).forEach(function (c) {
+      if (flagUrl(c[0])) { var img = flagImg(c[0], 26); img.title = cname(c[0]) + ' · ' + fmt(c[1]); host.appendChild(img); }
+    });
+    if (!host.childNodes.length) host.appendChild(el('div', 'empty', 'No visits yet.'));
+  }
+
+  /* ---------- country table (flags + search + sort) ---------- */
+  function renderCountries() {
+    var host = document.getElementById('countries'); host.textContent = '';
+    var rows = (DATA && DATA.countries) ? DATA.countries.slice() : [];
+    if (COUNTRY_Q) {
+      var q = COUNTRY_Q.toLowerCase();
+      rows = rows.filter(function (r) { return r[0].toLowerCase().indexOf(q) >= 0 || cname(r[0]).toLowerCase().indexOf(q) >= 0; });
+    }
+    if (COUNTRY_SORT === 'name') rows.sort(function (a, b) { return cname(a[0]).localeCompare(cname(b[0])); });
+    else rows.sort(function (a, b) { return b[1] - a[1]; });
+    if (!rows.length) { host.appendChild(el('div', 'empty', 'No matches.')); return; }
+    var max = rows.reduce(function (m, r) { return Math.max(m, r[1]); }, 1);
+    var total = (DATA.countries || []).reduce(function (s, r) { return s + r[1]; }, 0);
+    rows.slice(0, 30).forEach(function (r, i) {
+      var row = el('div', 'row');
+      row.appendChild(el('div', 'rank', String(i + 1)));
+      row.appendChild(flagImg(r[0], 22));
+      var nm = el('div', 'name'); nm.appendChild(document.createTextNode(cname(r[0])));
+      var code = el('span', 'code', r[0]); nm.appendChild(code);
+      row.appendChild(nm);
+      var track = el('div', 'track'); var bar = el('div', 'bar');
+      bar.style.width = Math.max(3, (r[1] / max) * 100) + '%'; track.appendChild(bar); row.appendChild(track);
+      row.appendChild(el('div', 'val mono', fmt(r[1])));
+      row.appendChild(el('div', 'pct', Math.round(pct(r[1], total)) + '%'));
+      host.appendChild(row);
+    });
+  }
+
+  /* ---------- cities ---------- */
+  function renderCities(rows) {
+    var host = document.getElementById('cities'); host.textContent = '';
+    if (!rows || !rows.length) { host.appendChild(el('div', 'empty', 'No Nepal visits recorded yet.')); return; }
+    var max = rows[0][1] || 1, total = rows.reduce(function (s, r) { return s + r[1]; }, 0);
+    rows.slice(0, 14).forEach(function (r, i) {
+      var row = el('div', 'row');
+      row.appendChild(el('div', 'rank', String(i + 1)));
+      row.appendChild(el('div', 'name', r[0]));
+      var track = el('div', 'track'); var bar = el('div', 'bar');
+      bar.style.width = Math.max(3, (r[1] / max) * 100) + '%'; track.appendChild(bar); row.appendChild(track);
+      row.appendChild(el('div', 'val mono', fmt(r[1])));
+      row.appendChild(el('div', 'pct', Math.round(pct(r[1], total)) + '%'));
+      host.appendChild(row);
+    });
+  }
+
+  /* ---------- render all ---------- */
+  function renderAll(d) {
+    DATA = d; LAST_AT = Date.now();
+    var np = (d.countries || []).find(function (c) { return c[0] === 'NP'; });
+    renderKPIs(d);
+    renderArea(d.daily);
+    renderDonut(np ? np[1] : 0, d.pageviews || 0);
+    renderWeekday(d.daily);
+    renderReach(d.countries);
+    renderCountries();
+    renderCities(d.nepalCities);
+    tickClock();
+  }
+
+  function tickClock() {
+    var lbl = document.getElementById('liveLbl'); if (!lbl || !LAST_AT) return;
+    var s = Math.round((Date.now() - LAST_AT) / 1000);
+    var txt = s < 5 ? 'updated just now' : s < 60 ? 'updated ' + s + 's ago' : 'updated ' + Math.round(s / 60) + 'm ago';
+    lbl.lastChild.textContent = ' ' + txt;
+  }
+
+  /* ---------- CSV export ---------- */
+  function toCSV() {
+    if (!DATA) return;
+    var lines = ['section,key,value'];
+    (DATA.countries || []).forEach(function (r) { lines.push('country,' + r[0] + ',' + r[1]); });
+    (DATA.nepalCities || []).forEach(function (r) { lines.push('nepal_city,"' + String(r[0]).replace(/"/g, '""') + '",' + r[1]); });
+    (DATA.daily || []).forEach(function (r) { lines.push('daily,' + r[0] + ',' + r[1]); });
+    lines.push('summary,pageviews,' + (DATA.pageviews || 0));
+    lines.push('summary,uniques,' + (DATA.uniques || 0));
+    var blob = new Blob([lines.join('\n')], { type: 'text/csv' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'nepaldisaster-analytics-' + new Date().toISOString().slice(0, 10) + '.csv';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+  }
+
+  /* ---------- theme ---------- */
+  function applyTheme(t) {
+    if (t === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+    else document.documentElement.removeAttribute('data-theme');
+    var ic = document.getElementById('themeIcon');
+    if (ic) ic.innerHTML = t === 'dark'
+      ? '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"/>'
+      : '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/>';
+    try { localStorage.setItem('nd_admin_theme', t); } catch (e) {}
+  }
+  function initTheme() {
+    var t = 'light';
+    try { t = localStorage.getItem('nd_admin_theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); } catch (e) {}
+    applyTheme(t);
+  }
+
+  /* ---------- data load ---------- */
   function loadStats() {
     fetch('/api/stats', { credentials: 'same-origin' })
       .then(function (r) {
-        if (r.status === 401) { show('login'); throw new Error('unauth'); }
+        if (r.status === 401) { show('login'); stopAuto(); throw new Error('unauth'); }
         if (!r.ok) throw new Error('stats');
         return r.json();
       })
-      .then(function (d) {
-        show('dash');
-        document.getElementById('kUniques').textContent = fmt(d.uniques);
-        document.getElementById('kPageviews').textContent = fmt(d.pageviews);
-        document.getElementById('kCountries').textContent = fmt((d.countries || []).length);
-        var np = (d.countries || []).find(function (c) { return c[0] === 'NP'; });
-        document.getElementById('kNepal').textContent = fmt(np ? np[1] : 0);
-        renderList(document.getElementById('countries'), d.countries, 'No visits recorded yet.');
-        renderList(document.getElementById('cities'), d.nepalCities, 'No Nepal visits recorded yet.');
-        renderSpark(d.daily);
-      })
-      .catch(function () { /* handled above */ });
+      .then(function (d) { show('dash'); renderAll(d); startAuto(); })
+      .catch(function () { /* handled */ });
+  }
+  function startAuto() {
+    if (!timer) timer = setInterval(loadStats, 45000);
+    if (!clockTimer) clockTimer = setInterval(tickClock, 1000);
+  }
+  function stopAuto() {
+    if (timer) { clearInterval(timer); timer = null; }
+    if (clockTimer) { clearInterval(clockTimer); clockTimer = null; }
   }
 
+  /* ---------- wiring ---------- */
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    errEl.textContent = '';
-    loginBtn.disabled = true;
+    errEl.textContent = ''; loginBtn.disabled = true;
     fetch('/api/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'same-origin',
-      body: JSON.stringify({
-        email: document.getElementById('email').value,
-        password: document.getElementById('password').value
-      })
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'same-origin',
+      body: JSON.stringify({ email: document.getElementById('email').value, password: document.getElementById('password').value })
     })
       .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
       .then(function (res) {
         loginBtn.disabled = false;
-        if (res.ok && res.j.ok) {
-          document.getElementById('password').value = '';
-          loadStats();
-        } else {
-          errEl.textContent = (res.j && res.j.error) || 'Sign-in failed.';
-        }
+        if (res.ok && res.j.ok) { document.getElementById('password').value = ''; loadStats(); }
+        else { errEl.textContent = (res.j && res.j.error) || 'Sign-in failed.'; }
       })
       .catch(function () { loginBtn.disabled = false; errEl.textContent = 'Network error. Try again.'; });
   });
 
   document.getElementById('logoutBtn').addEventListener('click', function () {
-    fetch('/api/logout', { method: 'POST', credentials: 'same-origin' })
-      .then(function () { show('login'); });
+    stopAuto();
+    fetch('/api/logout', { method: 'POST', credentials: 'same-origin' }).then(function () { show('login'); });
   });
+  document.getElementById('refreshBtn').addEventListener('click', loadStats);
+  document.getElementById('exportBtn').addEventListener('click', toCSV);
+  document.getElementById('themeBtn').addEventListener('click', function () {
+    var cur = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+    applyTheme(cur === 'dark' ? 'light' : 'dark');
+  });
+  document.getElementById('countrySearch').addEventListener('input', function (e) { COUNTRY_Q = e.target.value.trim(); renderCountries(); });
+  Array.prototype.forEach.call(document.querySelectorAll('#countrySort button'), function (b) {
+    b.addEventListener('click', function () {
+      COUNTRY_SORT = b.getAttribute('data-sort');
+      Array.prototype.forEach.call(document.querySelectorAll('#countrySort button'), function (x) { x.classList.toggle('on', x === b); });
+      renderCountries();
+    });
+  });
+  document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible' && DATA) loadStats(); });
 
-  // On load, try stats — if the session cookie is valid we skip straight to the dashboard.
+  initTheme();
   loadStats();
 })();

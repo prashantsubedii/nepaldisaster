@@ -29,8 +29,8 @@
       "rows": [ ["Nepal — missing / out of contact", "2,426"] ]
     },
     "rescued": {
-      "big": "2,189",
-      "rows": [ ["Total rescued (all)", "6,633"], ["Named in registry", "2,189"], ["Nepali (named)", "2,034"], ["Foreign (named)", "155"] ]
+      "big": "6,633",
+      "rows": [ ["Total rescued", "6,633"], ["Named in registry", "2,189"], ["— of these, Nepali", "2,034"], ["— of these, foreign", "155"] ]
     },
     "injured": {
       "big": "1,473",
