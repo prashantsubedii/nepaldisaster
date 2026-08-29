@@ -9,10 +9,21 @@
 
 const { cmd } = require('../lib/kv');
 
-const QUERY = 'Nepal floods when:14d';
-const FEED = 'https://news.google.com/rss/search?q=' +
-  encodeURIComponent(QUERY) + '&hl=en-US&gl=US&ceid=US:en';
-const CACHE_KEY = 'cache:news:v2';
+// Two feeds merged: broad wire coverage + reliable Nepali outlets, so the list
+// always carries fresh Nepali reporting alongside the international headlines.
+const NEPALI_SITES = [
+  'onlinekhabar.com', 'kathmandupost.com', 'ratopati.com',
+  'myrepublica.nagariknetwork.com', 'setopati.com', 'ekantipur.com',
+  'thehimalayantimes.com', 'nepalnews.com'
+];
+const FEEDS = [
+  'https://news.google.com/rss/search?q=' +
+    encodeURIComponent('Nepal floods when:21d') + '&hl=en-US&gl=US&ceid=US:en',
+  'https://news.google.com/rss/search?q=' +
+    encodeURIComponent('Nepal flood when:21d (' + NEPALI_SITES.map(s => 'site:' + s).join(' OR ') + ')') +
+    '&hl=en-US&gl=US&ceid=US:en'
+];
+const CACHE_KEY = 'cache:news:v3';
 const TTL = 600;          // serve cached for 10 minutes
 const STALE = 6 * 3600;   // keep a stale copy up to 6h for fallback
 
@@ -48,14 +59,28 @@ function parse(xml) {
     .slice(0, 24);
 }
 
-async function fresh() {
-  const r = await fetch(FEED, {
+async function fetchFeed(url) {
+  const r = await fetch(url, {
     headers: { 'User-Agent': 'Mozilla/5.0 (compatible; nepaldisaster.com/1.0)' },
     signal: AbortSignal.timeout(8000)
   });
   if (!r.ok) throw new Error('rss ' + r.status);
-  const items = parse(await r.text());
-  return { at: Date.now(), items };
+  return parse(await r.text());
+}
+
+async function fresh() {
+  const results = await Promise.allSettled(FEEDS.map(fetchFeed));
+  const seen = new Set();
+  let merged = [];
+  results.forEach(r => {
+    if (r.status === 'fulfilled') r.value.forEach(it => {
+      const key = (it.title || '').toLowerCase().slice(0, 60);
+      if (key && !seen.has(key)) { seen.add(key); merged.push(it); }
+    });
+  });
+  if (!merged.length) throw new Error('no items');
+  merged.sort((a, b) => b.ts - a.ts);
+  return { at: Date.now(), items: merged.slice(0, 30) };
 }
 
 module.exports = async (req, res) => {

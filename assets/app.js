@@ -860,6 +860,8 @@ function wire(){
   setupManualSync();
   fetchLiveNews();                                                // pull live headlines now…
   setInterval(fetchLiveNews, 600000);                            // …and every 10 minutes
+  fetchLiveAlerts();                                              // live flood alerts (GDACS)…
+  setInterval(fetchLiveAlerts, 600000);                          // …refreshed every 10 minutes
   // re-render bulletins every 10 minutes (refreshes relative times / fallback content)
   setInterval(()=>{
     renderTicker();
@@ -943,7 +945,28 @@ const NOTIFS=[
 ];
 /* cleared alerts persist; a cleared alert never reappears — only genuinely new ids show */
 const NOTIF_CLEARED=(()=>{try{return new Set(JSON.parse(localStorage.getItem("nd_cleared")||"[]"));}catch(e){return new Set();}})();
-function activeNotifs(){ return NOTIFS.filter(n=>!NOTIF_CLEARED.has(n.id)); }
+/* Live flood alerts from /api/alerts (GDACS — UN/EC official flood feed). These
+   are prepended to the built-in advisories; a genuinely new event id shows up as
+   a new alert automatically. */
+let LIVE_ALERTS=[];
+function activeNotifs(){ return LIVE_ALERTS.concat(NOTIFS).filter(n=>!NOTIF_CLEARED.has(n.id)); }
+async function fetchLiveAlerts(){
+  try{
+    const r=await fetch("/api/alerts",{signal:AbortSignal.timeout(9000)});
+    if(!r.ok) return;
+    const j=await r.json();
+    if(j && Array.isArray(j.alerts)){
+      LIVE_ALERTS=j.alerts.map(a=>{
+        let when="live"; try{ if(a.ts) when=new Date(a.ts).toLocaleDateString(LANG==="ne"?"ne-NP":"en-GB",{day:"numeric",month:"short"}); }catch(_){}
+        const lvl=a.alertlevel||"GDACS";
+        return { id:a.id||("gdacs-"+(a.from||"")), sev:a.level||"watch", url:a.url,
+          tag:{en:"Flood alert · "+lvl, ne:"बाढी अलर्ट · "+lvl}, time:when, src:"GDACS · UN/EC",
+          msg:{en:a.description||a.title, ne:a.description||a.title} };
+      });
+      renderNotifs();
+    }
+  }catch(_){ /* keep built-in advisories */ }
+}
 function clearNotifs(){ activeNotifs().forEach(n=>NOTIF_CLEARED.add(n.id)); try{localStorage.setItem("nd_cleared",JSON.stringify([...NOTIF_CLEARED]));}catch(e){} renderNotifs(); }
 
 /* url + long now live inline on each NEWS item above (20 sourced bulletins) */
@@ -1215,7 +1238,7 @@ function renderNotifs(){
     <div class="nrow nrow--${n.sev}">
       <div class="nrow__t"><span class="nrow__tag">${esc(TL(n.tag))}</span><span class="nrow__time mono">${esc(n.time)}</span></div>
       <div class="nrow__msg">${esc(TL(n.msg))}</div>
-      <div class="nrow__src">SRC · ${esc(n.src)}</div>
+      <div class="nrow__src">SRC · ${esc(n.src)}${n.url?` · <a href="${esc(n.url)}" target="_blank" rel="noopener" style="color:var(--crimson)">${esc(t("news.source"))}</a>`:""}</div>
     </div>`).join("");
 }
 
