@@ -120,8 +120,8 @@ const EVENT = {
   since:"2026-08-26T08:37:00+05:45",
   title:{en:"2026 Nepal Floods", ne:"२०२६ नेपाल बाढी"},
   region:{en:"Rasuwa · Nuwakot · Trishuli corridor · Chitwan", ne:"रसुवा · नुवाकोट · त्रिशूली कोरिडोर · चितवन"},
-  eas:{en:"Trishuli corridor glacial flood. 626 dead, 2,426 missing (Nepal); 2,189 rescued. Search & relief ongoing.",
-       ne:"त्रिशूली कोरिडोरमा हिमनदी बाढी। ६२६ मृत्यु, २,४२६ बेपत्ता (नेपाल); २,१८९ उद्धार। खोजी तथा राहत जारी।"}
+  eas:{en:"Trishuli corridor glacial flood. 626 dead, 2,426 missing (Nepal); 6,633 rescued (2,189 named). Search & relief ongoing.",
+       ne:"त्रिशूली कोरिडोरमा हिमनदी बाढी। ६२६ मृत्यु, २,४२६ बेपत्ता (नेपाल); ६,६३३ उद्धार (२,१८९ नामावली)। खोजी तथा राहत जारी।"}
 };
 /* Nepal-side figures only. Live-refreshed every 10 minutes: local feed (baseline)
    → Wikipedia PROSE (deaths/missing/injured + foreign nationals among the missing,
@@ -132,13 +132,13 @@ let STATS = [
   {key:"deaths",  n:"626", cls:"hstat--death"},
   {key:"missing", n:"2,426"},
   {key:"foreign", n:"668"},
-  {key:"rescued", n:"2,189", cls:"hstat--rescue"}
+  {key:"rescued", n:"6,633", cls:"hstat--rescue"}   // hero = TOTAL rescued (NDRRMA rescued-statistics); the NAMED registry (2,189) is a separate figure shown on the Rescued page
 ];
 
 /* -------------------- TICKER -------------------- */
 const TICKER = [
-  {src:"POLICE", en:"Nepal Police confirm 626 dead, 2,426 missing (Nepal); 2,189 rescued — figures rising",
-   ne:"नेपाल प्रहरीले ६२६ मृत्यु, २,४२६ बेपत्ता (नेपाल) पुष्टि; २,१८९ उद्धार — संख्या बढ्दै"},
+  {src:"POLICE", en:"Nepal Police confirm 626 dead, 2,426 missing (Nepal); 6,633 rescued (2,189 named) — figures rising",
+   ne:"नेपाल प्रहरीले ६२६ मृत्यु, २,४२६ बेपत्ता (नेपाल) पुष्टि; ६,६३३ उद्धार (२,१८९ नामावली) — संख्या बढ्दै"},
   {src:"NDRRMA", en:"NDRRMA names 2,189 rescued in its official registry — 2,034 Nepali, 155 foreign",
    ne:"NDRRMA अभिलेखमा २,१८९ उद्धारितको नाम — २,०३४ नेपाली, १५५ विदेशी"},
   {src:"PMO", en:"PM Disaster Relief Fund passes Rs 385.5 million; govt releases Rs 1 billion",
@@ -386,8 +386,8 @@ const I18N = {
   "hero.eyebrow":"Active Disaster · Live Situation",
   "hero.note":"Provisional Nepal-side figures confirmed by Nepal Police and NDRRMA (as of {date}). Counts auto-update and are being revised as search operations continue — not final. Verify against official Nepal Police / NDRRMA bulletins.",
   "hero.help":"Emergency Helplines","hero.report":"Report an Incident",
-  "stat.deaths":"Confirmed Deaths","stat.missing":"Reported Missing","stat.foreign":"Foreign Nationals Missing","stat.rescued":"Rescued",
-  "stat.sub.deaths":"Nepal Police · rising","stat.sub.missing":"incl. 668 foreign","stat.sub.foreign":"tourists & NRNs","stat.sub.rescued":"by air · NDRRMA","stat.tap":"Tap for breakdown →",
+  "stat.deaths":"Confirmed Deaths","stat.missing":"Reported Missing","stat.foreign":"Foreign Nationals Missing","stat.rescued":"Total Rescued",
+  "stat.sub.deaths":"Nepal Police · rising","stat.sub.missing":"incl. 668 foreign","stat.sub.foreign":"tourists & NRNs","stat.sub.rescued":"NDRRMA · 2,189 named","stat.tap":"Tap for breakdown →",
   "sec.hl.eye":"Call for Help · Toll-free 24×7","sec.hl.h":"Emergency Helplines",
   "hl.national":"National","hl.district":"Affected Districts","hl.more":"All helplines →",
   "hl.note":"Source: NDRRMA emergency helpline notice. If a line is busy, dial 100 (Police) or 102 (Ambulance).",
@@ -419,7 +419,7 @@ const I18N = {
   "hero.eyebrow":"सक्रिय विपद् · पछिल्लो अवस्था",
   "hero.note":"नेपाल प्रहरी र NDRRMA द्वारा पुष्टि गरिएको नेपालतर्फको प्रारम्भिक तथ्यांक ({date} सम्म)। तथ्यांक स्वतः अद्यावधिक हुन्छ र खोजी कार्य जारी रहेकाले संशोधन हुँदैछ — अन्तिम होइन। आधिकारिक नेपाल प्रहरी / NDRRMA विवरणसँग रुजु गर्नुहोस्।",
   "hero.help":"आपत्कालीन हेल्पलाइन","hero.report":"घटना जानकारी दिनुहोस्",
-  "stat.deaths":"पुष्टि भएका मृत्यु","stat.missing":"बेपत्ता","stat.foreign":"बेपत्ता विदेशी नागरिक","stat.rescued":"उद्धार",
+  "stat.deaths":"पुष्टि भएका मृत्यु","stat.missing":"बेपत्ता","stat.foreign":"बेपत्ता विदेशी नागरिक","stat.rescued":"कुल उद्धार",
   "stat.sub.deaths":"नेपाल प्रहरी · बढ्दै","stat.sub.missing":"६६८ विदेशीसहित","stat.sub.foreign":"पर्यटक र गैरआवासीय","stat.sub.rescued":"हवाई · NDRRMA","stat.tap":"विस्तृत विवरण →",
   "sec.hl.eye":"सहयोगका लागि सम्पर्क · निःशुल्क २४×७","sec.hl.h":"आपत्कालीन हेल्पलाइन",
   "hl.national":"राष्ट्रिय","hl.district":"प्रभावित जिल्लाहरू","hl.more":"सबै हेल्पलाइन →",
