@@ -187,7 +187,7 @@ html[lang="ne"] .ticker__tag { text-transform: none; letter-spacing: 0; font-fam
   align-items: center;
   height: 36px;
   white-space: nowrap;
-  animation: tk 48s linear infinite;
+  animation: tk 80s linear infinite;
 }
 .ticker__track:hover { animation-play-state: paused; }
 .ticker__item {

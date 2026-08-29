@@ -124,13 +124,14 @@ const EVENT = {
        ne:"त्रिशूली कोरिडोरमा हिमनदी बाढी। ६२६ मृत्यु, २,४२६ बेपत्ता (नेपाल); २,१८९ उद्धार। खोजी तथा राहत जारी।"}
 };
 /* Nepal-side figures only. Live-refreshed every 10 minutes: local feed (baseline)
-   → Wikipedia PROSE (deaths/missing, which states Nepal figures separately from Tibet)
-   → NDRRMA API (rescued, live Nepal registry). The Wikipedia INFOBOX is NOT used —
-   it reports Nepal+Tibet COMBINED, which is what previously inflated the toll. */
+   → Wikipedia PROSE (deaths/missing/injured + foreign nationals among the missing,
+   which states Nepal figures separately from Tibet) → NDRRMA API (rescued, live
+   Nepal registry). The Wikipedia INFOBOX is NOT used — it reports Nepal+Tibet
+   COMBINED, which is what previously inflated the toll. */
 let STATS = [
   {key:"deaths",  n:"626", cls:"hstat--death"},
   {key:"missing", n:"2,426"},
-  {key:"foreign", n:"542"},
+  {key:"foreign", n:"668"},
   {key:"rescued", n:"2,189", cls:"hstat--rescue"}
 ];
 
@@ -140,14 +141,14 @@ const TICKER = [
    ne:"नेपाल प्रहरीले ६२६ मृत्यु, २,४२६ बेपत्ता (नेपाल) पुष्टि; २,१८९ उद्धार — संख्या बढ्दै"},
   {src:"NDRRMA", en:"NDRRMA names 2,189 rescued in its official registry — 2,034 Nepali, 155 foreign",
    ne:"NDRRMA अभिलेखमा २,१८९ उद्धारितको नाम — २,०३४ नेपाली, १५५ विदेशी"},
-  {src:"PMO", en:"PM Disaster Relief Fund raises Rs 273.3 million; govt releases Rs 1 billion",
-   ne:"प्रधानमन्त्री राहत कोषमा रु. २७.३३ करोड; सरकारले रु. १ अर्ब निकासा"},
+  {src:"PMO", en:"PM Disaster Relief Fund passes Rs 385.5 million; govt releases Rs 1 billion",
+   ne:"प्रधानमन्त्री राहत कोष रु. ३८.५५ करोड नाघ्यो; सरकारले रु. १ अर्ब निकासा"},
   {src:"USGS", en:"Ice avalanche from a glacier — not an earthquake — triggered the surge",
    ne:"भूकम्प होइन, हिमनदीको हिउँ पहिरोले बाढीको भल निम्त्यायो — यूएसजीएस"},
-  {src:"GOVT", en:"19 bridges and ~40 km of highway gone; six hydropower plants damaged",
-   ne:"१९ पुल र करिब ४० कि.मि. सडक ध्वस्त; ६ जलविद्युत् आयोजना क्षतिग्रस्त"},
-  {src:"AID", en:"India sends ~50 tonnes of aid; US $500k, UK £5m, IFRC $1.4m pledged",
-   ne:"भारतले करिब ५० टन सहायता; अमेरिका ५ लाख डलर, बेलायत ५० लाख पाउन्ड, IFRC १४ लाख डलर"}
+  {src:"GOVT", en:"41 bridges and ~42 km of road damaged (Rs 15bn); ~431 MW knocked off the grid",
+   ne:"४१ पुल र करिब ४२ कि.मि. सडक क्षति (रु. १५ अर्ब); करिब ४३१ मेगावाट ग्रिडबाट हट्यो"},
+  {src:"AID", en:"ADB pledges $5m; EU €2m, UN CERF $2m and Red Cross CHF 1m released",
+   ne:"एडीबीले ५० लाख डलर; युरोपेली संघ २० लाख युरो, संयुक्त राष्ट्र CERF २० लाख डलर, रेडक्रस १० लाख स्विस फ्र्यांक"}
 ];
 
 /* -------------------- NEWS / BULLETINS (20, sourced; full articles) -------------------- */
@@ -1398,9 +1399,9 @@ const STATS_DETAIL=[
  {id:"injured", sev:"watch", big:"1,473", title:{en:"Injured",ne:"घाइते"}, unit:{en:"Nepal side",ne:"नेपालतर्फ"}, src:"Nepal Police / Health Ministry",
   rows:[["Nepal — injured","1,473"]],
   note:{en:"1,473 injured people are receiving treatment across hospitals in the affected districts and Kathmandu. Nepal Police and the Health Ministry continue to update the count.",ne:"प्रभावित जिल्ला र काठमाडौंका अस्पतालमा १,४७३ घाइतेको उपचार जारी। नेपाल प्रहरी र स्वास्थ्य मन्त्रालयले संख्या अद्यावधिक गर्दै।"}},
- {id:"foreign", sev:"danger", big:"542", title:{en:"Foreign Nationals by Country",ne:"विदेशी नागरिक देश अनुसार"}, unit:{en:"at least 542 missing · 30+ countries",ne:"कम्तीमा ५४२ बेपत्ता · ३०+ देश"}, src:"Nepal Police / Diplomatic Missions",
-  rows:[["India","214"],["United States","94"],["Ukraine","76"],["Malaysia","71"],["Non-resident Indians","58"],["Australia","9"],["United Kingdom","7"],["Canada","5"],["South Korea","4"],["Italy","2"],["Philippines","1"],["Other countries","1"]],
-  note:{en:"At least 542 of the missing are foreign nationals from more than 30 countries, per Nepal Police and diplomatic missions. Country figures are provisional and revised as identification continues.",ne:"बेपत्तामध्ये कम्तीमा ५४२ जना ३० भन्दा बढी देशका विदेशी नागरिक (नेपाल प्रहरी र कूटनीतिक नियोग)। देशगत तथ्यांक प्रारम्भिक।"}},
+ {id:"foreign", sev:"danger", big:"668", title:{en:"Foreign Nationals by Country",ne:"विदेशी नागरिक देश अनुसार"}, unit:{en:"at least 668 missing · 34 countries",ne:"कम्तीमा ६६८ बेपत्ता · ३४ देश"}, src:"Nepal Police / Diplomatic Missions",
+  rows:[["India","288"],["United States","90"],["Ukraine","53"],["Malaysia","51"],["Australia","35"],["United Kingdom","33"],["Canada","32"],["Other countries","86"]],
+  note:{en:"At least 668 of the missing are foreign nationals from 34 countries, per Nepal Police and diplomatic missions — many trekkers and pilgrims on the Langtang and Kerung routes. Country figures are provisional and revised as identification continues.",ne:"बेपत्तामध्ये कम्तीमा ६६८ जना ३४ देशका विदेशी नागरिक (नेपाल प्रहरी र कूटनीतिक नियोग) — धेरै लाङटाङ र केरुङ मार्गका पदयात्री र तीर्थयात्री। देशगत तथ्यांक प्रारम्भिक।"}},
  {id:"security", sev:"watch", big:"4,348", title:{en:"Search Operation and Security Personnel",ne:"खोज सञ्चालन र सुरक्षाकर्मी"}, unit:{en:"Nepal Army · Armed Police · Nepal Police",ne:"नेपाली सेना · सशस्त्र प्रहरी · नेपाल प्रहरी"}, src:"Nepal Police / OnlineKhabar",
   rows:[["Total personnel mobilised","4,348"]],
   note:{en:"About 4,348 personnel from the Nepal Army, Armed Police Force and Nepal Police have been mobilised for search, rescue, medical treatment and relief distribution across the affected districts. An exact per-force breakdown is not published by a live source; this total is from official police briefings.",ne:"नेपाली सेना, सशस्त्र प्रहरी र नेपाल प्रहरीका करिब ४,३४८ जनशक्ति प्रभावित जिल्लामा खोज, उद्धार, उपचार र राहत वितरणमा परिचालित। बलगत विस्तृत विवरण कुनै प्रत्यक्ष स्रोतले प्रकाशन गर्दैन; यो कुल संख्या प्रहरीको आधिकारिक विवरणबाट।"}},
@@ -1409,7 +1410,7 @@ const STATS_DETAIL=[
  {id:"land", sev:"relief", big:"", title:{en:"Rescued from Land",ne:"स्थलमार्ग उद्धार"}, src:"NDRRMA",
   note:{en:"Ground-rescue figures are coordinated with local administrative units.",ne:"स्थलगत उद्धारको तथ्यांक स्थानीय निकायसँग समन्वय भइरहेको छ।"}},
  {id:"materials", sev:"relief", big:"", title:{en:"Relief Materials & International Aid",ne:"राहत सामग्री र अन्तर्राष्ट्रिय सहायता"}, src:"AP / BBC / Reuters",
-  rows:[["India","~50 tonnes of supplies"],["United States","USD 500,000"],["United Kingdom","GBP 5 million"],["IFRC (Red Cross)","USD 1.4 million"]]},
+  rows:[["India","~50 tonnes of supplies"],["Asian Development Bank","USD 5 million"],["European Union","EUR 2 million"],["UN CERF","USD 2 million"],["Red Cross / IFRC","CHF 1 million"]]},
  {id:"fuel", sev:"watch", big:"", title:{en:"Fuel and Logistics",ne:"इन्धन र रसद"}, src:"NDRRMA / Nepal Army",
   note:{en:"Fuel and logistics are coordinated by the Nepal Army and NDRRMA.",ne:"इन्धन र रसद नेपाली सेना र NDRRMA ले समन्वय गर्छन्।"}}
 ];
@@ -1710,8 +1711,8 @@ Object.assign(I18N.ne,{
   "rfund.note":"प्रधानमन्त्री विपद् राहत कोषका लागि अर्थमन्त्रीलाई हस्तान्तरित प्रारम्भिक रकम र सरकारी निकासा; रकम बढ्दै। स्रोत: अनलाइनखबर / OPMCM — भर पर्नुअघि रुजु गर्नुहोस्।"
 });
 const RELIEF_COLLECTED = {
-  updated:"27 Aug 2026",
-  donations:273.3,   // million NPR — public donations handed to Finance Minister (first 6 hours)
+  updated:"28 Aug 2026",
+  donations:385.5,   // million NPR — cumulative public donations to the PM Disaster Relief Fund (by 28 Aug; top donors listed below)
   govt:1000,         // million NPR — Government release to the fund
   donors:[
     {name:{en:"Gorkha Brewery",ne:"गोर्खा ब्रुअरी"}, amt:100},
@@ -1902,6 +1903,11 @@ async function _srcSummary(){
   }
   const inj=txt.match(/([\d,]{2,7})\s+(?:people\s+)?were\s+injured/i);
   if(inj && _setStat("injured",_num(inj[1]))) changed=true;
+  // Foreign nationals among the missing, e.g. "At least 668 tourists from 34
+  // countries are among the missing." Previously this figure had NO live source
+  // and stayed frozen at its baseline — this is what made "foreign" look stuck.
+  const fgn=txt.match(/([\d,]{2,7})\s+(?:foreign\s+)?tourists?\s+from\s+\d+\s+countries?\s+(?:are|were)\s+among\s+the\s+missing/i);
+  if(fgn && _setStat("foreign",_num(fgn[1]))) changed=true;
   return changed;
 }
 

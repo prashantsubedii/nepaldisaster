@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-29T09:15:00+05:45",
+  "updated_at": "2026-08-29T18:45:00+05:45",
   "event": {
     "code": "FL-2026-0826",
     "since": "2026-08-26T08:37:00+05:45",
@@ -16,7 +16,7 @@
   "stats": [
     { "key": "deaths",  "n": "626", "cls": "hstat--death" },
     { "key": "missing", "n": "2,426" },
-    { "key": "foreign", "n": "542" },
+    { "key": "foreign", "n": "668" },
     { "key": "rescued", "n": "2,189", "cls": "hstat--rescue" }
   ],
   "stats_detail": {
@@ -37,12 +37,11 @@
       "rows": [ ["Nepal — injured", "1,473"] ]
     },
     "foreign": {
-      "big": "542",
+      "big": "668",
       "rows": [
-        ["India", "214"], ["United States", "94"], ["Ukraine", "76"],
-        ["Malaysia", "71"], ["Non-resident Indians", "58"], ["Australia", "9"],
-        ["United Kingdom", "7"], ["Canada", "5"], ["South Korea", "4"],
-        ["Italy", "2"], ["Philippines", "1"], ["Other countries", "1"]
+        ["India", "288"], ["United States", "90"], ["Ukraine", "53"],
+        ["Malaysia", "51"], ["Australia", "35"], ["United Kingdom", "33"],
+        ["Canada", "32"], ["Other countries", "86"]
       ]
     }
   }
