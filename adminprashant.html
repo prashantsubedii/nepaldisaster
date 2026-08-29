@@ -119,12 +119,20 @@
   .flags-strip img{ width:26px; height:19px; border-radius:3px; object-fit:cover; box-shadow:0 0 0 1px rgba(0,0,0,.08); }
   .chk{ display:inline-flex; align-items:center; gap:6px; font-size:.78rem; color:var(--muted); margin:0; text-transform:none; letter-spacing:0; font-weight:500; cursor:pointer; }
   .chk input{ width:auto; margin:0; accent-color:var(--crimson); }
-  .insights{ display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:12px; }
-  .insight{ border:1px solid var(--line); border-radius:11px; padding:14px 15px; background:var(--line-2); }
-  .insight .ic{ font-size:1.05rem; }
-  .insight .t{ font-size:.72rem; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); font-weight:600; margin:6px 0 3px; }
-  .insight .v{ font-family:Archivo,sans-serif; font-weight:700; font-size:1.05rem; line-height:1.25; }
-  .insight .v small{ font-weight:500; color:var(--muted); font-size:.82rem; }
+  /* 6 insight cards → always an even grid (6 / 3 / 2), never an orphan row */
+  .insights{ display:grid; grid-template-columns:repeat(6,1fr); gap:12px; }
+  @media(max-width:1100px){ .insights{ grid-template-columns:repeat(3,1fr); } }
+  @media(max-width:680px){ .insights{ grid-template-columns:repeat(2,1fr); } }
+  .insight{ border:1px solid var(--line); border-radius:12px; padding:15px; background:var(--line-2); display:flex; flex-direction:column; }
+  .insight .ic{ width:34px; height:34px; border-radius:9px; display:inline-flex; align-items:center; justify-content:center; background:color-mix(in srgb,var(--accent-2) 13%,transparent); color:var(--accent-2); margin-bottom:11px; }
+  .insight .ic svg{ width:18px; height:18px; }
+  .insight.i-red .ic{ background:color-mix(in srgb,var(--crimson) 13%,transparent); color:var(--crimson); }
+  .insight.i-green .ic{ background:color-mix(in srgb,var(--accent) 15%,transparent); color:var(--accent); }
+  .insight.i-amber .ic{ background:color-mix(in srgb,var(--amber) 16%,transparent); color:var(--amber); }
+  .insight.i-blue .ic{ background:color-mix(in srgb,var(--accent-2) 13%,transparent); color:var(--accent-2); }
+  .insight .t{ font-size:.7rem; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); font-weight:600; margin:0 0 4px; }
+  .insight .v{ font-family:Archivo,sans-serif; font-weight:700; font-size:1.02rem; line-height:1.25; margin-top:auto; }
+  .insight .v small{ font-weight:500; color:var(--muted); font-size:.8rem; }
   #hourChart svg{ height:150px; }
 </style>
 </head>

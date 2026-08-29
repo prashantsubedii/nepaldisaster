@@ -251,9 +251,18 @@
   }
 
   /* ---------- auto-generated insights ---------- */
-  function insightCard(icon, title, value, sub) {
-    var c = el('div', 'insight');
-    c.appendChild(el('div', 'ic', icon));
+  // Themed line icons (stroke = currentColor, tinted by the card's accent chip).
+  var IC = {
+    trend: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>',
+    clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+    compare: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3l4 4-4 4"/><path d="M21 7H8a4 4 0 0 0-4 4"/><path d="M7 21l-4-4 4-4"/><path d="M3 17h13a4 4 0 0 0 4-4"/></svg>',
+    bars: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>',
+    globe: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18Z"/></svg>',
+    flag: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4"/><path d="M5 4h11l-2 3.5L16 11H5"/></svg>'
+  };
+  function insightCard(iconSvg, cls, title, value, sub) {
+    var c = el('div', 'insight' + (cls ? ' ' + cls : ''));
+    var ic = el('div', 'ic'); ic.innerHTML = iconSvg; c.appendChild(ic);
     c.appendChild(el('div', 't', title));
     var v = el('div', 'v'); v.appendChild(document.createTextNode(value));
     if (sub) { v.appendChild(document.createTextNode(' ')); v.appendChild(el('small', null, sub)); }
@@ -267,28 +276,29 @@
     var busy = daily.reduce(function (b, r) { return r[1] > b[1] ? r : b; }, ['—', 0]);
     var wk = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     var busyLbl = validDate(busy[0]) ? wk[new Date(busy[0] + 'T00:00:00Z').getUTCDay()] + ' ' + busy[0].slice(5) : '—';
-    host.appendChild(insightCard('📈', 'Busiest day', fmt(busy[1]), 'views · ' + busyLbl));
+    host.appendChild(insightCard(IC.trend, 'i-red', 'Busiest day', fmt(busy[1]), 'views · ' + busyLbl));
     // peak hour of day
     var byHour = new Array(24).fill(0);
     hourly.forEach(function (r) { if (validHour(r[0])) byHour[parseInt(r[0].slice(11), 10)] += r[1]; });
     var peakH = byHour.indexOf(Math.max.apply(null, byHour.concat([0])));
     var peakHasData = byHour.some(function (v) { return v > 0; });
-    host.appendChild(insightCard('🕐', 'Peak hour (UTC)', peakHasData ? (peakH < 10 ? '0' + peakH : peakH) + ':00' : '—', peakHasData ? fmt(byHour[peakH]) + ' views' : 'collecting'));
+    host.appendChild(insightCard(IC.clock, 'i-blue', 'Peak hour (UTC)', peakHasData ? (peakH < 10 ? '0' + peakH : peakH) + ':00' : '—', peakHasData ? fmt(byHour[peakH]) + ' views' : 'collecting'));
     // week over week
     var last7 = daily.slice(-7).reduce(function (s, r) { return s + r[1]; }, 0);
     var prev7 = daily.slice(-14, -7).reduce(function (s, r) { return s + r[1]; }, 0);
     var wowTxt = '—', wowSub = 'vs prior 7d';
-    if (prev7) { var w = Math.round((last7 - prev7) / prev7 * 100); wowTxt = (w >= 0 ? '+' : '') + w + '%'; }
-    host.appendChild(insightCard('🔁', 'Week over week', wowTxt, wowSub));
+    var wowCls = 'i-green';
+    if (prev7) { var w = Math.round((last7 - prev7) / prev7 * 100); wowTxt = (w >= 0 ? '+' : '') + w + '%'; wowCls = w < 0 ? 'i-red' : 'i-green'; }
+    host.appendChild(insightCard(IC.compare, wowCls, 'Week over week', wowTxt, wowSub));
     // average per day
     var avg = daily.length ? Math.round(daily.reduce(function (s, r) { return s + r[1]; }, 0) / daily.length) : 0;
-    host.appendChild(insightCard('📊', 'Avg / day', fmt(avg), 'over ' + daily.length + 'd'));
+    host.appendChild(insightCard(IC.bars, 'i-amber', 'Avg / day', fmt(avg), 'over ' + daily.length + 'd'));
     // top country share
     var totC = countries.reduce(function (s, r) { return s + r[1]; }, 0);
     var top = countries[0] || ['—', 0];
-    host.appendChild(insightCard('🌍', 'Top country', cname(top[0]), Math.round(pct(top[1], totC)) + '% share'));
+    host.appendChild(insightCard(IC.globe, 'i-blue', 'Top country', cname(top[0]), Math.round(pct(top[1], totC)) + '% share'));
     // reach
-    host.appendChild(insightCard('🚩', 'Global reach', fmt(countries.length), 'countries'));
+    host.appendChild(insightCard(IC.flag, 'i-green', 'Global reach', fmt(countries.length), 'countries'));
   }
 
   /* ---------- country table (flags + search + sort) ---------- */
