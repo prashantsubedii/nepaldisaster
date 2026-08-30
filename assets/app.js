@@ -121,8 +121,8 @@ const EVENT = {
   since:"2026-08-26T08:37:00+05:45",
   title:{en:"2026 Nepal Floods", ne:"२०२६ नेपाल बाढी"},
   region:{en:"Rasuwa · Nuwakot · Trishuli corridor · Chitwan", ne:"रसुवा · नुवाकोट · त्रिशूली कोरिडोर · चितवन"},
-  eas:{en:"Trishuli corridor glacial flood. 734 dead, 2,498 missing (Nepal); 7,514 rescued (2,189 named). Search & relief ongoing.",
-       ne:"त्रिशूली कोरिडोरमा हिमनदी बाढी। ७३४ मृत्यु, २,४९८ बेपत्ता (नेपाल); ७,५१४ उद्धार (२,१८९ नामावली)। खोजी तथा राहत जारी।"}
+  eas:{en:"Trishuli corridor glacial flood. 734 dead, 2,498 missing (Nepal); 8,186 rescued by security forces. Search & relief ongoing.",
+       ne:"त्रिशूली कोरिडोरमा हिमनदी बाढी। ७३४ मृत्यु, २,४९८ बेपत्ता (नेपाल); सुरक्षा निकायद्वारा ८,१८६ उद्धार। खोजी तथा राहत जारी।"}
 };
 /* Nepal-side figures only. Live-refreshed every 10 minutes: local feed (baseline)
    → Wikipedia PROSE (deaths/missing/injured + foreign nationals among the missing,
@@ -133,13 +133,13 @@ let STATS = [
   {key:"deaths",  n:"734", cls:"hstat--death"},
   {key:"missing", n:"2,498"},
   {key:"foreign", n:"668"},
-  {key:"rescued", n:"7,514", cls:"hstat--rescue"}   // hero = TOTAL rescued (NDRRMA rescued-statistics); the NAMED registry (2,189) is a separate figure shown on the Rescued page
+  {key:"rescued", n:"8,186", cls:"hstat--rescue"}   // hero = TOTAL rescued (NDRRMA rescued-statistics); the NAMED registry (2,189) is a separate figure shown on the Rescued page
 ];
 
 /* -------------------- TICKER -------------------- */
 const TICKER = [
-  {src:"NDRRMA", en:"NDRRMA: 734 confirmed dead, 2,498 missing (30 Aug, 9 am); 7,514 rescued — figures still rising",
-   ne:"NDRRMA: ७३४ मृत्यु पुष्टि, २,४९८ बेपत्ता (३० भदौ, बिहान ९ बजे); ७,५१४ उद्धार — संख्या बढ्दै"},
+  {src:"NDRRMA", en:"NDRRMA: 734 confirmed dead, 2,498 missing (30 Aug, 9 am); 8,186 rescued — figures still rising",
+   ne:"NDRRMA: ७३४ मृत्यु पुष्टि, २,४९८ बेपत्ता (३० भदौ, बिहान ९ बजे); ८,१८६ उद्धार — संख्या बढ्दै"},
   {src:"TRAFFIC", en:"Prithvi Highway cut at Krishnabhir (Dhading) — Mugling–Kathmandu route closed after road subsided",
    ne:"पृथ्वी राजमार्ग कृष्णभीर (धादिङ) मा अवरुद्ध — सडक भासिएपछि मुग्लिन–काठमाडौं मार्ग बन्द"},
   {src:"NDRRMA", en:"NDRRMA names 2,189 rescued in its official registry — 2,034 Nepali, 155 foreign",
@@ -1679,9 +1679,12 @@ const STATS_DETAIL=[
  {id:"missing", sev:"danger", big:"2,498", title:{en:"Missing and Out of Contact",ne:"बेपत्ता तथा सम्पर्कविहीन"}, unit:{en:"Nepal side only",ne:"नेपालतर्फ मात्र"}, src:"Nepal Police / NDRRMA",
   rows:[["Nepal — missing / out of contact","2,498"],["— of these, in Rasuwa","562"]],
   note:{en:"Nepal Police report {n} people missing or out of contact on the Nepal side. This figure is Nepal-only — it excludes the separately-counted China/Tibet-side missing. It moves in both directions as people are found dead or rescued.",ne:"नेपाल प्रहरीका अनुसार नेपालतर्फ {n} जना बेपत्ता वा सम्पर्कविहीन। यो संख्या नेपाल मात्रको हो — चीन/तिब्बततर्फको अलग गणनालाई समावेश गरिएको छैन। मानिस मृत वा उद्धार भेटिँदै जाँदा यो घट्न वा बढ्न सक्छ।"}},
- {id:"rescued", sev:"relief", big:"7,514", title:{en:"Rescued",ne:"उद्धार"}, unit:{en:"total rescued · NDRRMA · 2,189 individually named",ne:"कुल उद्धार · NDRRMA · २,१८९ जनाको नाम"}, src:"NDRRMA rescue portal",
-  rows:[["Total rescued","7,514"],["Named in registry","2,189"],["— of these, Nepali","2,034"],["— of these, foreign","155"]],
-  note:{en:"NDRRMA reports 7,514 people rescued in total. Of those, 2,189 are so far individually named in the public registry — and of that named group, 2,034 are Nepali and 155 are foreign nationals. The full searchable name list is on this site's Rescued page. All figures auto-update live from the NDRRMA API.",ne:"NDRRMA का अनुसार कुल ७,५१४ जना उद्धार। तीमध्ये अहिलेसम्म २,१८९ जनाको नाम सार्वजनिक नामावलीमा — र त्यो नामावलीमध्ये २,०३४ नेपाली र १५५ विदेशी नागरिक। पूरा खोजयोग्य नामावली यस साइटको उद्धार पृष्ठमा। सबै संख्या NDRRMA API बाट प्रत्यक्ष अद्यावधिक।"}},
+ {id:"rescued", sev:"relief", big:"8,186", title:{en:"Rescued",ne:"उद्धार"}, unit:{en:"rescued by security forces · NDRRMA, 30 Aug",ne:"सुरक्षा निकायद्वारा उद्धार · NDRRMA, ३० भदौ"}, src:"NDRRMA / The Kathmandu Post",
+  // NOTE: rows 0–3 are written BY INDEX from _setRescueRegistry() —
+  // [0]=grand total, [1]=named registry, [2]=Nepali, [3]=foreign.
+  // Keep that order; append any extra rows after index 3.
+  rows:[["Total rescued (NDRRMA live count)","8,186"],["Named in public registry","2,189"],["— of these, Nepali","2,034"],["— of these, foreign","155"],["Rescued by security forces (30 Aug bulletin)","8,186"],["— airlifted from hydropower tunnel","279"],["— foreign nationals airlifted","227"]],
+  note:{en:"NDRRMA's 9 am update on 30 August reports 8,186 people rescued by security forces, including 279 airlifted over two days from a hydropower tunnel and 227 foreign nationals flown out by helicopter. Separately, 2,189 rescued people are so far individually named in the public registry — 2,034 Nepali and 155 foreign nationals. The full searchable name list is on this site's Rescued page and auto-updates from the NDRRMA API.",ne:"NDRRMA को ३० भदौ बिहान ९ बजेको अद्यावधिकअनुसार सुरक्षा निकायले ८,१८६ जनालाई उद्धार गरे — जसमा जलविद्युत् सुरुङबाट दुई दिनमा निकालिएका २७९ जना र हेलिकप्टरबाट उद्धार गरिएका २२७ विदेशी नागरिक समावेश। छुट्टै, उद्धार भएकामध्ये २,१८९ जनाको नाम सार्वजनिक नामावलीमा — २,०३४ नेपाली र १५५ विदेशी। पूरा खोजयोग्य नामावली यस साइटको उद्धार पृष्ठमा।"}},
  {id:"injured", sev:"watch", big:"242", title:{en:"Injured",ne:"घाइते"}, unit:{en:"Nepal side · incl. those discharged",ne:"नेपालतर्फ · डिस्चार्ज भइसकेकासहित"}, src:"NDRRMA (30 Aug, 9 am)",
   rows:[["Nepal — injured","242"]],
   note:{en:"NDRRMA reports {n} people injured, including those still receiving treatment and those already discharged, across hospitals in the affected districts and Kathmandu. The count is updated as casualty reports are consolidated.",ne:"NDRRMA का अनुसार प्रभावित जिल्ला र काठमाडौंका अस्पतालमा {n} जना घाइते — उपचाररत र डिस्चार्ज भइसकेका दुवै समावेश। विवरण एकीकृत हुँदै जाँदा संख्या अद्यावधिक हुन्छ।"}},
@@ -2111,7 +2114,7 @@ function _setStat(key,val){
   let changed=false;
   const s=STATS.find(x=>x.key===key);
   if(s && s.n!==disp){ s.n=disp; changed=true; }
-  // "rescued" is special: the HERO shows the TOTAL rescued (6,633), but its
+  // "rescued" is special: the HERO shows the TOTAL rescued, but its
   // stats-page detail is the NAMED REGISTRY (2,189) — a different, smaller
   // number kept in step separately via _setRescueRegistry(). So don't mirror the
   // hero total into that detail's headline here.
@@ -2218,8 +2221,12 @@ async function _srcSummary(){
     if(_setStat("deaths",_num(dm[1]))) changed=true;
     if(_setStat("missing",_num(dm[2]))) changed=true;
   }
-  const inj=txt.match(/([\d,]{2,7})\s+(?:people\s+)?were\s+injured/i);
-  if(inj && _setStat("injured",_num(inj[1]))) changed=true;
+  // INJURED is deliberately NOT parsed from Wikipedia. The article's injury
+  // figure mixes scopes (Nepal + Tibet, and counts that include people already
+  // discharged elsewhere), which is the same problem that made us drop the
+  // infobox above — it was overriding NDRRMA's Nepal-only figure (242 on
+  // 30 Aug) with a much larger combined number. Injured comes from NDRRMA via
+  // assets/live_data.json instead.
   // Foreign nationals among the missing, e.g. "At least 668 tourists from 34
   // countries are among the missing." Previously this figure had NO live source
   // and stayed frozen at its baseline — this is what made "foreign" look stuck.

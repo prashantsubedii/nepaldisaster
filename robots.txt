@@ -1,0 +1,35 @@
+# NepalDisaster.com — National Emergency Information Service
+# Public emergency information. Crawling is welcome and encouraged.
+
+User-agent: *
+Allow: /
+
+# Admin dashboard and server APIs are not public content.
+Disallow: /adminprashant
+Disallow: /adminprashant.html
+Disallow: /api/
+
+# Favicons and styles must stay crawlable — Google needs to fetch the icon
+# to show it beside the result, and CSS/JS to render the page for indexing.
+Allow: /favicon/
+Allow: /favicon.ico
+Allow: /assets/
+
+# Major crawlers: no crawl-delay, this is time-critical emergency information.
+User-agent: Googlebot
+Allow: /
+Disallow: /adminprashant
+Disallow: /api/
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Googlebot-News
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+Disallow: /adminprashant
+Disallow: /api/
+
+Sitemap: https://www.nepaldisaster.com/sitemap.xml

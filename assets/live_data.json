@@ -9,15 +9,15 @@
       "ne": "रसुवा · नुवाकोट · त्रिशूली कोरिडोर · चितवन"
     },
     "eas": {
-      "en": "Trishuli / Bhote Koshi glacial flood. NDRRMA confirm 734 dead and 2,498 missing (30 Aug, 9 am); 7,514 rescued. Prithvi Highway cut at Krishnabhir. Search, body management and relief ongoing.",
-      "ne": "त्रिशूली / भोटेकोशी हिमनदी बाढी। राष्ट्रिय विपद् प्राधिकरण (NDRRMA) ले ७३४ मृत्यु र २,४९८ बेपत्ता पुष्टि गरेको (३० भदौ, बिहान ९ बजे); ६,६३३ उद्धार। कृष्णभीरमा पृथ्वी राजमार्ग अवरुद्ध। खोजी, शव व्यवस्थापन र राहत जारी।"
+      "en": "Trishuli / Bhote Koshi glacial flood. NDRRMA confirm 734 dead and 2,498 missing (30 Aug, 9 am); 8,186 rescued by security forces. Prithvi Highway cut at Krishnabhir. Search, body management and relief ongoing.",
+      "ne": "त्रिशूली / भोटेकोशी हिमनदी बाढी। राष्ट्रिय विपद् प्राधिकरण (NDRRMA) ले ७३४ मृत्यु र २,४९८ बेपत्ता पुष्टि गरेको (३० भदौ, बिहान ९ बजे); सुरक्षा निकायद्वारा ८,१८६ उद्धार। कृष्णभीरमा पृथ्वी राजमार्ग अवरुद्ध। खोजी, शव व्यवस्थापन र राहत जारी।"
     }
   },
   "stats": [
     { "key": "deaths",  "n": "734", "cls": "hstat--death" },
     { "key": "missing", "n": "2,498" },
     { "key": "foreign", "n": "668" },
-    { "key": "rescued", "n": "7,514", "cls": "hstat--rescue" }
+    { "key": "rescued", "n": "8,186", "cls": "hstat--rescue" }
   ],
   "stats_detail": {
     "deaths": {
@@ -38,12 +38,25 @@
       "big": "2,498",
       "rows": [
         ["Nepal — missing / out of contact", "2,498"],
-        ["— of these, in Rasuwa", "562"]
+        ["Linked to hydropower projects", "933"],
+        ["Foreign nationals", "589"],
+        ["Nepalis travelling with them", "127"],
+        ["Rasuwa", "562"],
+        ["Nuwakot", "115"],
+        ["Makwanpur", "65"]
       ]
     },
     "rescued": {
-      "big": "7,514",
-      "rows": [ ["Total rescued", "7,514"], ["Named in registry", "2,189"], ["— of these, Nepali", "2,034"], ["— of these, foreign", "155"] ]
+      "big": "8,186",
+      "rows": [
+        ["Total rescued (NDRRMA live count)", "8,186"],
+        ["Named in public registry", "2,189"],
+        ["— of these, Nepali", "2,034"],
+        ["— of these, foreign", "155"],
+        ["Rescued by security forces (30 Aug bulletin)", "8,186"],
+        ["— airlifted from hydropower tunnel", "279"],
+        ["— foreign nationals airlifted", "227"]
+      ]
     },
     "injured": {
       "big": "242",
