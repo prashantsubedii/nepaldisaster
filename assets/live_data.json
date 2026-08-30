@@ -46,8 +46,18 @@
       "rows": [ ["Total rescued", "7,514"], ["Named in registry", "2,189"], ["— of these, Nepali", "2,034"], ["— of these, foreign", "155"] ]
     },
     "injured": {
-      "big": "1,473",
-      "rows": [ ["Nepal — injured", "1,473"] ]
+      "big": "242",
+      "rows": [ ["Nepal — injured", "242"] ]
+    },
+    "security": {
+      "big": "19,895",
+      "rows": [
+        ["Total personnel mobilised", "19,895"],
+        ["Nepali Army", "8,399"],
+        ["Nepal Police", "7,213"],
+        ["Armed Police Force", "4,203"],
+        ["Rescued by security forces", "8,186"]
+      ]
     },
     "foreign": {
       "big": "668",
