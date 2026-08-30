@@ -35,8 +35,9 @@
   function showOfflinePopup(){
     if(SEC.offline) return;
     SEC.offline = true;
+    const warn='<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:6px"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>';
     const html = `<div style="position:fixed;top:0;left:0;right:0;background:#C8102E;color:white;padding:12px 16px;font-family:sans-serif;font-size:14px;z-index:99999;border-bottom:2px solid #900;box-shadow:0 2px 8px rgba(0,0,0,0.3);">
-      <strong>⚠️ No Internet Connection</strong> — Data may be stale. Reconnect to sync latest figures from Nepal Police & NDRRMA.
+      <strong>${warn}No Internet Connection</strong> — Data may be stale. Reconnect to sync latest figures from Nepal Police & NDRRMA.
     </div>`;
     document.body.insertAdjacentHTML("afterbegin", html);
   }
@@ -862,7 +863,7 @@ function wire(){
   fetchLiveNews();                                                // pull live headlines now…
   setInterval(fetchLiveNews, 600000);                            // …and every 10 minutes
   fetchLiveAlerts();                                              // live flood alerts (GDACS)…
-  setInterval(fetchLiveAlerts, 600000);                          // …refreshed every 10 minutes
+  setInterval(fetchLiveAlerts, 180000);                          // …refreshed every 3 minutes so risky alerts surface fast
   // re-render bulletins every 10 minutes (refreshes relative times / fallback content)
   setInterval(()=>{
     renderTicker();
@@ -902,7 +903,10 @@ function doShare(mode){
    ========================================================================= */
 Object.assign(I18N.en,{
   "news.read":"Read full bulletin","news.live":"LIVE",
-  "notif.h":"Alerts","notif.eye":"Signal Feed","notif.clear":"Clear all","notif.empty":"No active alerts.","notif.count":"active","notif.enable":"🔔 Notify me",
+  "notif.h":"Alerts","notif.eye":"Signal Feed","notif.clear":"Clear all","notif.empty":"No active alerts.","notif.count":"active","notif.enable":"Notify me",
+  "fpop.eye":"Risky Flood Alert","fpop.red":"RED · SEVERE","fpop.orange":"ORANGE · RISKY","fpop.title":"Flood alert — Nepal",
+  "fpop.region":"Affected area","fpop.issued":"Issued","fpop.source":"Source","fpop.report":"View official report ↗",
+  "fpop.dismiss":"Dismiss","fpop.view":"See all alerts","fpop.auto":"Auto-checked every few minutes · GDACS (UN/EC)","fpop.live":"LIVE",
   "glof.tag":"GLOF Watch",
   "gallery.eye":"From the Affected Areas","gallery.h":"Ground Gallery","gallery.load":"Loading photos…","gallery.none":"Photos could not be loaded right now. See the official article.","gallery.loadall":"View all photos →","page.gallery.h":"Photo Gallery","page.gallery.p":"Photographs from the affected areas, from published news sources and Wikimedia. Verify context independently.",
   "page.news.h":"Live Bulletins","page.news.p":"Detailed reporting on the current disaster, compiled from published and official sources. Verify independently.",
@@ -912,7 +916,10 @@ Object.assign(I18N.en,{
 });
 Object.assign(I18N.ne,{
   "news.read":"पूरा बुलेटिन पढ्नुहोस्","news.live":"प्रत्यक्ष",
-  "notif.h":"अलर्टहरू","notif.eye":"सिग्नल फिड","notif.clear":"सबै हटाउनुहोस्","notif.empty":"कुनै सक्रिय अलर्ट छैन।","notif.count":"सक्रिय","notif.enable":"🔔 सूचना पाउनुहोस्",
+  "notif.h":"अलर्टहरू","notif.eye":"सिग्नल फिड","notif.clear":"सबै हटाउनुहोस्","notif.empty":"कुनै सक्रिय अलर्ट छैन।","notif.count":"सक्रिय","notif.enable":"सूचना पाउनुहोस्",
+  "fpop.eye":"जोखिमपूर्ण बाढी अलर्ट","fpop.red":"रातो · गम्भीर","fpop.orange":"सुन्तला · जोखिमपूर्ण","fpop.title":"बाढी अलर्ट — नेपाल",
+  "fpop.region":"प्रभावित क्षेत्र","fpop.issued":"जारी","fpop.source":"स्रोत","fpop.report":"आधिकारिक रिपोर्ट हेर्नुहोस् ↗",
+  "fpop.dismiss":"हटाउनुहोस्","fpop.view":"सबै अलर्ट हेर्नुहोस्","fpop.auto":"हरेक केही मिनेटमा स्वतः जाँच · GDACS (UN/EC)","fpop.live":"प्रत्यक्ष",
   "glof.tag":"GLOF सतर्कता",
   "gallery.eye":"प्रभावित क्षेत्रबाट","gallery.h":"स्थलगत ग्यालरी","gallery.load":"तस्बिर लोड हुँदै…","gallery.none":"अहिले तस्बिर लोड हुन सकेन। आधिकारिक लेख हेर्नुहोस्।","gallery.loadall":"सबै तस्बिर हेर्नुहोस् →","page.gallery.h":"तस्बिर ग्यालरी","page.gallery.p":"प्रभावित क्षेत्रका तस्बिरहरू, प्रकाशित समाचार र विकिमिडियाबाट। सन्दर्भ स्वतन्त्र रुजु गर्नुहोस्।",
   "page.news.h":"प्रत्यक्ष बुलेटिन","page.news.p":"हालको विपद्बारे प्रकाशित र आधिकारिक स्रोतबाट संकलित विस्तृत समाचार। स्वतन्त्र रुजु गर्नुहोस्।",
@@ -982,7 +989,7 @@ function updateNotifEnableBtn(){
   const b=$("#notifEnable"); if(!b) return;
   const hide = !notifSupported() || Notification.permission==="granted" || Notification.permission==="denied";
   b.hidden = hide;
-  b.textContent = t("notif.enable");
+  const lbl=b.querySelector(".ntf-lbl"); if(lbl) lbl.textContent = t("notif.enable");
 }
 
 async function fetchLiveAlerts(){
@@ -995,6 +1002,7 @@ async function fetchLiveAlerts(){
         let when="live"; try{ if(a.ts) when=new Date(a.ts).toLocaleDateString(LANG==="ne"?"ne-NP":"en-GB",{day:"numeric",month:"short"}); }catch(_){}
         const lvl=a.alertlevel||"GDACS";
         return { id:a.id||("gdacs-"+(a.from||"")), sev:a.level||"watch", url:a.url,
+          alertlevel:lvl, title:a.title||"", ts:a.ts||0,
           tag:{en:"Flood alert · "+lvl, ne:"बाढी अलर्ट · "+lvl}, time:when, src:"GDACS · UN/EC",
           msg:{en:a.description||a.title, ne:a.description||a.title} };
       });
@@ -1004,10 +1012,84 @@ async function fetchLiveAlerts(){
       LIVE_ALERTS.forEach(a=>NOTIF_SEEN.add(a.id));
       NOTIF_PRIMED=true; _saveSeen();
       renderNotifs();
+      maybeFloodPopup();   // surface the top risky (Red/Orange) alert as a UI popup
     }
   }catch(_){ /* keep built-in advisories */ }
 }
-function clearNotifs(){ activeNotifs().forEach(n=>NOTIF_CLEARED.add(n.id)); try{localStorage.setItem("nd_cleared",JSON.stringify([...NOTIF_CLEARED]));}catch(e){} renderNotifs(); }
+function clearNotifs(){ activeNotifs().forEach(n=>NOTIF_CLEARED.add(n.id)); try{localStorage.setItem("nd_cleared",JSON.stringify([...NOTIF_CLEARED]));}catch(e){} renderNotifs(); maybeFloodPopup(); }
+
+/* =========================================================================
+   RISKY FLOOD ALERT popup — an in-page modal (styled to match the site) that
+   surfaces the single highest-severity live flood alert the moment it arrives.
+   Unlike OS notifications (which need permission and stay silent on first load),
+   this always shows the current Red/Orange ("risky") alert once — so a visitor
+   who just opened the site immediately sees the active danger. Each alert id is
+   remembered so the same alert never pops twice; a genuinely new event pops on
+   its own the next time the 3-minute poll picks it up, no command needed.
+   ========================================================================= */
+const RISKY_SEV = new Set(["danger","watch"]);   // Red + Orange = risky; Green = advisory only
+const POPUP_SEEN=(()=>{try{return new Set(JSON.parse(localStorage.getItem("nd_popup_seen")||"[]"));}catch(e){return new Set();}})();
+function _savePopupSeen(){ try{localStorage.setItem("nd_popup_seen",JSON.stringify([...POPUP_SEEN].slice(-200)));}catch(e){} }
+let _popupOpenFor=null;   // id currently displayed (guards re-entrancy while open)
+
+/* pick the top risky alert we haven't shown yet, and pop it */
+function maybeFloodPopup(){
+  const pop=$("#fpop"); if(!pop) return;
+  if(_popupOpenFor) return;                                   // one at a time
+  const risky=LIVE_ALERTS
+    .filter(a=>RISKY_SEV.has(a.sev) && !NOTIF_CLEARED.has(a.id) && !POPUP_SEEN.has(a.id))
+    .sort((a,b)=>(a.sev==="danger"?0:1)-(b.sev==="danger"?0:1) || (b.ts||0)-(a.ts||0));
+  if(!risky.length) return;
+  openFloodPopup(risky[0]);
+}
+
+function openFloodPopup(a){
+  const pop=$("#fpop"); if(!pop) return;
+  _popupOpenFor=a.id;
+  POPUP_SEEN.add(a.id); _savePopupSeen();                     // never pop this id again
+  const red=a.sev==="danger";
+  const chip=red?t("fpop.red"):t("fpop.orange");
+  const head=a.title || t("fpop.title");
+  const body=TL(a.msg)||"";
+  const region=(EVENT&&EVENT.region)?TL(EVENT.region):"";
+  const meta=[];
+  if(region) meta.push([t("fpop.region"),region]);
+  if(a.time) meta.push([t("fpop.issued"),a.time]);
+  meta.push([t("fpop.source"),a.src||"GDACS · UN/EC"]);
+  pop.className="fpop fpop--"+a.sev+" open";
+  pop.innerHTML=`
+    <div class="fpop__card" role="alertdialog" aria-modal="true" aria-labelledby="fpopH">
+      <div class="fpop__bar"></div>
+      <button class="fpop__x" id="fpopX" aria-label="Close">✕</button>
+      <div class="fpop__top">
+        <span class="fpop__chip">${esc(chip)}</span>
+        <span class="fpop__pulse"><span class="fpop__dot"></span>${esc(t("fpop.live"))}</span>
+      </div>
+      <div class="fpop__eye">${esc(t("fpop.eye"))}</div>
+      <h3 class="fpop__h" id="fpopH">${esc(head)}</h3>
+      ${body?`<p class="fpop__body">${esc(body)}</p>`:""}
+      <dl class="fpop__meta">
+        ${meta.map(m=>`<div><dt>${esc(m[0])}</dt><dd>${esc(m[1])}</dd></div>`).join("")}
+      </dl>
+      <div class="fpop__actions">
+        ${a.url?`<a class="btn btn--primary" href="${esc(a.url)}" target="_blank" rel="noopener">${esc(t("fpop.report"))}</a>`:""}
+        <button class="btn btn--ghost" id="fpopEnable"${notifSupported()&&Notification.permission==="default"?"":" hidden"}>${BELL_ICO}<span>${esc(t("notif.enable"))}</span></button>
+        <button class="btn btn--ghost" id="fpopMore">${esc(t("fpop.view"))}</button>
+      </div>
+      <div class="fpop__foot">${esc(t("fpop.auto"))}</div>
+    </div>`;
+  pop.setAttribute("aria-hidden","false");
+  const x=$("#fpopX"); if(x){ x.addEventListener("click",closeFloodPopup); x.focus(); }
+  const en=$("#fpopEnable"); if(en) en.addEventListener("click",()=>{ requestNotifPerm(); const b=$("#fpopEnable"); if(b) b.hidden=true; });
+  const more=$("#fpopMore"); if(more) more.addEventListener("click",()=>{ closeFloodPopup(); notifOpen(); });
+  pop.onclick=e=>{ if(e.target===pop) closeFloodPopup(); };   // click backdrop to close
+}
+function closeFloodPopup(){
+  const pop=$("#fpop"); if(!pop) return;
+  pop.classList.remove("open"); pop.setAttribute("aria-hidden","true");
+  _popupOpenFor=null;
+  const b=$("#bell"); if(b) b.focus();
+}
 
 /* url + long now live inline on each NEWS item above (20 sourced bulletins) */
 
@@ -1210,6 +1292,8 @@ async function fetchInfobox(title){
 
 /* ---------- notifications ---------- */
 const BELL='<svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>';
+/* inline bell that inherits its button's text colour (white on crimson, ink on ghost) */
+const BELL_ICO='<svg class="ico-bell" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>';
 function injectChrome(){
   // Stack the running NPT time INSIDE the red LIVE block (LIVE on top, time below).
   // The header clock is hidden on small screens, so this keeps the time visible.
@@ -1256,7 +1340,7 @@ function injectChrome(){
     const scrim=document.createElement("div"); scrim.className="scrim"; scrim.id="scrim"; document.body.appendChild(scrim);
     const p=document.createElement("aside"); p.className="notif"; p.id="notif"; p.setAttribute("aria-label","Alerts"); p.setAttribute("aria-hidden","true");
     p.innerHTML=`<div class="notif__h"><div><span class="eyebrow" data-i18n="notif.eye">Signal Feed</span><h3 data-i18n="notif.h">Alerts</h3></div><button class="notif__x" id="notifX" aria-label="Close">✕</button></div>
-      <div class="notif__bar"><span class="lbl"><span id="notifCount">0</span> <span data-i18n="notif.count">active</span></span><button class="notif__enable" id="notifEnable" data-i18n="notif.enable" hidden>Enable alerts</button><button class="notif__clear" id="notifClear" data-i18n="notif.clear">Clear all</button></div>
+      <div class="notif__bar"><span class="lbl"><span id="notifCount">0</span> <span data-i18n="notif.count">active</span></span><button class="notif__enable" id="notifEnable" hidden>${BELL_ICO}<span class="ntf-lbl" data-i18n="notif.enable">Notify me</span></button><button class="notif__clear" id="notifClear" data-i18n="notif.clear">Clear all</button></div>
       <div class="notif__list" id="notifList"></div>`;
     document.body.appendChild(p);
     scrim.addEventListener("click",notifClose);
@@ -1264,6 +1348,13 @@ function injectChrome(){
     $("#notifClear").addEventListener("click",clearNotifs);
     $("#notifEnable").addEventListener("click",requestNotifPerm);
     document.addEventListener("keydown",e=>{if(e.key==="Escape"&&$("#notif").classList.contains("open"))notifClose();});
+  }
+  // risky-flood-alert popup host (content injected on demand by openFloodPopup)
+  if(!$("#fpop")){
+    const fp=document.createElement("div");
+    fp.className="fpop"; fp.id="fpop"; fp.setAttribute("aria-hidden","true");
+    document.body.appendChild(fp);
+    document.addEventListener("keydown",e=>{ if(e.key==="Escape"&&fp.classList.contains("open")) closeFloodPopup(); });
   }
   updateNotifEnableBtn();
 }
@@ -2017,7 +2108,7 @@ function setupManualSync(){
   // refresh immediately when the tab becomes visible again (cheap, catches up fast)
   if(!window.__ndVis){
     window.__ndVis=true;
-    document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="visible") liveRefresh(); });
+    document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="visible"){ liveRefresh(); fetchLiveAlerts(); fetchLiveNews(); } });
   }
 }
 
