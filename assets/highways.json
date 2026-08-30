@@ -1,42 +1,62 @@
 {
-  "updated_at": "2026-08-30T09:15:00+05:45",
+  "updated_at": "2026-08-30T10:30:00+05:45",
   "summary": {
-    "en": "Floods and landslides have blocked or disrupted at least nine highways nationwide. The worst hit is the Narayanghat–Mugling section of the Prithvi Highway, cut by landslides since 26 August. Time-window (one-way) rules are in force on several night-risk sections. Conditions change hour to hour — always confirm with the local traffic office before travelling.",
-    "ne": "बाढी र पहिरोले देशभरका कम्तीमा नौ राजमार्ग अवरुद्ध वा प्रभावित भएका छन्। सबैभन्दा बढी प्रभावित पृथ्वी राजमार्गको नारायणघाट–मुग्लिन खण्ड २६ भदौदेखि पहिरोले बन्द छ। कयौं खण्डमा राति सवारी रोक्ने (एकतर्फी) नियम लागू छ। अवस्था घण्टै पिच्छे बदलिन्छ — यात्रा गर्नुअघि स्थानीय ट्राफिक कार्यालयमा पुष्टि गर्नुहोस्।"
+    "en": "The 26 August Bhote Koshi glacial flood and continuing monsoon rain have blocked or disrupted at least nine highways nationwide. The key route into Kathmandu — the Prithvi Highway's Mugling–Kathmandu section — is CUT at Krishnabhir (Benighat Rorang, Dhading), where the road subsided early on 30 August after the Trishuli eroded its base. The Betrawati–Rasuwagadhi road toward the China border was destroyed by the flood. Night one-way bans are in force on several hill sections. Conditions change hour to hour — always confirm with the local traffic office (dial 103) before travelling.",
+    "ne": "२६ भदौको भोटेकोशी हिमनदी बाढी र निरन्तर मनसुनी वर्षाले देशभरका कम्तीमा नौ राजमार्ग अवरुद्ध वा प्रभावित छन्। काठमाडौं छिर्ने मुख्य मार्ग — पृथ्वी राजमार्गको मुग्लिन–काठमाडौं खण्ड — कृष्णभीर (बेनीघाट रोराङ, धादिङ) मा अवरुद्ध छ; त्रिशूलीले जग खियाएपछि ३० भदौ बिहानै सडक भासिएको हो। बेत्रावती–रसुवागढी सडक बाढीले ध्वस्त पारेको छ। कयौं पहाडी खण्डमा राति एकतर्फी रोक लागू छ। अवस्था घण्टै पिच्छे बदलिन्छ — यात्रा गर्नुअघि स्थानीय ट्राफिक कार्यालय (१०३) मा पुष्टि गर्नुहोस्।"
   },
-  "source": "Nepal Police Traffic · Dept. of Roads · District Administration",
+  "source": "Kathmandu Post · NDRRMA · Nepal Police Traffic · Dept. of Roads · District Administration (30 Aug 2026)",
   "provinces": [
     {
       "name": { "en": "Bagmati", "ne": "बागमती" },
       "routes": [
         {
-          "name": "Narayanghat – Mugling",
+          "name": "Mugling – Kathmandu",
           "highway": "Prithvi Highway (H04)",
           "status": "closed",
-          "since": { "en": "Closed since 26 Aug, morning", "ne": "२६ भदौ बिहानदेखि बन्द" },
-          "reason": { "en": "Major landslide at Jalbire / Tuin Khola; carriageway fully cut. 25 slide-prone spots identified along this section.", "ne": "जलबिरे / टुइँ खोलामा ठूलो पहिरो; सडक पूर्ण अवरुद्ध। यस खण्डमा २५ पहिरो-जोखिम स्थान पहिचान।" },
-          "eta": { "en": "No reopening time — clearing ongoing", "ne": "खुल्ने समय अनिश्चित — सफाइ जारी" },
-          "detour": { "en": "Hetauda–Bharatpur, or Butwal–Nawalpur–Daunne–Dumkibas", "ne": "हेटौंडा–भरतपुर, वा बुटवल–नवलपुर–दाउन्ने–डुम्किबास" },
+          "since": { "en": "Cut since 30 Aug (road subsided)", "ne": "३० भदौदेखि बन्द (सडक भासियो)" },
+          "reason": { "en": "The carriageway sank at Krishnabhir in Benighat Rorang, Dhading, after the swollen Trishuli eroded its base — the main route into Kathmandu is fully cut. Bhote Koshi flood debris also blocks the Dhading stretch at Galoudi, Bahuni Bhir (Gajuri) and Mahesh Dobhan (Galchhi).", "ne": "त्रिशूली बढेर जग खियाएपछि धादिङको बेनीघाट रोराङस्थित कृष्णभीरमा सडक भासियो — काठमाडौं छिर्ने मुख्य मार्ग पूर्ण अवरुद्ध। भोटेकोशी बाढीको सामग्रीले धादिङको गलौदी, बाहुनीभीर (गजुरी) र महेशडोभान (गल्छी) मा पनि अवरोध।" },
+          "eta": { "en": "No reopening time — heavy equipment deployed", "ne": "खुल्ने समय अनिश्चित — भारी उपकरण परिचालन" },
+          "detour": { "en": "No direct alternative; ask the traffic office. BP/Kanti routes are night-restricted.", "ne": "प्रत्यक्ष विकल्प छैन; ट्राफिक कार्यालयमा सोध्नुहोस्। बीपी/कान्ति मार्गमा राति रोक छ।" },
+          "contact": "Dhading DPO · Traffic 103"
+        },
+        {
+          "name": "Narayanghat – Mugling",
+          "highway": "Prithvi Highway (H04)",
+          "status": "caution",
+          "since": { "en": "Intermittent since 26 Aug", "ne": "२६ भदौदेखि रुकिरुकी" },
+          "reason": { "en": "The Chitwan section has been cleared and is passable, but movement is on flood-risk watch from the upstream Trishuli. Expect short holds; drive in daylight only.", "ne": "चितवनतर्फको खण्ड सफा गरी आवागमन खुला; तर माथिल्लो त्रिशूलीको बाढी जोखिमका कारण निगरानीमा। छोटो रोकावट सम्भव; दिउँसो मात्र चलाउनुहोस्।" },
+          "eta": { "en": "Open with delays in daylight", "ne": "दिउँसो ढिलाइका साथ खुला" },
+          "detour": { "en": "Travel in daylight; avoid after heavy rain", "ne": "दिउँसो मात्र यात्रा; भारी वर्षापछि नजानुहोस्" },
           "contact": "Chitwan DPO 9855013999"
         },
         {
-          "name": "Kathmandu – Mugling (Nagdhunga corridor)",
-          "highway": "Prithvi Highway (H04)",
-          "status": "caution",
-          "since": { "en": "Restricted since 27 Aug", "ne": "२७ भदौदेखि नियन्त्रित" },
-          "reason": { "en": "Multiple blockages in Dhading; slow single-lane movement past Fishling and Malekhu.", "ne": "धादिङमा कयौं ठाउँमा अवरोध; फिस्लिङ र मलेखु नजिक एकलेनमा ढिलो सवारी।" },
-          "eta": { "en": "Passable with delays in daylight", "ne": "दिउँसो ढिलाइका साथ आवागमन सम्भव" },
-          "detour": { "en": "Travel in daylight; avoid after heavy rain", "ne": "दिउँसो मात्र यात्रा गर्नुहोस्; भारी वर्षापछि नजानुहोस्" },
-          "contact": "Traffic 103"
+          "name": "Betrawati – Rasuwagadhi (China border)",
+          "highway": "Pasang Lhamu Highway",
+          "status": "closed",
+          "since": { "en": "Destroyed 26 Aug", "ne": "२६ भदौमा ध्वस्त" },
+          "reason": { "en": "The 26 August Bhote Koshi glacial flash flood destroyed the road at multiple points — the Dept. of Roads confirms the entire 42 km Betrawati–Rasuwagadhi stretch, plus 16 km toward the border, was swept away.", "ne": "२६ भदौको भोटेकोशी हिमनदी बाढीले सडक कैयौं ठाउँमा ध्वस्त — सडक विभागका अनुसार बेत्रावती–रसुवागढीको पूरै ४२ कि.मि. र सिमानातर्फको १६ कि.मि. खण्ड बगायो।" },
+          "eta": { "en": "Long-term closure — reconstruction needed", "ne": "दीर्घकालीन बन्द — पुनर्निर्माण आवश्यक" },
+          "detour": { "en": "No vehicular detour; rescue/relief access only", "ne": "सवारीका लागि वैकल्पिक मार्ग छैन; उद्धार/राहत पहुँच मात्र" },
+          "contact": "Rasuwa DPO 9851287100"
+        },
+        {
+          "name": "Trishuli – Mailung – Syaphrubesi",
+          "highway": "Rasuwa Corridor",
+          "status": "closed",
+          "since": { "en": "Blocked since 26 Aug", "ne": "२६ भदौदेखि अवरुद्ध" },
+          "reason": { "en": "River erosion and debris cut the road at Khalte, Rasuwa; the corridor to Syaphrubesi is impassable.", "ne": "रसुवाको खल्तेमा नदी कटान र सामग्रीले सडक अवरुद्ध; स्याफ्रुबेसीसम्मको मार्ग बन्द।" },
+          "eta": { "en": "No reopening time", "ne": "खुल्ने समय अनिश्चित" },
+          "detour": { "en": "None; rescue access only", "ne": "छैन; उद्धार पहुँच मात्र" },
+          "contact": "Rasuwa DPO 9851287100"
         },
         {
           "name": "Khurkot – Nepalthok – Katunjebesi",
           "highway": "BP Highway (H03)",
           "status": "oneway",
           "since": { "en": "Night ban in force", "ne": "राति रोक लागू" },
-          "reason": { "en": "Flood risk along the Sunkoshi. Vehicles barred 6:00 pm – 4:00 am; open 4:00 am – 6:00 pm only.", "ne": "सुनकोशी किनारमा बाढी जोखिम। बेलुका ६ बजेदेखि बिहान ४ बजेसम्म सवारी रोक; बिहान ४ – बेलुका ६ मात्र खुला।" },
+          "reason": { "en": "Flood risk along the Sunkoshi and 2024 flood damage under repair. Vehicles barred 6:00 pm – 4:00 am; open in daylight only.", "ne": "सुनकोशी किनारमा बाढी जोखिम र २०२४ को बाढी क्षति मर्मतमा। बेलुका ६ बजेदेखि बिहान ४ बजेसम्म सवारी रोक; दिउँसो मात्र खुला।" },
           "eta": { "en": "Daytime window only", "ne": "दिउँसोको समय मात्र" },
-          "detour": { "en": "Use Prithvi/Tribhuvan routes at night", "ne": "राति पृथ्वी/त्रिभुवन मार्ग प्रयोग गर्नुहोस्" },
+          "detour": { "en": "Plan crossings before 6 pm", "ne": "बेलुका ६ अघि नै यात्रा मिलाउनुहोस्" },
           "contact": "Traffic 103"
         },
         {
@@ -44,20 +64,20 @@
           "highway": "Kanti Rajmarg",
           "status": "oneway",
           "since": { "en": "Night ban in force", "ne": "राति रोक लागू" },
-          "reason": { "en": "Landslide risk on the hill section. Closed to all vehicles 5:00 pm – 5:00 am.", "ne": "पहाडी खण्डमा पहिरो जोखिम। बेलुका ५ – बिहान ५ बजेसम्म सबै सवारी बन्द।" },
+          "reason": { "en": "Landslide risk on the Makwanpur hill section. Closed to all vehicles 5:00 pm – 5:00 am.", "ne": "मकवानपुरको पहाडी खण्डमा पहिरो जोखिम। बेलुका ५ – बिहान ५ बजेसम्म सबै सवारी बन्द।" },
           "eta": { "en": "Daytime only", "ne": "दिउँसो मात्र" },
           "detour": { "en": "Tribhuvan Highway via Naubise", "ne": "नौबिसे हुँदै त्रिभुवन राजमार्ग" },
           "contact": "Traffic 103"
         },
         {
-          "name": "Galchhi – Rasuwagadhi (Kerung border)",
-          "highway": "Pasang Lhamu Highway",
-          "status": "closed",
-          "since": { "en": "Cut since 26 Aug", "ne": "२६ भदौदेखि अवरुद्ध" },
-          "reason": { "en": "Flood and debris destroyed sections near Timure and the Rasuwagadhi border point.", "ne": "टिमुरे र रसुवागढी नाका नजिक बाढी–पहिरोले सडक ध्वस्त।" },
-          "eta": { "en": "Long-term closure", "ne": "दीर्घकालीन बन्द" },
-          "detour": { "en": "No vehicular detour; rescue access only", "ne": "सवारीका लागि वैकल्पिक मार्ग छैन; उद्धार पहुँच मात्र" },
-          "contact": "Rasuwa DPO 9851287100"
+          "name": "Tokha – Chhahare",
+          "highway": "Kathmandu – Nuwakot link",
+          "status": "oneway",
+          "since": { "en": "Night ban in force", "ne": "राति रोक लागू" },
+          "reason": { "en": "Slide-prone hill road; closed 10:00 pm – 5:00 am for safety.", "ne": "पहिरो-जोखिम पहाडी सडक; सुरक्षाका लागि राति १० – बिहान ५ बजेसम्म बन्द।" },
+          "eta": { "en": "Daytime only", "ne": "दिउँसो मात्र" },
+          "detour": { "en": "Use Prithvi Highway by day", "ne": "दिउँसो पृथ्वी राजमार्ग प्रयोग गर्नुहोस्" },
+          "contact": "Traffic 103"
         }
       ]
     },
@@ -69,7 +89,7 @@
           "highway": "Prithvi Highway (H04)",
           "status": "caution",
           "since": { "en": "Intermittent since 27 Aug", "ne": "२७ भदौदेखि रुकिरुकी" },
-          "reason": { "en": "Small slips near Aabukhaireni and Dumre cleared but recur after rain.", "ne": "आबुखैरेनी र दुम्रे नजिक साना पहिरो हटाइए पनि वर्षापछि दोहोरिन्छ।" },
+          "reason": { "en": "Small slips near Aabukhaireni and Dumre are cleared but recur after rain.", "ne": "आबुखैरेनी र दुम्रे नजिक साना पहिरो हटाइए पनि वर्षापछि दोहोरिन्छ।" },
           "eta": { "en": "Open, expect short holds", "ne": "खुला, छोटो रोकावट सम्भव" },
           "detour": { "en": "—", "ne": "—" },
           "contact": "Traffic 103"
@@ -100,22 +120,22 @@
       "name": { "en": "Koshi", "ne": "कोशी" },
       "routes": [
         {
+          "name": "Bhadrapur – Ilam – Taplejung",
+          "highway": "Mechi Highway (H12)",
+          "status": "closed",
+          "since": { "en": "Blocked since 28 Aug", "ne": "२८ भदौदेखि अवरुद्ध" },
+          "reason": { "en": "Mud and debris blocked the road at Rajduwali, Ilam; a local diversion is in use.", "ne": "इलामको राजदुवालीमा माटो र सामग्रीले सडक अवरुद्ध; स्थानीय वैकल्पिक मार्ग प्रयोगमा।" },
+          "eta": { "en": "Clearing ongoing", "ne": "सफाइ जारी" },
+          "detour": { "en": "Local diversion via side road", "ne": "छेउको सडक हुँदै वैकल्पिक मार्ग" },
+          "contact": "Traffic 103"
+        },
+        {
           "name": "Dharan – Dhankuta – Hile",
           "highway": "Koshi Highway (H08)",
           "status": "caution",
           "since": { "en": "Monitored", "ne": "निगरानीमा" },
           "reason": { "en": "Mudslides on the Bhedetar bends after rain; drive with care.", "ne": "वर्षापछि भेडेटार मोडमा पहिरो; सावधानीपूर्वक चलाउनुहोस्।" },
           "eta": { "en": "Open", "ne": "खुला" },
-          "detour": { "en": "—", "ne": "—" },
-          "contact": "Traffic 103"
-        },
-        {
-          "name": "Bhadrapur – Ilam – Taplejung",
-          "highway": "Mechi Highway (H12)",
-          "status": "caution",
-          "since": { "en": "Monitored", "ne": "निगरानीमा" },
-          "reason": { "en": "Hill slips reported near Phikkal; short clearances ongoing.", "ne": "फिक्कल नजिक पहिरो; छोटो सफाइ जारी।" },
-          "eta": { "en": "Open with delays", "ne": "ढिलाइका साथ खुला" },
           "detour": { "en": "—", "ne": "—" },
           "contact": "Traffic 103"
         },
@@ -160,6 +180,16 @@
       "name": { "en": "Lumbini", "ne": "लुम्बिनी" },
       "routes": [
         {
+          "name": "Ghartigaun – Kungri (Rolpa)",
+          "highway": "Shaheed Highway (H16)",
+          "status": "closed",
+          "since": { "en": "Blocked since 28 Aug", "ne": "२८ भदौदेखि अवरुद्ध" },
+          "reason": { "en": "A landslide blocked the road at Kungri, Rolpa; clearing is under way.", "ne": "रोल्पाको कुङ्ग्रीमा पहिरोले सडक अवरुद्ध; सफाइ जारी।" },
+          "eta": { "en": "Clearing ongoing", "ne": "सफाइ जारी" },
+          "detour": { "en": "—", "ne": "—" },
+          "contact": "Traffic 103"
+        },
+        {
           "name": "Butwal – Palpa – Tansen",
           "highway": "Siddhartha Highway (H10)",
           "status": "caution",
@@ -184,6 +214,16 @@
     {
       "name": { "en": "Karnali", "ne": "कर्णाली" },
       "routes": [
+        {
+          "name": "Rukumkot – Rijegad (Rukum West)",
+          "highway": "Bheri Corridor",
+          "status": "closed",
+          "since": { "en": "Blocked since 28 Aug", "ne": "२८ भदौदेखि अवरुद्ध" },
+          "reason": { "en": "Rocks, soil and mud blocked the corridor at Rijegad Khola, Rukum West.", "ne": "रुकुम पश्चिमको रिजेगाड खोलामा ढुङ्गा, माटो र सामग्रीले मार्ग अवरुद्ध।" },
+          "eta": { "en": "Clearing ongoing", "ne": "सफाइ जारी" },
+          "detour": { "en": "—", "ne": "—" },
+          "contact": "Traffic 103"
+        },
         {
           "name": "Surkhet – Dailekh – Jumla",
           "highway": "Karnali Highway (H15)",

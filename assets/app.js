@@ -121,8 +121,8 @@ const EVENT = {
   since:"2026-08-26T08:37:00+05:45",
   title:{en:"2026 Nepal Floods", ne:"२०२६ नेपाल बाढी"},
   region:{en:"Rasuwa · Nuwakot · Trishuli corridor · Chitwan", ne:"रसुवा · नुवाकोट · त्रिशूली कोरिडोर · चितवन"},
-  eas:{en:"Trishuli corridor glacial flood. 675 dead, 2,426 missing (Nepal); 6,633 rescued (2,189 named). Search & relief ongoing.",
-       ne:"त्रिशूली कोरिडोरमा हिमनदी बाढी। ६७५ मृत्यु, २,४२६ बेपत्ता (नेपाल); ६,६३३ उद्धार (२,१८९ नामावली)। खोजी तथा राहत जारी।"}
+  eas:{en:"Trishuli corridor glacial flood. 734 dead, 2,498 missing (Nepal); 7,514 rescued (2,189 named). Search & relief ongoing.",
+       ne:"त्रिशूली कोरिडोरमा हिमनदी बाढी। ७३४ मृत्यु, २,४९८ बेपत्ता (नेपाल); ७,५१४ उद्धार (२,१८९ नामावली)। खोजी तथा राहत जारी।"}
 };
 /* Nepal-side figures only. Live-refreshed every 10 minutes: local feed (baseline)
    → Wikipedia PROSE (deaths/missing/injured + foreign nationals among the missing,
@@ -130,16 +130,18 @@ const EVENT = {
    Nepal registry). The Wikipedia INFOBOX is NOT used — it reports Nepal+Tibet
    COMBINED, which is what previously inflated the toll. */
 let STATS = [
-  {key:"deaths",  n:"675", cls:"hstat--death"},
-  {key:"missing", n:"2,426"},
+  {key:"deaths",  n:"734", cls:"hstat--death"},
+  {key:"missing", n:"2,498"},
   {key:"foreign", n:"668"},
-  {key:"rescued", n:"6,633", cls:"hstat--rescue"}   // hero = TOTAL rescued (NDRRMA rescued-statistics); the NAMED registry (2,189) is a separate figure shown on the Rescued page
+  {key:"rescued", n:"7,514", cls:"hstat--rescue"}   // hero = TOTAL rescued (NDRRMA rescued-statistics); the NAMED registry (2,189) is a separate figure shown on the Rescued page
 ];
 
 /* -------------------- TICKER -------------------- */
 const TICKER = [
-  {src:"POLICE", en:"Nepal Police confirm 675 dead, 2,426 missing (Nepal); 6,633 rescued (2,189 named) — figures rising",
-   ne:"नेपाल प्रहरीले ६७५ मृत्यु, २,४२६ बेपत्ता (नेपाल) पुष्टि; ६,६३३ उद्धार (२,१८९ नामावली) — संख्या बढ्दै"},
+  {src:"NDRRMA", en:"NDRRMA: 734 confirmed dead, 2,498 missing (30 Aug, 9 am); 7,514 rescued — figures still rising",
+   ne:"NDRRMA: ७३४ मृत्यु पुष्टि, २,४९८ बेपत्ता (३० भदौ, बिहान ९ बजे); ७,५१४ उद्धार — संख्या बढ्दै"},
+  {src:"TRAFFIC", en:"Prithvi Highway cut at Krishnabhir (Dhading) — Mugling–Kathmandu route closed after road subsided",
+   ne:"पृथ्वी राजमार्ग कृष्णभीर (धादिङ) मा अवरुद्ध — सडक भासिएपछि मुग्लिन–काठमाडौं मार्ग बन्द"},
   {src:"NDRRMA", en:"NDRRMA names 2,189 rescued in its official registry — 2,034 Nepali, 155 foreign",
    ne:"NDRRMA अभिलेखमा २,१८९ उद्धारितको नाम — २,०३४ नेपाली, १५५ विदेशी"},
   {src:"PMO", en:"PM Disaster Relief Fund passes Rs 385.5 million; govt releases Rs 1 billion",
@@ -155,14 +157,22 @@ const TICKER = [
 /* -------------------- NEWS / BULLETINS (20, sourced; full articles) -------------------- */
 const WK="https://en.wikipedia.org/wiki/2026_Nepal_floods";
 const NEWS = [
-  {sev:"danger", tag:{en:"Toll",ne:"मृत्यु"}, time:"28 Aug 2026", src:"AP / Nepal Police",
-   url:"https://www.washingtontimes.com/news/2026/aug/27/death-toll-floods-rises-rescuers-nepal-china-working-find-hundreds/",
-   title:{en:"Nepal flood death toll climbs to 675 as body management continues",
-          ne:"नेपाल बाढीमा मृत्यु ६७५ पुग्यो, शव व्यवस्थापन जारी"},
-   body:{en:"Nepal Police raised the confirmed Nepal-side toll to 675, with 2,426 still missing or out of contact.",
-         ne:"नेपाल प्रहरीले नेपालतर्फको पुष्टि मृत्यु ६७५ पुर्‍यायो; २,४२६ जना बेपत्ता वा सम्पर्कविहीन।"},
-   long:{en:"Nepal Police confirmed 675 deaths on the Nepal side as rescue and body-management teams reached settlements cut off by the 26 August surge down the Bhotekoshi/Trishuli. Around 2,426 people remain missing or out of contact on the Nepal side (separate from the China/Tibet-side count). Officials warned the toll would keep rising as access to buried riverside villages is restored and downstream bodies are recovered along the Narayani corridor.",
-         ne:"नेपाल प्रहरीले नेपालतर्फ ६७५ मृत्यु पुष्टि गर्‍यो। २६ अगस्टको भोटेकोशी/त्रिशूली भलले अवरुद्ध बस्तीमा उद्धार र शव व्यवस्थापन टोली पुग्दै। नेपालतर्फ करिब २,४२६ जना बेपत्ता वा सम्पर्कविहीन (चीन/तिब्बततर्फको गणनाभन्दा अलग)। पहुँच खुल्दै र नारायणी कोरिडोरमा शव भेटिँदै जाँदा संख्या बढ्ने अधिकारीको चेतावनी।"}},
+  {sev:"danger", tag:{en:"Toll",ne:"मृत्यु"}, time:"30 Aug 2026", src:"The Kathmandu Post / NDRRMA",
+   url:"https://kathmandupost.com/national/2026/08/30/death-toll-from-bhotekoshi-flood-reaches-734",
+   title:{en:"Bhotekoshi flood death toll reaches 734; 2,498 still missing",
+          ne:"भोटेकोशी बाढीमा मृत्यु ७३४ पुग्यो; २,४९८ अझै बेपत्ता"},
+   body:{en:"NDRRMA's 9 am update on 30 August put the confirmed toll at 734, with 2,498 people still missing.",
+         ne:"NDRRMA को ३० भदौ बिहान ९ बजेको अद्यावधिकले पुष्टि मृत्यु ७३४ र २,४९८ जना बेपत्ता देखायो।"},
+   long:{en:"The National Disaster Risk Reduction and Management Authority (NDRRMA) said in its 9 am update on Sunday, 30 August, that 734 bodies had been recovered from the flood-hit districts, with 2,498 people still missing. Chitwan has recorded the most recovered bodies (259), followed by Nawalparasi East (184), Nawalparasi West (82), Gorkha (58), Nuwakot (52), Dhading (50), Tanahun (36) and Rasuwa (13). The number of missing is highest in Rasuwa, where 562 people remain unaccounted for. The toll is expected to keep rising as downstream bodies are recovered along the Narayani corridor.",
+         ne:"राष्ट्रिय विपद् जोखिम न्यूनीकरण तथा व्यवस्थापन प्राधिकरण (NDRRMA) का अनुसार आइतबार ३० भदौ बिहान ९ बजेसम्म बाढी प्रभावित जिल्लाहरूबाट ७३४ शव भेटिएका छन् भने २,४९८ जना अझै बेपत्ता छन्। सबैभन्दा बढी चितवनमा (२५९), त्यसपछि नवलपरासी पूर्व (१८४), नवलपरासी पश्चिम (८२), गोरखा (५८), नुवाकोट (५२), धादिङ (५०), तनहुँ (३६) र रसुवा (१३)। रसुवामा सबैभन्दा बढी ५६२ जना बेपत्ता। नारायणी कोरिडोरमा तल्लो तटबाट शव भेटिँदै जाँदा मृत्यु संख्या बढ्ने अनुमान।"}},
+  {sev:"danger", tag:{en:"Highway",ne:"राजमार्ग"}, time:"30 Aug 2026", src:"The Kathmandu Post",
+   url:"https://kathmandupost.com/national/2026/08/30/trishuli-flood-severs-prithvi-highway-cutting-off-key-route-into-kathmandu",
+   title:{en:"Trishuli flood severs Prithvi Highway, cutting off key route into Kathmandu",
+          ne:"त्रिशूली बाढीले पृथ्वी राजमार्ग भत्कायो, काठमाडौं छिर्ने मुख्य मार्ग अवरुद्ध"},
+   body:{en:"The road subsided at Krishnabhir in Benighat Rorang, Dhading, after the Trishuli eroded its base — the Mugling–Kathmandu section is fully cut.",
+         ne:"त्रिशूलीले जग खियाएपछि धादिङको बेनीघाट रोराङस्थित कृष्णभीरमा सडक भासियो — मुग्लिन–काठमाडौं खण्ड पूर्ण अवरुद्ध।"},
+   long:{en:"A section of the Prithvi Highway sank early on Sunday, 30 August, at Krishnabhir in Benighat Rorang Rural Municipality of Dhading, after the swollen Trishuli river eroded the road's base. Dhading Chief District Officer Laxmi Pandey Gautam said the road gave way as the river rose, completely blocking the Mugling–Kathmandu section — the main artery linking the capital with Pokhara and western Nepal. Bagmati Province traffic chief Dilli Narayan Pandey confirmed the subsidence. The closure compounds days of disruption on the corridor from Bhote Koshi flood debris in Dhading. No reopening time has been given; travellers should confirm with the local traffic office (dial 103) before setting off.",
+         ne:"आइतबार ३० भदौ बिहानै धादिङको बेनीघाट रोराङ गाउँपालिकास्थित कृष्णभीरमा पृथ्वी राजमार्गको एक खण्ड भासियो; बढेको त्रिशूली नदीले सडकको जग खियाएको हो। धादिङका प्रमुख जिल्ला अधिकारी लक्ष्मी पाण्डे गौतमका अनुसार नदी बढ्दै जाँदा सडक भासिँदा मुग्लिन–काठमाडौं खण्ड पूर्ण अवरुद्ध भयो — यो राजधानीलाई पोखरा र पश्चिम नेपालसँग जोड्ने मुख्य मार्ग हो। बागमती प्रदेश ट्राफिक प्रमुख दिल्लीनारायण पाण्डेले सडक भासिएको पुष्टि गरे। भोटेकोशी बाढीको सामग्रीले धादिङमा दिनैपिच्छे अवरोध भइरहेकोमा यो बन्दले थप कठिनाइ ल्यायो। खुल्ने समय तय भएको छैन; यात्रुले जानुअघि स्थानीय ट्राफिक कार्यालय (१०३) मा पुष्टि गर्नुहोस्।"}},
   {sev:"relief", tag:{en:"Rescue",ne:"उद्धार"}, time:"28 Aug 2026", src:"Nepal Police / OnlineKhabar",
    url:"https://english.onlinekhabar.com/people-rescued-rasuwa-flood-2.html",
    title:{en:"1,545 rescued after Rasuwa flood; 28 police still out of contact",
@@ -924,6 +934,9 @@ Object.assign(I18N.en,{
   "hw.updated":"Updated","hw.refresh":"Refresh","hw.all":"All","hw.f.closed":"Closed","hw.f.oneway":"One-way","hw.f.open":"Open",
   "hw.st.closed":"CLOSED","hw.st.oneway":"ONE-WAY","hw.st.caution":"CAUTION","hw.st.open":"OPEN",
   "hw.reason":"Reason","hw.eta":"Est. reopening","hw.detour":"Detour","hw.contact":"Contact","hw.since":"Status","hw.route":"route",
+  "hw.hero":"Road command","hw.hero.closed":"highways closed","hw.hero.line":"{o} one-way · {c} on caution · {open} open · {t} routes monitored",
+  "hw.critical":"Critical — closed & restricted","hw.critical.sub":"Plan around these before you travel","hw.other":"Other routes by province",
+  "hw.allclear":"No highways are fully closed right now — travel with normal monsoon caution.","hw.sincelbl":"Since","hw.call":"Call",
   "hw.summary":"National overview","hw.live":"Live road bulletins","hw.livesrc":"Auto-updating · Google News (road/traffic filter)","hw.nolive":"No new road bulletins on the wire right now.",
   "hw.precau":"Travel precautions","hw.precau1":"Travel in daylight; avoid hill highways after dark and during heavy rain.","hw.precau2":"Keep 2–3x normal travel time in hand and carry fuel, water and a power bank.","hw.precau3":"Never cross a flooded road or an active landslide — wait for clearance.","hw.precau4":"Confirm the section with the local traffic office (dial 103) before you set off.",
   "hw.loading":"Loading highway status…","hw.legend":"Statuses are compiled from published reports and may lag real conditions.","hw.count.closed":"closed","hw.count.oneway":"one-way","hw.count.open":"open / caution"
@@ -934,6 +947,9 @@ Object.assign(I18N.ne,{
   "hw.updated":"अद्यावधिक","hw.refresh":"ताजा गर्नुहोस्","hw.all":"सबै","hw.f.closed":"बन्द","hw.f.oneway":"एकतर्फी","hw.f.open":"खुला",
   "hw.st.closed":"बन्द","hw.st.oneway":"एकतर्फी","hw.st.caution":"सावधानी","hw.st.open":"खुला",
   "hw.reason":"कारण","hw.eta":"खुल्ने अनुमान","hw.detour":"वैकल्पिक मार्ग","hw.contact":"सम्पर्क","hw.since":"अवस्था","hw.route":"मार्ग",
+  "hw.hero":"सडक कमाण्ड","hw.hero.closed":"राजमार्ग बन्द","hw.hero.line":"{o} एकतर्फी · {c} सावधानी · {open} खुला · {t} मार्ग निगरानीमा",
+  "hw.critical":"जोखिम — बन्द र नियन्त्रित","hw.critical.sub":"यात्रा गर्नुअघि यीलाई ध्यान दिनुहोस्","hw.other":"अन्य मार्ग (प्रदेश अनुसार)",
+  "hw.allclear":"अहिले कुनै राजमार्ग पूर्ण बन्द छैन — सामान्य मनसुन सावधानीसहित यात्रा गर्नुहोस्।","hw.sincelbl":"देखि","hw.call":"फोन",
   "hw.summary":"राष्ट्रिय अवलोकन","hw.live":"प्रत्यक्ष सडक बुलेटिन","hw.livesrc":"स्वतः अद्यावधिक · गुगल न्युज (सडक/ट्राफिक फिल्टर)","hw.nolive":"अहिले नयाँ सडक बुलेटिन छैन।",
   "hw.precau":"यात्रा सावधानी","hw.precau1":"दिउँसो यात्रा गर्नुहोस्; अँध्यारो र भारी वर्षामा पहाडी राजमार्ग नजानुहोस्।","hw.precau2":"सामान्यभन्दा २–३ गुणा बढी समय राख्नुहोस्; इन्धन, पानी र पावर बैंक बोक्नुहोस्।","hw.precau3":"बाढी आएको सडक वा सक्रिय पहिरो कहिल्यै नकाट्नुहोस् — सफा नभएसम्म पर्खनुहोस्।","hw.precau4":"निस्कनुअघि स्थानीय ट्राफिक कार्यालय (१०३) मा खण्ड पुष्टि गर्नुहोस्।",
   "hw.loading":"राजमार्ग अवस्था लोड हुँदै…","hw.legend":"अवस्था प्रकाशित प्रतिवेदनबाट संकलित; वास्तविक अवस्थाभन्दा पछाडि हुन सक्छ।","hw.count.closed":"बन्द","hw.count.oneway":"एकतर्फी","hw.count.open":"खुला / सावधानी",
@@ -1657,15 +1673,15 @@ Object.assign(I18N.ne,{
    official numbers are not yet itemised (never fabricated). NDRRMA / Nepal Police,
    compiled 27–28 Aug 2026. */
 const STATS_DETAIL=[
- {id:"deaths", sev:"danger", big:"675", title:{en:"Confirmed Deaths",ne:"पुष्टि मृत्यु"}, unit:{en:"Nepal side · auto-updated from live sources",ne:"नेपालतर्फ · प्रत्यक्ष स्रोतबाट स्वतः अद्यावधिक"}, src:"Nepal Police / NDRRMA / Wikipedia",
-  rows:[["Nepal (Nepal Police confirmed)","675"]],
+ {id:"deaths", sev:"danger", big:"734", title:{en:"Confirmed Deaths",ne:"पुष्टि मृत्यु"}, unit:{en:"Nepal side · auto-updated from live sources",ne:"नेपालतर्फ · प्रत्यक्ष स्रोतबाट स्वतः अद्यावधिक"}, src:"NDRRMA / Nepal Police / Wikipedia",
+  rows:[["Nepal — bodies recovered (NDRRMA, 30 Aug)","734"],["Chitwan","259"],["Nawalparasi East","184"],["Nawalparasi West","82"],["Gorkha","58"],["Nuwakot","52"],["Dhading","50"],["Tanahun","36"],["Rasuwa","13"]],
   note:{en:"Nepal Police confirmed {n} deaths on the Nepal side; the toll auto-updates every 10 minutes from live sources as access is restored to buried riverside settlements and body-management operations recover more victims downstream.",ne:"नेपाल प्रहरीले नेपालतर्फ {n} मृत्यु पुष्टि गर्‍यो; पहुँच खुल्दै र शव व्यवस्थापन जारी रहँदा प्रत्यक्ष स्रोतबाट हरेक १० मिनेटमा संख्या स्वतः अद्यावधिक हुन्छ।"}},
- {id:"missing", sev:"danger", big:"2,426", title:{en:"Missing and Out of Contact",ne:"बेपत्ता तथा सम्पर्कविहीन"}, unit:{en:"Nepal side only",ne:"नेपालतर्फ मात्र"}, src:"Nepal Police / NDRRMA",
-  rows:[["Nepal — missing / out of contact","2,426"]],
+ {id:"missing", sev:"danger", big:"2,498", title:{en:"Missing and Out of Contact",ne:"बेपत्ता तथा सम्पर्कविहीन"}, unit:{en:"Nepal side only",ne:"नेपालतर्फ मात्र"}, src:"Nepal Police / NDRRMA",
+  rows:[["Nepal — missing / out of contact","2,498"],["— of these, in Rasuwa","562"]],
   note:{en:"Nepal Police report {n} people missing or out of contact on the Nepal side. This figure is Nepal-only — it excludes the separately-counted China/Tibet-side missing. It moves in both directions as people are found dead or rescued.",ne:"नेपाल प्रहरीका अनुसार नेपालतर्फ {n} जना बेपत्ता वा सम्पर्कविहीन। यो संख्या नेपाल मात्रको हो — चीन/तिब्बततर्फको अलग गणनालाई समावेश गरिएको छैन। मानिस मृत वा उद्धार भेटिँदै जाँदा यो घट्न वा बढ्न सक्छ।"}},
- {id:"rescued", sev:"relief", big:"6,633", title:{en:"Rescued",ne:"उद्धार"}, unit:{en:"total rescued · NDRRMA · 2,189 individually named",ne:"कुल उद्धार · NDRRMA · २,१८९ जनाको नाम"}, src:"NDRRMA rescue portal",
-  rows:[["Total rescued","6,633"],["Named in registry","2,189"],["— of these, Nepali","2,034"],["— of these, foreign","155"]],
-  note:{en:"NDRRMA reports 6,633 people rescued in total. Of those, 2,189 are so far individually named in the public registry — and of that named group, 2,034 are Nepali and 155 are foreign nationals. The full searchable name list is on this site's Rescued page. All figures auto-update live from the NDRRMA API.",ne:"NDRRMA का अनुसार कुल ६,६३३ जना उद्धार। तीमध्ये अहिलेसम्म २,१८९ जनाको नाम सार्वजनिक नामावलीमा — र त्यो नामावलीमध्ये २,०३४ नेपाली र १५५ विदेशी नागरिक। पूरा खोजयोग्य नामावली यस साइटको उद्धार पृष्ठमा। सबै संख्या NDRRMA API बाट प्रत्यक्ष अद्यावधिक।"}},
+ {id:"rescued", sev:"relief", big:"7,514", title:{en:"Rescued",ne:"उद्धार"}, unit:{en:"total rescued · NDRRMA · 2,189 individually named",ne:"कुल उद्धार · NDRRMA · २,१८९ जनाको नाम"}, src:"NDRRMA rescue portal",
+  rows:[["Total rescued","7,514"],["Named in registry","2,189"],["— of these, Nepali","2,034"],["— of these, foreign","155"]],
+  note:{en:"NDRRMA reports 7,514 people rescued in total. Of those, 2,189 are so far individually named in the public registry — and of that named group, 2,034 are Nepali and 155 are foreign nationals. The full searchable name list is on this site's Rescued page. All figures auto-update live from the NDRRMA API.",ne:"NDRRMA का अनुसार कुल ७,५१४ जना उद्धार। तीमध्ये अहिलेसम्म २,१८९ जनाको नाम सार्वजनिक नामावलीमा — र त्यो नामावलीमध्ये २,०३४ नेपाली र १५५ विदेशी नागरिक। पूरा खोजयोग्य नामावली यस साइटको उद्धार पृष्ठमा। सबै संख्या NDRRMA API बाट प्रत्यक्ष अद्यावधिक।"}},
  {id:"injured", sev:"watch", big:"1,473", title:{en:"Injured",ne:"घाइते"}, unit:{en:"Nepal side",ne:"नेपालतर्फ"}, src:"Nepal Police / Health Ministry",
   rows:[["Nepal — injured","1,473"]],
   note:{en:"{n} injured people are receiving treatment across hospitals in the affected districts and Kathmandu. Nepal Police and the Health Ministry continue to update the count.",ne:"प्रभावित जिल्ला र काठमाडौंका अस्पतालमा {n} घाइतेको उपचार जारी। नेपाल प्रहरी र स्वास्थ्य मन्त्रालयले संख्या अद्यावधिक गर्दै।"}},
@@ -2314,41 +2330,111 @@ async function fetchHighwayNews(){
   try{ const r=await fetch("/api/highways",{signal:AbortSignal.timeout(9000)}); if(r.ok){ const j=await r.json(); if(j&&Array.isArray(j.items)) HW_NEWS=j.items; } }catch(_){}
   renderHighways();
 }
-function _hwRouteCard(rt){
+const _HW_RANK={closed:0,oneway:1,caution:2,open:3};
+function _hwSevRank(s){ return _HW_RANK[s]!=null?_HW_RANK[s]:3; }
+function _telHref(c){ const d=String(c||"").replace(/[^0-9+]/g,""); return d.replace(/[^0-9]/g,"").length>=3?d:""; }
+
+function _hwRouteCard(rt, prov){
   const st=_hwClass(rt.status);
-  const rows=[[t("hw.reason"), TL(rt.reason)]];
-  if(rt.eta) rows.push([t("hw.eta"), TL(rt.eta)]);
-  const det=rt.detour?TL(rt.detour):""; if(det && det!=="—") rows.push([t("hw.detour"), det]);
-  if(rt.contact) rows.push([t("hw.contact"), rt.contact]);
   const since=rt.since?TL(rt.since):"";
+  const det=rt.detour?TL(rt.detour):"";
+  const eta=rt.eta?TL(rt.eta):"";
+  const tel=_telHref(rt.contact);
+  const rows=[];
+  if(eta) rows.push([t("hw.eta"), eta]);
+  if(det && det!=="—") rows.push([t("hw.detour"), det]);
+  const contact = rt.contact ? (tel
+      ? `<a class="hwcard__call" href="tel:${esc(tel)}" aria-label="${esc(t("hw.call"))} ${esc(rt.contact)}">${PH}<span>${esc(rt.contact)}</span></a>`
+      : `<span class="hwcard__call hwcard__call--static">${PH}<span>${esc(rt.contact)}</span></span>`) : "";
   return `<article class="hwcard hwcard--${st}">
     <div class="hwcard__head">
-      <div class="hwcard__id"><h4 class="hwcard__name">${esc(rt.name)}</h4>${rt.highway?`<span class="hwcard__hw">${esc(rt.highway)}</span>`:""}</div>
-      <span class="hwbadge hwbadge--${st}">${esc(t("hw.st."+st))}</span>
+      <div class="hwcard__id">
+        <h4 class="hwcard__name">${esc(rt.name)}</h4>
+        <span class="hwcard__meta-top">${rt.highway?`<span class="hwcard__hw">${esc(rt.highway)}</span>`:""}${prov?`<span class="hwcard__prov">${esc(prov)}</span>`:""}</span>
+      </div>
+      <span class="hwbadge hwbadge--${st}"><span class="hwbadge__dot" aria-hidden="true"></span>${esc(t("hw.st."+st))}</span>
     </div>
-    ${since?`<div class="hwcard__since">${esc(since)}</div>`:""}
-    <dl class="hwcard__meta">${rows.map(r=>`<div><dt>${esc(r[0])}</dt><dd>${esc(r[1])}</dd></div>`).join("")}</dl>
+    ${since?`<div class="hwcard__since"><span class="hwcard__sincedot" aria-hidden="true"></span>${esc(since)}</div>`:""}
+    <p class="hwcard__reason">${esc(TL(rt.reason))}</p>
+    ${rows.length?`<dl class="hwcard__facts">${rows.map(r=>`<div><dt>${esc(r[0])}</dt><dd>${esc(r[1])}</dd></div>`).join("")}</dl>`:""}
+    ${contact?`<div class="hwcard__foot">${contact}</div>`:""}
   </article>`;
 }
-function _hwMatches(st){
-  if(HW_FILTER==="all") return true;
-  if(HW_FILTER==="open") return st==="open"||st==="caution";
-  return st===HW_FILTER;
-}
+
 function renderHighways(){
   const root=$("#hwRoot"); if(!root) return;
   if(!HW_DATA){ root.innerHTML=`<p class="hwloading">${esc(t("hw.loading"))}</p>`; return; }
   const provs=HW_DATA.provinces||[];
-  let nC=0,nO=0,nP=0;
-  provs.forEach(p=>(p.routes||[]).forEach(r=>{ const s=_hwClass(r.status); if(s==="closed")nC++; else if(s==="oneway")nO++; else nP++; }));
-  const strip=`<div class="hwstrip">
-    <button class="hwkpi hwkpi--closed${HW_FILTER==="closed"?" is-on":""}" data-hwf="closed"><span class="hwkpi__n mono">${nC}</span><span class="hwkpi__l">${esc(t("hw.count.closed"))}</span></button>
-    <button class="hwkpi hwkpi--oneway${HW_FILTER==="oneway"?" is-on":""}" data-hwf="oneway"><span class="hwkpi__n mono">${nO}</span><span class="hwkpi__l">${esc(t("hw.count.oneway"))}</span></button>
-    <button class="hwkpi hwkpi--open${HW_FILTER==="open"?" is-on":""}" data-hwf="open"><span class="hwkpi__n mono">${nP}</span><span class="hwkpi__l">${esc(t("hw.count.open"))}</span></button>
-    <button class="hwkpi hwkpi--all${HW_FILTER==="all"?" is-on":""}" data-hwf="all"><span class="hwkpi__l">${esc(t("hw.all"))}</span></button>
+  // Flatten every route once, tagged with its province, so we can build a
+  // cross-province "critical" board and severity-sorted province sections.
+  const all=[];
+  provs.forEach(p=>(p.routes||[]).forEach(r=>{ all.push({rt:r, prov:TL(p.name), st:_hwClass(r.status)}); }));
+  const nC=all.filter(x=>x.st==="closed").length;
+  const nO=all.filter(x=>x.st==="oneway").length;
+  const nCau=all.filter(x=>x.st==="caution").length;
+  const nOpen=all.filter(x=>x.st==="open").length;
+  const total=all.length;
+  const worst = nC>0 ? "closed" : (nO>0 ? "oneway" : (nCau>0 ? "caution" : "open"));
+
+  /* ---- command hero: the national picture at a glance ---- */
+  const heroLine=t("hw.hero.line")
+      .replace("{o}",String(nO)).replace("{c}",String(nCau))
+      .replace("{open}",String(nOpen)).replace("{t}",String(total));
+  const hero=`<div class="hwhero hwhero--${worst}">
+    <div class="hwhero__main">
+      <span class="hwhero__eye">${esc(t("hw.hero"))}</span>
+      <div class="hwhero__big"><span class="hwhero__n mono">${nC}</span><span class="hwhero__unit">${esc(t("hw.hero.closed"))}</span></div>
+      <div class="hwhero__line">${esc(heroLine)}</div>
+    </div>
+    <div class="hwhero__side">
+      <span class="hwhero__upd"><span class="hwhero__pulse" aria-hidden="true"></span>${esc(t("hw.updated"))}</span>
+      <span class="hwhero__time mono">${esc(_hwUpdated())}</span>
+      <button class="btn btn--ghost btn--sm" id="hwRefresh">${esc(t("hw.refresh"))}</button>
+    </div>
   </div>`;
-  const controls=`<div class="hwbar"><span class="hwbar__upd">${esc(t("hw.updated"))} · <b class="mono">${esc(_hwUpdated())}</b></span><button class="btn btn--ghost btn--sm" id="hwRefresh">${esc(t("hw.refresh"))}</button></div>`;
+
+  /* ---- national overview / situation report ---- */
   const summary=HW_DATA.summary?`<div class="hwsum"><span class="hwsum__eye">${esc(t("hw.summary"))}</span><p>${esc(TL(HW_DATA.summary))}</p>${HW_DATA.source?`<div class="hwsum__src">SRC · ${esc(HW_DATA.source)}</div>`:""}</div>`:"";
+
+  /* ---- filter chips ---- */
+  const chip=(f,label,n,cls)=>`<button class="hwchip${cls?" hwchip--"+cls:""}${HW_FILTER===f?" is-on":""}" data-hwf="${f}"><span class="hwchip__l">${esc(label)}</span>${n!=null?`<span class="hwchip__n mono">${n}</span>`:""}</button>`;
+  const chips=`<div class="hwchips" role="group" aria-label="Filter by status">
+    ${chip("all",t("hw.all"),total,"")}
+    ${chip("closed",t("hw.count.closed"),nC,"closed")}
+    ${chip("oneway",t("hw.count.oneway"),nO,"oneway")}
+    ${chip("caution",t("hw.st.caution"),nCau,"caution")}
+    ${chip("open",t("hw.st.open"),nOpen,"open")}
+  </div>`;
+
+  const show=st=>HW_FILTER==="all"||HW_FILTER===st;
+
+  /* ---- critical board: closed + one-way, cross-province, worst first ---- */
+  let critical="";
+  const crit=all.filter(x=>(x.st==="closed"||x.st==="oneway") && show(x.st))
+                .sort((a,b)=>_hwSevRank(a.st)-_hwSevRank(b.st));
+  if(crit.length){
+    critical=`<section class="hwsection hwsection--crit">
+      <div class="hwsection__h"><h3 class="hwsection__t">${esc(t("hw.critical"))}<span class="hwsection__n mono">${crit.length}</span></h3><span class="hwsection__sub">${esc(t("hw.critical.sub"))}</span></div>
+      <div class="hwgrid hwgrid--crit">${crit.map(x=>_hwRouteCard(x.rt,x.prov)).join("")}</div>
+    </section>`;
+  } else if(HW_FILTER==="all"){
+    critical=`<div class="hwallclear"><span class="hwallclear__ic" aria-hidden="true">✓</span>${esc(t("hw.allclear"))}</div>`;
+  }
+
+  /* ---- province sections: caution + open, grouped, severity-sorted ---- */
+  let sections="";
+  if(HW_FILTER==="all"||HW_FILTER==="caution"||HW_FILTER==="open"){
+    sections=provs.map(p=>{
+      const cards=(p.routes||[])
+        .filter(r=>{ const s=_hwClass(r.status); return (s==="caution"||s==="open") && show(s); })
+        .sort((a,b)=>_hwSevRank(_hwClass(a.status))-_hwSevRank(_hwClass(b.status)));
+      if(!cards.length) return "";
+      return `<section class="hwprov"><h3 class="hwprov__h">${esc(TL(p.name))}<span class="hwprov__n mono">${cards.length} ${esc(t("hw.route"))}</span></h3><div class="hwgrid">${cards.map(r=>_hwRouteCard(r)).join("")}</div></section>`;
+    }).filter(Boolean).join("");
+    if(sections) sections=`<div class="hwsection__h hwsection__h--prov"><h3 class="hwsection__t">${esc(t("hw.other"))}</h3></div>`+sections;
+  }
+
+  /* ---- live wire bulletins ---- */
   let live="";
   if(HW_NEWS && HW_NEWS.length){
     const items=HW_NEWS.slice(0,8).map(n=>{
@@ -2357,14 +2443,13 @@ function renderHighways(){
     }).join("");
     live=`<div class="hwlive"><div class="hwlive__h"><span class="hwsum__eye">${esc(t("hw.live"))}</span><span class="hwlive__src mono">${esc(t("hw.livesrc"))}</span></div>${items}</div>`;
   }
-  const sections=provs.map(p=>{
-    const cards=(p.routes||[]).filter(r=>_hwMatches(_hwClass(r.status)));
-    if(!cards.length) return "";
-    return `<section class="hwprov"><h3 class="hwprov__h">${esc(TL(p.name))}<span class="hwprov__n mono">${cards.length} ${esc(t("hw.route"))}</span></h3><div class="hwgrid">${cards.map(_hwRouteCard).join("")}</div></section>`;
-  }).filter(Boolean).join("");
+
   const precau=`<div class="hwprecau"><h3 class="hwprecau__h">${esc(t("hw.precau"))}</h3><ul><li>${esc(t("hw.precau1"))}</li><li>${esc(t("hw.precau2"))}</li><li>${esc(t("hw.precau3"))}</li><li>${esc(t("hw.precau4"))}</li></ul></div>`;
   const legend=`<p class="hwlegendnote">${esc(t("hw.legend"))}</p>`;
-  root.innerHTML=controls+strip+summary+live+`<div class="hwprovs">${sections||`<p class="hwloading">${esc(t("hw.nolive"))}</p>`}</div>`+precau+legend;
+
+  const body=(critical||sections)?(critical+sections):`<p class="hwloading">${esc(t("hw.nolive"))}</p>`;
+  root.innerHTML=hero+summary+chips+`<div class="hwboard">${body}</div>`+live+precau+legend;
+
   root.querySelectorAll("[data-hwf]").forEach(b=>b.addEventListener("click",()=>{ const f=b.getAttribute("data-hwf"); HW_FILTER=(HW_FILTER===f&&f!=="all")?"all":f; renderHighways(); }));
   const rf=$("#hwRefresh"); if(rf) rf.addEventListener("click",()=>{ rf.disabled=true; Promise.all([fetchHighways(),fetchHighwayNews()]).finally(()=>{ toast(LANG==="ne"?"राजमार्ग अवस्था अद्यावधिक भयो।":"Highway status refreshed.","crim"); }); });
 }
