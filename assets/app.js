@@ -795,7 +795,7 @@ function renderAll(){
   renderTicker(); renderEvent(); renderStats(); renderHelplines();
   renderNews(document.body.dataset.newsLimit?+document.body.dataset.newsLimit:0);
   renderHistory(); renderRelief(); renderAlerts(); renderMissing();
-  renderNotifs(); renderGallery(); renderFullGallery(); renderNewsPage(); renderStatsPage(); renderMissingSummary(); renderRescuePage(); renderReliefCollected(); setSync();
+  renderNotifs(); renderGallery(); renderFullGallery(); renderNewsPage(); renderStatsPage(); renderMissingSummary(); renderRescuePage(); renderReliefCollected(); renderHighways(); setSync();
 }
 
 /* ---- mobile nav / hamburger (module scope so injectChrome can also call it) ---- */
@@ -864,6 +864,11 @@ function wire(){
   setInterval(fetchLiveNews, 600000);                            // …and every 10 minutes
   fetchLiveAlerts();                                              // live flood alerts (GDACS)…
   setInterval(fetchLiveAlerts, 180000);                          // …refreshed every 3 minutes so risky alerts surface fast
+  maybeWarningsPopup();                                          // today's consolidated district-level flood warning (once/day)
+  if($("#hwRoot")){                                              // Highway Updates page — curated table + live road bulletins
+    fetchHighways(); fetchHighwayNews();
+    setInterval(fetchHighways, 300000); setInterval(fetchHighwayNews, 300000);  // auto-refresh every 5 min
+  }
   // re-render bulletins every 10 minutes (refreshes relative times / fallback content)
   setInterval(()=>{
     renderTicker();
@@ -907,19 +912,37 @@ Object.assign(I18N.en,{
   "fpop.eye":"Risky Flood Alert","fpop.red":"RED · SEVERE","fpop.orange":"ORANGE · RISKY","fpop.title":"Flood alert — Nepal",
   "fpop.region":"Affected area","fpop.issued":"Issued","fpop.source":"Source","fpop.report":"View official report ↗",
   "fpop.dismiss":"Dismiss","fpop.view":"See all alerts","fpop.auto":"Auto-checked every few minutes · GDACS (UN/EC)","fpop.live":"LIVE",
+  "warn.badge":"TODAY · HIGH ALERT","warn.eye":"Today's Flood Warning","warn.count":"districts on flood / landslide watch","warn.legend":"Red = under today's riverside alert (NDRRMA)","warn.reopen":"Today's district warnings","warn.sevlabel":"Riverside alert today",
   "glof.tag":"GLOF Watch",
   "gallery.eye":"From the Affected Areas","gallery.h":"Ground Gallery","gallery.load":"Loading photos…","gallery.none":"Photos could not be loaded right now. See the official article.","gallery.loadall":"View all photos →","page.gallery.h":"Photo Gallery","page.gallery.p":"Photographs from the affected areas, from published news sources and Wikimedia. Verify context independently.",
   "page.news.h":"Live Bulletins","page.news.p":"Detailed reporting on the current disaster, compiled from published and official sources. Verify independently.",
   "news.back":"← All bulletins","news.source":"Read at original source ↗","news.overview":"Situation overview","news.overview.src":"Live from Wikipedia · 2026 China–Nepal floods",
   "hist.readmore":"Read full article ↗","hist.loading":"Loading details…","hist.tap":"Tap for details",
-  "relief.scan":"Scan to donate","relief.fonepay":"Fonepay — PM Disaster Relief Fund","relief.fonepay.p":"Scan this Fonepay QR with any Nepali banking or wallet app to donate to the Prime Minister's relief fund."
+  "relief.scan":"Scan to donate","relief.fonepay":"Fonepay — PM Disaster Relief Fund","relief.fonepay.p":"Scan this Fonepay QR with any Nepali banking or wallet app to donate to the Prime Minister's relief fund.",
+  "nav.highway":"Highway Updates",
+  "page.hw.eye":"Roads & Mobility","page.hw.h":"Highway Updates","page.hw.p":"Live status of Nepal's major highways — open, closed and one-way sections by province, with the reason, expected reopening and safe detours. Verify locally before you travel.",
+  "hw.updated":"Updated","hw.refresh":"Refresh","hw.all":"All","hw.f.closed":"Closed","hw.f.oneway":"One-way","hw.f.open":"Open",
+  "hw.st.closed":"CLOSED","hw.st.oneway":"ONE-WAY","hw.st.caution":"CAUTION","hw.st.open":"OPEN",
+  "hw.reason":"Reason","hw.eta":"Est. reopening","hw.detour":"Detour","hw.contact":"Contact","hw.since":"Status","hw.route":"route",
+  "hw.summary":"National overview","hw.live":"Live road bulletins","hw.livesrc":"Auto-updating · Google News (road/traffic filter)","hw.nolive":"No new road bulletins on the wire right now.",
+  "hw.precau":"Travel precautions","hw.precau1":"Travel in daylight; avoid hill highways after dark and during heavy rain.","hw.precau2":"Keep 2–3x normal travel time in hand and carry fuel, water and a power bank.","hw.precau3":"Never cross a flooded road or an active landslide — wait for clearance.","hw.precau4":"Confirm the section with the local traffic office (dial 103) before you set off.",
+  "hw.loading":"Loading highway status…","hw.legend":"Statuses are compiled from published reports and may lag real conditions.","hw.count.closed":"closed","hw.count.oneway":"one-way","hw.count.open":"open / caution"
 });
 Object.assign(I18N.ne,{
+  "nav.highway":"राजमार्ग अपडेट",
+  "page.hw.eye":"सडक तथा आवागमन","page.hw.h":"राजमार्ग अपडेट","page.hw.p":"नेपालका प्रमुख राजमार्गको प्रत्यक्ष अवस्था — प्रदेश अनुसार खुला, बन्द र एकतर्फी खण्ड, कारण, खुल्ने अनुमानित समय र सुरक्षित वैकल्पिक मार्गसहित। यात्रा गर्नुअघि स्थानीय रूपमा पुष्टि गर्नुहोस्।",
+  "hw.updated":"अद्यावधिक","hw.refresh":"ताजा गर्नुहोस्","hw.all":"सबै","hw.f.closed":"बन्द","hw.f.oneway":"एकतर्फी","hw.f.open":"खुला",
+  "hw.st.closed":"बन्द","hw.st.oneway":"एकतर्फी","hw.st.caution":"सावधानी","hw.st.open":"खुला",
+  "hw.reason":"कारण","hw.eta":"खुल्ने अनुमान","hw.detour":"वैकल्पिक मार्ग","hw.contact":"सम्पर्क","hw.since":"अवस्था","hw.route":"मार्ग",
+  "hw.summary":"राष्ट्रिय अवलोकन","hw.live":"प्रत्यक्ष सडक बुलेटिन","hw.livesrc":"स्वतः अद्यावधिक · गुगल न्युज (सडक/ट्राफिक फिल्टर)","hw.nolive":"अहिले नयाँ सडक बुलेटिन छैन।",
+  "hw.precau":"यात्रा सावधानी","hw.precau1":"दिउँसो यात्रा गर्नुहोस्; अँध्यारो र भारी वर्षामा पहाडी राजमार्ग नजानुहोस्।","hw.precau2":"सामान्यभन्दा २–३ गुणा बढी समय राख्नुहोस्; इन्धन, पानी र पावर बैंक बोक्नुहोस्।","hw.precau3":"बाढी आएको सडक वा सक्रिय पहिरो कहिल्यै नकाट्नुहोस् — सफा नभएसम्म पर्खनुहोस्।","hw.precau4":"निस्कनुअघि स्थानीय ट्राफिक कार्यालय (१०३) मा खण्ड पुष्टि गर्नुहोस्।",
+  "hw.loading":"राजमार्ग अवस्था लोड हुँदै…","hw.legend":"अवस्था प्रकाशित प्रतिवेदनबाट संकलित; वास्तविक अवस्थाभन्दा पछाडि हुन सक्छ।","hw.count.closed":"बन्द","hw.count.oneway":"एकतर्फी","hw.count.open":"खुला / सावधानी",
   "news.read":"पूरा बुलेटिन पढ्नुहोस्","news.live":"प्रत्यक्ष",
   "notif.h":"अलर्टहरू","notif.eye":"सिग्नल फिड","notif.clear":"सबै हटाउनुहोस्","notif.empty":"कुनै सक्रिय अलर्ट छैन।","notif.count":"सक्रिय","notif.enable":"सूचना पाउनुहोस्",
   "fpop.eye":"जोखिमपूर्ण बाढी अलर्ट","fpop.red":"रातो · गम्भीर","fpop.orange":"सुन्तला · जोखिमपूर्ण","fpop.title":"बाढी अलर्ट — नेपाल",
   "fpop.region":"प्रभावित क्षेत्र","fpop.issued":"जारी","fpop.source":"स्रोत","fpop.report":"आधिकारिक रिपोर्ट हेर्नुहोस् ↗",
   "fpop.dismiss":"हटाउनुहोस्","fpop.view":"सबै अलर्ट हेर्नुहोस्","fpop.auto":"हरेक केही मिनेटमा स्वतः जाँच · GDACS (UN/EC)","fpop.live":"प्रत्यक्ष",
+  "warn.badge":"आज · उच्च सतर्कता","warn.eye":"आजको बाढी चेतावनी","warn.count":"जिल्ला बाढी / पहिरो निगरानीमा","warn.legend":"रातो = आज नदी किनार सतर्कता (NDRRMA)","warn.reopen":"आजका जिल्ला चेतावनी","warn.sevlabel":"आज नदी किनार सतर्कता",
   "glof.tag":"GLOF सतर्कता",
   "gallery.eye":"प्रभावित क्षेत्रबाट","gallery.h":"स्थलगत ग्यालरी","gallery.load":"तस्बिर लोड हुँदै…","gallery.none":"अहिले तस्बिर लोड हुन सकेन। आधिकारिक लेख हेर्नुहोस्।","gallery.loadall":"सबै तस्बिर हेर्नुहोस् →","page.gallery.h":"तस्बिर ग्यालरी","page.gallery.p":"प्रभावित क्षेत्रका तस्बिरहरू, प्रकाशित समाचार र विकिमिडियाबाट। सन्दर्भ स्वतन्त्र रुजु गर्नुहोस्।",
   "page.news.h":"प्रत्यक्ष बुलेटिन","page.news.p":"हालको विपद्बारे प्रकाशित र आधिकारिक स्रोतबाट संकलित विस्तृत समाचार। स्वतन्त्र रुजु गर्नुहोस्।",
@@ -951,6 +974,67 @@ const NOTIFS=[
    msg:{en:"Gyirong Port destroyed on the China side; hundreds reported missing across the border.",
         ne:"चीनतर्फ ग्यिरोङ बन्दरगाह ध्वस्त; सीमापार सयौं बेपत्ता।"}}
 ];
+
+/* =========================================================================
+   TODAY'S DISTRICT FLOOD WARNINGS — the data behind the "Today's Flood
+   Warning" popup. Compiled from real, published sources for the current
+   event and shown as one consolidated bulletin:
+     • NDRRMA fresh warning, 30 Aug 2026 — Bhote Koshi rising again in Rasuwa,
+       Trishuli ~3 m above normal, a landslide-dammed lake on the Lhende Khola
+       (~18 km above Rasuwagadhi) at risk of bursting → riverside alert for
+       Rasuwa, Nuwakot, Dhading, Chitwan.  (IANS / NDRRMA)
+     • DHM flash-flood bulletin — 44 districts across all seven provinces.
+       (The Himalayan Times / DHM)
+   `sev:1` marks the districts under today's riverside alert (shown red).
+   Update this block as DHM/NDRRMA revise their bulletins.
+   ========================================================================= */
+const WARNINGS={
+  active:true,                 // set false only when NDRRMA declares the risk over — then the popup stops
+  updated:"2026-08-30",        // bump this (or the day rolls over) to re-surface the warning
+  date:{en:"30 Aug 2026",ne:"१४ भदौ २०८३"},
+  count:44,
+  source:"DHM special bulletin · NDRRMA",
+  url:"https://www.dhm.gov.np",
+  headline:{en:"Bhote Koshi & Trishuli surging — second-flood risk",
+            ne:"भोटेकोशी र त्रिशूली बढ्दो — दोस्रो बाढीको जोखिम"},
+  summary:{
+    en:"NDRRMA warns the Bhote Koshi is rising again in Rasuwa and the Trishuli is running about 3 m above normal. A landslide-dammed lake on the Lhende Khola, roughly 18 km above Rasuwagadhi, could burst and set off a second flood. DHM keeps flash-flood risk high across 44 districts in all seven provinces. Riverside residents must move to higher ground and stay off the banks.",
+    ne:"राष्ट्रिय विपद् प्राधिकरण (NDRRMA) ले रसुवामा भोटेकोशी फेरि बढ्दै गएको र त्रिशूली सामान्यभन्दा करिब ३ मिटर माथि बगिरहेको चेतावनी दिएको छ। रसुवागढीभन्दा करिब १८ कि.मि. माथि ल्हेन्डे खोलामा पहिरोले बाँधिएको तालले फुटेर दोस्रो बाढी निम्त्याउन सक्ने जोखिम छ। DHM ले सातै प्रदेशका ४४ जिल्लामा आकस्मिक बाढीको जोखिम उच्च रहेको जनाएको छ। नदी किनारका बासिन्दा तुरुन्तै अग्लो स्थानमा जानुहोस्।"},
+  rivers:[
+    {name:{en:"Bhote Koshi",ne:"भोटेकोशी"}, status:{en:"rising",ne:"बढ्दै"}, sev:"danger"},
+    {name:{en:"Trishuli",ne:"त्रिशूली"}, status:{en:"+3 m above normal",ne:"+३ मि. माथि"}, sev:"danger"},
+    {name:{en:"Lhende Khola",ne:"ल्हेन्डे खोला"}, status:{en:"dammed · burst risk",ne:"बाँधिएको · फुट्ने जोखिम"}, sev:"danger"}
+  ],
+  provinces:[
+    {name:{en:"Bagmati",ne:"बागमती"}, districts:[
+      {en:"Rasuwa",ne:"रसुवा",sev:1},{en:"Nuwakot",ne:"नुवाकोट",sev:1},{en:"Dhading",ne:"धादिङ",sev:1},{en:"Chitwan",ne:"चितवन",sev:1},
+      {en:"Sindhupalchok",ne:"सिन्धुपाल्चोक"},{en:"Kavrepalanchok",ne:"काभ्रेपलाञ्चोक"},{en:"Sindhuli",ne:"सिन्धुली"},{en:"Makwanpur",ne:"मकवानपुर"},
+      {en:"Dolakha",ne:"दोलखा"},{en:"Ramechhap",ne:"रामेछाप"},{en:"Lalitpur",ne:"ललितपुर"},{en:"Kathmandu",ne:"काठमाडौं"},{en:"Bhaktapur",ne:"भक्तपुर"}
+    ]},
+    {name:{en:"Gandaki",ne:"गण्डकी"}, districts:[
+      {en:"Gorkha",ne:"गोरखा"},{en:"Lamjung",ne:"लमजुङ"},{en:"Tanahun",ne:"तनहुँ"},{en:"Kaski",ne:"कास्की"},
+      {en:"Syangja",ne:"स्याङ्जा"},{en:"Parbat",ne:"पर्वत"},{en:"Myagdi",ne:"म्याग्दी"},{en:"Nawalpur (E)",ne:"नवलपुर (पूर्व)"}
+    ]},
+    {name:{en:"Koshi",ne:"कोशी"}, districts:[
+      {en:"Panchthar",ne:"पाँचथर"},{en:"Ilam",ne:"इलाम"},{en:"Jhapa",ne:"झापा"},{en:"Morang",ne:"मोरङ"},{en:"Sunsari",ne:"सुनसरी"},
+      {en:"Saptari",ne:"सप्तरी"},{en:"Bhojpur",ne:"भोजपुर"},{en:"Sankhuwasabha",ne:"संखुवासभा"},{en:"Udayapur",ne:"उदयपुर"}
+    ]},
+    {name:{en:"Madhesh",ne:"मधेश"}, districts:[
+      {en:"Parsa",ne:"पर्सा"},{en:"Bara",ne:"बारा"},{en:"Rautahat",ne:"रौतहट"},{en:"Sarlahi",ne:"सर्लाही"}
+    ]},
+    {name:{en:"Lumbini",ne:"लुम्बिनी"}, districts:[
+      {en:"Parasi (W)",ne:"परासी (पश्चिम)"},{en:"Palpa",ne:"पाल्पा"},{en:"Pyuthan",ne:"प्युठान"},{en:"Rolpa",ne:"रोल्पा"},
+      {en:"Dang",ne:"दाङ"},{en:"Banke",ne:"बाँके"},{en:"Bardiya",ne:"बर्दिया"}
+    ]},
+    {name:{en:"Karnali",ne:"कर्णाली"}, districts:[
+      {en:"Salyan",ne:"सल्यान"},{en:"Surkhet",ne:"सुर्खेत"}
+    ]},
+    {name:{en:"Sudurpaschim",ne:"सुदूरपश्चिम"}, districts:[
+      {en:"Kailali",ne:"कैलाली"}
+    ]}
+  ]
+};
+
 /* cleared alerts persist; a cleared alert never reappears — only genuinely new ids show */
 const NOTIF_CLEARED=(()=>{try{return new Set(JSON.parse(localStorage.getItem("nd_cleared")||"[]"));}catch(e){return new Set();}})();
 /* Live flood alerts from /api/alerts (GDACS — UN/EC official flood feed). These
@@ -1031,11 +1115,15 @@ const RISKY_SEV = new Set(["danger","watch"]);   // Red + Orange = risky; Green 
 const POPUP_SEEN=(()=>{try{return new Set(JSON.parse(localStorage.getItem("nd_popup_seen")||"[]"));}catch(e){return new Set();}})();
 function _savePopupSeen(){ try{localStorage.setItem("nd_popup_seen",JSON.stringify([...POPUP_SEEN].slice(-200)));}catch(e){} }
 let _popupOpenFor=null;   // id currently displayed (guards re-entrancy while open)
+let _warnShownThisLoad=false;   // today's consolidated warning takes priority over the single GDACS pop
 
 /* pick the top risky alert we haven't shown yet, and pop it */
 function maybeFloodPopup(){
   const pop=$("#fpop"); if(!pop) return;
   if(_popupOpenFor) return;                                   // one at a time
+  // If the consolidated "Today's Flood Warning" already covered this event, don't
+  // also stack the single GDACS pop — just mark its ids seen so it stays quiet.
+  if(_warnShownThisLoad){ LIVE_ALERTS.forEach(a=>POPUP_SEEN.add(a.id)); _savePopupSeen(); return; }
   const risky=LIVE_ALERTS
     .filter(a=>RISKY_SEV.has(a.sev) && !NOTIF_CLEARED.has(a.id) && !POPUP_SEEN.has(a.id))
     .sort((a,b)=>(a.sev==="danger"?0:1)-(b.sev==="danger"?0:1) || (b.ts||0)-(a.ts||0));
@@ -1059,36 +1147,105 @@ function openFloodPopup(a){
   pop.className="fpop fpop--"+a.sev+" open";
   pop.innerHTML=`
     <div class="fpop__card" role="alertdialog" aria-modal="true" aria-labelledby="fpopH">
-      <div class="fpop__bar"></div>
-      <button class="fpop__x" id="fpopX" aria-label="Close">✕</button>
-      <div class="fpop__top">
-        <span class="fpop__chip">${esc(chip)}</span>
-        <span class="fpop__pulse"><span class="fpop__dot"></span>${esc(t("fpop.live"))}</span>
+      <button class="fpop__x" id="fpopX" aria-label="Close">${XICON}</button>
+      <div class="fpop__scroll">
+        <div class="fpop__top">
+          <span class="fpop__chip">${esc(chip)}</span>
+          <span class="fpop__pulse"><span class="fpop__dot"></span>${esc(t("fpop.live"))}</span>
+        </div>
+        <div class="fpop__eye">${esc(t("fpop.eye"))}</div>
+        <h3 class="fpop__h" id="fpopH">${esc(head)}</h3>
+        ${body?`<p class="fpop__body">${esc(body)}</p>`:""}
+        <dl class="fpop__meta">
+          ${meta.map(m=>`<div><dt>${esc(m[0])}</dt><dd>${esc(m[1])}</dd></div>`).join("")}
+        </dl>
+        <div class="fpop__actions">
+          ${a.url?`<a class="btn btn--primary" href="${esc(a.url)}" target="_blank" rel="noopener">${esc(t("fpop.report"))}</a>`:""}
+          <button class="btn btn--ghost" id="fpopEnable"${notifSupported()&&Notification.permission==="default"?"":" hidden"}>${BELL_ICO}<span>${esc(t("notif.enable"))}</span></button>
+          <button class="btn btn--ghost" id="fpopMore">${esc(t("fpop.view"))}</button>
+        </div>
+        <div class="fpop__foot">${esc(t("fpop.auto"))}</div>
       </div>
-      <div class="fpop__eye">${esc(t("fpop.eye"))}</div>
-      <h3 class="fpop__h" id="fpopH">${esc(head)}</h3>
-      ${body?`<p class="fpop__body">${esc(body)}</p>`:""}
-      <dl class="fpop__meta">
-        ${meta.map(m=>`<div><dt>${esc(m[0])}</dt><dd>${esc(m[1])}</dd></div>`).join("")}
-      </dl>
-      <div class="fpop__actions">
-        ${a.url?`<a class="btn btn--primary" href="${esc(a.url)}" target="_blank" rel="noopener">${esc(t("fpop.report"))}</a>`:""}
-        <button class="btn btn--ghost" id="fpopEnable"${notifSupported()&&Notification.permission==="default"?"":" hidden"}>${BELL_ICO}<span>${esc(t("notif.enable"))}</span></button>
-        <button class="btn btn--ghost" id="fpopMore">${esc(t("fpop.view"))}</button>
-      </div>
-      <div class="fpop__foot">${esc(t("fpop.auto"))}</div>
     </div>`;
   pop.setAttribute("aria-hidden","false");
-  const x=$("#fpopX"); if(x){ x.addEventListener("click",closeFloodPopup); x.focus(); }
-  const en=$("#fpopEnable"); if(en) en.addEventListener("click",()=>{ requestNotifPerm(); const b=$("#fpopEnable"); if(b) b.hidden=true; });
-  const more=$("#fpopMore"); if(more) more.addEventListener("click",()=>{ closeFloodPopup(); notifOpen(); });
-  pop.onclick=e=>{ if(e.target===pop) closeFloodPopup(); };   // click backdrop to close
+  _wireFpop(pop);
 }
 function closeFloodPopup(){
   const pop=$("#fpop"); if(!pop) return;
   pop.classList.remove("open"); pop.setAttribute("aria-hidden","true");
+  pop.classList.remove("fpop--warn");
   _popupOpenFor=null;
   const b=$("#bell"); if(b) b.focus();
+}
+
+/* shared wiring for both popups: close, notify, "see all", backdrop-click */
+function _wireFpop(pop){
+  const x=$("#fpopX"); if(x){ x.addEventListener("click",closeFloodPopup); x.focus(); }
+  const en=$("#fpopEnable"); if(en) en.addEventListener("click",()=>{ requestNotifPerm(); const b=$("#fpopEnable"); if(b) b.hidden=true; });
+  const more=$("#fpopMore"); if(more) more.addEventListener("click",()=>{ closeFloodPopup(); notifOpen(); });
+  pop.onclick=e=>{ if(e.target===pop) closeFloodPopup(); };
+}
+
+/* =========================================================================
+   TODAY'S FLOOD WARNING popup — the consolidated, district-level bulletin.
+   Shows once per calendar day (deduped by WARNINGS.updated) on load, and can
+   be reopened any time from the alerts drawer. Takes priority over the single
+   GDACS pop so a visitor sees the full picture — the river surge, the second-
+   flood risk, and every district DHM/NDRRMA has placed on watch today.
+   ========================================================================= */
+function maybeWarningsPopup(){ openWarningsPopup(false); }
+function openWarningsPopup(force){
+  const pop=$("#fpop"); if(!pop || typeof WARNINGS==="undefined") return;
+  if(_popupOpenFor) return;
+  if(WARNINGS.active===false && !force) return;               // NDRRMA declared the risk over
+  // The warning persists until: (a) it's a new calendar day (re-shows "tomorrow"),
+  // (b) a new alert is issued (WARNINGS.updated changes), or (c) risk is declared over.
+  const stamp=WARNINGS.updated+"@"+new Date().toLocaleDateString("en-CA");
+  if(!force){
+    let seen=""; try{ seen=localStorage.getItem("nd_warn_seen")||""; }catch(e){}
+    if(seen===stamp) return;                                  // already shown for this alert, this day
+  }
+  try{ localStorage.setItem("nd_warn_seen",stamp); }catch(e){}
+  _warnShownThisLoad=true;
+  if(typeof LIVE_ALERTS!=="undefined"){ LIVE_ALERTS.forEach(a=>POPUP_SEEN.add(a.id)); _savePopupSeen(); } // suppress redundant single pop
+  _popupOpenFor="__warn__";
+  const W=WARNINGS;
+  const rivers=W.rivers.map(r=>`<span class="wrv wrv--${r.sev}"><b>${esc(TL(r.name))}</b><span>${esc(TL(r.status))}</span></span>`).join("");
+  // Riverside-alert districts pulled out as a short, prominent row.
+  const sev=[]; W.provinces.forEach(p=>p.districts.forEach(d=>{ if(d.sev) sev.push(TL(d)); }));
+  const sevRow=sev.length?`<div class="wsev"><span class="wsev__l">${esc(t("warn.sevlabel"))}</span><span class="wsev__names">${sev.map(n=>esc(n)).join(", ")}</span></div>`:"";
+  // Everything else as calm, comma-separated text per province (no boxes).
+  const provs=W.provinces.map(p=>{
+    const names=p.districts.map(d=>`<span class="wd${d.sev?" wd--sev":""}">${esc(TL(d))}</span>`).join(", ");
+    return `<div class="wprov"><div class="wprov__h">${esc(TL(p.name))}<span class="wprov__n">${p.districts.length}</span></div><p class="wlist">${names}</p></div>`;
+  }).join("");
+  pop.className="fpop fpop--danger fpop--warn open";
+  pop.innerHTML=`
+    <div class="fpop__card fpop__card--wide" role="alertdialog" aria-modal="true" aria-labelledby="fpopH">
+      <button class="fpop__x" id="fpopX" aria-label="Close">${XICON}</button>
+      <div class="fpop__scroll">
+        <div class="fpop__top">
+          <span class="fpop__chip">${esc(t("warn.badge"))}</span>
+          <span class="fpop__pulse"><span class="fpop__dot"></span>${esc(t("fpop.live"))}</span>
+          <span class="wdate mono">${esc(TL(W.date))}</span>
+        </div>
+        <div class="fpop__eye">${esc(t("warn.eye"))}</div>
+        <h3 class="fpop__h" id="fpopH">${esc(TL(W.headline))}</h3>
+        <p class="fpop__body">${esc(TL(W.summary))}</p>
+        <div class="wrivers">${rivers}</div>
+        <div class="wcount"><span class="wcount__n mono">${W.count}</span><span class="wcount__l">${esc(t("warn.count"))}</span></div>
+        ${sevRow}
+        <div class="wprovs">${provs}</div>
+        <div class="fpop__actions">
+          <a class="btn btn--primary" href="${esc(W.url)}" target="_blank" rel="noopener">${esc(t("fpop.report"))}</a>
+          <button class="btn btn--ghost" id="fpopEnable"${notifSupported()&&Notification.permission==="default"?"":" hidden"}>${BELL_ICO}<span>${esc(t("notif.enable"))}</span></button>
+          <button class="btn btn--ghost" id="fpopMore">${esc(t("fpop.view"))}</button>
+        </div>
+        <div class="fpop__foot">SRC · ${esc(W.source)} · ${esc(t("fpop.auto"))}</div>
+      </div>
+    </div>`;
+  pop.setAttribute("aria-hidden","false");
+  _wireFpop(pop);
 }
 
 /* url + long now live inline on each NEWS item above (20 sourced bulletins) */
@@ -1294,6 +1451,10 @@ async function fetchInfobox(title){
 const BELL='<svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>';
 /* inline bell that inherits its button's text colour (white on crimson, ink on ghost) */
 const BELL_ICO='<svg class="ico-bell" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>';
+/* crisp SVG close cross (replaces the ✕ glyph) — matches the icon system */
+const XICON='<svg class="ico-x" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+/* warning triangle (inherits currentColor) for the "today's warnings" control */
+const XTRI='<svg class="ico-tri" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>';
 function injectChrome(){
   // Stack the running NPT time INSIDE the red LIVE block (LIVE on top, time below).
   // The header clock is hidden on small screens, so this keeps the time visible.
@@ -1317,8 +1478,22 @@ function injectChrome(){
     b.addEventListener("click",notifOpen);
   }
 
-  // mobile alert item inside nav dropdown
+  // Highway Updates nav link — injected on every page that doesn't already carry
+  // it (only highway-updates.html hardcodes it, to mark itself current), so one
+  // edit here keeps the nav consistent sitewide without touching each HTML file.
   const navInner=$("#navInner");
+  if(navInner && !navInner.querySelector('a[href="highway-updates.html"]')){
+    const hw=document.createElement("a");
+    hw.href="highway-updates.html";
+    hw.setAttribute("data-i18n","nav.highway");
+    hw.textContent="Highway Updates";
+    const after=navInner.querySelector('a[href="alerts.html"]');
+    if(after && after.nextSibling) navInner.insertBefore(hw, after.nextSibling);
+    else if(after) navInner.appendChild(hw);
+    else navInner.appendChild(hw);
+  }
+
+  // mobile alert item inside nav dropdown
   if(navInner && !$("#mobileNavAlert")){
     const mobAlert=document.createElement("a");
     mobAlert.href="#alerts";
@@ -1339,7 +1514,8 @@ function injectChrome(){
   if(!$("#notif")){
     const scrim=document.createElement("div"); scrim.className="scrim"; scrim.id="scrim"; document.body.appendChild(scrim);
     const p=document.createElement("aside"); p.className="notif"; p.id="notif"; p.setAttribute("aria-label","Alerts"); p.setAttribute("aria-hidden","true");
-    p.innerHTML=`<div class="notif__h"><div><span class="eyebrow" data-i18n="notif.eye">Signal Feed</span><h3 data-i18n="notif.h">Alerts</h3></div><button class="notif__x" id="notifX" aria-label="Close">✕</button></div>
+    p.innerHTML=`<div class="notif__h"><div><span class="eyebrow" data-i18n="notif.eye">Signal Feed</span><h3 data-i18n="notif.h">Alerts</h3></div><button class="notif__x" id="notifX" aria-label="Close">${XICON}</button></div>
+      <button class="notif__warn" id="warnReopen"><span class="notif__warn-l">${XTRI}<span data-i18n="warn.reopen">Today's district warnings</span></span><span class="notif__warn-n mono">${(typeof WARNINGS!=="undefined"?WARNINGS.count:"")}</span></button>
       <div class="notif__bar"><span class="lbl"><span id="notifCount">0</span> <span data-i18n="notif.count">active</span></span><button class="notif__enable" id="notifEnable" hidden>${BELL_ICO}<span class="ntf-lbl" data-i18n="notif.enable">Notify me</span></button><button class="notif__clear" id="notifClear" data-i18n="notif.clear">Clear all</button></div>
       <div class="notif__list" id="notifList"></div>`;
     document.body.appendChild(p);
@@ -1347,6 +1523,9 @@ function injectChrome(){
     $("#notifX").addEventListener("click",notifClose);
     $("#notifClear").addEventListener("click",clearNotifs);
     $("#notifEnable").addEventListener("click",requestNotifPerm);
+    const wr=$("#warnReopen");
+    if(typeof WARNINGS==="undefined" || WARNINGS.active===false) wr.hidden=true;
+    wr.addEventListener("click",()=>{ notifClose(); openWarningsPopup(true); });
     document.addEventListener("keydown",e=>{if(e.key==="Escape"&&$("#notif").classList.contains("open"))notifClose();});
   }
   // risky-flood-alert popup host (content injected on demand by openFloodPopup)
@@ -2108,8 +2287,86 @@ function setupManualSync(){
   // refresh immediately when the tab becomes visible again (cheap, catches up fast)
   if(!window.__ndVis){
     window.__ndVis=true;
-    document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="visible"){ liveRefresh(); fetchLiveAlerts(); fetchLiveNews(); } });
+    document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="visible"){ liveRefresh(); fetchLiveAlerts(); fetchLiveNews(); if($("#hwRoot")){ fetchHighways(); fetchHighwayNews(); } } });
   }
+}
+
+/* =========================================================================
+   HIGHWAY UPDATES page — province-grouped route table from assets/highways.json
+   (curated, editable) plus the auto-updating road-bulletin feed from
+   /api/highways. Everything below runs only where #hwRoot exists.
+   ========================================================================= */
+let HW_DATA=null, HW_NEWS=[], HW_FILTER="all";
+const HW_STATUS=["closed","oneway","caution","open"];
+function _hwClass(s){ return HW_STATUS.indexOf(s)>=0?s:"open"; }
+function _hwUpdated(){
+  if(!HW_DATA||!HW_DATA.updated_at) return "";
+  try{ return new Date(HW_DATA.updated_at).toLocaleString(LANG==="ne"?"ne-NP":"en-GB",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}); }
+  catch(_){ return HW_DATA.updated_at; }
+}
+async function fetchHighways(){
+  if(!$("#hwRoot")) return;
+  try{ const r=await fetch("assets/highways.json?_="+Date.now(),{cache:"no-store",signal:AbortSignal.timeout(6000)}); if(r.ok) HW_DATA=await r.json(); }catch(_){}
+  renderHighways();
+}
+async function fetchHighwayNews(){
+  if(!$("#hwRoot")) return;
+  try{ const r=await fetch("/api/highways",{signal:AbortSignal.timeout(9000)}); if(r.ok){ const j=await r.json(); if(j&&Array.isArray(j.items)) HW_NEWS=j.items; } }catch(_){}
+  renderHighways();
+}
+function _hwRouteCard(rt){
+  const st=_hwClass(rt.status);
+  const rows=[[t("hw.reason"), TL(rt.reason)]];
+  if(rt.eta) rows.push([t("hw.eta"), TL(rt.eta)]);
+  const det=rt.detour?TL(rt.detour):""; if(det && det!=="—") rows.push([t("hw.detour"), det]);
+  if(rt.contact) rows.push([t("hw.contact"), rt.contact]);
+  const since=rt.since?TL(rt.since):"";
+  return `<article class="hwcard hwcard--${st}">
+    <div class="hwcard__head">
+      <div class="hwcard__id"><h4 class="hwcard__name">${esc(rt.name)}</h4>${rt.highway?`<span class="hwcard__hw">${esc(rt.highway)}</span>`:""}</div>
+      <span class="hwbadge hwbadge--${st}">${esc(t("hw.st."+st))}</span>
+    </div>
+    ${since?`<div class="hwcard__since">${esc(since)}</div>`:""}
+    <dl class="hwcard__meta">${rows.map(r=>`<div><dt>${esc(r[0])}</dt><dd>${esc(r[1])}</dd></div>`).join("")}</dl>
+  </article>`;
+}
+function _hwMatches(st){
+  if(HW_FILTER==="all") return true;
+  if(HW_FILTER==="open") return st==="open"||st==="caution";
+  return st===HW_FILTER;
+}
+function renderHighways(){
+  const root=$("#hwRoot"); if(!root) return;
+  if(!HW_DATA){ root.innerHTML=`<p class="hwloading">${esc(t("hw.loading"))}</p>`; return; }
+  const provs=HW_DATA.provinces||[];
+  let nC=0,nO=0,nP=0;
+  provs.forEach(p=>(p.routes||[]).forEach(r=>{ const s=_hwClass(r.status); if(s==="closed")nC++; else if(s==="oneway")nO++; else nP++; }));
+  const strip=`<div class="hwstrip">
+    <button class="hwkpi hwkpi--closed${HW_FILTER==="closed"?" is-on":""}" data-hwf="closed"><span class="hwkpi__n mono">${nC}</span><span class="hwkpi__l">${esc(t("hw.count.closed"))}</span></button>
+    <button class="hwkpi hwkpi--oneway${HW_FILTER==="oneway"?" is-on":""}" data-hwf="oneway"><span class="hwkpi__n mono">${nO}</span><span class="hwkpi__l">${esc(t("hw.count.oneway"))}</span></button>
+    <button class="hwkpi hwkpi--open${HW_FILTER==="open"?" is-on":""}" data-hwf="open"><span class="hwkpi__n mono">${nP}</span><span class="hwkpi__l">${esc(t("hw.count.open"))}</span></button>
+    <button class="hwkpi hwkpi--all${HW_FILTER==="all"?" is-on":""}" data-hwf="all"><span class="hwkpi__l">${esc(t("hw.all"))}</span></button>
+  </div>`;
+  const controls=`<div class="hwbar"><span class="hwbar__upd">${esc(t("hw.updated"))} · <b class="mono">${esc(_hwUpdated())}</b></span><button class="btn btn--ghost btn--sm" id="hwRefresh">${esc(t("hw.refresh"))}</button></div>`;
+  const summary=HW_DATA.summary?`<div class="hwsum"><span class="hwsum__eye">${esc(t("hw.summary"))}</span><p>${esc(TL(HW_DATA.summary))}</p>${HW_DATA.source?`<div class="hwsum__src">SRC · ${esc(HW_DATA.source)}</div>`:""}</div>`:"";
+  let live="";
+  if(HW_NEWS && HW_NEWS.length){
+    const items=HW_NEWS.slice(0,8).map(n=>{
+      let when=""; try{ if(n.ts) when=new Date(n.ts).toLocaleDateString(LANG==="ne"?"ne-NP":"en-GB",{day:"numeric",month:"short"}); }catch(_){}
+      return `<a class="hwnews__row" href="${esc(n.url)}" target="_blank" rel="noopener"><span class="hwnews__t">${esc(n.title)}</span><span class="hwnews__m mono">${esc(n.source||"")}${when?" · "+esc(when):""}</span></a>`;
+    }).join("");
+    live=`<div class="hwlive"><div class="hwlive__h"><span class="hwsum__eye">${esc(t("hw.live"))}</span><span class="hwlive__src mono">${esc(t("hw.livesrc"))}</span></div>${items}</div>`;
+  }
+  const sections=provs.map(p=>{
+    const cards=(p.routes||[]).filter(r=>_hwMatches(_hwClass(r.status)));
+    if(!cards.length) return "";
+    return `<section class="hwprov"><h3 class="hwprov__h">${esc(TL(p.name))}<span class="hwprov__n mono">${cards.length} ${esc(t("hw.route"))}</span></h3><div class="hwgrid">${cards.map(_hwRouteCard).join("")}</div></section>`;
+  }).filter(Boolean).join("");
+  const precau=`<div class="hwprecau"><h3 class="hwprecau__h">${esc(t("hw.precau"))}</h3><ul><li>${esc(t("hw.precau1"))}</li><li>${esc(t("hw.precau2"))}</li><li>${esc(t("hw.precau3"))}</li><li>${esc(t("hw.precau4"))}</li></ul></div>`;
+  const legend=`<p class="hwlegendnote">${esc(t("hw.legend"))}</p>`;
+  root.innerHTML=controls+strip+summary+live+`<div class="hwprovs">${sections||`<p class="hwloading">${esc(t("hw.nolive"))}</p>`}</div>`+precau+legend;
+  root.querySelectorAll("[data-hwf]").forEach(b=>b.addEventListener("click",()=>{ const f=b.getAttribute("data-hwf"); HW_FILTER=(HW_FILTER===f&&f!=="all")?"all":f; renderHighways(); }));
+  const rf=$("#hwRefresh"); if(rf) rf.addEventListener("click",()=>{ rf.disabled=true; Promise.all([fetchHighways(),fetchHighwayNews()]).finally(()=>{ toast(LANG==="ne"?"राजमार्ग अवस्था अद्यावधिक भयो।":"Highway status refreshed.","crim"); }); });
 }
 
 if(document.readyState!=="loading") wire(); else document.addEventListener("DOMContentLoaded",wire);

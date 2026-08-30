@@ -1,0 +1,235 @@
+{
+  "updated_at": "2026-08-30T09:15:00+05:45",
+  "summary": {
+    "en": "Floods and landslides have blocked or disrupted at least nine highways nationwide. The worst hit is the Narayanghat–Mugling section of the Prithvi Highway, cut by landslides since 26 August. Time-window (one-way) rules are in force on several night-risk sections. Conditions change hour to hour — always confirm with the local traffic office before travelling.",
+    "ne": "बाढी र पहिरोले देशभरका कम्तीमा नौ राजमार्ग अवरुद्ध वा प्रभावित भएका छन्। सबैभन्दा बढी प्रभावित पृथ्वी राजमार्गको नारायणघाट–मुग्लिन खण्ड २६ भदौदेखि पहिरोले बन्द छ। कयौं खण्डमा राति सवारी रोक्ने (एकतर्फी) नियम लागू छ। अवस्था घण्टै पिच्छे बदलिन्छ — यात्रा गर्नुअघि स्थानीय ट्राफिक कार्यालयमा पुष्टि गर्नुहोस्।"
+  },
+  "source": "Nepal Police Traffic · Dept. of Roads · District Administration",
+  "provinces": [
+    {
+      "name": { "en": "Bagmati", "ne": "बागमती" },
+      "routes": [
+        {
+          "name": "Narayanghat – Mugling",
+          "highway": "Prithvi Highway (H04)",
+          "status": "closed",
+          "since": { "en": "Closed since 26 Aug, morning", "ne": "२६ भदौ बिहानदेखि बन्द" },
+          "reason": { "en": "Major landslide at Jalbire / Tuin Khola; carriageway fully cut. 25 slide-prone spots identified along this section.", "ne": "जलबिरे / टुइँ खोलामा ठूलो पहिरो; सडक पूर्ण अवरुद्ध। यस खण्डमा २५ पहिरो-जोखिम स्थान पहिचान।" },
+          "eta": { "en": "No reopening time — clearing ongoing", "ne": "खुल्ने समय अनिश्चित — सफाइ जारी" },
+          "detour": { "en": "Hetauda–Bharatpur, or Butwal–Nawalpur–Daunne–Dumkibas", "ne": "हेटौंडा–भरतपुर, वा बुटवल–नवलपुर–दाउन्ने–डुम्किबास" },
+          "contact": "Chitwan DPO 9855013999"
+        },
+        {
+          "name": "Kathmandu – Mugling (Nagdhunga corridor)",
+          "highway": "Prithvi Highway (H04)",
+          "status": "caution",
+          "since": { "en": "Restricted since 27 Aug", "ne": "२७ भदौदेखि नियन्त्रित" },
+          "reason": { "en": "Multiple blockages in Dhading; slow single-lane movement past Fishling and Malekhu.", "ne": "धादिङमा कयौं ठाउँमा अवरोध; फिस्लिङ र मलेखु नजिक एकलेनमा ढिलो सवारी।" },
+          "eta": { "en": "Passable with delays in daylight", "ne": "दिउँसो ढिलाइका साथ आवागमन सम्भव" },
+          "detour": { "en": "Travel in daylight; avoid after heavy rain", "ne": "दिउँसो मात्र यात्रा गर्नुहोस्; भारी वर्षापछि नजानुहोस्" },
+          "contact": "Traffic 103"
+        },
+        {
+          "name": "Khurkot – Nepalthok – Katunjebesi",
+          "highway": "BP Highway (H03)",
+          "status": "oneway",
+          "since": { "en": "Night ban in force", "ne": "राति रोक लागू" },
+          "reason": { "en": "Flood risk along the Sunkoshi. Vehicles barred 6:00 pm – 4:00 am; open 4:00 am – 6:00 pm only.", "ne": "सुनकोशी किनारमा बाढी जोखिम। बेलुका ६ बजेदेखि बिहान ४ बजेसम्म सवारी रोक; बिहान ४ – बेलुका ६ मात्र खुला।" },
+          "eta": { "en": "Daytime window only", "ne": "दिउँसोको समय मात्र" },
+          "detour": { "en": "Use Prithvi/Tribhuvan routes at night", "ne": "राति पृथ्वी/त्रिभुवन मार्ग प्रयोग गर्नुहोस्" },
+          "contact": "Traffic 103"
+        },
+        {
+          "name": "Kanti Lokpath (Kathmandu – Hetauda)",
+          "highway": "Kanti Rajmarg",
+          "status": "oneway",
+          "since": { "en": "Night ban in force", "ne": "राति रोक लागू" },
+          "reason": { "en": "Landslide risk on the hill section. Closed to all vehicles 5:00 pm – 5:00 am.", "ne": "पहाडी खण्डमा पहिरो जोखिम। बेलुका ५ – बिहान ५ बजेसम्म सबै सवारी बन्द।" },
+          "eta": { "en": "Daytime only", "ne": "दिउँसो मात्र" },
+          "detour": { "en": "Tribhuvan Highway via Naubise", "ne": "नौबिसे हुँदै त्रिभुवन राजमार्ग" },
+          "contact": "Traffic 103"
+        },
+        {
+          "name": "Galchhi – Rasuwagadhi (Kerung border)",
+          "highway": "Pasang Lhamu Highway",
+          "status": "closed",
+          "since": { "en": "Cut since 26 Aug", "ne": "२६ भदौदेखि अवरुद्ध" },
+          "reason": { "en": "Flood and debris destroyed sections near Timure and the Rasuwagadhi border point.", "ne": "टिमुरे र रसुवागढी नाका नजिक बाढी–पहिरोले सडक ध्वस्त।" },
+          "eta": { "en": "Long-term closure", "ne": "दीर्घकालीन बन्द" },
+          "detour": { "en": "No vehicular detour; rescue access only", "ne": "सवारीका लागि वैकल्पिक मार्ग छैन; उद्धार पहुँच मात्र" },
+          "contact": "Rasuwa DPO 9851287100"
+        }
+      ]
+    },
+    {
+      "name": { "en": "Gandaki", "ne": "गण्डकी" },
+      "routes": [
+        {
+          "name": "Mugling – Pokhara",
+          "highway": "Prithvi Highway (H04)",
+          "status": "caution",
+          "since": { "en": "Intermittent since 27 Aug", "ne": "२७ भदौदेखि रुकिरुकी" },
+          "reason": { "en": "Small slips near Aabukhaireni and Dumre cleared but recur after rain.", "ne": "आबुखैरेनी र दुम्रे नजिक साना पहिरो हटाइए पनि वर्षापछि दोहोरिन्छ।" },
+          "eta": { "en": "Open, expect short holds", "ne": "खुला, छोटो रोकावट सम्भव" },
+          "detour": { "en": "—", "ne": "—" },
+          "contact": "Traffic 103"
+        },
+        {
+          "name": "Pokhara – Baglung – Beni",
+          "highway": "Baglung Highway",
+          "status": "caution",
+          "since": { "en": "Monitored", "ne": "निगरानीमा" },
+          "reason": { "en": "Kaligandaki running high; riverside stretches at risk during downpours.", "ne": "कालीगण्डकी बढेको; भारी वर्षामा किनारका खण्ड जोखिममा।" },
+          "eta": { "en": "Open", "ne": "खुला" },
+          "detour": { "en": "—", "ne": "—" },
+          "contact": "Traffic 103"
+        },
+        {
+          "name": "Beni – Jomsom – Muktinath",
+          "highway": "Kaligandaki Corridor",
+          "status": "caution",
+          "since": { "en": "Monsoon advisory", "ne": "मनसुन सल्लाह" },
+          "reason": { "en": "Rough, single-lane; 4WD only. Slides common between Tatopani and Ghasa.", "ne": "उबडखाबड, एकलेन; ४WD मात्र। तातोपानी–घाँसाबीच पहिरो सामान्य।" },
+          "eta": { "en": "Open to 4WD", "ne": "४WD लाई खुला" },
+          "detour": { "en": "—", "ne": "—" },
+          "contact": "Mustang DPO"
+        }
+      ]
+    },
+    {
+      "name": { "en": "Koshi", "ne": "कोशी" },
+      "routes": [
+        {
+          "name": "Dharan – Dhankuta – Hile",
+          "highway": "Koshi Highway (H08)",
+          "status": "caution",
+          "since": { "en": "Monitored", "ne": "निगरानीमा" },
+          "reason": { "en": "Mudslides on the Bhedetar bends after rain; drive with care.", "ne": "वर्षापछि भेडेटार मोडमा पहिरो; सावधानीपूर्वक चलाउनुहोस्।" },
+          "eta": { "en": "Open", "ne": "खुला" },
+          "detour": { "en": "—", "ne": "—" },
+          "contact": "Traffic 103"
+        },
+        {
+          "name": "Bhadrapur – Ilam – Taplejung",
+          "highway": "Mechi Highway (H12)",
+          "status": "caution",
+          "since": { "en": "Monitored", "ne": "निगरानीमा" },
+          "reason": { "en": "Hill slips reported near Phikkal; short clearances ongoing.", "ne": "फिक्कल नजिक पहिरो; छोटो सफाइ जारी।" },
+          "eta": { "en": "Open with delays", "ne": "ढिलाइका साथ खुला" },
+          "detour": { "en": "—", "ne": "—" },
+          "contact": "Traffic 103"
+        },
+        {
+          "name": "Itahari – Bardibas (East–West)",
+          "highway": "Mahendra Highway (H01)",
+          "status": "open",
+          "since": { "en": "Normal", "ne": "सामान्य" },
+          "reason": { "en": "Terai plains section running normally; watch for waterlogging at underpasses.", "ne": "तराई समथर खण्ड सामान्य; अन्डरपासमा जलजमाव सम्भव।" },
+          "eta": { "en": "Open", "ne": "खुला" },
+          "detour": { "en": "—", "ne": "—" },
+          "contact": "Traffic 103"
+        }
+      ]
+    },
+    {
+      "name": { "en": "Madhesh", "ne": "मधेश" },
+      "routes": [
+        {
+          "name": "Pathlaiya – Birgunj",
+          "highway": "Tribhuvan Highway (H02)",
+          "status": "open",
+          "since": { "en": "Normal", "ne": "सामान्य" },
+          "reason": { "en": "Open; brief waterlogging possible at Simara and Jitpur after heavy rain.", "ne": "खुला; भारी वर्षापछि सिमरा र जीतपुरमा छोटो जलजमाव सम्भव।" },
+          "eta": { "en": "Open", "ne": "खुला" },
+          "detour": { "en": "—", "ne": "—" },
+          "contact": "Traffic 103"
+        },
+        {
+          "name": "Bardibas – Lahan – Inaruwa (East–West)",
+          "highway": "Mahendra Highway (H01)",
+          "status": "open",
+          "since": { "en": "Normal", "ne": "सामान्य" },
+          "reason": { "en": "Running normally. Local rivers (Ratu, Kamala) monitored for surges.", "ne": "सामान्य सञ्चालन। रातु, कमला खोलाको बढाव निगरानीमा।" },
+          "eta": { "en": "Open", "ne": "खुला" },
+          "detour": { "en": "—", "ne": "—" },
+          "contact": "Traffic 103"
+        }
+      ]
+    },
+    {
+      "name": { "en": "Lumbini", "ne": "लुम्बिनी" },
+      "routes": [
+        {
+          "name": "Butwal – Palpa – Tansen",
+          "highway": "Siddhartha Highway (H10)",
+          "status": "caution",
+          "since": { "en": "Monitored", "ne": "निगरानीमा" },
+          "reason": { "en": "Chronic slide zone in the Siddhababa area; short one-lane holds after rain.", "ne": "सिद्धबाबा क्षेत्रमा पुरानो पहिरो क्षेत्र; वर्षापछि छोटो एकलेन रोकावट।" },
+          "eta": { "en": "Open with holds", "ne": "रोकावटसहित खुला" },
+          "detour": { "en": "—", "ne": "—" },
+          "contact": "Traffic 103"
+        },
+        {
+          "name": "Butwal – Kohalpur (East–West)",
+          "highway": "Mahendra Highway (H01)",
+          "status": "open",
+          "since": { "en": "Normal", "ne": "सामान्य" },
+          "reason": { "en": "Open. Watch Tinau and Rapti bridge approaches during high flow.", "ne": "खुला। तिनाउ र राप्ती पुल छेउछाउ बढाव बेला सतर्क रहनुहोस्।" },
+          "eta": { "en": "Open", "ne": "खुला" },
+          "detour": { "en": "—", "ne": "—" },
+          "contact": "Traffic 103"
+        }
+      ]
+    },
+    {
+      "name": { "en": "Karnali", "ne": "कर्णाली" },
+      "routes": [
+        {
+          "name": "Surkhet – Dailekh – Jumla",
+          "highway": "Karnali Highway (H15)",
+          "status": "caution",
+          "since": { "en": "Monsoon advisory", "ne": "मनसुन सल्लाह" },
+          "reason": { "en": "Narrow mountain road; frequent slips between Manma and Kalikot. 4WD advised.", "ne": "साँघुरो पहाडी सडक; मान्म–कालिकोटबीच बारम्बार पहिरो। ४WD सल्लाह।" },
+          "eta": { "en": "Open, high risk", "ne": "खुला, उच्च जोखिम" },
+          "detour": { "en": "—", "ne": "—" },
+          "contact": "Traffic 103"
+        },
+        {
+          "name": "Kohalpur – Surkhet",
+          "highway": "Ratna Highway (H14)",
+          "status": "open",
+          "since": { "en": "Normal", "ne": "सामान्य" },
+          "reason": { "en": "Open; Babai and Bheri crossings watched during peak flow.", "ne": "खुला; बबई र भेरी तटमा बढाव बेला निगरानी।" },
+          "eta": { "en": "Open", "ne": "खुला" },
+          "detour": { "en": "—", "ne": "—" },
+          "contact": "Traffic 103"
+        }
+      ]
+    },
+    {
+      "name": { "en": "Sudurpaschim", "ne": "सुदूरपश्चिम" },
+      "routes": [
+        {
+          "name": "Attariya – Dadeldhura – Baitadi",
+          "highway": "Mahakali Highway (H13)",
+          "status": "caution",
+          "since": { "en": "Monsoon advisory", "ne": "मनसुन सल्लाह" },
+          "reason": { "en": "Landslip-prone hill climbs; short holds near Syaule after rain.", "ne": "पहिरो-जोखिम पहाडी उकालो; वर्षापछि स्याउले नजिक छोटो रोकावट।" },
+          "eta": { "en": "Open with delays", "ne": "ढिलाइसहित खुला" },
+          "detour": { "en": "—", "ne": "—" },
+          "contact": "Traffic 103"
+        },
+        {
+          "name": "Dhangadhi – Attariya – Mahendranagar (East–West)",
+          "highway": "Mahendra Highway (H01)",
+          "status": "open",
+          "since": { "en": "Normal", "ne": "सामान्य" },
+          "reason": { "en": "Open. Mohana and Mahakali river levels monitored near the border.", "ne": "खुला। सिमाना नजिक मोहना र महाकाली नदीको सतह निगरानीमा।" },
+          "eta": { "en": "Open", "ne": "खुला" },
+          "detour": { "en": "—", "ne": "—" },
+          "contact": "Traffic 103"
+        }
+      ]
+    }
+  ]
+}
