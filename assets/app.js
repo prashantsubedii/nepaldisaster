@@ -23,61 +23,113 @@
   }
 })();
 
-/* ================== SECURITY + OFFLINE MONITORING ================== */
-(function securityMonitor(){
+/* ================== LIGHT / DARK THEME ==================
+   Three states, in the order a viewer expects:
+     "system"  (default) — follow the OS, via the prefers-color-scheme media query
+     "light" / "dark"    — an explicit choice, stamped on <html data-theme>
+
+   Applied here at the top of the script rather than in wire(), because wire()
+   runs after first paint and the page would visibly flash the wrong palette on
+   every navigation. The CSS defines the light palette on bare :root, redefines
+   it under prefers-color-scheme:dark guarded by :not([data-theme="light"]), and
+   again under [data-theme="dark"] — so the toggle wins in both directions and
+   "system" still tracks the OS. */
+const THEME_KEY = "nd_theme";
+function storedTheme(){
+  try{ const v = localStorage.getItem(THEME_KEY); return (v==="light"||v==="dark") ? v : "system"; }
+  catch(e){ return "system"; }
+}
+function systemPrefersDark(){
+  return !!(window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches);
+}
+function effectiveTheme(){
+  const t = storedTheme();
+  return t === "system" ? (systemPrefersDark() ? "dark" : "light") : t;
+}
+function applyTheme(){
+  const t = storedTheme();
+  const root = document.documentElement;
+  if(t === "system") root.removeAttribute("data-theme");
+  else root.setAttribute("data-theme", t);
+  // Keep the browser UI (address bar, form controls) in step.
+  const dark = effectiveTheme() === "dark";
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if(meta) meta.setAttribute("content", dark ? "#0F1113" : "#B3122B");
+  updateThemeBtn();
+}
+/* Cycle light → dark → system, so a viewer can always get back to "follow my OS"
+   without clearing site data. */
+function toggleTheme(){
+  const order = ["light", "dark", "system"];
+  const next = order[(order.indexOf(storedTheme()) + 1) % order.length];
+  try{ localStorage.setItem(THEME_KEY, next); }catch(e){}
+  applyTheme();
+  if(typeof toast === "function") toast(t("theme." + next));
+}
+function updateThemeBtn(){
+  const b = document.getElementById("themeBtn");
+  if(!b) return;
+  const cur = storedTheme();
+  const label = (typeof t === "function") ? t("theme." + cur) : cur;
+  b.setAttribute("aria-label", label);
+  b.setAttribute("title", label);
+  b.dataset.mode = cur;
+}
+applyTheme();
+// Follow the OS live while the viewer is on "system".
+try{
+  const mq = window.matchMedia("(prefers-color-scheme: dark)");
+  const onChange = () => { if(storedTheme() === "system") applyTheme(); };
+  if(mq.addEventListener) mq.addEventListener("change", onChange);
+  else if(mq.addListener) mq.addListener(onChange);
+}catch(e){}
+
+/* ================== CONNECTION + INTEGRITY MONITORING ==================
+   Offline state is shown as a slim status pill in the page chrome, not as a
+   modal or a full-width red bar that shoves the page down. Repeated script
+   errors are logged, not surfaced as a dialog — a visitor looking for a
+   helpline should never have to dismiss anything to reach it. */
+(function connectionMonitor(){
   const SEC = {
     offline: false,
     crashCount: sessionStorage.getItem("__crash") ? parseInt(sessionStorage.getItem("__crash")) : 0,
     lastGoodData: localStorage.getItem("__lastGoodData") || null
   };
 
-  // Offline detection with UI popup
-  function showOfflinePopup(){
-    if(SEC.offline) return;
-    SEC.offline = true;
-    const warn='<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:6px"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>';
-    const html = `<div style="position:fixed;top:0;left:0;right:0;background:#C8102E;color:white;padding:12px 16px;font-family:sans-serif;font-size:14px;z-index:99999;border-bottom:2px solid #900;box-shadow:0 2px 8px rgba(0,0,0,0.3);">
-      <strong>${warn}No Internet Connection</strong> — Data may be stale. Reconnect to sync latest figures from Nepal Police & NDRRMA.
-    </div>`;
-    document.body.insertAdjacentHTML("afterbegin", html);
-  }
-
-  function hideOfflinePopup(){
-    if(!SEC.offline) return;
-    SEC.offline = false;
-    const popup = document.querySelector('div[style*="position:fixed"]');
-    if(popup) popup.remove();
-  }
-
-  // Network status monitoring
-  window.addEventListener("online", ()=>{ hideOfflinePopup(); console.log("[SECURITY] Network restored"); });
-  window.addEventListener("offline", ()=>{ showOfflinePopup(); console.log("[SECURITY] Network lost"); });
-
-  // Check initial state
-  if(!navigator.onLine) showOfflinePopup();
-
-  // Crash detection (CSP-safe: no inline handlers, uses delegated listener)
-  window.addEventListener("error", (e)=>{
-    SEC.crashCount++;
-    sessionStorage.setItem("__crash", SEC.crashCount);
-    if(SEC.crashCount > 3 && !document.getElementById("__crashPopup")){
-      const div = document.createElement("div");
-      div.id = "__crashPopup";
-      div.setAttribute("style","position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:white;padding:24px;border-radius:4px;box-shadow:0 4px 16px rgba(0,0,0,0.2);z-index:99999;max-width:400px;font-family:sans-serif;");
-      div.innerHTML = `<h2 style="color:#C8102E;margin:0 0 12px;">Site Error Detected</h2>
-        <p style="margin:0 0 12px;color:#333;">The site encountered multiple errors. This may indicate a corrupted cache or browser conflict.</p>
-        <button id="__crashClearBtn" style="background:#C8102E;color:white;border:none;padding:8px 16px;border-radius:2px;cursor:pointer;font-weight:bold;">Clear Cache & Reload</button>`;
-      document.body.appendChild(div);
-      document.getElementById("__crashClearBtn").addEventListener("click", ()=>{
-        localStorage.clear(); sessionStorage.clear(); location.reload();
-      });
-      console.error("[SECURITY] Repeated errors detected. User should clear cache.");
+  function pill(){
+    let el=document.getElementById("netPill");
+    if(!el){
+      el=document.createElement("div");
+      el.id="netPill"; el.className="netpill"; el.setAttribute("role","status");
+      el.innerHTML='<span class="netpill__dot"></span><span class="netpill__t">Offline — showing the last synced figures</span>';
+      (document.body||document.documentElement).appendChild(el);
     }
-  });
+    return el;
+  }
+  function setOffline(off){
+    if(SEC.offline===off) return;
+    SEC.offline=off;
+    const el=pill();
+    el.classList.toggle("is-on", off);
+    const txt=el.querySelector(".netpill__t");
+    if(txt) txt.textContent = off
+      ? (document.documentElement.lang==="ne" ? "अफलाइन — पछिल्लो सिंक भएको तथ्यांक देखाइँदै" : "Offline — showing the last synced figures")
+      : (document.documentElement.lang==="ne" ? "पुनः जोडियो" : "Back online");
+    if(!off) setTimeout(()=>{ el.classList.remove("is-on"); }, 2600);
+  }
 
-  // Reset crash count on successful load
+  window.addEventListener("online",  ()=>setOffline(false));
+  window.addEventListener("offline", ()=>setOffline(true));
+  if(!navigator.onLine) document.addEventListener("DOMContentLoaded", ()=>setOffline(true));
+
+  // Crash counting stays (it protects the cached-data path) but never renders UI.
+  window.addEventListener("error", ()=>{
+    SEC.crashCount++;
+    try{ sessionStorage.setItem("__crash", SEC.crashCount); }catch(_){}
+    if(SEC.crashCount>3) console.error("[MONITOR] Repeated script errors on this page.");
+  });
   window.addEventListener("load", ()=>{
-    setTimeout(()=>{ sessionStorage.setItem("__crash","0"); SEC.crashCount=0; }, 5000);
+    setTimeout(()=>{ try{sessionStorage.setItem("__crash","0");}catch(_){} SEC.crashCount=0; }, 5000);
   });
 
   // Data validation on fetch
@@ -120,9 +172,9 @@ const EVENT = {
   code:"FL-2026-0826",
   since:"2026-08-26T08:37:00+05:45",
   title:{en:"2026 Nepal Floods", ne:"२०२६ नेपाल बाढी"},
-  region:{en:"Rasuwa · Nuwakot · Trishuli corridor · Chitwan", ne:"रसुवा · नुवाकोट · त्रिशूली कोरिडोर · चितवन"},
-  eas:{en:"Trishuli corridor glacial flood. 734 dead, 2,498 missing (Nepal); 8,186 rescued by security forces. Search & relief ongoing.",
-       ne:"त्रिशूली कोरिडोरमा हिमनदी बाढी। ७३४ मृत्यु, २,४९८ बेपत्ता (नेपाल); सुरक्षा निकायद्वारा ८,१८६ उद्धार। खोजी तथा राहत जारी।"}
+  region:{en:"Rasuwa · Nuwakot · Dhading · Trishuli corridor · Chitwan · Nawalparasi", ne:"रसुवा · नुवाकोट · धादिङ · त्रिशूली कोरिडोर · चितवन · नवलपरासी"},
+  eas:{en:"Trishuli corridor glacier-collapse flood. 903 dead, 4,247 missing (Nepal). Tunnel rescue continues at Trishuli 3A; Prithvi Highway still cut at Krishnabhir.",
+       ne:"त्रिशूली कोरिडोरमा हिमनदी भत्किएर बाढी। ९०३ मृत्यु, ४,२४७ बेपत्ता (नेपाल)। त्रिशूली ३ए मा सुरुङ उद्धार जारी; कृष्णभीरमा पृथ्वी राजमार्ग अझै अवरुद्ध।"}
 };
 /* Nepal-side figures only. Live-refreshed every 10 minutes: local feed (baseline)
    → Wikipedia PROSE (deaths/missing/injured + foreign nationals among the missing,
@@ -130,33 +182,95 @@ const EVENT = {
    Nepal registry). The Wikipedia INFOBOX is NOT used — it reports Nepal+Tibet
    COMBINED, which is what previously inflated the toll. */
 let STATS = [
-  {key:"deaths",  n:"734", cls:"hstat--death"},
-  {key:"missing", n:"2,498"},
-  {key:"foreign", n:"668"},
-  {key:"rescued", n:"8,186", cls:"hstat--rescue"}   // hero = TOTAL rescued (NDRRMA rescued-statistics); the NAMED registry (2,189) is a separate figure shown on the Rescued page
+  {key:"deaths",  n:"903", cls:"hstat--death"},
+  {key:"missing", n:"4,247"},
+  {key:"foreign", n:"592"},
+  {key:"rescued", n:"7,514", cls:"hstat--rescue"}   // hero = TOTAL rescued (NDRRMA rescued-statistics); the NAMED registry (3,027) is a separate figure shown on the Rescued page
 ];
 
 /* -------------------- TICKER -------------------- */
 const TICKER = [
-  {src:"NDRRMA", en:"NDRRMA: 734 confirmed dead, 2,498 missing (30 Aug, 9 am); 8,186 rescued — figures still rising",
-   ne:"NDRRMA: ७३४ मृत्यु पुष्टि, २,४९८ बेपत्ता (३० भदौ, बिहान ९ बजे); ८,१८६ उद्धार — संख्या बढ्दै"},
-  {src:"TRAFFIC", en:"Prithvi Highway cut at Krishnabhir (Dhading) — Mugling–Kathmandu route closed after road subsided",
-   ne:"पृथ्वी राजमार्ग कृष्णभीर (धादिङ) मा अवरुद्ध — सडक भासिएपछि मुग्लिन–काठमाडौं मार्ग बन्द"},
-  {src:"NDRRMA", en:"NDRRMA names 2,189 rescued in its official registry — 2,034 Nepali, 155 foreign",
-   ne:"NDRRMA अभिलेखमा २,१८९ उद्धारितको नाम — २,०३४ नेपाली, १५५ विदेशी"},
-  {src:"PMO", en:"PM Disaster Relief Fund passes Rs 385.5 million; govt releases Rs 1 billion",
-   ne:"प्रधानमन्त्री राहत कोष रु. ३८.५५ करोड नाघ्यो; सरकारले रु. १ अर्ब निकासा"},
-  {src:"USGS", en:"Ice avalanche from a glacier — not an earthquake — triggered the surge",
-   ne:"भूकम्प होइन, हिमनदीको हिउँ पहिरोले बाढीको भल निम्त्यायो — यूएसजीएस"},
-  {src:"GOVT", en:"41 bridges and ~42 km of road damaged (Rs 15bn); ~431 MW knocked off the grid",
-   ne:"४१ पुल र करिब ४२ कि.मि. सडक क्षति (रु. १५ अर्ब); करिब ४३१ मेगावाट ग्रिडबाट हट्यो"},
-  {src:"AID", en:"ADB pledges $5m; EU €2m, UN CERF $2m and Red Cross CHF 1m released",
-   ne:"एडीबीले ५० लाख डलर; युरोपेली संघ २० लाख युरो, संयुक्त राष्ट्र CERF २० लाख डलर, रेडक्रस १० लाख स्विस फ्र्यांक"}
+  {src:"NDRRMA", en:"NDRRMA: 903 confirmed dead, 4,247 missing (31 Aug) — the missing count nearly doubled overnight",
+   ne:"NDRRMA: ९०३ मृत्यु पुष्टि, ४,२४७ बेपत्ता (३१ भदौ) — बेपत्ता संख्या एकै रातमा झन्डै दोब्बर"},
+  {src:"RESCUE", en:"Tunnel rescue in a critical phase at Trishuli 3A and Upper Trishuli-1 — Indian and Chinese teams drilling to reach trapped workers",
+   ne:"त्रिशूली ३ए र माथिल्लो त्रिशूली-१ मा सुरुङ उद्धार निर्णायक चरणमा — भारतीय र चिनियाँ टोली ड्रिल गर्दै"},
+  {src:"TRAFFIC", en:"Prithvi Highway still cut at Krishnabhir (Dhading) — Mugling–Kathmandu section closed after the road subsided",
+   ne:"पृथ्वी राजमार्ग कृष्णभीर (धादिङ) मा अझै अवरुद्ध — सडक भासिएपछि मुग्लिन–काठमाडौं खण्ड बन्द"},
+  {src:"CHITWAN", en:"Mass burial of unidentified victims begins in Chitwan — of 250+ bodies washed downstream, only nine were readily identified",
+   ne:"चितवनमा नचिनिएका शवको सामूहिक व्यवस्थापन सुरु — तल्लो तटमा पुगेका २५०+ शवमध्ये नौ मात्र चिनिए"},
+  {src:"NDRRMA", en:"NDRRMA names 3,027 rescued people in its public registry — 2,801 Nepali, 226 foreign",
+   ne:"NDRRMA को सार्वजनिक अभिलेखमा ३,०२७ उद्धारितको नाम — २,८०१ नेपाली, २२६ विदेशी"},
+  {src:"PMO", en:"PM Disaster Relief Fund passes Rs 5.44 billion; Rs 675 million released to 15 local units",
+   ne:"प्रधानमन्त्री विपद् राहत कोष रु. ५.४४ अर्ब नाघ्यो; १५ स्थानीय तहलाई रु. ६७.५ करोड निकासा"},
+  {src:"USGS", en:"A glacier collapse near Langtang Lirung — not an earthquake — triggered the surge; the seismic signal came from the collapse itself",
+   ne:"भूकम्प होइन, लाङटाङ लिरुङ नजिक हिमनदी भत्किँदा बाढी आयो; भूकम्पीय सङ्केत त्यही भत्किँदाको हो"},
+  {src:"GOVT", en:"Preliminary damage put at Rs 200 billion; 41 bridges and ~42 km of road destroyed; ~431 MW off the grid",
+   ne:"प्रारम्भिक क्षति रु. २०० अर्ब; ४१ पुल र करिब ४२ कि.मि. सडक ध्वस्त; करिब ४३१ मेगावाट ग्रिडबाट हट्यो"},
+  {src:"WARNING", en:"NDRRMA keeps the riverside alert active for Rasuwa, Nuwakot, Dhading and Chitwan — a landslide-dammed lake on the Lhende Khola is still being watched",
+   ne:"रसुवा, नुवाकोट, धादिङ र चितवनमा नदी किनारको चेतावनी कायमै — ल्हेन्डे खोलामा पहिरोले बाँधिएको ताल निगरानीमा"},
+  {src:"AID", en:"IFRC appeals for CHF 25m; ADB $5m, EU €2m, UN CERF $2m released; China sends 50 tonnes of supplies",
+   ne:"IFRC ले २.५ करोड स्विस फ्र्यांक अपिल; एडीबी ५० लाख डलर, EU २० लाख युरो, CERF २० लाख डलर; चीनले ५० टन सामग्री पठायो"}
 ];
 
 /* -------------------- NEWS / BULLETINS (20, sourced; full articles) -------------------- */
 const WK="https://en.wikipedia.org/wiki/2026_Nepal_floods";
 const NEWS = [
+  {sev:"danger", tag:{en:"Toll",ne:"मृत्यु"}, time:"31 Aug 2026", src:"NDRRMA / The Kathmandu Post",
+   url:"https://kathmandupost.com/national",
+   title:{en:"Death toll passes 900 as the number missing nearly doubles to 4,247",
+          ne:"मृत्यु ९०० नाघ्यो, बेपत्ता झन्डै दोब्बर भई ४,२४७ पुग्यो"},
+   body:{en:"NDRRMA's 31 August update puts the confirmed toll at 903 and the missing at 4,247 — including 592 foreign nationals and 85 security personnel.",
+         ne:"NDRRMA को ३१ भदौको अद्यावधिकले पुष्टि मृत्यु ९०३ र बेपत्ता ४,२४७ देखायो — जसमा ५९२ विदेशी नागरिक र ८५ सुरक्षाकर्मी।"},
+   long:{en:"The National Disaster Risk Reduction and Management Authority said on Monday, 31 August, that 903 people are now confirmed dead in the Bhote Koshi–Trishuli flood and 4,247 are missing or out of contact. The missing figure nearly doubled in a day as hydropower workers, whole riverside households and travellers who had not been formally registered were added to the list. Among the missing are 592 foreign nationals and 85 security personnel — 44 Nepali Army, 28 Nepal Police and 13 Armed Police Force. NDRRMA also reports 1,473 injured. The toll continues to climb as bodies are recovered along the Narayani corridor and as far downstream as Uttar Pradesh in India.",
+         ne:"राष्ट्रिय विपद् जोखिम न्यूनीकरण तथा व्यवस्थापन प्राधिकरणका अनुसार सोमबार ३१ भदौसम्म भोटेकोशी–त्रिशूली बाढीमा ९०३ जनाको मृत्यु पुष्टि भएको छ भने ४,२४७ जना बेपत्ता वा सम्पर्कविहीन छन्। जलविद्युत् आयोजनाका कामदार, किनारका पूरै घरपरिवार र दर्ता नभएका यात्रु थपिँदा बेपत्ता संख्या एकै दिनमा झन्डै दोब्बर भयो। बेपत्तामध्ये ५९२ विदेशी नागरिक र ८५ सुरक्षाकर्मी छन् — ४४ नेपाली सेना, २८ नेपाल प्रहरी र १३ सशस्त्र प्रहरी। NDRRMA ले १,४७३ घाइते रहेको पनि जनाएको छ। नारायणी कोरिडोर हुँदै भारतको उत्तर प्रदेशसम्म शव भेटिँदै जाँदा संख्या बढ्दै छ।"}},
+  {sev:"relief", tag:{en:"Tunnel rescue",ne:"सुरुङ उद्धार"}, time:"31 Aug 2026", src:"Al Jazeera / Reuters / NDRRMA",
+   url:"https://www.aljazeera.com/news/2026/8/30/nepal-rescuers-drill-into-tunnels-in-bid-to-reach-trapped-workers",
+   title:{en:"Tunnel rescue enters its critical phase at Trishuli 3A and Upper Trishuli-1",
+          ne:"त्रिशूली ३ए र माथिल्लो त्रिशूली-१ मा सुरुङ उद्धार निर्णायक चरणमा"},
+   body:{en:"After days of drilling, teams have reached the upper section of the Trishuli 3A tunnel and are preparing to send in crews with oxygen. Specialist help has come from India and China.",
+         ne:"कैयौं दिनको ड्रिलिङपछि टोलीले त्रिशूली ३ए सुरुङको माथिल्लो भागमा पहुँच बनायो; अक्सिजनसहित टोली भित्र पठाउने तयारी। भारत र चीनबाट विशेषज्ञ सहयोग।"},
+   long:{en:"Nepal's government says more than 100 workers may still be alive inside tunnels at damaged hydropower projects, with the focus on the Trishuli 3A and 3B sites and at least 35 people trapped at Upper Trishuli-1. NDRRMA counts 934 hydropower workers among the missing across 11 projects. Rescuers have drilled through to the tunnel's upper section and are preparing to send teams in with oxygen; about 350 workers and residents have already been brought out of the Trishuli 3A site, and 279 people were airlifted from tunnels over the first two days. Nepal has brought in specialist tunnel-rescue teams and equipment from India and China, and Australian underground-rescue engineer Arnold Dix is advising. Twenty-seven hydropower facilities were damaged or destroyed along the corridor.",
+         ne:"नेपाल सरकारका अनुसार क्षतिग्रस्त जलविद्युत् आयोजनाका सुरुङभित्र १०० भन्दा बढी कामदार जीवितै हुन सक्छन्; ध्यान त्रिशूली ३ए र ३बी तथा माथिल्लो त्रिशूली-१ मा केन्द्रित छ, जहाँ कम्तीमा ३५ जना फसेका छन्। NDRRMA का अनुसार ११ आयोजनाका ९३४ कामदार बेपत्ता छन्। उद्धारकर्मीले सुरुङको माथिल्लो भागसम्म ड्रिल गरिसकेका छन् र अक्सिजनसहित टोली पठाउने तयारीमा छन्; त्रिशूली ३ए बाट करिब ३५० जना पहिल्यै निकालिइसकेका छन् भने पहिलो दुई दिनमै २७९ जना हेलिकप्टरबाट उद्धार गरिए। नेपालले भारत र चीनबाट सुरुङ उद्धारका विशेषज्ञ टोली र उपकरण ल्याएको छ; अस्ट्रेलियाली इन्जिनियर अर्नोल्ड डिक्सले सल्लाह दिइरहेका छन्। कोरिडोरका २७ जलविद्युत् संरचना क्षतिग्रस्त वा ध्वस्त भए।"}},
+  {sev:"danger", tag:{en:"Body management",ne:"शव व्यवस्थापन"}, time:"31 Aug 2026", src:"The New York Times / Euronews",
+   url:"https://www.cnn.com/2026/08/30/world/live-news/nepal-china-flood",
+   title:{en:"Mass burial of unidentified victims begins in Chitwan",
+          ne:"चितवनमा नचिनिएका शवको सामूहिक व्यवस्थापन सुरु"},
+   body:{en:"More than 250 bodies washed up in Chitwan, about 160 km downstream. So badly damaged that only nine could be readily identified, they are being temporarily buried for later DNA matching.",
+         ne:"करिब १६० कि.मि. तल्लो तट चितवनमा २५० भन्दा बढी शव भेटिए। अत्यन्तै क्षतविक्षत भएकाले नौ जना मात्र तत्काल चिनिए; पछि डीएनए मिलाउन अस्थायी रूपमा गाडिँदै।"},
+   long:{en:"With hospitals and morgues in the affected districts full, and with no cold storage for the number of bodies arriving, authorities have begun temporarily burying unidentified victims so they can be exhumed and matched by DNA later. In Chitwan district — roughly 160 km downstream of the worst-hit area — more than 250 bodies washed up, so badly mangled that only nine could be readily identified. Cadavers and injured survivors have been transferred to Bhairahawa, Bharatpur, Butwal, Gorkha, Kathmandu, Nawalparasi, Palpa and Pokhara. Nepal has allowed in forensic and DNA specialists from India, China, Australia and South Korea to help with identification.",
+         ne:"प्रभावित जिल्लाका अस्पताल र शवगृह भरिएपछि र आउने शवका लागि शीत भण्डार नभएपछि अधिकारीहरूले नचिनिएका शव अस्थायी रूपमा गाड्न थालेका छन्, ताकि पछि निकालेर डीएनएबाट पहिचान गर्न सकियोस्। सबैभन्दा प्रभावित क्षेत्रबाट करिब १६० कि.मि. तल चितवनमा २५० भन्दा बढी शव भेटिए, जुन यति क्षतविक्षत थिए कि नौ जना मात्र तत्काल चिनिए। शव र घाइतेलाई भैरहवा, भरतपुर, बुटवल, गोरखा, काठमाडौं, नवलपरासी, पाल्पा र पोखरा पठाइएको छ। पहिचानमा सहयोगका लागि नेपालले भारत, चीन, अस्ट्रेलिया र दक्षिण कोरियाका फोरेन्सिक तथा डीएनए विशेषज्ञलाई भित्र्याएको छ।"}},
+  {sev:"watch", tag:{en:"Cause",ne:"कारण"}, time:"31 Aug 2026", src:"USGS / GFZ / University of Calgary",
+   url:WK,
+   title:{en:"Satellite imagery confirms a glacier collapse near Langtang Lirung — on the Nepal side",
+          ne:"उपग्रह तस्बिरले पुष्टि गर्‍यो: लाङटाङ लिरुङ नजिक नेपालतर्फ नै हिमनदी भत्कियो"},
+   body:{en:"Analysis now places the source inside Nepal, not Tibet: a 0.2 km² slab of ice broke off and fell about 1.2 km, and the Ms 5.2 seismic signal came from the collapse itself, not an earthquake.",
+         ne:"विश्लेषणले स्रोत तिब्बत होइन, नेपालभित्रै रहेको देखायो: ०.२ वर्ग कि.मि. हिउँको पत्र भाँचिएर करिब १.२ कि.मि. तल खस्यो; Ms ५.२ को भूकम्पीय सङ्केत भूकम्पले होइन, त्यही भत्किँदा उत्पन्न भएको।"},
+   long:{en:"Early reports blamed an earthquake, a glacial lake outburst flood, or Chinese infrastructure in Tibet. Satellite imagery and seismology have since settled the question: a glacier collapsed near Langtang Lirung, inside Nepal, about 64 km north of Kathmandu. Daniel Shugar of the University of Calgary said a 0.2 km² piece of ice appears to have snapped off cleanly and dropped about 1.2 km to the valley floor. The USGS showed that the Ms 5.2 signal recorded at 08:37 NPT did not precede the collapse but was generated by it; Germany's GFZ recorded an Mw 5.7 event consistent with a landslide at the identical timestamp, and a second Ms 4.2 landslide followed three hours later. The debris — an estimated 100–200 million m³ from an altitude of 5,200–5,400 m — melted from the friction of the impact and travelled up to 100 km downstream at around 180 km/h. Glacier-collapse floods are rarer than GLOFs in the region, but far more destructive.",
+         ne:"सुरुका प्रतिवेदनले भूकम्प, हिमताल विस्फोट वा तिब्बतमा चिनियाँ संरचनालाई दोष दिएका थिए। उपग्रह तस्बिर र भूकम्पशास्त्रले अब प्रस्ट पारेको छ: काठमाडौंबाट करिब ६४ कि.मि. उत्तर, नेपालभित्रै लाङटाङ लिरुङ नजिक हिमनदी भत्कियो। क्यालगेरी विश्वविद्यालयका डेनियल शुगरका अनुसार ०.२ वर्ग कि.मि. हिउँको टुक्रा सफासँग भाँचिएर करिब १.२ कि.मि. तल उपत्यकामा खस्यो। बिहान ८:३७ बजे रेकर्ड भएको Ms ५.२ सङ्केत भत्किनुअघि होइन, भत्किँदा नै उत्पन्न भएको यूएसजीएसले देखायो; जर्मनीको जीएफजेडले ठ्याक्कै त्यही समयमा पहिरोसँग मिल्दो Mw ५.७ रेकर्ड गर्‍यो र तीन घण्टापछि Ms ४.२ को दोस्रो पहिरो गयो। ५,२००–५,४०० मिटर उचाइबाट खसेको अनुमानित १०–२० करोड घनमिटर सामग्री घर्षणले पग्लिएर करिब १८० कि.मि. प्रतिघण्टाको गतिमा १०० कि.मि. तलसम्म पुग्यो। यस क्षेत्रमा हिमनदी भत्किएर आउने बाढी GLOF भन्दा कम हुन्छ, तर धेरै विनाशकारी।"}},
+  {sev:"danger", tag:{en:"Warning",ne:"चेतावनी"}, time:"31 Aug 2026", src:"NDRRMA / DHM",
+   url:"https://ianslive.in/nepal-issues-fresh-flood-warning-as-bhote-koshi-water-level-rises--20260830082421",
+   title:{en:"Riverside alert stays active — dammed lake on the Lhende Khola still under watch",
+          ne:"नदी किनारको चेतावनी कायमै — ल्हेन्डे खोलाको बाँधिएको ताल अझै निगरानीमा"},
+   body:{en:"NDRRMA keeps Rasuwa, Nuwakot, Dhading and Chitwan on riverside alert. A landslide has dammed the Lhende Khola about 18 km above Rasuwagadhi, forming a lake of roughly 0.11 km².",
+         ne:"NDRRMA ले रसुवा, नुवाकोट, धादिङ र चितवनमा नदी किनारको चेतावनी कायम राखेको छ। रसुवागढीभन्दा करिब १८ कि.मि. माथि पहिरोले ल्हेन्डे खोला थुनेर करिब ०.११ वर्ग कि.मि. को ताल बनेको।"},
+   long:{en:"NDRRMA has issued a fresh warning that the Bhote Koshi's level in Rasuwa has risen again, and the Flood Forecasting Division of the Department of Hydrology and Meteorology reports the Trishuli running about 3 m above normal at Galchhi in Dhading. Satellite imagery taken at 11:44 am on 27 August shows the Lhende Khola — a Bhote Koshi tributary — obstructed roughly 18 km upstream of the Rasuwagadhi border point, forming a lake of about 0.11 km². Two barrier lakes formed after the collapse; the larger one on the Chinese side overflowed on 28 August, briefly halting rescue work, and had largely drained by 30 August, but the high-altitude lake near the collapse site remains. Everyone working on search, rescue and relief in Rasuwa, Nuwakot, Dhading and Chitwan, and anyone living along the riverbanks, has been asked to stay alert and off the banks.",
+         ne:"NDRRMA ले रसुवामा भोटेकोशीको सतह फेरि बढेको नयाँ चेतावनी जारी गरेको छ; जल तथा मौसम विज्ञान विभागको बाढी पूर्वानुमान महाशाखाका अनुसार धादिङको गल्छीमा त्रिशूली सामान्यभन्दा करिब ३ मिटर माथि बगिरहेको छ। २७ भदौ बिहान ११:४४ बजेको उपग्रह तस्बिरअनुसार भोटेकोशीको सहायक ल्हेन्डे खोला रसुवागढी नाकाभन्दा करिब १८ कि.मि. माथि थुनिएर करिब ०.११ वर्ग कि.मि. को ताल बनेको छ। भत्किएपछि दुई ताल बनेका थिए; चीनतर्फको ठूलो ताल २८ भदौमा पोखिँदा उद्धार केही बेर रोकियो र ३० भदौसम्म धेरै हदसम्म रित्तियो, तर भत्किएको स्थान नजिकको अग्लो तालचाहिँ कायमै छ। रसुवा, नुवाकोट, धादिङ र चितवनमा खोज, उद्धार र राहतमा खटिएका तथा नदी किनारका बासिन्दालाई सतर्क रहन र किनारबाट टाढा बस्न आग्रह गरिएको छ।"}},
+  {sev:"relief", tag:{en:"Fund",ne:"कोष"}, time:"31 Aug 2026", src:"Radio Nepal / OPMCM",
+   url:"https://radionepalonline.com/en/2026/08/30/435092.html",
+   title:{en:"PM Disaster Relief Fund passes Rs 5 billion; Rs 675 million released to 15 local units",
+          ne:"प्रधानमन्त्री विपद् राहत कोष रु. ५ अर्ब नाघ्यो; १५ स्थानीय तहलाई रु. ६७.५ करोड निकासा"},
+   body:{en:"The fund had crossed Rs 5.02 billion by 30 August and Rs 5.44 billion by the government's latest count, from banks, business houses, social organisations and individuals.",
+         ne:"बैंक, व्यावसायिक घराना, सामाजिक संस्था र व्यक्तिबाट ३० भदौसम्म कोषमा रु. ५.०२ अर्ब र सरकारको पछिल्लो गणनाअनुसार रु. ५.४४ अर्ब जम्मा।"},
+   long:{en:"The Prime Minister's Natural Disaster Relief Fund, launched hours after the flood, has grown very fast: Rs 1.91 billion arrived in the first 36 hours, taking the balance from Rs 2.17 billion to Rs 4.09 billion, and it passed Rs 5.02 billion on 30 August. The Prime Minister and cabinet pledged a month's salary each. The government has released Rs 675 million to 15 local units across Rasuwa, Nuwakot, Dhading, Gorkha and Tanahun, and the Finance Ministry says roughly Rs 20 billion already in the current budget can be redirected to rescue and relief. A 'one-door policy' applies to cash and in-kind donations. Donate only through the official bank accounts, Fonepay QR codes or the NCHL-operated portal listed on this site's Relief Fund page — verify the web address before paying.",
+         ne:"बाढीको केही घण्टामै सुरु भएको प्रधानमन्त्री प्राकृतिक विपद् उद्धार कोष द्रुत गतिमा बढेको छ: पहिलो ३६ घण्टामै रु. १.९१ अर्ब थपिँदा रकम रु. २.१७ अर्बबाट रु. ४.०९ अर्ब पुग्यो र ३० भदौमा रु. ५.०२ अर्ब नाघ्यो। प्रधानमन्त्री र मन्त्रिपरिषद्ले एक महिनाको तलब दिने घोषणा गरे। सरकारले रसुवा, नुवाकोट, धादिङ, गोरखा र तनहुँका १५ स्थानीय तहलाई रु. ६७.५ करोड निकासा गरेको छ भने अर्थ मन्त्रालयका अनुसार चालु बजेटकै करिब रु. २० अर्ब उद्धार र राहतमा मोड्न सकिन्छ। नगद र वस्तुगत सहयोगमा 'एकद्वार नीति' लागू छ। यस साइटको राहत कोष पृष्ठमा उल्लेख गरिएका आधिकारिक बैंक खाता, फोनपे QR वा NCHL सञ्चालित पोर्टलबाट मात्र दान गर्नुहोस् — भुक्तानी अघि ठेगाना रुजु गर्नुहोस्।"}},
+  {sev:"watch", tag:{en:"Early warning",ne:"पूर्व चेतावनी"}, time:"31 Aug 2026", src:"Reuters / SCMP",
+   url:WK,
+   title:{en:"Nepal had asked China for earlier flood warnings as the risk grew, Reuters reports",
+          ne:"जोखिम बढ्दै जाँदा नेपालले चीनसँग छिटो बाढी चेतावनी माग्दै आएको थियो — रोयटर्स"},
+   body:{en:"A joint flash-flood warning system had run for years, but its gauges were tuned for monsoon floods — and the upstream stations were swept away before any alert could go out.",
+         ne:"संयुक्त आकस्मिक बाढी चेतावनी प्रणाली वर्षौंदेखि चलेको थियो, तर यसका मापक मनसुनी बाढीका लागि मात्र मिलाइएका थिए — र चेतावनी जानुअघि नै माथिल्ला स्टेसन बगे।"},
+   long:{en:"Chinese and Nepali scientists had maintained a flash-flood early warning system on this stretch for years, and the South China Morning Post credits it with preventing casualties in the past. It could not detect the 26 August event: the water-level monitors were optimised for monsoon or perennial floods, and Nepal's upstream monitoring stations were destroyed by the surge before alerts could be sent. A senior fellow at the Stimson Center described the affected area as a monitoring blind spot that geologists had paid little attention to. Reuters reports Nepal had asked China for faster warnings as risks mounted. One warning chain did work: headteacher Rajendra Dawadi at Tribhuvan Trishuli secondary school in Nuwakot received four separate warnings, one from Betrawati directly upstream, and evacuated 900 children ten minutes before the water arrived.",
+         ne:"चिनियाँ र नेपाली वैज्ञानिकले यस खण्डमा वर्षौंदेखि आकस्मिक बाढी पूर्व चेतावनी प्रणाली सञ्चालन गर्दै आएका थिए र यसले विगतमा ज्यान जोगाएको साउथ चाइना मर्निङ पोस्टको भनाइ छ। तर २६ भदौको घटना यसले पत्ता लगाउन सकेन: जलसतह मापक मनसुनी वा नियमित बाढीका लागि मात्र मिलाइएका थिए, र चेतावनी पठाउनुअघि नै नेपालका माथिल्ला निगरानी स्टेसन बाढीले बगाए। स्टिम्सन सेन्टरका एक वरिष्ठ फेलोका अनुसार प्रभावित क्षेत्र भूगर्भविद्ले कम ध्यान दिएको 'निगरानी शून्य क्षेत्र' थियो। जोखिम बढ्दै जाँदा नेपालले चीनसँग छिटो चेतावनी माग गरेको रोयटर्सले जनाएको छ। एउटा चेतावनी शृंखलाले भने काम गर्‍यो: नुवाकोटको त्रिभुवन त्रिशूली माध्यमिक विद्यालयका प्रधानाध्यापक राजेन्द्र दवाडीले चार फरक चेतावनी पाए — एउटा ठीक माथिको बेत्रावतीबाट — र पानी आउनुभन्दा दस मिनेटअघि ९०० बालबालिकालाई सुरक्षित निकाले।"}},
   {sev:"danger", tag:{en:"Toll",ne:"मृत्यु"}, time:"30 Aug 2026", src:"The Kathmandu Post / NDRRMA",
    url:"https://kathmandupost.com/national/2026/08/30/death-toll-from-bhotekoshi-flood-reaches-734",
    title:{en:"Bhotekoshi flood death toll reaches 734; 2,498 still missing",
@@ -179,15 +293,15 @@ const NEWS = [
           ne:"रसुवा बाढीपछि १,५४५ उद्धार; २८ प्रहरी सम्पर्कविहीन"},
    body:{en:"As of Friday morning, 644 people were rescued from Rasuwa, 898 from Nuwakot and three from Dhading.",
          ne:"शुक्रबार बिहानसम्म रसुवाबाट ६४४, नुवाकोटबाट ८९८ र धादिङबाट ३ जना उद्धार।"},
-   long:{en:"Nepal Police said 1,545 people caught in the Bhotekoshi flood have been rescued — 644 from Rasuwa, 898 from Nuwakot and three from Dhading — as of 7am Friday. Some 4,348 personnel from the Army, Armed Police Force and Nepal Police had been mobilised at that point; the deployment has since grown to 19,895. However, 28 police officers remained out of contact several days after the disaster.",
-         ne:"नेपाल प्रहरीका अनुसार भोटेकोशी बाढीमा परेका १,५४५ जनालाई उद्धार गरिएको छ — शुक्रबार बिहान ७ बजेसम्म रसुवाबाट ६४४, नुवाकोटबाट ८९८ र धादिङबाट ३। सेना, सशस्त्र र नेपाल प्रहरीका करिब ४,३४८ जनशक्ति परिचालित। तर विपद्को केही दिनपछि पनि २८ प्रहरी सम्पर्कविहीन।"}},
+   long:{en:"Nepal Police said 1,545 people caught in the Bhotekoshi flood have been rescued — 644 from Rasuwa, 898 from Nuwakot and three from Dhading — as of 7am Friday. Some 4,348 personnel from the Army, Armed Police Force and Nepal Police had been mobilised at that point; the deployment has since grown to 18,708. However, 28 police officers remained out of contact several days after the disaster.",
+         ne:"नेपाल प्रहरीका अनुसार भोटेकोशी बाढीमा परेका १,५४५ जनालाई उद्धार गरिएको छ — शुक्रबार बिहान ७ बजेसम्म रसुवाबाट ६४४, नुवाकोटबाट ८९८ र धादिङबाट ३। सेना, सशस्त्र र नेपाल प्रहरीका करिब ४,३४८ जनशक्ति परिचालित (अहिले १८,७०८)। तर विपद्को केही दिनपछि पनि २८ प्रहरी सम्पर्कविहीन।"}},
   {sev:"relief", tag:{en:"Registry",ne:"अभिलेख"}, time:"28 Aug 2026", src:"NDRRMA",
    url:"https://ndrrma.gov.np/np/rescue",
    title:{en:"NDRRMA names 2,189 rescued in its official registry",
           ne:"NDRRMA को आधिकारिक अभिलेखमा २,१८९ उद्धारित"},
    body:{en:"The National Disaster Portal lists 2,189 rescued people by name — 2,034 Nepali and 155 foreign nationals.",
          ne:"राष्ट्रिय विपद् पोर्टलले २,१८९ उद्धारितको नाम सूचीबद्ध — २,०३४ नेपाली, १५५ विदेशी।"},
-   long:{en:"NDRRMA's National Disaster Portal maintains a named registry of rescued people for family tracing. It now lists 2,189 individuals — 2,034 Nepali and 155 foreign nationals — with their rescue location, date and status (safe, injured, under medical care or transferred to a relief camp). The searchable list is mirrored live on this site's Rescued page and auto-updates from the NDRRMA API.",
+   long:{en:"NDRRMA's National Disaster Portal maintains a named registry of rescued people for family tracing. As of 28 August it listed 2,189 individuals — 2,034 Nepali and 155 foreign nationals — with their rescue location, date and status (safe, injured, under medical care or transferred to a relief camp). The searchable list is mirrored live on this site's Rescued page and auto-updates from the NDRRMA API.",
          ne:"NDRRMA को राष्ट्रिय विपद् पोर्टलले परिवार खोजीका लागि उद्धारितको नामावली राख्छ। हाल २,१८९ जना — २,०३४ नेपाली र १५५ विदेशी — सूचीबद्ध, उद्धार स्थान, मिति र अवस्थासहित। यो सूची यस साइटको उद्धार पृष्ठमा प्रत्यक्ष रूपमा उपलब्ध छ र NDRRMA API बाट स्वतः अद्यावधिक हुन्छ।"}},
   {sev:"watch", tag:{en:"Cause",ne:"कारण"}, time:"26 Aug 2026", src:"USGS / GFZ",
    url:WK,
@@ -261,14 +375,14 @@ const NEWS = [
          ne:"विस्थापन, क्षतिग्रस्त विद्यालय र स्वास्थ्य जोखिमले हजारौं बालबालिका प्रभावित।"},
    long:{en:"UNICEF estimated that more than 17,000 children required urgent assistance following the floods, citing displacement, damaged schools and water-borne health risks. Aid agencies were prioritising clean water, sanitation, child protection and psychosocial support in relief camps. Red Cross representatives said entire villages and market areas had been destroyed along the corridor.",
          ne:"बाढीपछि १७,००० भन्दा बढी बालबालिकालाई तत्काल सहयोग आवश्यक रहेको युनिसेफको अनुमान — विस्थापन, क्षतिग्रस्त विद्यालय र पानीजन्य स्वास्थ्य जोखिमका कारण। राहत शिविरमा सफा पानी, सरसफाइ, बाल संरक्षण र मनोसामाजिक सहयोगमा जोड। रेडक्रसका अनुसार कोरिडोरका पूरै गाउँ र बजार ध्वस्त।"}},
-  {sev:"watch", tag:{en:"Response",ne:"प्रतिकार्य"}, time:"30 Aug 2026", src:"NDRRMA / The Kathmandu Post",
-   url:"https://kathmandupost.com/national/2026/08/30/death-toll-from-bhotekoshi-flood-reaches-734",
-   title:{en:"19,895 security personnel mobilised for search, rescue and relief",
-          ne:"खोज, उद्धार र राहतमा १९,८९५ सुरक्षाकर्मी परिचालन"},
-   body:{en:"The Army, Armed Police Force and Nepal Police are deployed across the affected districts.",
-         ne:"प्रभावित जिल्लाहरूमा सेना, सशस्त्र प्रहरी र नेपाल प्रहरी परिचालित।"},
-   long:{en:"NDRRMA's 9 am update on 30 August put the deployment at 19,895 security personnel — 8,399 from the Nepal Army, 7,213 from Nepal Police and 4,203 from the Armed Police Force — mobilised for search, rescue, relief and assistance across the flood-hit districts. Security forces have rescued 8,186 people in total. Helicopters remain central to the operation, including the evacuation of 279 people trapped inside a hydropower tunnel over two days and 227 foreign nationals airlifted to safety.",
-         ne:"NDRRMA को ३० भदौ बिहान ९ बजेको अद्यावधिकअनुसार बाढी प्रभावित जिल्लामा खोज, उद्धार र राहतका लागि १९,८९५ सुरक्षाकर्मी परिचालित — नेपाली सेनाका ८,३९९, नेपाल प्रहरीका ७,२१३ र सशस्त्र प्रहरीका ४,२०३। सुरक्षा निकायले कुल ८,१८६ जनालाई उद्धार गरेका छन्। हेलिकप्टर सञ्चालन प्रमुख रहेको छ — दुई दिनमा जलविद्युत् सुरुङभित्र फसेका २७९ जना र २२७ विदेशी नागरिकको उद्धार।"}},
+  {sev:"watch", tag:{en:"Response",ne:"प्रतिकार्य"}, time:"31 Aug 2026", src:"NDRRMA / AFP",
+   url:"https://kathmandupost.com/national",
+   title:{en:"18,708 security personnel mobilised; 7,514 people brought to safety",
+          ne:"१८,७०८ सुरक्षाकर्मी परिचालन; ७,५१४ जना सुरक्षित स्थानमा"},
+   body:{en:"NDRRMA's live count puts the deployment at 18,708 across the affected districts, with 7,514 people rescued so far — including 279 from a hydropower tunnel and 227 foreign nationals.",
+         ne:"NDRRMA को प्रत्यक्ष गणनाअनुसार प्रभावित जिल्लामा १८,७०८ जनशक्ति परिचालित; अहिलेसम्म ७,५१४ जना उद्धार — जसमा जलविद्युत् सुरुङबाट २७९ र २२७ विदेशी नागरिक।"},
+   long:{en:"NDRRMA's live count on 31 August puts the deployment at 18,708 security personnel — 8,370 from the Nepali Army, 6,135 from Nepal Police and 4,203 from the Armed Police Force — mobilised for search, rescue, relief and assistance across the flood-hit districts. Rescue teams have brought 7,514 people to safety so far. Helicopters remain central to the operation, including the evacuation of 279 people trapped inside a hydropower tunnel over two days and 227 foreign nationals airlifted out. 145 of 198 communication towers in the affected districts are back in service.",
+         ne:"NDRRMA को ३१ भदौको प्रत्यक्ष गणनाअनुसार बाढी प्रभावित जिल्लामा खोज, उद्धार र राहतका लागि १८,७०८ सुरक्षाकर्मी परिचालित — नेपाली सेनाका ८,३७०, नेपाल प्रहरीका ६,१३५ र सशस्त्र प्रहरीका ४,२०३। अहिलेसम्म ७,५१४ जनालाई सुरक्षित स्थानमा पुर्‍याइएको छ र प्रभावित जिल्लाका १९८ मध्ये १४५ टेलिफोन टावर पुनः सञ्चालनमा आएका छन्। हेलिकप्टर सञ्चालन प्रमुख रहेको छ — दुई दिनमा जलविद्युत् सुरुङभित्र फसेका २७९ जना र २२७ विदेशी नागरिकको उद्धार।"}},
   {sev:"watch", tag:{en:"Injured",ne:"घाइते"}, time:"28 Aug 2026", src:"Nepal Police",
    url:WK,
    title:{en:"466 injured; dozens treated in Kathmandu hospitals",
@@ -329,13 +443,18 @@ const NEWS = [
 
 /* -------------------- ALERTS (real settlements, approx. coords) -------------------- */
 const ALERTS = [
-  {sev:"danger", lat:28.2790, lng:85.3780, place:{en:"Rasuwagadhi / Timure",ne:"रसुवागढी / तिमुरे"}, desc:{en:"Border customs office and hydropower station reported destroyed",ne:"सीमा भन्सार कार्यालय र जलविद्युत् केन्द्र ध्वस्त"}},
-  {sev:"danger", lat:28.1620, lng:85.3400, place:{en:"Syafrubesi",ne:"स्याफ्रुबेसी"}, desc:{en:"Riverside settlements inundated; Langtang gateway cut off",ne:"किनारका बस्ती डुबान; लाङटाङ प्रवेशद्वार अवरुद्ध"}},
-  {sev:"danger", lat:28.1119, lng:85.2975, place:{en:"Dhunche (Rasuwa HQ)",ne:"धुन्चे (रसुवा सदरमुकाम)"}, desc:{en:"District HQ; rescue and coordination centre",ne:"जिल्ला सदरमुकाम; उद्धार र समन्वय केन्द्र"}},
-  {sev:"danger", lat:27.9610, lng:85.1810, place:{en:"Betrawati (Nuwakot)",ne:"बेत्रावती (नुवाकोट)"}, desc:{en:"Bridges swept away on the Trishuli; settlements damaged",ne:"त्रिशूलीका पुल बगायो; बस्ती क्षतिग्रस्त"}},
-  {sev:"watch", lat:27.9010, lng:85.1560, place:{en:"Devighat / Trishuli",ne:"देवीघाट / त्रिशूली"}, desc:{en:"Hydropower plants damaged; downstream monitoring",ne:"जलविद्युत् आयोजना क्षति; तल्लो तटमा निगरानी"}},
-  {sev:"watch", lat:27.5800, lng:84.5000, place:{en:"Chitwan (downstream)",ne:"चितवन (तल्लो तट)"}, desc:{en:"Downstream flood warning along the Trishuli / Narayani",ne:"त्रिशूली/नारायणी किनारमा बाढी चेतावनी"}},
-  {sev:"danger", lat:28.3700, lng:85.3000, place:{en:"Gyirong Port (Tibet, China)",ne:"ग्यिरोङ बन्दरगाह (तिब्बत, चीन)"}, desc:{en:"Port reported destroyed; casualties on the China side",ne:"बन्दरगाह ध्वस्त; चीनतर्फ क्षति"}}
+  {sev:"danger", lat:28.2790, lng:85.3780, place:{en:"Rasuwagadhi / Timure",ne:"रसुवागढी / तिमुरे"}, desc:{en:"Border customs office and hydropower station destroyed; 300+ queuing vehicles swept away",ne:"सीमा भन्सार कार्यालय र जलविद्युत् केन्द्र ध्वस्त; लाइनमा रहेका ३००+ सवारी बगे"}},
+  {sev:"danger", lat:28.2200, lng:85.3900, place:{en:"Lhende Khola barrier lake",ne:"ल्हेन्डे खोला बाँधिएको ताल"}, desc:{en:"Landslide-dammed lake ~0.11 km², 18 km above Rasuwagadhi — burst risk, under watch",ne:"पहिरोले बाँधिएको करिब ०.११ वर्ग कि.मि. को ताल, रसुवागढीभन्दा १८ कि.मि. माथि — फुट्ने जोखिम, निगरानीमा"}},
+  {sev:"danger", lat:28.1620, lng:85.3400, place:{en:"Syafrubesi",ne:"स्याफ्रुबेसी"}, desc:{en:"Riverside settlements inundated; Langtang gateway cut off, road impassable",ne:"किनारका बस्ती डुबान; लाङटाङ प्रवेशद्वार अवरुद्ध, सडक बन्द"}},
+  {sev:"danger", lat:28.1119, lng:85.2975, place:{en:"Dhunche (Rasuwa HQ)",ne:"धुन्चे (रसुवा सदरमुकाम)"}, desc:{en:"District HQ; rescue and coordination centre — 562 still missing in Rasuwa",ne:"जिल्ला सदरमुकाम; उद्धार र समन्वय केन्द्र — रसुवामा ५६२ अझै बेपत्ता"}},
+  {sev:"danger", lat:28.1400, lng:85.2600, place:{en:"Trishuli 3A tunnel (Mailung)",ne:"त्रिशूली ३ए सुरुङ (माइलुङ)"}, desc:{en:"Tunnel rescue in its critical phase — 100+ workers may still be alive inside",ne:"सुरुङ उद्धार निर्णायक चरणमा — भित्र १००+ कामदार जीवित हुन सक्ने"}},
+  {sev:"danger", lat:27.9610, lng:85.1810, place:{en:"Betrawati (Nuwakot)",ne:"बेत्रावती (नुवाकोट)"}, desc:{en:"Bridges swept away on the Trishuli; a school 10 minutes downstream evacuated 900 children in time",ne:"त्रिशूलीका पुल बगायो; १० मिनेट तल्लो तटको विद्यालयले समयमै ९०० बालबालिका निकाल्यो"}},
+  {sev:"watch", lat:27.9010, lng:85.1560, place:{en:"Devighat / Trishuli",ne:"देवीघाट / त्रिशूली"}, desc:{en:"Hydropower plants damaged; ~431 MW off the grid nationally",ne:"जलविद्युत् आयोजना क्षति; राष्ट्रिय ग्रिडबाट करिब ४३१ मेगावाट हट्यो"}},
+  {sev:"danger", lat:27.8600, lng:84.9200, place:{en:"Krishnabhir (Benighat Rorang, Dhading)",ne:"कृष्णभीर (बेनीघाट रोराङ, धादिङ)"}, desc:{en:"Prithvi Highway CUT — the carriageway subsided; Mugling–Kathmandu section closed",ne:"पृथ्वी राजमार्ग अवरुद्ध — सडक भासियो; मुग्लिन–काठमाडौं खण्ड बन्द"}},
+  {sev:"watch", lat:27.5800, lng:84.5000, place:{en:"Chitwan (downstream)",ne:"चितवन (तल्लो तट)"}, desc:{en:"250+ bodies washed up ~160 km downstream; mass burial of the unidentified under way",ne:"करिब १६० कि.मि. तल २५०+ शव भेटिए; नचिनिएकाको सामूहिक व्यवस्थापन जारी"}},
+  {sev:"watch", lat:27.6900, lng:84.0900, place:{en:"Nawalparasi (Narayani corridor)",ne:"नवलपरासी (नारायणी कोरिडोर)"}, desc:{en:"Riverside alert; recovery operations continuing along the Narayani",ne:"नदी किनार चेतावनी; नारायणी किनारमा शव खोजी जारी"}},
+  {sev:"relief", lat:27.9280, lng:84.6270, place:{en:"Gorkha",ne:"गोरखा"}, desc:{en:"Riverside alert and relief distribution; local units funded from the PM relief release",ne:"नदी किनार चेतावनी र राहत वितरण; प्रधानमन्त्री राहत निकासाबाट स्थानीय तह सञ्चालन"}},
+  {sev:"danger", lat:28.3700, lng:85.3000, place:{en:"Gyirong Port (Tibet, China)",ne:"ग्यिरोङ बन्दरगाह (तिब्बत, चीन)"}, desc:{en:"Port destroyed; China reports 16 dead and 546 missing on its side",ne:"बन्दरगाह ध्वस्त; चीनतर्फ १६ मृत्यु र ५४६ बेपत्ता"}}
 ];
 
 /* -------------------- HELPLINES (from official NDRRMA poster) -------------------- */
@@ -398,7 +517,7 @@ const I18N = {
   "hero.note":"Provisional Nepal-side figures confirmed by Nepal Police and NDRRMA (as of {date}). Counts auto-update and are being revised as search operations continue — not final. Verify against official Nepal Police / NDRRMA bulletins.",
   "hero.help":"Emergency Helplines","hero.report":"Report an Incident",
   "stat.deaths":"Confirmed Deaths","stat.missing":"Reported Missing","stat.foreign":"Foreign Nationals Missing","stat.rescued":"Total Rescued",
-  "stat.sub.deaths":"Nepal Police · rising","stat.sub.missing":"incl. 668 foreign","stat.sub.foreign":"tourists & NRNs","stat.sub.rescued":"NDRRMA · 2,189 named","stat.tap":"Tap for breakdown →",
+  "stat.sub.deaths":"Nepal Police · rising","stat.sub.missing":"incl. 592 foreign","stat.sub.foreign":"tourists & NRNs","stat.sub.rescued":"NDRRMA · live count","stat.tap":"Tap for breakdown →",
   "sec.hl.eye":"Call for Help · Toll-free 24×7","sec.hl.h":"Emergency Helplines",
   "hl.national":"National","hl.district":"Affected Districts","hl.more":"All helplines →",
   "hl.note":"Source: NDRRMA emergency helpline notice. If a line is busy, dial 100 (Police) or 102 (Ambulance).",
@@ -410,7 +529,7 @@ const I18N = {
   "foot.about":"An independent civic information service aggregating publicly available disaster data for Nepal. Not an official government site — always verify critical information with official sources.",
   "foot.sections":"Sections","foot.sources":"Official Sources",
   "foot.rights":"Civic information service","foot.verify":"Data provisional · Verify official sources before acting",
-  "page.alerts.h":"Alert Map","page.alerts.p":"Active impact zones along the Trishuli corridor. Approximate coordinates; not a live-updating feed.",
+  "page.alerts.h":"Alert Map","page.alerts.p":"Impact zones and active warnings along the Bhote Koshi–Trishuli corridor, updated {date}. Coordinates are approximate. Live GDACS flood alerts (UN/EC) arrive separately every few minutes — open the bell in the header to read them.",
   "page.missing.h":"Missing Persons","page.missing.p":"Report a missing person and use the official channels to trace people. This site does not maintain its own verified list.",
   "page.relief.h":"Relief Fund","page.relief.p":"Official Prime Minister's relief fund account details, transcribed from the PMO notice. Verify every detail before transferring.",
   "page.history.h":"Disaster History","page.history.p":"Selected major disasters in Nepal — for record and preparedness.",
@@ -431,7 +550,7 @@ const I18N = {
   "hero.note":"नेपाल प्रहरी र NDRRMA द्वारा पुष्टि गरिएको नेपालतर्फको प्रारम्भिक तथ्यांक ({date} सम्म)। तथ्यांक स्वतः अद्यावधिक हुन्छ र खोजी कार्य जारी रहेकाले संशोधन हुँदैछ — अन्तिम होइन। आधिकारिक नेपाल प्रहरी / NDRRMA विवरणसँग रुजु गर्नुहोस्।",
   "hero.help":"आपत्कालीन हेल्पलाइन","hero.report":"घटना जानकारी दिनुहोस्",
   "stat.deaths":"पुष्टि भएका मृत्यु","stat.missing":"बेपत्ता","stat.foreign":"बेपत्ता विदेशी नागरिक","stat.rescued":"कुल उद्धार",
-  "stat.sub.deaths":"नेपाल प्रहरी · बढ्दै","stat.sub.missing":"६६८ विदेशीसहित","stat.sub.foreign":"पर्यटक र गैरआवासीय","stat.sub.rescued":"हवाई · NDRRMA","stat.tap":"विस्तृत विवरण →",
+  "stat.sub.deaths":"नेपाल प्रहरी · बढ्दै","stat.sub.missing":"५९२ विदेशीसहित","stat.sub.foreign":"पर्यटक र गैरआवासीय","stat.sub.rescued":"हवाई · NDRRMA","stat.tap":"विस्तृत विवरण →",
   "sec.hl.eye":"सहयोगका लागि सम्पर्क · निःशुल्क २४×७","sec.hl.h":"आपत्कालीन हेल्पलाइन",
   "hl.national":"राष्ट्रिय","hl.district":"प्रभावित जिल्लाहरू","hl.more":"सबै हेल्पलाइन →",
   "hl.note":"स्रोत: NDRRMA आपत्कालीन हेल्पलाइन सूचना। व्यस्त भए १०० (प्रहरी) वा १०२ (एम्बुलेन्स) मा फोन गर्नुहोस्।",
@@ -443,7 +562,7 @@ const I18N = {
   "foot.about":"नेपालको सार्वजनिक विपद् तथ्यांक समेट्ने स्वतन्त्र नागरिक सूचना सेवा। यो आधिकारिक सरकारी साइट होइन — महत्त्वपूर्ण जानकारी आधिकारिक स्रोतसँग रुजु गर्नुहोस्।",
   "foot.sections":"खण्डहरू","foot.sources":"आधिकारिक स्रोत",
   "foot.rights":"नागरिक सूचना सेवा","foot.verify":"तथ्यांक प्रारम्भिक · कार्य गर्नुअघि आधिकारिक स्रोत रुजु गर्नुहोस्",
-  "page.alerts.h":"चेतावनी नक्सा","page.alerts.p":"त्रिशूली कोरिडोरका सक्रिय प्रभावित क्षेत्र। अनुमानित निर्देशांक; प्रत्यक्ष अद्यावधिक हुने फिड होइन।",
+  "page.alerts.h":"चेतावनी नक्सा","page.alerts.p":"भोटेकोशी–त्रिशूली कोरिडोरका प्रभावित क्षेत्र र सक्रिय चेतावनी, {date} मा अद्यावधिक। निर्देशांक अनुमानित। GDACS (संयुक्त राष्ट्र/EC) का प्रत्यक्ष बाढी अलर्ट हरेक केही मिनेटमा छुट्टै आउँछन् — हेडरको घण्टी खोलेर हेर्नुहोस्।",
   "page.missing.h":"बेपत्ता व्यक्ति","page.missing.p":"बेपत्ता व्यक्तिको जानकारी दिनुहोस् र खोजीका लागि आधिकारिक च्यानल प्रयोग गर्नुहोस्। यो साइटले आफ्नै रुजु सूची राख्दैन।",
   "page.relief.h":"राहत कोष","page.relief.p":"प्रधानमन्त्री कार्यालयको सूचनाबाट सारिएको आधिकारिक राहत कोष खाता विवरण। रकम पठाउनुअघि हरेक विवरण रुजु गर्नुहोस्।",
   "page.history.h":"विपद् इतिहास","page.history.p":"नेपालका छानिएका प्रमुख विपद् — अभिलेख र पूर्वतयारीका लागि।",
@@ -806,6 +925,8 @@ function renderAll(){
   renderNews(document.body.dataset.newsLimit?+document.body.dataset.newsLimit:0);
   renderHistory(); renderRelief(); renderAlerts(); renderMissing();
   renderNotifs(); renderGallery(); renderFullGallery(); renderNewsPage(); renderStatsPage(); renderMissingSummary(); renderRescuePage(); renderReliefCollected(); renderHighways(); setSync();
+  renderOfficialMissing();
+  updateThemeBtn();
 }
 
 /* ---- mobile nav / hamburger (module scope so injectChrome can also call it) ---- */
@@ -874,7 +995,7 @@ function wire(){
   setInterval(fetchLiveNews, 600000);                            // …and every 10 minutes
   fetchLiveAlerts();                                              // live flood alerts (GDACS)…
   setInterval(fetchLiveAlerts, 180000);                          // …refreshed every 3 minutes so risky alerts surface fast
-  maybeWarningsPopup();                                          // today's consolidated district-level flood warning (once/day)
+  if($("#officialMissing")){ renderOfficialMissing(); loadOfficialMissing(2); }   // NDRRMA missing-persons registry
   if($("#hwRoot")){                                              // Highway Updates page — curated table + live road bulletins
     fetchHighways(); fetchHighwayNews();
     setInterval(fetchHighways, 300000); setInterval(fetchHighwayNews, 300000);  // auto-refresh every 5 min
@@ -918,6 +1039,7 @@ function doShare(mode){
    ========================================================================= */
 Object.assign(I18N.en,{
   "news.read":"Read full bulletin","news.live":"LIVE",
+  "theme.light":"Theme: light","theme.dark":"Theme: dark","theme.system":"Theme: follows your device",
   "notif.h":"Alerts","notif.eye":"Signal Feed","notif.clear":"Clear all","notif.empty":"No active alerts.","notif.count":"active","notif.enable":"Notify me",
   "fpop.eye":"Risky Flood Alert","fpop.red":"RED · SEVERE","fpop.orange":"ORANGE · RISKY","fpop.title":"Flood alert — Nepal",
   "fpop.region":"Affected area","fpop.issued":"Issued","fpop.source":"Source","fpop.report":"View official report ↗",
@@ -954,6 +1076,7 @@ Object.assign(I18N.ne,{
   "hw.precau":"यात्रा सावधानी","hw.precau1":"दिउँसो यात्रा गर्नुहोस्; अँध्यारो र भारी वर्षामा पहाडी राजमार्ग नजानुहोस्।","hw.precau2":"सामान्यभन्दा २–३ गुणा बढी समय राख्नुहोस्; इन्धन, पानी र पावर बैंक बोक्नुहोस्।","hw.precau3":"बाढी आएको सडक वा सक्रिय पहिरो कहिल्यै नकाट्नुहोस् — सफा नभएसम्म पर्खनुहोस्।","hw.precau4":"निस्कनुअघि स्थानीय ट्राफिक कार्यालय (१०३) मा खण्ड पुष्टि गर्नुहोस्।",
   "hw.loading":"राजमार्ग अवस्था लोड हुँदै…","hw.legend":"अवस्था प्रकाशित प्रतिवेदनबाट संकलित; वास्तविक अवस्थाभन्दा पछाडि हुन सक्छ।","hw.count.closed":"बन्द","hw.count.oneway":"एकतर्फी","hw.count.open":"खुला / सावधानी",
   "news.read":"पूरा बुलेटिन पढ्नुहोस्","news.live":"प्रत्यक्ष",
+  "theme.light":"थिम: उज्यालो","theme.dark":"थिम: अँध्यारो","theme.system":"थिम: यन्त्रअनुसार",
   "notif.h":"अलर्टहरू","notif.eye":"सिग्नल फिड","notif.clear":"सबै हटाउनुहोस्","notif.empty":"कुनै सक्रिय अलर्ट छैन।","notif.count":"सक्रिय","notif.enable":"सूचना पाउनुहोस्",
   "fpop.eye":"जोखिमपूर्ण बाढी अलर्ट","fpop.red":"रातो · गम्भीर","fpop.orange":"सुन्तला · जोखिमपूर्ण","fpop.title":"बाढी अलर्ट — नेपाल",
   "fpop.region":"प्रभावित क्षेत्र","fpop.issued":"जारी","fpop.source":"स्रोत","fpop.report":"आधिकारिक रिपोर्ट हेर्नुहोस् ↗",
@@ -974,21 +1097,24 @@ const GLOF={
 };
 /* Notifications feed (factual, sourced) */
 const NOTIFS=[
-  {id:"glof-2026-0826", sev:"watch", tag:{en:"GLOF",ne:"GLOF"}, time:"just now", src:"NDRRMA advisory",
-   msg:{en:"GLOF advisory issued: stay alert along the Trishuli/Bhotekoshi; move away from riverbanks in Rasuwa, Nuwakot, Dhading, Gorkha, Chitwan.",
-        ne:"GLOF सतर्कता जारी: त्रिशूली/भोटेकोशी किनारमा सतर्क रहनुहोस्; रसुवा, नुवाकोट, धादिङ, गोरखा, चितवनमा नदी किनारबाट टाढा जानुहोस्।"}},
-  {id:"rescue-88", sev:"relief", tag:{en:"Rescue",ne:"उद्धार"}, time:"27 Aug", src:"Nepal Army",
-   msg:{en:"At least 88 people rescued along the Trishuli corridor; helicopters and medical teams deployed.",
-        ne:"त्रिशूली कोरिडोरमा कम्तीमा ८८ जना उद्धार; हेलिकप्टर र चिकित्सा टोली परिचालन।"}},
-  {id:"damage-bridges", sev:"danger", tag:{en:"Damage",ne:"क्षति"}, time:"27 Aug", src:"Govt. of Nepal",
-   msg:{en:"About 19 bridges and 40 km of road destroyed; six hydropower plants damaged.",
-        ne:"करिब १९ पुल र ४० कि.मि. सडक ध्वस्त; ६ जलविद्युत् आयोजना क्षतिग्रस्त।"}},
-  {id:"aid-intl", sev:"relief", tag:{en:"Aid",ne:"सहायता"}, time:"27 Aug", src:"BBC / Reuters",
-   msg:{en:"India sends ~50 tonnes of aid; US pledges USD 500,000; UN support underway.",
-        ne:"भारतले करिब ५० टन सहायता; अमेरिकाले ५ लाख डलर; राष्ट्रसंघको सहयोग।"}},
-  {id:"gyirong-port", sev:"danger", tag:{en:"Cross-border",ne:"सीमापार"}, time:"26 Aug", src:"Xinhua",
-   msg:{en:"Gyirong Port destroyed on the China side; hundreds reported missing across the border.",
-        ne:"चीनतर्फ ग्यिरोङ बन्दरगाह ध्वस्त; सीमापार सयौं बेपत्ता।"}}
+  {id:"warn-2026-0831-riverside", sev:"danger", tag:{en:"Riverside alert",ne:"किनार चेतावनी"}, time:"31 Aug", src:"NDRRMA / DHM", url:"https://www.dhm.gov.np",
+   msg:{en:"Riverside alert active for Rasuwa, Nuwakot, Dhading and Chitwan. The Bhote Koshi is rising again and the Trishuli runs ~3 m above normal at Galchhi. Stay off the banks and move to higher ground.",
+        ne:"रसुवा, नुवाकोट, धादिङ र चितवनमा नदी किनारको चेतावनी सक्रिय। भोटेकोशी फेरि बढ्दै; गल्छीमा त्रिशूली सामान्यभन्दा करिब ३ मि. माथि। किनारबाट टाढा रहनुहोस्, अग्लो स्थानमा जानुहोस्।"}},
+  {id:"warn-2026-0831-lhende", sev:"watch", tag:{en:"Dammed lake",ne:"बाँधिएको ताल"}, time:"31 Aug", src:"NDRRMA satellite analysis",
+   msg:{en:"A landslide has dammed the Lhende Khola ~18 km above Rasuwagadhi, forming a lake of about 0.11 km². A burst would send a second surge down the Bhote Koshi — the site stays under watch.",
+        ne:"रसुवागढीभन्दा करिब १८ कि.मि. माथि पहिरोले ल्हेन्डे खोला थुनेर करिब ०.११ वर्ग कि.मि. को ताल बनेको। फुटेमा भोटेकोशीमा दोस्रो भल आउन सक्छ — स्थल निगरानीमा।"}},
+  {id:"traffic-2026-0831-prithvi", sev:"danger", tag:{en:"Highway",ne:"राजमार्ग"}, time:"31 Aug", src:"Nepal Police Traffic", url:"highway-updates.html",
+   msg:{en:"Prithvi Highway still cut at Krishnabhir (Benighat Rorang, Dhading) — the Mugling–Kathmandu section is closed. Confirm with the traffic office (103) before travelling.",
+        ne:"पृथ्वी राजमार्ग कृष्णभीर (बेनीघाट रोराङ, धादिङ) मा अझै अवरुद्ध — मुग्लिन–काठमाडौं खण्ड बन्द। यात्रा अघि ट्राफिक कार्यालय (१०३) मा पुष्टि गर्नुहोस्।"}},
+  {id:"rescue-2026-0831-tunnel", sev:"relief", tag:{en:"Tunnel rescue",ne:"सुरुङ उद्धार"}, time:"31 Aug", src:"NDRRMA / Reuters",
+   msg:{en:"Rescuers have drilled into the upper section of the Trishuli 3A tunnel and are preparing to send crews in with oxygen. 100+ workers may still be alive inside; 35 are trapped at Upper Trishuli-1.",
+        ne:"उद्धारकर्मी त्रिशूली ३ए सुरुङको माथिल्लो भागसम्म ड्रिल गरी अक्सिजनसहित टोली पठाउने तयारीमा। भित्र १००+ कामदार जीवित हुन सक्ने; माथिल्लो त्रिशूली-१ मा ३५ जना फसेका।"}},
+  {id:"toll-2026-0831", sev:"danger", tag:{en:"Toll",ne:"मृत्यु"}, time:"31 Aug", src:"NDRRMA",
+   msg:{en:"NDRRMA: 903 confirmed dead, 4,247 missing and 1,473 injured on the Nepal side. The missing count nearly doubled as hydropower workers and unregistered travellers were added.",
+        ne:"NDRRMA: नेपालतर्फ ९०३ मृत्यु पुष्टि, ४,२४७ बेपत्ता र १,४७३ घाइते। जलविद्युत् कामदार र दर्ता नभएका यात्रु थपिँदा बेपत्ता संख्या झन्डै दोब्बर।"}},
+  {id:"relief-2026-0831-fund", sev:"relief", tag:{en:"Relief",ne:"राहत"}, time:"31 Aug", src:"OPMCM / Radio Nepal", url:"relief.html",
+   msg:{en:"PM Disaster Relief Fund passes Rs 5 billion; Rs 675 million released to 15 local units in Rasuwa, Nuwakot, Dhading, Gorkha and Tanahun. Donate only via the official channels.",
+        ne:"प्रधानमन्त्री विपद् राहत कोष रु. ५ अर्ब नाघ्यो; रसुवा, नुवाकोट, धादिङ, गोरखा र तनहुँका १५ स्थानीय तहलाई रु. ६७.५ करोड निकासा। आधिकारिक माध्यमबाट मात्र दान गर्नुहोस्।"}}
 ];
 
 /* =========================================================================
@@ -1006,15 +1132,15 @@ const NOTIFS=[
    ========================================================================= */
 const WARNINGS={
   active:true,                 // set false only when NDRRMA declares the risk over — then the popup stops
-  updated:"2026-08-30",        // bump this (or the day rolls over) to re-surface the warning
-  date:{en:"30 Aug 2026",ne:"१४ भदौ २०८३"},
+  updated:"2026-08-31",        // bump this (or the day rolls over) to re-surface the warning
+  date:{en:"31 Aug 2026",ne:"१५ भदौ २०८३"},
   count:44,
   source:"DHM special bulletin · NDRRMA",
   url:"https://www.dhm.gov.np",
-  headline:{en:"Bhote Koshi & Trishuli surging — second-flood risk",
-            ne:"भोटेकोशी र त्रिशूली बढ्दो — दोस्रो बाढीको जोखिम"},
+  headline:{en:"Riverside alert still active — dammed lake on the Lhende Khola under watch",
+            ne:"नदी किनारको चेतावनी कायमै — ल्हेन्डे खोलाको बाँधिएको ताल निगरानीमा"},
   summary:{
-    en:"NDRRMA warns the Bhote Koshi is rising again in Rasuwa and the Trishuli is running about 3 m above normal. A landslide-dammed lake on the Lhende Khola, roughly 18 km above Rasuwagadhi, could burst and set off a second flood. DHM keeps flash-flood risk high across 44 districts in all seven provinces. Riverside residents must move to higher ground and stay off the banks.",
+    en:"NDRRMA keeps Rasuwa, Nuwakot, Dhading and Chitwan under a riverside alert. The Bhote Koshi has risen again in Rasuwa and the Trishuli is running about 3 m above normal at Galchhi in Dhading. Satellite imagery shows a landslide has dammed the Lhende Khola about 18 km above Rasuwagadhi, forming a lake of roughly 0.11 km² that could still burst. The larger barrier lake on the Chinese side has largely drained, but the high-altitude one near the collapse site remains. DHM keeps flash-flood risk high across 44 districts in all seven provinces. Riverside residents must move to higher ground and stay off the banks.",
     ne:"राष्ट्रिय विपद् प्राधिकरण (NDRRMA) ले रसुवामा भोटेकोशी फेरि बढ्दै गएको र त्रिशूली सामान्यभन्दा करिब ३ मिटर माथि बगिरहेको चेतावनी दिएको छ। रसुवागढीभन्दा करिब १८ कि.मि. माथि ल्हेन्डे खोलामा पहिरोले बाँधिएको तालले फुटेर दोस्रो बाढी निम्त्याउन सक्ने जोखिम छ। DHM ले सातै प्रदेशका ४४ जिल्लामा आकस्मिक बाढीको जोखिम उच्च रहेको जनाएको छ। नदी किनारका बासिन्दा तुरुन्तै अग्लो स्थानमा जानुहोस्।"},
   rivers:[
     {name:{en:"Bhote Koshi",ne:"भोटेकोशी"}, status:{en:"rising",ne:"बढ्दै"}, sev:"danger"},
@@ -1112,11 +1238,11 @@ async function fetchLiveAlerts(){
       LIVE_ALERTS.forEach(a=>NOTIF_SEEN.add(a.id));
       NOTIF_PRIMED=true; _saveSeen();
       renderNotifs();
-      maybeFloodPopup();   // surface the top risky (Red/Orange) alert as a UI popup
+      renderAlertBar();    // surface the top risky (Red/Orange) alert INLINE — no modal
     }
   }catch(_){ /* keep built-in advisories */ }
 }
-function clearNotifs(){ activeNotifs().forEach(n=>NOTIF_CLEARED.add(n.id)); try{localStorage.setItem("nd_cleared",JSON.stringify([...NOTIF_CLEARED]));}catch(e){} renderNotifs(); maybeFloodPopup(); }
+function clearNotifs(){ activeNotifs().forEach(n=>NOTIF_CLEARED.add(n.id)); try{localStorage.setItem("nd_cleared",JSON.stringify([...NOTIF_CLEARED]));}catch(e){} renderNotifs(); renderAlertBar(); }
 
 /* =========================================================================
    RISKY FLOOD ALERT popup — an in-page modal (styled to match the site) that
@@ -1133,59 +1259,50 @@ function _savePopupSeen(){ try{localStorage.setItem("nd_popup_seen",JSON.stringi
 let _popupOpenFor=null;   // id currently displayed (guards re-entrancy while open)
 let _warnShownThisLoad=false;   // today's consolidated warning takes priority over the single GDACS pop
 
-/* pick the top risky alert we haven't shown yet, and pop it */
-function maybeFloodPopup(){
-  const pop=$("#fpop"); if(!pop) return;
-  if(_popupOpenFor) return;                                   // one at a time
-  // If the consolidated "Today's Flood Warning" already covered this event, don't
-  // also stack the single GDACS pop — just mark its ids seen so it stays quiet.
-  if(_warnShownThisLoad){ LIVE_ALERTS.forEach(a=>POPUP_SEEN.add(a.id)); _savePopupSeen(); return; }
-  const risky=LIVE_ALERTS
+/* ---- INLINE ALERT BAR (replaces the auto-opening modal) ----
+   The highest-severity live alert is shown as a slim, dismissible strip that
+   sits in the page flow directly under the event banner. It is readable at a
+   glance, never covers the helplines, needs no click to get past, and links
+   straight into the alerts drawer for the full list. Dismissals are remembered
+   per alert id, so a genuinely new alert reappears on its own. */
+function topRiskyAlert(){
+  return LIVE_ALERTS
     .filter(a=>RISKY_SEV.has(a.sev) && !NOTIF_CLEARED.has(a.id) && !POPUP_SEEN.has(a.id))
-    .sort((a,b)=>(a.sev==="danger"?0:1)-(b.sev==="danger"?0:1) || (b.ts||0)-(a.ts||0));
-  if(!risky.length) return;
-  openFloodPopup(risky[0]);
+    .sort((a,b)=>(a.sev==="danger"?0:1)-(b.sev==="danger"?0:1) || (b.ts||0)-(a.ts||0))[0] || null;
+}
+function renderAlertBar(){
+  let host=$("#alertBar");
+  const a=topRiskyAlert();
+  if(!a){ if(host) host.remove(); return; }
+  if(!host){
+    host=document.createElement("div");
+    host.id="alertBar"; host.setAttribute("role","status");
+    const anchor=$(".eas")||$("header.hd");
+    if(anchor && anchor.parentNode) anchor.parentNode.insertBefore(host, anchor.nextSibling);
+    else document.body.insertBefore(host, document.body.firstChild);
+  }
+  const red=a.sev==="danger";
+  host.className="abar abar--"+(red?"danger":"watch");
+  host.innerHTML=`
+    <div class="abar__in">
+      <span class="abar__sev">${esc(red?t("fpop.red"):t("fpop.orange"))}</span>
+      <span class="abar__msg">${esc(a.title||TL(a.msg)||t("fpop.title"))}</span>
+      <span class="abar__acts">
+        <button class="abar__link" id="abarMore">${esc(t("fpop.view"))}</button>
+        ${a.url?`<a class="abar__link" href="${esc(a.url)}" target="_blank" rel="noopener">${esc(t("fpop.report"))}</a>`:""}
+        <button class="abar__x" id="abarX" aria-label="Dismiss">${XICON}</button>
+      </span>
+    </div>`;
+  const more=$("#abarMore"); if(more) more.addEventListener("click",()=>notifOpen());
+  const x=$("#abarX"); if(x) x.addEventListener("click",()=>{
+    POPUP_SEEN.add(a.id); _savePopupSeen(); renderAlertBar();
+  });
 }
 
-function openFloodPopup(a){
-  const pop=$("#fpop"); if(!pop) return;
-  _popupOpenFor=a.id;
-  POPUP_SEEN.add(a.id); _savePopupSeen();                     // never pop this id again
-  const red=a.sev==="danger";
-  const chip=red?t("fpop.red"):t("fpop.orange");
-  const head=a.title || t("fpop.title");
-  const body=TL(a.msg)||"";
-  const region=(EVENT&&EVENT.region)?TL(EVENT.region):"";
-  const meta=[];
-  if(region) meta.push([t("fpop.region"),region]);
-  if(a.time) meta.push([t("fpop.issued"),a.time]);
-  meta.push([t("fpop.source"),a.src||"GDACS · UN/EC"]);
-  pop.className="fpop fpop--"+a.sev+" open";
-  pop.innerHTML=`
-    <div class="fpop__card" role="alertdialog" aria-modal="true" aria-labelledby="fpopH">
-      <button class="fpop__x" id="fpopX" aria-label="Close">${XICON}</button>
-      <div class="fpop__scroll">
-        <div class="fpop__top">
-          <span class="fpop__chip">${esc(chip)}</span>
-          <span class="fpop__pulse"><span class="fpop__dot"></span>${esc(t("fpop.live"))}</span>
-        </div>
-        <div class="fpop__eye">${esc(t("fpop.eye"))}</div>
-        <h3 class="fpop__h" id="fpopH">${esc(head)}</h3>
-        ${body?`<p class="fpop__body">${esc(body)}</p>`:""}
-        <dl class="fpop__meta">
-          ${meta.map(m=>`<div><dt>${esc(m[0])}</dt><dd>${esc(m[1])}</dd></div>`).join("")}
-        </dl>
-        <div class="fpop__actions">
-          ${a.url?`<a class="btn btn--primary" href="${esc(a.url)}" target="_blank" rel="noopener">${esc(t("fpop.report"))}</a>`:""}
-          <button class="btn btn--ghost" id="fpopEnable"${notifSupported()&&Notification.permission==="default"?"":" hidden"}>${BELL_ICO}<span>${esc(t("notif.enable"))}</span></button>
-          <button class="btn btn--ghost" id="fpopMore">${esc(t("fpop.view"))}</button>
-        </div>
-        <div class="fpop__foot">${esc(t("fpop.auto"))}</div>
-      </div>
-    </div>`;
-  pop.setAttribute("aria-hidden","false");
-  _wireFpop(pop);
-}
+/* The single-alert modal was removed in favour of renderAlertBar() above — an
+   inline strip that never blocks the page. The dialog host (#fpop) is kept for
+   the user-initiated "Today's district warnings" panel opened from the alerts
+   drawer, which openWarningsPopup() below renders into. */
 function closeFloodPopup(){
   const pop=$("#fpop"); if(!pop) return;
   pop.classList.remove("open"); pop.setAttribute("aria-hidden","true");
@@ -1209,7 +1326,6 @@ function _wireFpop(pop){
    GDACS pop so a visitor sees the full picture — the river surge, the second-
    flood risk, and every district DHM/NDRRMA has placed on watch today.
    ========================================================================= */
-function maybeWarningsPopup(){ openWarningsPopup(false); }
 function openWarningsPopup(force){
   const pop=$("#fpop"); if(!pop || typeof WARNINGS==="undefined") return;
   if(_popupOpenFor) return;
@@ -1464,6 +1580,8 @@ async function fetchInfobox(title){
 }
 
 /* ---------- notifications ---------- */
+const THEME_SUN='<svg class="ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.2M12 19.2v2.2M4.2 12H2M22 12h-2.2M6.1 6.1 4.6 4.6M19.4 19.4l-1.5-1.5M17.9 6.1l1.5-1.5M4.6 19.4l1.5-1.5"/></svg>';
+const THEME_MOON='<svg class="ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.3A8.5 8.5 0 1 1 9.7 3.5a6.8 6.8 0 0 0 10.8 10.8Z"/></svg>';
 const BELL='<svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>';
 /* inline bell that inherits its button's text colour (white on crimson, ink on ghost) */
 const BELL_ICO='<svg class="ico-bell" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>';
@@ -1486,6 +1604,16 @@ function injectChrome(){
   }
   // bell in header tools (desktop)
   const tools=$(".hd__tools");
+  // light/dark toggle, next to the language switch
+  if(tools && !$("#themeBtn")){
+    const tb=document.createElement("button");
+    tb.className="theme"; tb.id="themeBtn"; tb.type="button";
+    tb.innerHTML=THEME_SUN+THEME_MOON;
+    const lang=tools.querySelector(".lang");
+    tools.insertBefore(tb, lang||null);
+    tb.addEventListener("click", toggleTheme);
+    updateThemeBtn();
+  }
   if(tools && !$("#bell")){
     const b=document.createElement("button");
     b.className="bell"; b.id="bell"; b.setAttribute("aria-label","Alerts");
@@ -1544,7 +1672,7 @@ function injectChrome(){
     wr.addEventListener("click",()=>{ notifClose(); openWarningsPopup(true); });
     document.addEventListener("keydown",e=>{if(e.key==="Escape"&&$("#notif").classList.contains("open"))notifClose();});
   }
-  // risky-flood-alert popup host (content injected on demand by openFloodPopup)
+  // dialog host for the user-opened "Today's district warnings" panel
   if(!$("#fpop")){
     const fp=document.createElement("div");
     fp.className="fpop"; fp.id="fpop"; fp.setAttribute("aria-hidden","true");
@@ -1557,8 +1685,13 @@ function notifOpen(){const p=$("#notif"),s=$("#scrim"); if(!p)return; p.classLis
 function notifClose(){const p=$("#notif"),s=$("#scrim"); if(!p)return; p.classList.remove("open");s.classList.remove("open");p.setAttribute("aria-hidden","true");const b=$("#bell");b&&b.focus();}
 function renderNotifs(){
   const items=activeNotifs();
-  const list=$("#notifList"); const badge=$("#bellBadge"); const cnt=$("#notifCount");
-  if(badge){ badge.textContent=items.length; badge.toggleAttribute("hidden",items.length===0); }
+  const list=$("#notifList"); const cnt=$("#notifCount");
+  // Both badges: the header bell (desktop) and the one inside the mobile menu.
+  // The mobile one was never being written, so it always read 0 on phones.
+  $$("#bellBadge, #mobileBellBadge").forEach(badge=>{
+    badge.textContent=items.length;
+    badge.toggleAttribute("hidden",items.length===0);
+  });
   if(cnt) cnt.textContent=items.length;
   if(!list) return;
   if(!items.length){ list.innerHTML=`<div class="nrow nrow--empty">${esc(t("notif.empty"))}</div>`; return; }
@@ -1646,10 +1779,14 @@ async function newsDetail(root,id){
 Object.assign(I18N.en,{
   "stat.tap":I18N.en["stat.tap"]||"Tap for breakdown →",
   "news.back2":"← Back","news.prev":"‹ Prev","news.next":"Next ›",
-  "sync.updated":"Synced","sync.auto":"auto 2 min","eas.onset":"Elapsed since onset","nav.stats":"Details","nav.seo":"SEO Page","nav.about":"About Dev",
+  "sync.updated":"Synced","sync.auto":"live · every 10 min","eas.onset":"Elapsed since onset","nav.stats":"Details","nav.seo":"SEO Page","nav.about":"About Dev",
   "page.stats.h":"Detailed Situation Figures","page.stats.p":"Category-wise breakdown from NDRRMA and Nepal Police, compiled from published situation reports. All figures are provisional and being revised.",
   "stats.src":"Source","stats.na":"Awaiting official figures — see the NDRRMA situation report.","stats.official":"NDRRMA situation report ↗","stats.fb":"NDRRMA updates (Facebook) ↗","stats.field":"Field updates · mirvictor ↗",
-  "stats.disclaimer":"Provisional figures, 27–28 August 2026. Totals differ between sources and update frequently. This page does not replace official NDRRMA / Nepal Police bulletins. Verify before republishing.",
+  "stats.disclaimer":"Provisional figures as of {date}. Headline numbers refresh automatically every 10 minutes from the NDRRMA rescue API, this site’s curated official feed and the Wikipedia article, in that order of authority. Totals differ between sources and are revised often. This page does not replace official NDRRMA / Nepal Police bulletins — verify before republishing.",
+  "om.eye":"Official Registry · NDRRMA · live","om.h":"Missing Persons Named by NDRRMA",
+  "om.p":"Read-only mirror of the missing-persons list on the NDRRMA National Disaster Portal, refreshed automatically. These are entries the authority has published for family tracing — separate from the community reports above. The official portal remains authoritative.",
+  "om.count":"named in the official registry","om.search":"Search a name…","om.none":"No entries match your search.","om.loading":"Loading the official registry…","om.failed":"The NDRRMA registry could not be reached.","om.retry":"Try again",
+  "om.open":"Open the NDRRMA missing-persons portal ↗","om.more":"Show more","om.nat":"Nationality","om.status":"Status","om.remarks":"Remarks",
   "msum.eye":"Overview · Provisional","msum.h":"Missing at a Glance","msum.bycountry":"Foreign nationals missing, by country","msum.total":"Total missing","msum.foreign":"Foreign nationals",
   "msum.note":"Provisional (NDRRMA). Foreign nationals missing or out of contact. Names are released through Nepal Police and NDRRMA — trace individuals via the official channels below.",
   "relief.qr.h":"Scan a QR to Donate","relief.qr.p":"Scan any of these official Fonepay QR codes for the PM Disaster Relief Fund with your banking or wallet app.",
@@ -1658,10 +1795,14 @@ Object.assign(I18N.en,{
 });
 Object.assign(I18N.ne,{
   "news.back2":"← फर्कनुहोस्","news.prev":"‹ अघिल्लो","news.next":"अर्को ›",
-  "sync.updated":"सिंक","sync.auto":"स्वतः २ मिनेट","eas.onset":"घटना भएको","nav.stats":"विवरण",
+  "sync.updated":"सिंक","sync.auto":"प्रत्यक्ष · हरेक १० मिनेट","eas.onset":"घटना भएको","nav.stats":"विवरण",
   "page.stats.h":"विस्तृत अवस्था तथ्यांक","page.stats.p":"NDRRMA र नेपाल प्रहरीका प्रकाशित प्रतिवेदनबाट वर्गअनुसार विवरण। सबै तथ्यांक प्रारम्भिक र संशोधन हुँदै।",
   "stats.src":"स्रोत","stats.na":"आधिकारिक तथ्यांक प्रतीक्षामा — NDRRMA प्रतिवेदन हेर्नुहोस्।","stats.official":"NDRRMA प्रतिवेदन ↗","stats.fb":"NDRRMA अपडेट (फेसबुक) ↗","stats.field":"स्थलगत अपडेट · mirvictor ↗",
-  "stats.disclaimer":"प्रारम्भिक तथ्यांक, २७–२८ अगस्ट २०२६। स्रोत अनुसार फरक पर्छ र बारम्बार अद्यावधिक हुन्छ। आधिकारिक NDRRMA / नेपाल प्रहरी विवरणसँग रुजु गर्नुहोस्।",
+  "stats.disclaimer":"{date} सम्मको प्रारम्भिक तथ्यांक। मुख्य संख्या हरेक १० मिनेटमा NDRRMA उद्धार API, यस साइटको आधिकारिक फिड र विकिपिडिया लेखबाट — सोही प्राथमिकता क्रममा — स्वतः अद्यावधिक हुन्छ। स्रोत अनुसार फरक पर्छ र बारम्बार संशोधन हुन्छ। आधिकारिक NDRRMA / नेपाल प्रहरी विवरणसँग रुजु गर्नुहोस्।",
+  "om.eye":"आधिकारिक अभिलेख · NDRRMA · प्रत्यक्ष","om.h":"NDRRMA ले नाम सार्वजनिक गरेका बेपत्ता व्यक्ति",
+  "om.p":"NDRRMA राष्ट्रिय विपद् पोर्टलको बेपत्ता व्यक्ति सूचीको पढ्न मात्र मिल्ने प्रतिलिपि, स्वतः अद्यावधिक। यी प्राधिकरणले परिवार खोजीका लागि प्रकाशित गरेका विवरण हुन् — माथिका सामुदायिक रिपोर्टभन्दा फरक। आधिकारिक पोर्टल नै प्रामाणिक।",
+  "om.count":"आधिकारिक अभिलेखमा दर्ता","om.search":"नाम खोज्नुहोस्…","om.none":"खोजीसँग मिल्ने विवरण भेटिएन।","om.loading":"आधिकारिक अभिलेख लोड हुँदै…","om.failed":"NDRRMA अभिलेखमा पहुँच भएन।","om.retry":"पुनः प्रयास",
+  "om.open":"NDRRMA बेपत्ता व्यक्ति पोर्टल खोल्नुहोस् ↗","om.more":"थप हेर्नुहोस्","om.nat":"राष्ट्रियता","om.status":"अवस्था","om.remarks":"कैफियत",
   "msum.eye":"सारांश · प्रारम्भिक","msum.h":"बेपत्ता — एक नजरमा","msum.bycountry":"बेपत्ता विदेशी नागरिक, देश अनुसार","msum.total":"कुल बेपत्ता","msum.foreign":"विदेशी नागरिक",
   "msum.note":"प्रारम्भिक (NDRRMA)। बेपत्ता वा सम्पर्कविहीन विदेशी नागरिक। नाम नेपाल प्रहरी र NDRRMA मार्फत सार्वजनिक हुन्छन् — तलका आधिकारिक स्रोतबाट खोजी गर्नुहोस्।",
   "relief.qr.h":"स्क्यान गरी दान गर्नुहोस्","relief.qr.p":"प्रधानमन्त्री विपद् राहत कोषका यी आधिकारिक फोनपे QR कुनै पनि बैंकिङ वा वालेट एपबाट स्क्यान गर्नुहोस्।",
@@ -1673,40 +1814,43 @@ Object.assign(I18N.ne,{
    official numbers are not yet itemised (never fabricated). NDRRMA / Nepal Police,
    compiled 27–28 Aug 2026. */
 const STATS_DETAIL=[
- {id:"deaths", sev:"danger", big:"734", title:{en:"Confirmed Deaths",ne:"पुष्टि मृत्यु"}, unit:{en:"Nepal side · auto-updated from live sources",ne:"नेपालतर्फ · प्रत्यक्ष स्रोतबाट स्वतः अद्यावधिक"}, src:"NDRRMA / Nepal Police / Wikipedia",
-  rows:[["Nepal — bodies recovered (NDRRMA, 30 Aug)","734"],["Chitwan","259"],["Nawalparasi East","184"],["Nawalparasi West","82"],["Gorkha","58"],["Nuwakot","52"],["Dhading","50"],["Tanahun","36"],["Rasuwa","13"]],
-  note:{en:"Nepal Police confirmed {n} deaths on the Nepal side; the toll auto-updates every 10 minutes from live sources as access is restored to buried riverside settlements and body-management operations recover more victims downstream.",ne:"नेपाल प्रहरीले नेपालतर्फ {n} मृत्यु पुष्टि गर्‍यो; पहुँच खुल्दै र शव व्यवस्थापन जारी रहँदा प्रत्यक्ष स्रोतबाट हरेक १० मिनेटमा संख्या स्वतः अद्यावधिक हुन्छ।"}},
- {id:"missing", sev:"danger", big:"2,498", title:{en:"Missing and Out of Contact",ne:"बेपत्ता तथा सम्पर्कविहीन"}, unit:{en:"Nepal side only",ne:"नेपालतर्फ मात्र"}, src:"Nepal Police / NDRRMA",
-  rows:[["Nepal — missing / out of contact","2,498"],["— of these, in Rasuwa","562"]],
-  note:{en:"Nepal Police report {n} people missing or out of contact on the Nepal side. This figure is Nepal-only — it excludes the separately-counted China/Tibet-side missing. It moves in both directions as people are found dead or rescued.",ne:"नेपाल प्रहरीका अनुसार नेपालतर्फ {n} जना बेपत्ता वा सम्पर्कविहीन। यो संख्या नेपाल मात्रको हो — चीन/तिब्बततर्फको अलग गणनालाई समावेश गरिएको छैन। मानिस मृत वा उद्धार भेटिँदै जाँदा यो घट्न वा बढ्न सक्छ।"}},
- {id:"rescued", sev:"relief", big:"8,186", title:{en:"Rescued",ne:"उद्धार"}, unit:{en:"rescued by security forces · NDRRMA, 30 Aug",ne:"सुरक्षा निकायद्वारा उद्धार · NDRRMA, ३० भदौ"}, src:"NDRRMA / The Kathmandu Post",
+ {id:"deaths", sev:"danger", big:"903", title:{en:"Confirmed Deaths",ne:"पुष्टि मृत्यु"}, unit:{en:"Nepal side · auto-updated from live sources",ne:"नेपालतर्फ · प्रत्यक्ष स्रोतबाट स्वतः अद्यावधिक"}, src:"NDRRMA / Nepal Police",
+  rows:[["Nepal — confirmed dead (NDRRMA, 31 Aug)","903"],["District split below is NDRRMA's last itemised one (30 Aug)","734"],["Chitwan","259"],["Nawalparasi East","184"],["Nawalparasi West","82"],["Gorkha","58"],["Nuwakot","52"],["Dhading","50"],["Tanahun","36"],["Rasuwa","13"]],
+  note:{en:"NDRRMA confirms {n} deaths on the Nepal side. The district breakdown below is the last one NDRRMA itemised (30 Aug, totalling 734) — the newer bodies recovered downstream have not yet been split by district. Chitwan, roughly 160 km below the worst-hit area, has received the most; many arrived so badly damaged that identification needs DNA. The headline figure auto-updates every 10 minutes from live official sources.",ne:"NDRRMA का अनुसार नेपालतर्फ {n} मृत्यु पुष्टि। तलको जिल्लागत विवरण NDRRMA ले अन्तिम पटक छुट्याएको (३० भदौ, जम्मा ७३४) हो — त्यसपछि तल्लो तटबाट भेटिएका शव अझै जिल्लागत रूपमा छुट्याइएका छैनन्। सबैभन्दा प्रभावित क्षेत्रबाट करिब १६० कि.मि. तल रहेको चितवनमा सबैभन्दा धेरै; धेरै शव यति क्षतविक्षत थिए कि डीएनए आवश्यक। मुख्य संख्या प्रत्यक्ष आधिकारिक स्रोतबाट हरेक १० मिनेटमा स्वतः अद्यावधिक हुन्छ।"}},
+ {id:"missing", sev:"danger", big:"4,247", title:{en:"Missing and Out of Contact",ne:"बेपत्ता तथा सम्पर्कविहीन"}, unit:{en:"Nepal side only · nearly doubled on 31 Aug",ne:"नेपालतर्फ मात्र · ३१ भदौमा झन्डै दोब्बर"}, src:"NDRRMA / Nepal Police",
+  rows:[["Nepal — missing / out of contact (31 Aug)","4,247"],["Foreign nationals among the missing","592"],["Linked to hydropower projects","934"],["Security personnel (44 Army · 28 Police · 13 APF)","85"],["Nepali travellers","127"],["Rasuwa","562"],["Nuwakot","115"],["Makwanpur","65"]],
+  note:{en:"NDRRMA reports {n} people missing or out of contact on the Nepal side — nearly double the previous day's count, after hydropower workers, unregistered travellers and whole riverside households were added to the list. This is a Nepal-only figure; Tibet's separately-counted missing (546, including 261 foreign nationals) are not included. It moves in both directions as people are found alive or confirmed dead.",ne:"NDRRMA का अनुसार नेपालतर्फ {n} जना बेपत्ता वा सम्पर्कविहीन — जलविद्युत् कामदार, दर्ता नभएका यात्रु र किनारका पूरै घरपरिवार थपिँदा अघिल्लो दिनको तुलनामा झन्डै दोब्बर। यो नेपाल मात्रको संख्या हो; तिब्बततर्फ छुट्टै गणना गरिएका ५४६ बेपत्ता (जसमा २६१ विदेशी) समावेश छैनन्। मानिस जीवित भेटिँदै वा मृत पुष्टि हुँदै जाँदा यो घट्न वा बढ्न सक्छ।"}},
+ {id:"rescued", sev:"relief", big:"7,514", title:{en:"Rescued",ne:"उद्धार"}, unit:{en:"live from the NDRRMA rescue API",ne:"NDRRMA उद्धार API बाट प्रत्यक्ष"}, src:"NDRRMA rescue API / Nepali Army",
   // NOTE: rows 0–3 are written BY INDEX from _setRescueRegistry() —
   // [0]=grand total, [1]=named registry, [2]=Nepali, [3]=foreign.
   // Keep that order; append any extra rows after index 3.
-  rows:[["Total rescued (NDRRMA live count)","8,186"],["Named in public registry","2,189"],["— of these, Nepali","2,034"],["— of these, foreign","155"],["Rescued by security forces (30 Aug bulletin)","8,186"],["— airlifted from hydropower tunnel","279"],["— foreign nationals airlifted","227"]],
-  note:{en:"NDRRMA's 9 am update on 30 August reports 8,186 people rescued by security forces, including 279 airlifted over two days from a hydropower tunnel and 227 foreign nationals flown out by helicopter. Separately, 2,189 rescued people are so far individually named in the public registry — 2,034 Nepali and 155 foreign nationals. The full searchable name list is on this site's Rescued page and auto-updates from the NDRRMA API.",ne:"NDRRMA को ३० भदौ बिहान ९ बजेको अद्यावधिकअनुसार सुरक्षा निकायले ८,१८६ जनालाई उद्धार गरे — जसमा जलविद्युत् सुरुङबाट दुई दिनमा निकालिएका २७९ जना र हेलिकप्टरबाट उद्धार गरिएका २२७ विदेशी नागरिक समावेश। छुट्टै, उद्धार भएकामध्ये २,१८९ जनाको नाम सार्वजनिक नामावलीमा — २,०३४ नेपाली र १५५ विदेशी। पूरा खोजयोग्य नामावली यस साइटको उद्धार पृष्ठमा।"}},
- {id:"injured", sev:"watch", big:"242", title:{en:"Injured",ne:"घाइते"}, unit:{en:"Nepal side · incl. those discharged",ne:"नेपालतर्फ · डिस्चार्ज भइसकेकासहित"}, src:"NDRRMA (30 Aug, 9 am)",
-  rows:[["Nepal — injured","242"]],
-  note:{en:"NDRRMA reports {n} people injured, including those still receiving treatment and those already discharged, across hospitals in the affected districts and Kathmandu. The count is updated as casualty reports are consolidated.",ne:"NDRRMA का अनुसार प्रभावित जिल्ला र काठमाडौंका अस्पतालमा {n} जना घाइते — उपचाररत र डिस्चार्ज भइसकेका दुवै समावेश। विवरण एकीकृत हुँदै जाँदा संख्या अद्यावधिक हुन्छ।"}},
- {id:"foreign", sev:"danger", big:"668", title:{en:"Foreign Nationals by Country",ne:"विदेशी नागरिक देश अनुसार"}, unit:{en:"at least {n} missing · 34 countries",ne:"कम्तीमा {n} बेपत्ता · ३४ देश"}, src:"Nepal Police / Diplomatic Missions",
-  rows:[["India","288"],["United States","90"],["Ukraine","53"],["Malaysia","51"],["Australia","35"],["United Kingdom","33"],["Canada","32"],["Other countries","86"]],
-  note:{en:"At least {n} of the missing are foreign nationals from 34 countries, per Nepal Police and diplomatic missions — many trekkers and pilgrims on the Langtang and Kerung routes. Country figures are provisional and revised as identification continues.",ne:"बेपत्तामध्ये कम्तीमा {n} जना ३४ देशका विदेशी नागरिक (नेपाल प्रहरी र कूटनीतिक नियोग) — धेरै लाङटाङ र केरुङ मार्गका पदयात्री र तीर्थयात्री। देशगत तथ्यांक प्रारम्भिक।"}},
- {id:"security", sev:"watch", big:"19,895", title:{en:"Search Operation and Security Personnel",ne:"खोज सञ्चालन र सुरक्षाकर्मी"}, unit:{en:"Nepal Army · Nepal Police · Armed Police Force",ne:"नेपाली सेना · नेपाल प्रहरी · सशस्त्र प्रहरी"}, src:"NDRRMA (30 Aug, 9 am) / The Kathmandu Post",
-  rows:[["Total personnel mobilised","19,895"],["Nepali Army","8,399"],["Nepal Police","7,213"],["Armed Police Force","4,203"],["Rescued by security forces","8,186"]],
-  note:{en:"NDRRMA's 9 am update on 30 August reports 19,895 security personnel mobilised for search, rescue, medical treatment and relief distribution across the affected districts — 8,399 from the Nepali Army, 7,213 from Nepal Police and 4,203 from the Armed Police Force. Security forces have rescued 8,186 people in total.",ne:"NDRRMA को ३० भदौ बिहान ९ बजेको अद्यावधिकअनुसार प्रभावित जिल्लामा खोज, उद्धार, उपचार र राहत वितरणका लागि १९,८९५ सुरक्षाकर्मी परिचालित — नेपाली सेनाका ८,३९९, नेपाल प्रहरीका ७,२१३ र सशस्त्र प्रहरीका ४,२०३। सुरक्षा निकायले कुल ८,१८६ जनालाई उद्धार गरेका छन्।"}},
- {id:"heli", sev:"relief", big:"", title:{en:"Helicopter Operations",ne:"हेलिकप्टर सञ्चालन"}, unit:{en:"Timure · Dhunche · Mailung · Trishuli",ne:"तिमुरे · धुन्चे · माइलुङ · त्रिशूली"}, src:"Nepal Army",
-  note:{en:"Army helicopters flew dozens of sorties airlifting people to safety, with private operators on standby. Sortie and passenger totals are updated by the Nepal Army.",ne:"सेनाका हेलिकप्टरले दर्जनौं उडान गरी मानिसलाई सुरक्षित स्थानमा पुर्‍याए; निजी अपरेटर तयारी अवस्थामा।"}},
- {id:"land", sev:"relief", big:"", title:{en:"Rescued from Land",ne:"स्थलमार्ग उद्धार"}, src:"NDRRMA",
-  note:{en:"Ground-rescue figures are coordinated with local administrative units.",ne:"स्थलगत उद्धारको तथ्यांक स्थानीय निकायसँग समन्वय भइरहेको छ।"}},
- {id:"materials", sev:"relief", big:"", title:{en:"Relief Materials & International Aid",ne:"राहत सामग्री र अन्तर्राष्ट्रिय सहायता"}, src:"AP / BBC / Reuters",
-  rows:[["India","~50 tonnes of supplies"],["Asian Development Bank","USD 5 million"],["European Union","EUR 2 million"],["UN CERF","USD 2 million"],["Red Cross / IFRC","CHF 1 million"]]},
- {id:"fuel", sev:"watch", big:"", title:{en:"Fuel and Logistics",ne:"इन्धन र रसद"}, src:"NDRRMA / Nepal Army",
-  note:{en:"Fuel and logistics are coordinated by the Nepal Army and NDRRMA.",ne:"इन्धन र रसद नेपाली सेना र NDRRMA ले समन्वय गर्छन्।"}}
+  rows:[["Total rescued (NDRRMA live count)","7,514"],["Named in public registry","3,027"],["— of these, Nepali","2,801"],["— of these, foreign","226"],["Rescued by the Nepali Army in Rasuwa alone","2,697"],["— airlifted from hydropower tunnels","279"],["— foreign nationals airlifted","227"]],
+  note:{en:"The headline is NDRRMA's live rescued count, read directly from its rescue API and refreshed every 10 minutes. Separately, {n} of those rescued are individually named in the public registry for family tracing — the full searchable list is on this site's Rescued page and also auto-updates from the same API. Wire reports on 31 August put the cumulative figure reported in NDRRMA bulletins higher, at around 9,500; the two counts are compiled differently, and this page shows the machine-readable one so it can never go stale.",ne:"मुख्य संख्या NDRRMA को उद्धार API बाट सिधै पढिएको प्रत्यक्ष गणना हो, हरेक १० मिनेटमा अद्यावधिक। छुट्टै, उद्धार भएकामध्ये {n} जनाको नाम परिवार खोजीका लागि सार्वजनिक अभिलेखमा छ — पूरा खोजयोग्य सूची यस साइटको उद्धार पृष्ठमा, त्यही API बाट स्वतः अद्यावधिक। ३१ भदौका समाचारमा NDRRMA विज्ञप्तिको संचयी संख्या करिब ९,५०० उल्लेख छ; दुवै गणना फरक विधिबाट तयार हुन्छन्, र यहाँ मेसिनले पढ्न मिल्ने संख्या देखाइएको छ ताकि यो कहिल्यै पुरानो नहोस्।"}},
+ {id:"injured", sev:"watch", big:"1,473", title:{en:"Injured",ne:"घाइते"}, unit:{en:"Nepal side · incl. those discharged",ne:"नेपालतर्फ · डिस्चार्ज भइसकेकासहित"}, src:"NDRRMA",
+  rows:[["Nepal — injured (NDRRMA)","1,473"]],
+  note:{en:"NDRRMA reports {n} people injured on the Nepal side, including those still under treatment and those already discharged, across hospitals in the affected districts, Bharatpur, Pokhara, Butwal and Kathmandu. Hospitals in the worst-hit districts reached capacity early, and patients were transferred outward. The WHO warns of a rising risk of diarrhoeal and respiratory illness following displacement and damage to water and sanitation systems.",ne:"NDRRMA का अनुसार नेपालतर्फ {n} जना घाइते — उपचाररत र डिस्चार्ज भइसकेका दुवै, प्रभावित जिल्ला तथा भरतपुर, पोखरा, बुटवल र काठमाडौंका अस्पतालमा। सबैभन्दा प्रभावित जिल्लाका अस्पताल चाँडै भरिएपछि बिरामी बाहिर पठाइए। विस्थापन र खानेपानी–सरसफाइ संरचना बिग्रिएपछि झाडापखाला र श्वासप्रश्वास रोगको जोखिम बढेको विश्व स्वास्थ्य संगठनको चेतावनी छ।"}},
+ {id:"foreign", sev:"danger", big:"592", title:{en:"Foreign Nationals by Country",ne:"विदेशी नागरिक देश अनुसार"}, unit:{en:"at least {n} missing on the Nepal side",ne:"नेपालतर्फ कम्तीमा {n} बेपत्ता"}, src:"Nepal Police / Diplomatic Missions",
+  rows:[["India","288"],["United States","90"],["Ukraine","53"],["Malaysia","51"],["Australia","35"],["United Kingdom","33"],["Canada","32"],["South Korea","9"]],
+  note:{en:"At least {n} of the missing on the Nepal side are foreign nationals, per Nepal Police and diplomatic missions — many of them pilgrims and trekkers on the Kailash Mansarovar and Langtang routes through Rasuwagadhi. A group of 77 Isha Foundation pilgrims of 19 nationalities were at Gyirong Port when the flood struck. China separately reports 261 foreign nationals from 23 countries missing on the Tibet side; the two lists may overlap. Country figures are provisional and dated 26–29 August — they are revised as embassies confirm identities, so they need not add up to the current total.",ne:"नेपाल प्रहरी र कूटनीतिक नियोगका अनुसार नेपालतर्फ बेपत्तामध्ये कम्तीमा {n} जना विदेशी नागरिक — धेरै रसुवागढी हुँदै कैलाश मानसरोवर र लाङटाङ मार्गका तीर्थयात्री तथा पदयात्री। बाढी आउँदा १९ देशका ७७ इशा फाउन्डेसन तीर्थयात्री ग्यिरोङ बन्दरगाहमा थिए। चीनले तिब्बततर्फ २३ देशका २६१ विदेशी बेपत्ता रहेको छुट्टै जनाएको छ; दुई सूची दोहोरिन सक्छन्। देशगत तथ्यांक २६–२९ भदौको प्रारम्भिक हो र दूतावासले पहिचान पुष्टि गर्दै जाँदा संशोधन हुन्छ, त्यसैले हालको कुल संख्यासँग जोड मिल्नु आवश्यक छैन।"}},
+ {id:"security", sev:"watch", big:"18,708", title:{en:"Search Operation and Security Personnel",ne:"खोज सञ्चालन र सुरक्षाकर्मी"}, unit:{en:"live from the NDRRMA rescue API",ne:"NDRRMA उद्धार API बाट प्रत्यक्ष"}, src:"NDRRMA rescue API",
+  rows:[["Total personnel mobilised (NDRRMA live count)","18,708"],["Nepali Army","8,370"],["Nepal Police","6,135"],["Armed Police Force","4,203"],["People brought to safety","7,514"],["Communication towers restored","145/198"]],
+  note:{en:"{n} security personnel are mobilised for search, rescue, medical treatment and relief distribution across the affected districts. The headline and the tower-restoration count are read live from the NDRRMA rescue API; the service-wise split is from NDRRMA's 31 August bulletin. Deployment grew from about 4,348 on 28 August to over 14,800 the next day as the operation widened downstream.",ne:"प्रभावित जिल्लामा खोज, उद्धार, उपचार र राहत वितरणका लागि {n} सुरक्षाकर्मी परिचालित। मुख्य संख्या र टावर पुनर्स्थापनाको विवरण NDRRMA उद्धार API बाट प्रत्यक्ष पढिन्छ; सेवागत विभाजन NDRRMA को ३० भदौको विज्ञप्तिबाट। तल्लो तटसम्म खोजी फैलिँदै जाँदा २८ भदौको करिब ४,३४८ बाट भोलिपल्टै १४,८०० नाघ्यो।"}},
+ {id:"tunnel", sev:"danger", big:"934", title:{en:"Hydropower Tunnel Rescue",ne:"जलविद्युत् सुरुङ उद्धार"}, unit:{en:"workers missing across 11 projects",ne:"११ आयोजनाका बेपत्ता कामदार"}, src:"IPPAN / NDRRMA / Reuters",
+  rows:[["Hydropower workers missing (11 projects)","934"],["Believed still alive in tunnels","100+"],["Trapped at Upper Trishuli-1","35"],["Brought out of Trishuli 3A so far","~350"],["Airlifted from tunnels in the first two days","279"],["Hydropower facilities damaged or destroyed","27"]],
+  note:{en:"The Independent Power Producers' Association Nepal (IPPAN) says {n} people working on 11 hydropower projects went missing. The rescue is now in its critical phase: after days of drilling, teams have reached the upper section of the Trishuli 3A tunnel and are preparing to send crews in with oxygen, while at least 35 remain trapped at Upper Trishuli-1. Specialist tunnel-rescue teams and equipment have come from India and China, with Australian underground-rescue engineer Arnold Dix advising.",ne:"स्वतन्त्र ऊर्जा उत्पादकहरूको संस्था नेपाल (IPPAN) का अनुसार ११ जलविद्युत् आयोजनामा काम गर्ने {n} जना बेपत्ता भए। उद्धार अहिले निर्णायक चरणमा छ: कैयौं दिनको ड्रिलिङपछि टोली त्रिशूली ३ए सुरुङको माथिल्लो भागसम्म पुगेको छ र अक्सिजनसहित भित्र पठाउने तयारीमा छ; माथिल्लो त्रिशूली-१ मा कम्तीमा ३५ जना अझै फसेका छन्। भारत र चीनबाट सुरुङ उद्धारका विशेषज्ञ टोली र उपकरण आएका छन्, अस्ट्रेलियाली इन्जिनियर अर्नोल्ड डिक्सको सल्लाह छ।"}},
+ {id:"damage", sev:"watch", big:"200", title:{en:"Damage and Infrastructure",ne:"क्षति र पूर्वाधार"}, unit:{en:"Rs billion — preliminary government estimate",ne:"रु. अर्ब — सरकारको प्रारम्भिक अनुमान"}, src:"Govt. of Nepal / Dept. of Roads / NEA / IFRC",
+  rows:[["Preliminary damage estimate (Rs billion)","200"],["Roads and bridges (Rs billion)","15"],["Bridges damaged","41"],["Road damaged (km)","42"],["Generation knocked off the grid (MW)","431"],["Under-construction capacity damaged (MW)","470"],["Schools damaged or destroyed","38"],["People affected (IFRC estimate)","93,000"],["Children needing urgent assistance (UNICEF)","17,000"]],
+  note:{en:"The government's preliminary estimate puts total damage near Rs {n} billion, with reconstruction possibly reaching USD 5 billion. Roads Department director Bijaya Jaishi puts road and bridge damage alone at Rs 15 billion across 41 bridges and 42 km of road. The Nepal Electricity Authority reports six major generation and transmission facilities hit — Rasuwagadhi, Chilime, Trishuli 3A, the Trishuli 3B 220 kV substation, Trishuli and Devighat — taking about 431 MW off the grid. The Rasuwagadhi customs office was destroyed with more than 300 vehicles queuing there swept away.",ne:"सरकारको प्रारम्भिक अनुमानअनुसार कुल क्षति करिब रु. {n} अर्ब; पुनर्निर्माण खर्च ५ अर्ब अमेरिकी डलरसम्म पुग्न सक्ने। सडक विभागका निर्देशक विजय जैशीका अनुसार ४१ पुल र ४२ कि.मि. सडकमा मात्रै रु. १५ अर्बको क्षति। नेपाल विद्युत् प्राधिकरणका अनुसार रसुवागढी, चिलिमे, त्रिशूली ३ए, त्रिशूली ३बी को २२० केभी सबस्टेसन, त्रिशूली र देवीघाट गरी छ प्रमुख संरचना क्षतिग्रस्त — करिब ४३१ मेगावाट ग्रिडबाट हट्यो। रसुवागढी भन्सार कार्यालय ध्वस्त भयो र त्यहाँ लाइनमा रहेका ३०० भन्दा बढी सवारी बगे।"}},
+ {id:"materials", sev:"relief", big:"", title:{en:"Relief Materials & International Aid",ne:"राहत सामग्री र अन्तर्राष्ट्रिय सहायता"}, src:"AP / BBC / Reuters / IFRC",
+  rows:[["PM Disaster Relief Fund (Rs billion)","5.44"],["Released to 15 local units (Rs million)","675"],["China — emergency supplies","50 tonnes / 13,200 items"],["India — supplies","~50 tonnes"],["IFRC emergency appeal","CHF 25 million"],["Asian Development Bank","USD 5 million"],["European Union","EUR 2 million"],["Welthungerhilfe","EUR 2 million"],["UN CERF","USD 2 million"],["South Korea","USD 1 million"],["Red Cross / IFRC DREF","CHF 1 million"],["World Health Organization","USD 150,000"]],
+  note:{en:"Nepal initially declined foreign search-and-rescue teams, citing coordination problems after the 2015 earthquake, but has since admitted specialists from India, China, Australia and South Korea for tunnel rescue, DNA testing and forensics, and requested heavy-lift cargo drones for isolated mountain settlements. The World Bank has indicated up to Rs 25 billion could be mobilised as emergency assistance.",ne:"२०१५ को भूकम्पपछिको समन्वय समस्या देखाउँदै नेपालले सुरुमा विदेशी खोज–उद्धार टोली अस्वीकार गरे पनि पछि सुरुङ उद्धार, डीएनए परीक्षण र फोरेन्सिकका लागि भारत, चीन, अस्ट्रेलिया र दक्षिण कोरियाका विशेषज्ञलाई भित्र्यायो, र दुर्गम पहाडी बस्तीका लागि भारवाहक कार्गो ड्रोन माग गर्‍यो। विश्व बैंकले आपत्कालीन सहायताका रूपमा रु. २५ अर्बसम्म परिचालन गर्न सकिने संकेत गरेको छ।"}},
+ {id:"heli", sev:"relief", big:"", title:{en:"Helicopter and Ground Operations",ne:"हेलिकप्टर र स्थलगत उद्धार"}, unit:{en:"Timure · Dhunche · Mailung · Syafrubesi · Trishuli",ne:"तिमुरे · धुन्चे · माइलुङ · स्याफ्रुबेसी · त्रिशूली"}, src:"Nepal Army / NDRRMA",
+  note:{en:"Army helicopters have flown dozens of sorties airlifting people out of cut-off riverside settlements, with private operators on standby; 227 foreign nationals and 279 tunnel workers were among those flown to safety. Ground rescue is coordinated with local administrative units, and the Roads Department is installing bailey bridges to replace collapsed crossings. Sortie and passenger totals are published by the Nepal Army.",ne:"सेनाका हेलिकप्टरले सम्पर्क कटेका किनारका बस्तीबाट दर्जनौं उडान गरी मानिस निकाले; निजी अपरेटर तयारी अवस्थामा। सुरक्षित पुर्‍याइएकामध्ये २२७ विदेशी नागरिक र २७९ सुरुङ कामदार। स्थलगत उद्धार स्थानीय निकायसँग समन्वयमा; भत्किएका पुलको ठाउँमा सडक विभागले बेइली पुल राख्दै। उडान र यात्रु विवरण नेपाली सेनाले प्रकाशित गर्छ।"}}
 ];
 function renderStatsPage(){
   const root=$("#statsRoot"); if(!root) return;
   root.innerHTML=`
-    <p class="verify" style="margin-bottom:18px">${esc(t("stats.disclaimer"))}<br>
+    <p class="verify" style="margin-bottom:18px">${esc(applyTokens(t("stats.disclaimer")))}<br>
       <span style="display:inline-flex;gap:14px;flex-wrap:wrap;margin-top:4px">
         <a href="https://bipadportal.gov.np" target="_blank" rel="noopener" style="color:var(--crimson);font-weight:600">${esc(t("stats.official"))}</a>
         <a href="https://www.facebook.com/NDRRMA" target="_blank" rel="noopener" style="color:var(--crimson);font-weight:600">${esc(t("stats.fb"))}</a>
@@ -1725,6 +1869,71 @@ function renderStatsPage(){
         <div class="sd__src">${esc(t("stats.src"))} · ${esc(s.src)}</div>
       </section>`).join("")}</div>`;
   if(location.hash){ const el=document.getElementById(location.hash.slice(1)); if(el) setTimeout(()=>el.scrollIntoView({behavior:"smooth",block:"start"}),120); }
+}
+
+/* =========================================================================
+   OFFICIAL MISSING-PERSONS REGISTRY (NDRRMA, live)
+   The Missing Persons page used to carry only community-submitted reports held
+   in this browser's localStorage — useful, but not the list families actually
+   need. NDRRMA publishes a named missing-persons registry through the same
+   CORS-open API that already powers the Rescued page, so it is mirrored here
+   read-only, refreshed on every 10-minute sync. Data comes from
+   _srcMissingRegistry() into OFFICIAL_MISSING.
+   ========================================================================= */
+const OM_STATE={q:"",show:24};
+function omName(p){
+  const en=(p.name||"").trim(), ne=(p.name_ne||"").trim();
+  return LANG==="ne" ? (ne||en||"—") : (en||ne||"—");
+}
+function omStatus(p){ return (LANG==="ne" && p.status_ne) ? p.status_ne : (p.status||""); }
+function omFiltered(){
+  const list=(OFFICIAL_MISSING&&OFFICIAL_MISSING.persons)||[];
+  const q=OM_STATE.q.trim().toLowerCase();
+  if(!q) return list;
+  return list.filter(p=>(omName(p)+" "+(p.country||"")+" "+(p.nationality||"")+" "+(p.remarks||"")).toLowerCase().includes(q));
+}
+function renderOfficialMissing(){
+  const root=$("#officialMissing"); if(!root) return;
+  if(!OFFICIAL_MISSING){
+    root.innerHTML = OFFICIAL_MISSING_ERR
+      ? `<div class="omwrap"><p class="omloading">${esc(t("om.failed"))} <button class="btn btn--ghost btn--sm" id="omRetry">${esc(t("om.retry"))}</button></p></div>`
+      : `<div class="omwrap"><p class="omloading">${esc(t("om.loading"))}</p></div>`;
+    const rt=$("#omRetry");
+    if(rt) rt.addEventListener("click",()=>{ OFFICIAL_MISSING_ERR=false; renderOfficialMissing(); loadOfficialMissing(1); });
+    return;
+  }
+  const all=omFiltered();
+  const shown=all.slice(0,OM_STATE.show);
+  const rows=shown.map(p=>`
+    <li class="omrow">
+      <span class="omrow__n">${esc(omName(p))}</span>
+      <span class="omrow__m">
+        ${p.age?`<span>${esc(String(p.age))}</span>`:""}
+        ${p.gender?`<span>${esc(capWord(p.gender))}</span>`:""}
+        ${p.nationality?`<span>${esc(capWord(p.country||p.nationality))}</span>`:""}
+      </span>
+      ${p.remarks?`<span class="omrow__r">${esc(p.remarks)}</span>`:""}
+      ${omStatus(p)?`<span class="omrow__s">${esc(omStatus(p))}</span>`:""}
+    </li>`).join("");
+  root.innerHTML=`
+    <section class="omwrap">
+      <div class="sec-head">
+        <div><span class="eyebrow">${esc(t("om.eye"))}</span><h2>${esc(t("om.h"))}</h2></div>
+        <a class="more" href="https://ndrrma.gov.np/np/missing" target="_blank" rel="noopener">${esc(t("om.open"))}</a>
+      </div>
+      <p class="omintro">${esc(t("om.p"))}</p>
+      <div class="ombar">
+        <span class="ombar__n mono">${esc(toNepDigits(_fmtInt(OFFICIAL_MISSING.count)))}</span>
+        <span class="ombar__l">${esc(t("om.count"))}</span>
+        <span class="ombar__search"><input id="omSearch" type="search" value="${esc(OM_STATE.q)}" placeholder="${esc(t("om.search"))}" aria-label="${esc(t("om.search"))}"></span>
+      </div>
+      ${all.length?`<ul class="omlist">${rows}</ul>`:`<p class="omloading">${esc(t("om.none"))}</p>`}
+      ${all.length>shown.length?`<button class="btn btn--ghost btn--sm ommore" id="omMore">${esc(t("om.more"))} (${all.length-shown.length})</button>`:""}
+    </section>`;
+  const inp=$("#omSearch");
+  if(inp) inp.addEventListener("input",e=>{ OM_STATE.q=e.target.value; OM_STATE.show=24; renderOfficialMissing(); const f=$("#omSearch"); if(f){f.focus(); f.setSelectionRange(f.value.length,f.value.length);} });
+  const more=$("#omMore");
+  if(more) more.addEventListener("click",()=>{ OM_STATE.show+=48; renderOfficialMissing(); });
 }
 
 /* Missing-persons summary — country-wise, distinct compact bar style */
@@ -1765,7 +1974,7 @@ Object.assign(I18N.en,{
   "nav.rescue":"Rescued",
   "page.rescue.h":"Rescued Persons","page.rescue.eye":"Official Registry · NDRRMA",
   "page.rescue.p":"Register of people rescued in the 2026 floods, mirrored from the NDRRMA National Disaster Portal. Names and details are published by NDRRMA for family tracing — the official portal remains authoritative. Verify before acting.",
-  "rescue.total":"Named in registry","rescue.grandtotal":"rescued in total (NDRRMA) — of which the following are individually named","rescue.nepali":"Nepali (named)","rescue.foreign":"Foreign (named)",
+  "rescue.total":"Named in the public registry","rescue.grandtotal":"Total rescued (NDRRMA live)","rescue.nepali":"Nepali (named)","rescue.foreign":"Foreign (named)",
   "rescue.all":"All","rescue.name":"Name","rescue.age":"Age","rescue.loc":"Rescued at","rescue.date":"Date","rescue.status":"Status",
   "rescue.status.all":"All statuses","rescue.status.care":"Under medical care","rescue.status.safe":"Safe","rescue.status.injured":"Injured",
   "rescue.search":"Search name or location…","rescue.none":"No rescued persons match your search.",
@@ -1777,7 +1986,7 @@ Object.assign(I18N.ne,{
   "nav.rescue":"उद्धार",
   "page.rescue.h":"उद्धार गरिएका व्यक्ति","page.rescue.eye":"आधिकारिक अभिलेख · NDRRMA",
   "page.rescue.p":"२०२६ को बाढीमा उद्धार गरिएका व्यक्तिहरूको अभिलेख, NDRRMA राष्ट्रिय विपद् पोर्टलबाट। नाम र विवरण परिवार खोजीका लागि NDRRMA द्वारा प्रकाशित — आधिकारिक पोर्टल नै प्रामाणिक। कार्य गर्नुअघि रुजु गर्नुहोस्।",
-  "rescue.total":"नामावलीमा दर्ता","rescue.grandtotal":"कुल उद्धार (NDRRMA) — जसमध्ये तलका व्यक्तिको नाम उल्लेख छ","rescue.nepali":"नेपाली (नामावली)","rescue.foreign":"विदेशी (नामावली)",
+  "rescue.total":"सार्वजनिक नामावलीमा दर्ता","rescue.grandtotal":"कुल उद्धार (NDRRMA प्रत्यक्ष)","rescue.nepali":"नेपाली (नामावली)","rescue.foreign":"विदेशी (नामावली)",
   "rescue.all":"सबै","rescue.name":"नाम","rescue.age":"उमेर","rescue.loc":"उद्धार स्थान","rescue.date":"मिति","rescue.status":"अवस्था",
   "rescue.status.all":"सबै अवस्था","rescue.status.care":"उपचाररत","rescue.status.safe":"सुरक्षित","rescue.status.injured":"घाइते",
   "rescue.search":"नाम वा स्थान खोज्नुहोस्…","rescue.none":"तपाईंको खोजीसँग मिल्ने उद्धारित व्यक्ति फेला परेन।",
@@ -1792,8 +2001,13 @@ const RESCUE_STATE={q:"",nat:"all",status:"all",page:1,perPage:20};
    Devanagari field (Latin name empty), so in English we must fall back to the
    Devanagari value instead of printing "—" — otherwise most of the list shows
    dashes. Prefer the current language, fall back to the other, then "—". */
+const _JUNK_NAME=/^(male|female|other|m|f|n\/a|na|unknown|-+)$/i;
+function _cleanName(v){
+  const x=String(v==null?"":v).trim().replace(/^(male|female)\s*[:：]\s*/i,"");
+  return _JUNK_NAME.test(x) ? "" : x;
+}
 function rescueName(p){
-  const en=(p.name||"").trim(), ne=(p.name_ne||"").trim();
+  const en=_cleanName(p.name), ne=_cleanName(p.name_ne);
   return LANG==="ne" ? (ne||en||"—") : (en||ne||"—");
 }
 function rescueLoc(p){
@@ -1828,7 +2042,7 @@ async function loadRescue(){
         // hero = grand total; stats-page detail = named-registry breakdown
         if(typeof _setStat==="function"){
           let dirty=false;
-          if(RESCUE.grandTotal && _setStat("rescued", String(RESCUE.grandTotal))) dirty=true;
+          if(RESCUE.grandTotal && _setStat("rescued", String(RESCUE.grandTotal), "ndrrma")) dirty=true;
           if(typeof _setRescueRegistry==="function" && _setRescueRegistry(RESCUE.grandTotal, RESCUE.total, RESCUE.nepali, RESCUE.foreign)) dirty=true;
           if(dirty){ try{renderStats();renderStatsPage();}catch(e){} }
         }
@@ -1940,7 +2154,9 @@ async function renderRescuePage(){
   const data=await loadRescue();
   if(!data||!data.persons){ root.innerHTML=`<p class="verify">${esc(t("gallery.none"))} <a href="https://ndrrma.gov.np/np/rescue" target="_blank" rel="noopener" style="color:var(--crimson)">NDRRMA ↗</a></p>`; return; }
   const total=data.total||data.persons.length, nep=data.nepali||0, forg=data.foreign||0;
-  const grand=data.grandTotal||null;
+  const grand = data.grandTotal
+    || (typeof STATS!=="undefined" && _int((STATS.find(x=>x.key==="rescued")||{}).n))
+    || null;
   const when=(data.fetched_at||"").slice(0,10);
   const chips=(data.status_counts||[]).filter(s=>s.count>0).map(s=>{
     const lbl=LANG==="ne"&&s.title_ne?s.title_ne:s.title;
@@ -1948,8 +2164,8 @@ async function renderRescuePage(){
   }).join("");
   root.innerHTML=`
     <div class="rescue">
-      ${grand?`<p class="rescue__grand mono" style="margin:0 0 10px;font-size:.92rem;color:var(--muted,#667)"><b style="font-size:1.15rem;color:var(--ok,#177a4c)">${esc(toNepDigits(grand))}</b> ${esc(t("rescue.grandtotal"))}</p>`:""}
       <div class="rescue__kpis">
+        ${grand?`<div class="rescue__kpi rescue__kpi--grand"><div class="k mono">${esc(toNepDigits(_fmtInt(grand)))}</div><div class="l">${esc(t("rescue.grandtotal"))}</div></div>`:""}
         <div class="rescue__kpi rescue__kpi--total"><div class="k mono">${esc(toNepDigits(total))}</div><div class="l">${esc(t("rescue.total"))}</div></div>
         <div class="rescue__kpi"><div class="k mono">${esc(toNepDigits(nep))}</div><div class="l">${esc(t("rescue.nepali"))}</div></div>
         <div class="rescue__kpi"><div class="k mono">${esc(toNepDigits(forg))}</div><div class="l">${esc(t("rescue.foreign"))}</div></div>
@@ -2000,18 +2216,22 @@ async function renderRescuePage(){
 Object.assign(I18N.en,{
   "rfund.eye":"PM Disaster Relief Fund","rfund.h":"Collected So Far",
   "rfund.total":"Total in Fund","rfund.donations":"Public Donations","rfund.govt":"Govt Release",
-  "rfund.top":"Top Contributors","rfund.updated":"Updated",
-  "rfund.note":"Provisional totals handed to the Finance Minister for the PM Disaster Relief Fund, plus the Government's own release; figures are rising. Source: OnlineKhabar / OPMCM — verify before relying on any amount."
+  "rfund.top":"Named Contributors (early published list)","rfund.updated":"Updated",
+  "rfund.note":"The fund's published balance passed Rs 5 billion — it includes the Government's own Rs 1 billion release, so the two bars always add back to the real total. The contributors listed below are only the donors named in the first days of the appeal; they account for a small share of the total, and thousands of individual donations are not itemised publicly. The balance rises daily and syncs automatically. Source: Radio Nepal / OnlineKhabar / OPMCM — verify before relying on any amount."
 });
 Object.assign(I18N.ne,{
   "rfund.eye":"प्रधानमन्त्री विपद् राहत कोष","rfund.h":"अहिलेसम्म संकलन",
   "rfund.total":"कोषमा कुल","rfund.donations":"सार्वजनिक दान","rfund.govt":"सरकारी निकासा",
-  "rfund.top":"प्रमुख दाता","rfund.updated":"अद्यावधिक",
-  "rfund.note":"प्रधानमन्त्री विपद् राहत कोषका लागि अर्थमन्त्रीलाई हस्तान्तरित प्रारम्भिक रकम र सरकारी निकासा; रकम बढ्दै। स्रोत: अनलाइनखबर / OPMCM — भर पर्नुअघि रुजु गर्नुहोस्।"
+  "rfund.top":"नाम सार्वजनिक भएका दाता (सुरुको सूची)","rfund.updated":"अद्यावधिक",
+  "rfund.note":"कोषको सार्वजनिक रकम रु. ५ अर्ब नाघ्यो — यसमा सरकारकै रु. १ अर्बको निकासा समावेश छ, त्यसैले दुवै पट्टी जोड्दा वास्तविक कुल रकम नै आउँछ। तल उल्लेखित दाता अपिलका सुरुका दिनमा नाम सार्वजनिक भएका मात्र हुन्; कुल रकमको सानो अंश ओगट्छन् र हजारौं व्यक्तिगत दान छुट्टै सार्वजनिक गरिएको छैन। रकम दैनिक बढ्छ र स्वतः अद्यावधिक हुन्छ। स्रोत: रेडियो नेपाल / अनलाइनखबर / OPMCM — कुनै रकममा भर पर्नुअघि रुजु गर्नुहोस्।"
 });
 const RELIEF_COLLECTED = {
-  updated:"28 Aug 2026",
-  donations:385.5,   // million NPR — cumulative public donations to the PM Disaster Relief Fund (by 28 Aug; top donors listed below)
+  updated:"30 Aug 2026",
+  /* The fund's published balance passed Rs 5.02bn on 30 Aug (Radio Nepal) and
+     Rs 5.44bn on the government's latest count. That balance INCLUDES the
+     Rs 1bn government release, so `donations` holds the public/corporate share
+     (balance − govt) and the two always add back up to the real total. */
+  donations:4440,    // million NPR — public & corporate donations to the PM Disaster Relief Fund
   govt:1000,         // million NPR — Government release to the fund
   donors:[
     {name:{en:"Gorkha Brewery",ne:"गोर्खा ब्रुअरी"}, amt:100},
@@ -2072,7 +2292,23 @@ function renderReliefCollected(){
 }
 
 /* ---------- live sync stamp + 10-min refresh from CORS-open live source ---------- */
-/* ================= Multi-Tier Real-Time Auto Fetching Engine ================= */
+/* ================= Multi-Tier Real-Time Auto Fetching Engine =================
+   Every figure on the site is refreshed from live sources. Because several
+   sources report the same number with different lag and different scope, each
+   source carries a RANK and the best-ranked source that answered in the current
+   cycle wins:
+
+     rank 1  NDRRMA rescue API   — machine-readable, official, always current
+     rank 2  assets/live_data.json — curated official baseline (NDRRMA bulletins)
+     rank 3  Wikipedia article prose — community-maintained, lags by a day or two
+
+   A worse-ranked source can never overwrite a better-ranked one in the same
+   cycle. That is what previously broke: Wikipedia (which still said 788 dead /
+   2,502 missing) would pull the toll back down under NDRRMA's own 903 / 4,247,
+   and a hard "never decrease" lock on 'rescued' left it frozen at a stale 8,186
+   even after NDRRMA's live count corrected downward. Ranking fixes both without
+   letting a bad parse through: implausible jumps are still rejected.
+   ============================================================================= */
 let _lastSync=null;
 function setSync(d){
   if(d)_lastSync=d;
@@ -2085,97 +2321,112 @@ function _num(x){ return x ? (""+x).replace(/[,\s+]/g,"") : null; }
 function _int(x){ const n=parseInt(String(x==null?"":x).replace(/[^0-9]/g,""),10); return isNaN(n)?0:n; }
 function _fmtInt(x){ return String(_int(x)).replace(/\B(?=(\d{3})+(?!\d))/g,","); }
 
-/* cumulative tolls must never move backwards when a lagging source reports lower */
-/* Only deaths and rescued physically monotonically rise. MISSING can fall (as
-   people are found dead or rescued) — locking it caused a stuck count. FOREIGN
-   and INJURED are revised in both directions too, so they follow the live feed. */
-const CUMULATIVE = new Set(["deaths","rescued"]);
+const SRC_RANK={ ndrrma:1, feed:2, wiki:3, feed_stale:4 };
+let _cycleSrc={};                    // key -> rank that already claimed it this cycle
+function _beginCycle(){ _cycleSrc={}; }
+
+/* The curated feed is only authoritative while somebody is keeping it current.
+   If assets/live_data.json has not been touched for FEED_FRESH_MS it drops
+   BELOW Wikipedia, so the site keeps advancing on its own instead of freezing
+   on a hand-typed baseline. This is the difference between "auto-updating" and
+   "auto-updating until the maintainer stops editing a JSON file". */
+const FEED_FRESH_MS = 36*3600*1000;
+function _feedRank(updatedAt){
+  const t=Date.parse(updatedAt||"");
+  if(isNaN(t)) return "feed";
+  return (Date.now()-t) < FEED_FRESH_MS ? "feed" : "feed_stale";
+}
+
+/* Deaths only ever rise in reality, so ANY source may push the toll up, and no
+   source may pull it back down — that is always a lagging report, never a
+   correction. (To revise it downward, edit both the STATS baseline in this file
+   and assets/live_data.json.) */
+const RISING_ONLY=new Set(["deaths"]);
 function _currentStat(key){
   const s=STATS.find(x=>x.key===key);
   if(s) return _int(s.n);
   const d=STATS_DETAIL.find(x=>x.id===key);
   return d?_int(d.big):0;
 }
-/* accept an incoming figure only if it is plausible and (for tolls) not a downgrade.
-   This is what lets a fast local feed stay correct even when Wikipedia lags. */
-function _acceptStat(key,val){
+function _acceptStat(key,val,src){
   const v=_int(val); if(v<=0) return false;
   const c=_currentStat(key);
-  if(CUMULATIVE.has(key)){
-    if(v<c) return false;              // a slow source can't lower a rising toll
-    if(c>0 && v>c*6) return false;     // reject an implausible spike (bad parse)
-  }
+  if(c>0 && v>c*8) return false;                       // implausible spike → bad parse
+  if(RISING_ONLY.has(key)) return v>=c;                // rank is irrelevant: up only
+  const rank=SRC_RANK[src]||9;
+  const claimed=_cycleSrc[key];
+  if(claimed!=null && rank>claimed) return false;      // a better source already answered
   return true;
 }
 
-function _setStat(key,val){
-  if(!_acceptStat(key,val)) return false;
+function _setStat(key,val,src){
+  src=src||"feed";
+  if(!_acceptStat(key,val,src)) return false;
+  _cycleSrc[key]=SRC_RANK[src]||9;
   const disp=_fmtInt(val);
   let changed=false;
   const s=STATS.find(x=>x.key===key);
   if(s && s.n!==disp){ s.n=disp; changed=true; }
-  // "rescued" is special: the HERO shows the TOTAL rescued, but its
-  // stats-page detail is the NAMED REGISTRY (2,189) — a different, smaller
-  // number kept in step separately via _setRescueRegistry(). So don't mirror the
-  // hero total into that detail's headline here.
+  // "rescued" is special: the HERO shows the TOTAL rescued, but its stats-page
+  // detail rows are the NAMED REGISTRY — a different, smaller number kept in
+  // step separately via _setRescueRegistry(). Don't mirror the total into them.
   if(key!=="rescued"){
     const d=STATS_DETAIL.find(x=>x.id===key);
     if(d && d.big!==undefined && d.big!=="" && d.big!==disp){ d.big=disp; changed=true; }
-    // deaths/missing/injured carry ONE row that IS the same total — keep it in
-    // step with the headline so the whole card (not just the big number) updates.
-    if(d && d.rows && (key==="deaths"||key==="missing"||key==="injured") && d.rows[0] && d.rows[0][1]!==disp){ d.rows[0][1]=disp; changed=true; }
+    // deaths/missing/injured/security carry ONE row that IS the same total —
+    // keep it in step so the whole card updates, not just the big number.
+    if(d && d.rows && (key==="deaths"||key==="missing"||key==="injured"||key==="security") && d.rows[0] && d.rows[0][1]!==disp){ d.rows[0][1]=disp; changed=true; }
   }
   return changed;
 }
-/* Keep the "Rescued — Named Registry" detail card in step with NDRRMA's
-   status-counts (named list) + rescued-statistics (grand total). The named
-   registry can move in both directions, so no cumulative guard here. */
+/* Keep the "Rescued — Named Registry" rows in step with NDRRMA's status-counts
+   (named list) + rescued-statistics (grand total). The named registry moves in
+   both directions, so no rising-only guard here. */
 function _setRescueRegistry(grandTotal, named, nepali, foreign){
   const d=STATS_DETAIL.find(x=>x.id==="rescued"); if(!d||!d.rows) return false;
   let ch=false;
-  const putBig=v=>{ if(v!=null && _int(v)>0){ const s=_fmtInt(v); if(d.big!==s){ d.big=s; ch=true; } } };
   const putRow=(i,v)=>{ if(v!=null && _int(v)>0 && d.rows[i]){ const s=_fmtInt(v); if(d.rows[i][1]!==s){ d.rows[i][1]=s; ch=true; } } };
-  putBig(grandTotal||named);           // headline = TOTAL rescued (falls back to named if the total feed is down)
+  const big=grandTotal||named;
+  if(big!=null && _int(big)>0){ const s=_fmtInt(big); if(d.big!==s){ d.big=s; ch=true; } }
   putRow(0,grandTotal); putRow(1,named); putRow(2,nepali); putRow(3,foreign);
   return ch;
 }
-
-function _updateForeignRow(countryName, countStr){
-  const fseg=STATS_DETAIL.find(s=>s.id==="foreign");
-  if(!fseg||!fseg.rows) return false;
-  const row=fseg.rows.find(r=>r[0].toLowerCase().includes(countryName.toLowerCase()));
-  if(row && row[1]!==countStr){
-    row[1]=countStr;
-    return true;
-  }
+/* Write a named row inside any stats-detail card (matched on its label). */
+function _setDetailRow(id, labelFragment, value){
+  const seg=STATS_DETAIL.find(s=>s.id===id);
+  if(!seg||!seg.rows||value==null||value==="") return false;
+  const row=seg.rows.find(r=>String(r[0]).toLowerCase().includes(String(labelFragment).toLowerCase()));
+  if(row && row[1]!==String(value)){ row[1]=String(value); return true; }
   return false;
+}
+function _updateForeignRow(countryName, countStr){
+  return _setDetailRow("foreign", countryName, countStr);
 }
 
 /* ---- individual live sources, each returns true if it changed anything ----
-   All three run CONCURRENTLY (Promise.allSettled) so one slow endpoint never
-   blocks the others — this is the main fix for "fetching/updating is too slow". */
+   All run CONCURRENTLY (Promise.allSettled) so one slow endpoint never blocks
+   the others. */
 
-// Tier 1 — local, same-origin feed (instant, no CORS, authoritative baseline).
+// Tier 1 — local, same-origin feed (instant, no CORS, curated official baseline).
 async function _srcLocalFeed(){
   let changed=false, j=null;
   try{
     const resp = await fetch("assets/live_data.json?_="+Date.now(), { cache:"no-store", signal: AbortSignal.timeout(4000) });
     if(!resp.ok) throw new Error("fetch failed");
     j = await resp.json();
-    // Cache good data for offline fallback
     if(window.__cacheGoodData) window.__cacheGoodData(j);
   }catch(err){
-    // Network failed — restore from cache (offline resilience)
     if(window.__restoreFromCache){
       j = window.__restoreFromCache();
       if(!j) return false;
     } else { return false; }
   }
-  if(Array.isArray(j.stats)) j.stats.forEach(st=>{ if(_setStat(st.key,_num(st.n))) changed=true; });
+  const FR=_feedRank(j.updated_at);
+  if(Array.isArray(j.stats)) j.stats.forEach(st=>{ if(_setStat(st.key,_num(st.n),FR)) changed=true; });
   if(j.stats_detail){
     Object.keys(j.stats_detail).forEach(k=>{
       const item=j.stats_detail[k];
-      if(item.big && _setStat(k,_num(item.big))) changed=true;
+      if(item.big && _setStat(k,_num(item.big),FR)) changed=true;
       if(Array.isArray(item.rows)){
         const seg=STATS_DETAIL.find(s=>s.id===k);
         if(seg && seg.rows) item.rows.forEach(nr=>{
@@ -2192,21 +2443,14 @@ async function _srcLocalFeed(){
   return changed;
 }
 
-// Tier 2 — Wikipedia INFOBOX: intentionally DISABLED. The infobox reports the
-// Nepal+Tibet(China) COMBINED toll (e.g. 623 deaths / 2,980 missing), which is
-// exactly what previously inflated this Nepal-only site (623 shown vs 626 real).
-// We parse the Nepal-specific figures from the prose instead (Tier 3).
-async function _srcInfobox(){
-  return false;
-}
-
-// Tier 3 — Wikipedia FULL article text (explaintext), parsed for the Nepal-only
-// casualty sentence, e.g. "At least 675 deaths and 2,426 missing were confirmed
-// in Nepal with an additional 7 dead and 554 missing in the Tibet Autonomous
-// Region." Matching that exact "…confirmed in Nepal" phrasing guarantees we get
-// the Nepal-side figure, never the Tibet one — and it auto-updates as editors
-// revise the article. The REST summary (lead paragraph) is NOT used: it doesn't
-// carry these numbers. Deaths only rise (cumulative); missing can move both ways.
+// Tier 2 — Wikipedia FULL article text (explaintext), parsed for the Nepal-only
+// casualty sentence, e.g. "At least 903 deaths and 4,247 missing were confirmed
+// in Nepal with an additional 16 dead and 546 missing in the Tibet Autonomous
+// Region." Matching that exact "…confirmed in Nepal" phrasing guarantees the
+// Nepal-side figure, never the Tibet one. The INFOBOX is deliberately not used —
+// it reports Nepal+Tibet COMBINED, which is what once inflated this Nepal-only
+// site. Wikipedia is rank 3: it fills gaps and catches up when it is AHEAD of
+// our curated feed, but it can never pull an official figure backwards.
 async function _srcSummary(){
   let txt="";
   try{
@@ -2218,67 +2462,102 @@ async function _srcSummary(){
   let changed=false;
   const dm=txt.match(/([\d,]{2,7})\s+deaths?\s+and\s+([\d,]{2,7})\s+(?:people\s+)?(?:were\s+)?missing\s+(?:were\s+)?confirmed\s+in\s+Nepal/i);
   if(dm){
-    if(_setStat("deaths",_num(dm[1]))) changed=true;
-    if(_setStat("missing",_num(dm[2]))) changed=true;
+    if(_setStat("deaths",_num(dm[1]),"wiki")) changed=true;
+    if(_setStat("missing",_num(dm[2]),"wiki")) changed=true;
   }
-  // INJURED is deliberately NOT parsed from Wikipedia. The article's injury
-  // figure mixes scopes (Nepal + Tibet, and counts that include people already
-  // discharged elsewhere), which is the same problem that made us drop the
-  // infobox above — it was overriding NDRRMA's Nepal-only figure (242 on
-  // 30 Aug) with a much larger combined number. Injured comes from NDRRMA via
-  // assets/live_data.json instead.
-  // Foreign nationals among the missing, e.g. "At least 668 tourists from 34
-  // countries are among the missing." Previously this figure had NO live source
-  // and stayed frozen at its baseline — this is what made "foreign" look stuck.
-  const fgn=txt.match(/([\d,]{2,7})\s+(?:foreign\s+)?tourists?\s+from\s+\d+\s+countries?\s+(?:are|were)\s+among\s+the\s+missing/i);
-  if(fgn && _setStat("foreign",_num(fgn[1]))) changed=true;
-  // Relief fund total — auto-updates the money figure as editors revise the
-  // article, e.g. "…Relief Fund was launched … raising over रू 385,500,000 by
-  // 28 August." (Note: the currency mark is रू, not ₹.) The fund only rises.
+  // The NDRRMA-attributed, explicitly Nepal-scoped casualty sentence, e.g.
+  // "…at least 903 people died, 1,473 were injured and 4,247 were missing in
+  // Nepal." Only this phrasing is trusted for INJURED — the infobox and the
+  // free-standing injury figures elsewhere in the article mix Nepal and Tibet.
+  const nd=txt.match(/([\d,]{2,7})\s+people\s+died,\s*([\d,]{2,7})\s+were\s+injured\s+and\s+([\d,]{2,7})\s+were\s+missing\s+in\s+Nepal/i);
+  if(nd){
+    if(_setStat("deaths",_num(nd[1]),"wiki")) changed=true;
+    if(_setStat("injured",_num(nd[2]),"wiki")) changed=true;
+    if(_setStat("missing",_num(nd[3]),"wiki")) changed=true;
+  }
+  // Foreign nationals among the missing, e.g. "As of 29 August 2026, 589 foreign
+  // nationals are among the missing." / "At least 668 tourists from 34 countries…"
+  const fgn=txt.match(/([\d,]{2,7})\s+foreign\s+nationals?\s+(?:are|were)\s+among\s+the\s+missing/i)
+         || txt.match(/([\d,]{2,7})\s+(?:foreign\s+)?tourists?\s+from\s+\d+\s+countries?\s+(?:are|were)\s+among\s+the\s+missing/i);
+  if(fgn && _setStat("foreign",_num(fgn[1]),"wiki")) changed=true;
+  // Relief-fund balance, e.g. "…Relief Fund was launched … raising over रू
+  // 5,440,000,000 by 29 August." (the currency mark is रू, not ₹). The published
+  // balance INCLUDES the government release, so store the public share.
   const fund=txt.match(/Relief Fund[^.]*?(?:रू|रु|₹|Rs\.?|NPR)\s*([\d,]{7,15})/i);
   if(fund && typeof RELIEF_COLLECTED==="object"){
-    const amtM=_int(fund[1])/1e6;                       // rupees → millions
-    if(amtM>0 && amtM>=(RELIEF_COLLECTED.donations||0) && RELIEF_COLLECTED.donations!==amtM){
-      RELIEF_COLLECTED.donations=amtM;
+    const balanceM=_int(fund[1])/1e6;                  // rupees → millions
+    const publicM=Math.max(0, balanceM-(RELIEF_COLLECTED.govt||0));
+    if(publicM>0 && publicM>=(RELIEF_COLLECTED.donations||0) && RELIEF_COLLECTED.donations!==publicM){
+      RELIEF_COLLECTED.donations=publicM;
       RELIEF_COLLECTED.updated=nptNow().toLocaleDateString("en-GB",{day:"2-digit",month:"short",year:"numeric"});
       changed=true;
     }
   }
+  // Preliminary damage estimate, e.g. "…caused Rs 200 billion in damages."
+  const dmg=txt.match(/(?:Rs|रू|रु|NPR)\s*([\d,.]{1,7})\s*billion\s+in\s+damages?/i);
+  if(dmg && _setStat("damage",_num(dmg[1]),"wiki")) changed=true;
   return changed;
 }
 
-// Tier 4 — NDRRMA official rescue figures (CORS-open). NDRRMA publishes TWO
-// different numbers and the site shows them in two different places:
-//   • rescued-statistics.rescued_count = TOTAL people rescued  → home hero stat
-//   • status-counts.total_count        = NAMED public registry → Rescued page + detail
-// Fetch both so the home total and the named-registry breakdown stay live & correct.
-async function _srcRescueCount(){
+// Tier 3 — NDRRMA official rescue API (CORS-open, rank 1). It publishes several
+// distinct numbers and the site shows them in distinct places:
+//   • rescued-statistics.rescued_count  = TOTAL rescued        → home hero stat
+//   • rescued-statistics.force_deployed = security personnel   → security card
+//   • rescued-statistics.tower          = comms towers restored
+//   • status-counts.total_count         = NAMED public registry → Rescued page
+async function _srcNDRRMA(){
   let changed=false, grand=null;
   try{
-    const r=await fetch("https://ndrrma.gov.np/api/v1/rescues/rescued-statistics/?_="+Date.now(),{signal:AbortSignal.timeout(5000)});
-    if(r.ok){ const j=await r.json(); grand=j&&j.rescued_count; if(grand && _setStat("rescued", String(grand))) changed=true; }
+    const r=await fetch("https://ndrrma.gov.np/api/v1/rescues/rescued-statistics/?_="+Date.now(),{signal:AbortSignal.timeout(6000)});
+    if(r.ok){
+      const j=await r.json();
+      grand=j&&j.rescued_count;
+      if(grand && _setStat("rescued", String(grand), "ndrrma")) changed=true;
+      if(j&&j.force_deployed && _setStat("security", String(j.force_deployed), "ndrrma")) changed=true;
+      if(j&&j.tower && _setDetailRow("security","towers restored", j.tower)) changed=true;
+    }
   }catch(_){}
   try{
-    const r=await fetch("https://ndrrma.gov.np/api/v1/rescues/status-counts/?limit=-1&_="+Date.now(),{signal:AbortSignal.timeout(5000)});
+    const r=await fetch("https://ndrrma.gov.np/api/v1/rescues/status-counts/?limit=-1&_="+Date.now(),{signal:AbortSignal.timeout(6000)});
     if(r.ok){ const j=await r.json(); if(j && _setRescueRegistry(grand, j.total_count, j.nepali_count, j.foreign_count)) changed=true; }
   }catch(_){}
   return changed;
 }
 
-// Tier 5 — Nepal Police official data source (when available via API or portal)
-// For now, infrastructure ready. Can be activated when NP publishes live casualty/missing counts.
-async function _srcNepalPolice(){
+// Tier 4 — NDRRMA official MISSING-PERSONS registry (CORS-open). Powers the
+// "official registry" panel on the Missing Persons page, alongside the
+// community-submitted entries.
+let OFFICIAL_MISSING=null, OFFICIAL_MISSING_ERR=false;
+async function _srcMissingRegistry(){
   try{
-    // Monitor: https://nepalpolice.gov.np/ for official casualty bulletins
-    // When API endpoint available, fetch from it here
-    // const r=await fetch("https://nepalpolice.gov.np/api/v1/disaster-figures/?limit=-1",{signal:AbortSignal.timeout(5000)});
-    // if(!r.ok) return false;
-    // const j=await r.json();
-    // if(j.deaths) _setStat("deaths", String(j.deaths));
-    // if(j.missing) _setStat("missing", String(j.missing));
-    // return true;
-    return false; // Disabled until API becomes available
-  }catch(_){ return false; }
+    const r=await fetch("https://ndrrma.gov.np/api/v1/rescues/missing-persons/?limit=-1&_="+Date.now(),{signal:AbortSignal.timeout(15000)});
+    if(!r.ok) throw new Error("http "+r.status);
+    const j=await r.json();
+    const list=j.results||j;
+    if(!Array.isArray(list)) return false;
+    const next={ count:(j.count!=null?j.count:list.length), fetched:Date.now(),
+      persons:list.map(p=>({
+        name:(p.name||"").trim(), name_ne:(p.name_ne||"").trim(),
+        age:p.age, gender:p.gender||"", nationality:p.nationality||"", country:p.country||"",
+        remarks:p.remarks||"", last_contact:p.last_contact||"",
+        status:(p.status&&p.status.title)||"", status_ne:(p.status&&p.status.title_ne)||""
+      })) };
+    const changed = !OFFICIAL_MISSING || OFFICIAL_MISSING.count!==next.count;
+    OFFICIAL_MISSING=next; OFFICIAL_MISSING_ERR=false;
+    if(typeof renderOfficialMissing==="function") renderOfficialMissing();
+    return changed;
+  }catch(_){
+    if(!OFFICIAL_MISSING){ OFFICIAL_MISSING_ERR=true; if(typeof renderOfficialMissing==="function") renderOfficialMissing(); }
+    return false;
+  }
+}
+/* The Missing Persons page loads this on its own, outside the 10-minute figure
+   sync, so a slow first burst can't leave the panel stuck — and it retries once
+   before giving the reader a retry button. */
+function loadOfficialMissing(retries){
+  _srcMissingRegistry().then(ok=>{
+    if(!OFFICIAL_MISSING && (retries||0) > 0) setTimeout(()=>loadOfficialMissing(retries-1), 4000);
+  });
 }
 
 let _refreshing=false;
@@ -2286,8 +2565,12 @@ async function liveRefresh(isManual){
   if(_refreshing) return;               // never overlap two refreshes
   _refreshing=true;
   try{
-    const results = await Promise.allSettled([_srcLocalFeed(), _srcInfobox(), _srcSummary(), _srcRescueCount()]);
-    const changed = results.some(r=>r.status==="fulfilled" && r.value===true);
+    _beginCycle();
+    // NDRRMA (rank 1) and the curated feed (rank 2) are awaited first so they
+    // claim their keys before Wikipedia (rank 3) is allowed to fill the gaps.
+    const primary = await Promise.allSettled([_srcNDRRMA(), _srcLocalFeed()]);
+    const rest    = await Promise.allSettled([_srcSummary(), _srcMissingRegistry()]);
+    const changed = primary.concat(rest).some(r=>r.status==="fulfilled" && r.value===true);
     if(changed || isManual){
       renderStats(); renderStatsPage(); renderMissingSummary(); renderEvent(); renderReliefCollected();
       if(isManual) toast(LANG==="ne"?"तथ्यांक अद्यावधिक भयो (Live)":"Latest disaster figures synced.","crim");
