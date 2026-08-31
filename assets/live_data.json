@@ -1,267 +1,114 @@
 {
-  "updated_at": "2026-08-31T18:00:00+05:45",
+  "updated_at": "2026-08-31T16:30:00+05:45",
   "event": {
     "code": "FL-2026-0826",
     "since": "2026-08-26T08:37:00+05:45",
-    "title": {
-      "en": "2026 Nepal Floods",
-      "ne": "२०२६ नेपाल बाढी"
-    },
+    "title": { "en": "2026 Nepal Floods", "ne": "२०२६ नेपाल बाढी" },
     "region": {
       "en": "Rasuwa · Nuwakot · Dhading · Trishuli corridor · Chitwan · Nawalparasi",
       "ne": "रसुवा · नुवाकोट · धादिङ · त्रिशूली कोरिडोर · चितवन · नवलपरासी"
     },
     "eas": {
-      "en": "Trishuli / Bhote Koshi glacier-collapse flood. NDRRMA confirm 903 dead and 4,247 missing (31 Aug). Mass burial of unidentified victims under way in Chitwan; tunnel rescue continues at Trishuli 3A and Upper Trishuli-1. Prithvi Highway still cut at Krishnabhir.",
-      "ne": "त्रिशूली / भोटेकोशी हिमनदी भत्किएर आएको बाढी। NDRRMA ले ९०३ मृत्यु र ४,२४७ बेपत्ता पुष्टि गरेको (३१ भदौ)। चितवनमा नचिनिएका शवको सामूहिक व्यवस्थापन जारी; त्रिशूली ३ए र माथिल्लो त्रिशूली-१ मा सुरुङ उद्धार जारी। कृष्णभीरमा पृथ्वी राजमार्ग अझै अवरुद्ध।"
+      "en": "Trishuli / Bhote Koshi glacier-collapse flood. NDRRMA confirm 903 dead and 4,247 missing; 10,451 rescued (31 Aug). Around 900 believed trapped in hydropower tunnels — Everest guides have joined the rescue. Fresh flood warning active; Prithvi Highway still cut at Krishnabhir.",
+      "ne": "त्रिशूली / भोटेकोशी हिमनदी भत्किएर आएको बाढी। NDRRMA ले ९०३ मृत्यु र ४,२४७ बेपत्ता पुष्टि गरेको; १०,४५१ उद्धार (३१ भदौ)। जलविद्युत् सुरुङभित्र करिब ९०० जना फसेको अनुमान — उद्धारमा सगरमाथा आरोही गाइड सहभागी। नयाँ बाढी चेतावनी सक्रिय; कृष्णभीरमा पृथ्वी राजमार्ग अझै अवरुद्ध।"
     }
   },
   "stats": [
-    {
-      "key": "deaths",
-      "n": "903",
-      "cls": "hstat--death"
-    },
-    {
-      "key": "missing",
-      "n": "4,247"
-    },
-    {
-      "key": "foreign",
-      "n": "592"
-    },
-    {
-      "key": "rescued",
-      "n": "7,514",
-      "cls": "hstat--rescue"
-    }
+    { "key": "deaths",  "n": "903", "cls": "hstat--death" },
+    { "key": "missing", "n": "4,247" },
+    { "key": "foreign", "n": "592" },
+    { "key": "rescued", "n": "10,451", "cls": "hstat--rescue" }
   ],
   "stats_detail": {
     "deaths": {
       "big": "903",
       "rows": [
-        [
-          "Nepal — confirmed dead (NDRRMA, 31 Aug)",
-          "903"
-        ],
-        [
-          "District split below is NDRRMA's last itemised one (30 Aug)",
-          "734"
-        ],
-        [
-          "Chitwan",
-          "259"
-        ],
-        [
-          "Nawalparasi East",
-          "184"
-        ],
-        [
-          "Nawalparasi West",
-          "82"
-        ],
-        [
-          "Gorkha",
-          "58"
-        ],
-        [
-          "Nuwakot",
-          "52"
-        ],
-        [
-          "Dhading",
-          "50"
-        ],
-        [
-          "Tanahun",
-          "36"
-        ],
-        [
-          "Rasuwa",
-          "13"
-        ]
+        ["Nepal — confirmed dead (NDRRMA, 31 Aug)", "903"],
+        ["Chitwan", "272"],
+        ["Nawalparasi East", "207"],
+        ["Nawalparasi West", "151"],
+        ["Nuwakot", "95"],
+        ["Gorkha", "62"],
+        ["Dhading", "55"],
+        ["Tanahun", "37"],
+        ["Rasuwa", "24"]
       ]
     },
     "missing": {
       "big": "4,247",
       "rows": [
-        [
-          "Nepal — missing / out of contact (31 Aug)",
-          "4,247"
-        ],
-        [
-          "Foreign nationals among the missing",
-          "592"
-        ],
-        [
-          "Linked to hydropower projects",
-          "934"
-        ],
-        [
-          "Security personnel",
-          "85"
-        ],
-        [
-          "Nepali travellers",
-          "127"
-        ],
-        [
-          "Rasuwa",
-          "562"
-        ],
-        [
-          "Nuwakot",
-          "115"
-        ],
-        [
-          "Makwanpur",
-          "65"
-        ]
+        ["Nepal — missing / out of contact (31 Aug)", "4,247"],
+        ["Foreign nationals among the missing", "592"],
+        ["Linked to hydropower projects", "934"],
+        ["Nepali Army personnel", "45"],
+        ["Nepal Police personnel", "25"],
+        ["Armed Police Force personnel", "13"],
+        ["Customs office staff", "15"],
+        ["Immigration office staff", "3"],
+        ["Rasuwa", "562"],
+        ["Nuwakot", "115"],
+        ["Makwanpur", "65"]
       ]
     },
     "rescued": {
-      "big": "7,514",
+      "big": "10,451",
       "rows": [
-        [
-          "Total rescued (NDRRMA live count)",
-          "7,514"
-        ],
-        [
-          "Named in public registry",
-          "3,027"
-        ],
-        [
-          "— of these, Nepali",
-          "2,801"
-        ],
-        [
-          "— of these, foreign",
-          "226"
-        ],
-        [
-          "Rescued by the Nepali Army in Rasuwa alone",
-          "2,697"
-        ],
-        [
-          "— airlifted from hydropower tunnels",
-          "279"
-        ],
-        [
-          "— foreign nationals airlifted",
-          "227"
-        ]
+        ["Total rescued (NDRRMA, 31 Aug)", "10,451"],
+        ["Named in the public registry", "3,026"],
+        ["— of these, Nepali", "2,801"],
+        ["— of these, foreign", "225"],
+        ["Airlifted by the Nepali Army — Nepali", "3,344"],
+        ["Airlifted by the Nepali Army — foreign nationals", "252"],
+        ["Rescue and relief flights flown", "411"],
+        ["Logged in the NDRRMA rescue system", "7,514"]
       ]
     },
     "injured": {
       "big": "1,473",
-      "rows": [
-        [
-          "Nepal — injured (NDRRMA)",
-          "1,473"
-        ]
-      ]
+      "rows": [ ["Nepal — injured (NDRRMA)", "1,473"] ]
     },
     "security": {
       "big": "18,708",
       "rows": [
-        [
-          "Total personnel mobilised (NDRRMA live count)",
-          "18,708"
-        ],
-        [
-          "Nepali Army",
-          "8,370"
-        ],
-        [
-          "Nepal Police",
-          "6,135"
-        ],
-        [
-          "Armed Police Force",
-          "4,203"
-        ],
-        [
-          "People brought to safety",
-          "7,514"
-        ],
-        [
-          "Communication towers restored",
-          "145/198"
-        ]
+        ["Total personnel mobilised (NDRRMA live count)", "18,708"],
+        ["Nepali Army", "8,370"],
+        ["Nepal Police", "6,135"],
+        ["Armed Police Force", "4,203"],
+        ["Rescue and relief flights flown", "411"],
+        ["Communication towers restored", "145/198"]
       ]
     },
     "foreign": {
       "big": "592",
       "rows": [
-        [
-          "India",
-          "288"
-        ],
-        [
-          "United States",
-          "90"
-        ],
-        [
-          "Ukraine",
-          "53"
-        ],
-        [
-          "Malaysia",
-          "51"
-        ],
-        [
-          "Australia",
-          "35"
-        ],
-        [
-          "United Kingdom",
-          "33"
-        ],
-        [
-          "Canada",
-          "32"
-        ],
-        [
-          "South Korea",
-          "9"
-        ]
+        ["India", "288"], ["United States", "90"], ["Ukraine", "53"],
+        ["Malaysia", "51"], ["Australia", "35"], ["United Kingdom", "33"],
+        ["Canada", "32"], ["South Korea", "9"]
+      ]
+    },
+    "tunnel": {
+      "big": "934",
+      "rows": [
+        ["Hydropower workers missing (11 projects)", "934"],
+        ["Believed still inside tunnel systems", "~900"],
+        ["Upper Trishuli-1 — believed inside", "~300"],
+        ["Chilime — believed inside", "6"],
+        ["Brought out of Trishuli 3A so far", "~350"],
+        ["Airlifted from tunnels in the first two days", "279"],
+        ["Hydropower facilities damaged or destroyed", "27"]
       ]
     },
     "damage": {
       "big": "200",
       "rows": [
-        [
-          "Preliminary damage estimate (Rs billion)",
-          "200"
-        ],
-        [
-          "Roads and bridges (Rs billion)",
-          "15"
-        ],
-        [
-          "Bridges damaged",
-          "41"
-        ],
-        [
-          "Road damaged (km)",
-          "42"
-        ],
-        [
-          "Generation knocked off the grid (MW)",
-          "431"
-        ],
-        [
-          "Under-construction capacity damaged (MW)",
-          "470"
-        ],
-        [
-          "Schools damaged or destroyed",
-          "38"
-        ],
-        [
-          "People affected (IFRC estimate)",
-          "93,000"
-        ]
+        ["Preliminary damage estimate (Rs billion)", "200"],
+        ["Roads and bridges (Rs billion)", "15"],
+        ["Bridges damaged", "41"],
+        ["Road damaged (km)", "42"],
+        ["Generation knocked off the grid (MW)", "431"],
+        ["Under-construction capacity damaged (MW)", "470"],
+        ["Schools damaged or destroyed", "38"],
+        ["People affected (IFRC estimate)", "93,000"]
       ]
     }
   }

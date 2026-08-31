@@ -28,6 +28,12 @@ const DRY = process.argv.includes("--dry");
 /* Previous value → current value. Order matters: longer/more specific strings
    must come before shorter ones that they contain. */
 const FIGURES = [
+  // --- rescued: the NDRRMA bulletin total, not the API's system log ------
+  ["7,514 rescued", "10,451 rescued"],
+  ["7,514", "10,451"],
+  // --- district split, now itemised to the full toll ---------------------
+  ["Chitwan has recorded the most bodies recovered (259)", "Chitwan has recorded the most bodies recovered (272)"],
+  ["Nawalparasi East (184), Nawalparasi West (82), Gorkha (58), Nuwakot (52), Dhading (50), Tanahun (36) and Rasuwa (13)", "Nawalparasi East (207), Nawalparasi West (151), Nuwakot (95), Gorkha (62), Dhading (55), Tanahun (37) and Rasuwa (24)"],
   // --- dates -------------------------------------------------------------
   ["2026-08-30", "2026-08-31"],
   ["30 August 2026", "31 August 2026"],
