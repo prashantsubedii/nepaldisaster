@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-31T16:30:00+05:45",
+  "updated_at": "2026-09-01T13:20:00+05:45",
   "event": {
     "code": "FL-2026-0826",
     "since": "2026-08-26T08:37:00+05:45",
@@ -9,54 +9,51 @@
       "ne": "रसुवा · नुवाकोट · धादिङ · त्रिशूली कोरिडोर · चितवन · नवलपरासी"
     },
     "eas": {
-      "en": "Trishuli / Bhote Koshi glacier-collapse flood. NDRRMA confirm 903 dead and 4,247 missing; 10,451 rescued (31 Aug). Around 900 believed trapped in hydropower tunnels — Everest guides have joined the rescue. Fresh flood warning active; Prithvi Highway still cut at Krishnabhir.",
-      "ne": "त्रिशूली / भोटेकोशी हिमनदी भत्किएर आएको बाढी। NDRRMA ले ९०३ मृत्यु र ४,२४७ बेपत्ता पुष्टि गरेको; १०,४५१ उद्धार (३१ भदौ)। जलविद्युत् सुरुङभित्र करिब ९०० जना फसेको अनुमान — उद्धारमा सगरमाथा आरोही गाइड सहभागी। नयाँ बाढी चेतावनी सक्रिय; कृष्णभीरमा पृथ्वी राजमार्ग अझै अवरुद्ध।"
+      "en": "Trishuli / Bhote Koshi glacier-collapse flood. NDRRMA confirm 987 dead and 3,916 missing; 11,814 rescued (1 Sept, 9am). 639 hydropower workers missing, around 500 believed trapped inside tunnels. Riverside alert still active; Prithvi Highway still cut at Krishnabhir.",
+      "ne": "त्रिशूली / भोटेकोशी हिमनदी भत्किएर आएको बाढी। NDRRMA ले ९८७ मृत्यु र ३,९१६ बेपत्ता पुष्टि गरेको; ११,८१४ उद्धार (१ सेप्टेम्बर, बिहान ९ बजे)। ६३९ जलविद्युत् कामदार बेपत्ता, करिब ५०० सुरुङभित्रै फसेको अनुमान। नदी किनार चेतावनी कायमै; कृष्णभीरमा पृथ्वी राजमार्ग अझै अवरुद्ध।"
     }
   },
   "stats": [
-    { "key": "deaths",  "n": "903", "cls": "hstat--death" },
-    { "key": "missing", "n": "4,247" },
-    { "key": "foreign", "n": "592" },
-    { "key": "rescued", "n": "10,451", "cls": "hstat--rescue" }
+    { "key": "deaths",  "n": "987", "cls": "hstat--death" },
+    { "key": "missing", "n": "3,916" },
+    { "key": "foreign", "n": "583" },
+    { "key": "rescued", "n": "11,814", "cls": "hstat--rescue" }
   ],
   "stats_detail": {
     "deaths": {
-      "big": "903",
+      "big": "987",
       "rows": [
-        ["Nepal — confirmed dead (NDRRMA, 31 Aug)", "903"],
-        ["Chitwan", "272"],
-        ["Nawalparasi East", "207"],
-        ["Nawalparasi West", "151"],
+        ["Nepal — confirmed dead (NDRRMA, 1 Sept, 9am)", "987"],
+        ["Chitwan", "321"],
+        ["Nawalparasi East", "216"],
+        ["Nawalparasi West", "170"],
         ["Nuwakot", "95"],
-        ["Gorkha", "62"],
+        ["Gorkha", "65"],
         ["Dhading", "55"],
-        ["Tanahun", "37"],
-        ["Rasuwa", "24"]
+        ["Tanahun", "38"],
+        ["Rasuwa", "27"]
       ]
     },
     "missing": {
-      "big": "4,247",
+      "big": "3,916",
       "rows": [
-        ["Nepal — missing / out of contact (31 Aug)", "4,247"],
-        ["Foreign nationals among the missing", "592"],
-        ["Linked to hydropower projects", "934"],
+        ["Nepal — missing / out of contact (1 Sept, 9am)", "3,916"],
+        ["Rasuwa", "865"],
+        ["Linked to hydropower projects", "639"],
+        ["Foreign nationals among the missing", "583"],
+        ["Nepalis accompanying foreign tourists", "127"],
         ["Nepali Army personnel", "45"],
         ["Nepal Police personnel", "25"],
-        ["Armed Police Force personnel", "13"],
-        ["Customs office staff", "15"],
-        ["Immigration office staff", "3"],
-        ["Rasuwa", "562"],
-        ["Nuwakot", "115"],
-        ["Makwanpur", "65"]
+        ["Armed Police Force personnel", "13"]
       ]
     },
     "rescued": {
-      "big": "10,451",
+      "big": "11,814",
       "rows": [
-        ["Total rescued (NDRRMA, 31 Aug)", "10,451"],
-        ["Named in the public registry", "3,026"],
-        ["— of these, Nepali", "2,801"],
-        ["— of these, foreign", "225"],
+        ["Total rescued (NDRRMA, 1 Sept)", "11,814"],
+        ["Named in the public registry", "3,122"],
+        ["— of these, Nepali", "2,913"],
+        ["— of these, foreign", "209"],
         ["Airlifted by the Nepali Army — Nepali", "3,344"],
         ["Airlifted by the Nepali Army — foreign nationals", "252"],
         ["Rescue and relief flights flown", "411"],
@@ -64,35 +61,39 @@
       ]
     },
     "injured": {
-      "big": "1,473",
-      "rows": [ ["Nepal — injured (NDRRMA)", "1,473"] ]
+      "big": "279",
+      "rows": [
+        ["Nepal — injured (NDRRMA, 1 Sept)", "279"],
+        ["Still under treatment", "111"],
+        ["Medical treatments provided across the response", "2,740"]
+      ]
     },
     "security": {
-      "big": "18,708",
+      "big": "21,008",
       "rows": [
-        ["Total personnel mobilised (NDRRMA live count)", "18,708"],
-        ["Nepali Army", "8,370"],
-        ["Nepal Police", "6,135"],
+        ["Total personnel mobilised (NDRRMA live count)", "21,008"],
+        ["Nepali Army", "8,722"],
+        ["Nepal Police", "7,894"],
         ["Armed Police Force", "4,203"],
         ["Rescue and relief flights flown", "411"],
-        ["Communication towers restored", "145/198"]
+        ["Settlements still out of reach", "2,498"],
+        ["Communication towers", "Connectivity fully restored"]
       ]
     },
     "foreign": {
-      "big": "592",
+      "big": "583",
       "rows": [
-        ["India", "288"], ["United States", "90"], ["Ukraine", "53"],
-        ["Malaysia", "51"], ["Australia", "35"], ["United Kingdom", "33"],
-        ["Canada", "32"], ["South Korea", "9"]
+        ["India", "288"], ["China (approx.)", "100"], ["United States", "80"],
+        ["Ukraine", "53"], ["Malaysia", "51"], ["Australia", "35"],
+        ["United Kingdom", "33"], ["Canada", "32"], ["South Korea", "9"]
       ]
     },
     "tunnel": {
-      "big": "934",
+      "big": "639",
       "rows": [
-        ["Hydropower workers missing (11 projects)", "934"],
-        ["Believed still inside tunnel systems", "~900"],
+        ["Hydropower workers missing (12 projects)", "639"],
+        ["Believed still inside tunnel systems", "~500"],
         ["Upper Trishuli-1 — believed inside", "~300"],
-        ["Chilime — believed inside", "6"],
         ["Brought out of Trishuli 3A so far", "~350"],
         ["Airlifted from tunnels in the first two days", "279"],
         ["Hydropower facilities damaged or destroyed", "27"]

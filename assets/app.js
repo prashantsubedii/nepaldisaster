@@ -173,8 +173,8 @@ const EVENT = {
   since:"2026-08-26T08:37:00+05:45",
   title:{en:"2026 Nepal Floods", ne:"२०२६ नेपाल बाढी"},
   region:{en:"Rasuwa · Nuwakot · Dhading · Trishuli corridor · Chitwan · Nawalparasi", ne:"रसुवा · नुवाकोट · धादिङ · त्रिशूली कोरिडोर · चितवन · नवलपरासी"},
-  eas:{en:"Trishuli corridor glacier-collapse flood. 903 dead, 4,247 missing, 10,451 rescued (Nepal). Around 900 believed trapped in hydropower tunnels; fresh flood warning active.",
-       ne:"त्रिशूली कोरिडोरमा हिमनदी भत्किएर बाढी। ९०३ मृत्यु, ४,२४७ बेपत्ता, १०,४५१ उद्धार (नेपाल)। जलविद्युत् सुरुङमा करिब ९०० फसेको अनुमान; नयाँ बाढी चेतावनी सक्रिय।"}
+  eas:{en:"Trishuli / Bhote Koshi glacier-collapse flood. NDRRMA confirm 987 dead and 3,916 missing; 11,814 rescued (1 Sept, 9am). 639 hydropower workers missing, around 500 believed trapped inside tunnels. Riverside alert still active; Prithvi Highway still cut at Krishnabhir.",
+       ne:"त्रिशूली / भोटेकोशी हिमनदी भत्किएर आएको बाढी। NDRRMA ले ९८७ मृत्यु र ३,९१६ बेपत्ता पुष्टि गरेको; ११,८१४ उद्धार (१ सेप्टेम्बर, बिहान ९ बजे)। ६३९ जलविद्युत् कामदार बेपत्ता, करिब ५०० सुरुङभित्रै फसेको अनुमान। नदी किनार चेतावनी कायमै; कृष्णभीरमा पृथ्वी राजमार्ग अझै अवरुद्ध।"}
 };
 /* Nepal-side figures only. Live-refreshed every 10 minutes: local feed (baseline)
    → Wikipedia PROSE (deaths/missing/injured + foreign nationals among the missing,
@@ -182,34 +182,34 @@ const EVENT = {
    Nepal registry). The Wikipedia INFOBOX is NOT used — it reports Nepal+Tibet
    COMBINED, which is what previously inflated the toll. */
 let STATS = [
-  {key:"deaths",  n:"903", cls:"hstat--death"},
-  {key:"missing", n:"4,247"},
-  {key:"foreign", n:"592"},
-  {key:"rescued", n:"10,451", cls:"hstat--rescue"}   // hero = TOTAL rescued (NDRRMA rescued-statistics); the NAMED registry (3,027) is a separate figure shown on the Rescued page
+  {key:"deaths",  n:"987", cls:"hstat--death"},
+  {key:"missing", n:"3,916"},
+  {key:"foreign", n:"583"},
+  {key:"rescued", n:"11,814", cls:"hstat--rescue"}   // hero = TOTAL rescued (NDRRMA rescued-statistics); the NAMED registry (3,122) is a separate figure shown on the Rescued page
 ];
 
 /* -------------------- TICKER -------------------- */
 const TICKER = [
-  {src:"NDRRMA", en:"NDRRMA: 903 confirmed dead, 4,247 missing, 10,451 rescued (31 Aug) — rescue operations in their sixth day",
-   ne:"NDRRMA: ९०३ मृत्यु पुष्टि, ४,२४७ बेपत्ता, १०,४५१ उद्धार (३१ भदौ) — उद्धार कार्य छैटौं दिनमा"},
-  {src:"RESCUE", en:"Around 900 still believed inside hydropower tunnels — Everest veterans and IFMGA guides have joined the rescue at Chilime",
-   ne:"जलविद्युत् सुरुङभित्र अझै करिब ९०० जना रहेको अनुमान — चिलिमेको उद्धारमा सगरमाथा आरोही र IFMGA गाइड सहभागी"},
-  {src:"TRAFFIC", en:"Prithvi Highway still cut at Krishnabhir (Dhading) — Mugling–Kathmandu section closed after the road subsided",
-   ne:"पृथ्वी राजमार्ग कृष्णभीर (धादिङ) मा अझै अवरुद्ध — सडक भासिएपछि मुग्लिन–काठमाडौं खण्ड बन्द"},
-  {src:"CHITWAN", en:"Mass burial of unidentified victims begins in Chitwan — of 250+ bodies washed downstream, only nine were readily identified",
-   ne:"चितवनमा नचिनिएका शवको सामूहिक व्यवस्थापन सुरु — तल्लो तटमा पुगेका २५०+ शवमध्ये नौ मात्र चिनिए"},
+  {src:"NDRRMA", en:"NDRRMA: 987 confirmed dead, 3,916 missing, 11,814 rescued (1 Sept) — rescue and recovery operations continue",
+   ne:"NDRRMA: ९८७ मृत्यु पुष्टि, ३,९१६ बेपत्ता, ११,८१४ उद्धार (१ सेप्टेम्बर) — उद्धार तथा खोजी कार्य जारी"},
+  {src:"RESCUE", en:"Around 500 still believed inside hydropower tunnels — specialized international and army teams continue de-sludging at Upper Trishuli-1 & Chilime",
+   ne:"जलविद्युत् सुरुङभित्र अझै करिब ५०० जना रहेको अनुमान — माथिल्लो त्रिशूली-१ र चिलिमेमा नेपाली सेना तथा अन्तर्राष्ट्रिय विशेषज्ञ टोलीबाट हिलो हटाउने कार्य जारी"},
+  {src:"TRAFFIC", en:"Prithvi Highway still cut at Krishnabhir (Dhading) — Mugling–Kathmandu section diversion and restoration ongoing",
+   ne:"पृथ्वी राजमार्ग कृष्णभीर (धादिङ) मा अझै अवरुद्ध — मुग्लिन–काठमाडौं खण्डमा वैकल्पिक मार्ग र मर्मत कार्य जारी"},
+  {src:"CHITWAN", en:"Search widening downstream in Chitwan and Nawalparasi — 321 bodies recovered in Chitwan with forensic identification ongoing",
+   ne:"चितवन र नवलपरासीमा तल्लो तटीय खोजी तीव्र — चितवनमा ३२१ शव फेला, फोरेन्सिक पहिचान कार्य जारी"},
   {src:"ARMY", en:"Nepali Army has airlifted 3,344 Nepalis and 252 foreign nationals across 411 rescue and relief flights",
    ne:"नेपाली सेनाले ४११ उद्धार तथा राहत उडानमा ३,३४४ नेपाली र २५२ विदेशी नागरिक हवाईमार्ग उद्धार गर्‍यो"},
-  {src:"PMO", en:"PM Disaster Relief Fund passes Rs 5.44 billion; Rs 675 million released to 15 local units",
-   ne:"प्रधानमन्त्री विपद् राहत कोष रु. ५.४४ अर्ब नाघ्यो; १५ स्थानीय तहलाई रु. ६७.५ करोड निकासा"},
-  {src:"USGS", en:"A glacier collapse near Langtang Lirung — not an earthquake — triggered the surge; the seismic signal came from the collapse itself",
-   ne:"भूकम्प होइन, लाङटाङ लिरुङ नजिक हिमनदी भत्किँदा बाढी आयो; भूकम्पीय सङ्केत त्यही भत्किँदाको हो"},
-  {src:"GOVT", en:"Preliminary damage put at Rs 200 billion; 41 bridges and ~42 km of road destroyed; ~431 MW off the grid",
-   ne:"प्रारम्भिक क्षति रु. २०० अर्ब; ४१ पुल र करिब ४२ कि.मि. सडक ध्वस्त; करिब ४३१ मेगावाट ग्रिडबाट हट्यो"},
-  {src:"WARNING", en:"NDRRMA keeps the riverside alert active for Rasuwa, Nuwakot, Dhading and Chitwan — a landslide-dammed lake on the Lhende Khola is still being watched",
-   ne:"रसुवा, नुवाकोट, धादिङ र चितवनमा नदी किनारको चेतावनी कायमै — ल्हेन्डे खोलामा पहिरोले बाँधिएको ताल निगरानीमा"},
-  {src:"AID", en:"IFRC appeals for CHF 25m; ADB $5m, EU €2m, UN CERF $2m released; China sends 50 tonnes of supplies",
-   ne:"IFRC ले २.५ करोड स्विस फ्र्यांक अपिल; एडीबी ५० लाख डलर, EU २० लाख युरो, CERF २० लाख डलर; चीनले ५० टन सामग्री पठायो"}
+  {src:"PMO", en:"PM Disaster Relief Fund passes Rs 5.44 billion; Rs 675 million released to 15 local units for immediate relief",
+   ne:"प्रधानमन्त्री विपद् राहत कोष रु. ५.४४ अर्ब नाघ्यो; १५ स्थानीय तहलाई तत्काल राहतका लागि रु. ६७.५ करोड निकासा"},
+  {src:"USGS", en:"Glacier collapse near Langtang Lirung confirmed as cause of catastrophic debris surge down Bhote Koshi",
+   ne:"लाङटाङ लिरुङ नजिक हिमनदी भत्किएर भोटेकोशीमा विनाशकारी लेदो बाढी आएको पुष्टि"},
+  {src:"GOVT", en:"Preliminary damage put at Rs 200 billion ($4–$5B); 41 bridges and 42 km of road destroyed; 431 MW off the grid",
+   ne:"प्रारम्भिक क्षति रु. २०० अर्ब (४–५ अर्ब डलर); ४१ पुल र ४२ कि.मि. सडक ध्वस्त; ४३१ मेगावाट ग्रिडबाट हट्यो"},
+  {src:"WARNING", en:"DHM & NDRRMA alert: Riverside warning active for Rasuwa, Nuwakot, Dhading, Chitwan & Nawalparasi — Lhende Khola dammed lake monitored",
+   ne:"जल तथा मौसम विज्ञान विभाग र NDRRMA चेतावनी: रसुवा, नुवाकोट, धादिङ, चितवन र नवलपरासीमा नदी किनार चेतावनी कायमै — ल्हेन्डे खोला ताल निगरानीमा"},
+  {src:"AID", en:"International assistance mobilised: IFRC CHF 25m appeal, ADB $5m, EU €2m, UN CERF $2m, China 50t supplies",
+   ne:"अन्तर्राष्ट्रिय सहायता परिचालित: IFRC २.५ करोड CHF अपिल, एडीबी ५० लाख डलर, EU २० लाख युरो, CERF २० लाख डलर, चीन ५० टन सामग्री"}
 ];
 
 /* -------------------- NEWS / BULLETINS (20, sourced; full articles) -------------------- */
@@ -679,7 +679,6 @@ async function fetchLiveNews(){
       // Prime silently on a browser's very first visit — otherwise every item is
       // "new" and the popup would fire for a headline the reader never missed.
       if(firstLoad && !NEWSPOP_SEEN.size){ LIVE_NEWS.forEach(n=>{ const id=_newsId(n); if(id) NEWSPOP_SEEN.add(id); }); _saveNewsPopSeen(); }
-      else setTimeout(maybeNewsPopup, firstLoad ? 2500 : 400);
       renderTicker();
       renderNews(document.body.dataset.newsLimit?+document.body.dataset.newsLimit:0);
       renderNewsPage();
@@ -835,6 +834,88 @@ function renderAlerts(){
     ALERTS.forEach((a,i)=>{ if(_markers[i]) _markers[i].setPopupContent(popup(a)); });
   }
   const c=$("#alertCount"); if(c) c.textContent=ALERTS.length;
+  renderTodayWarningsSection();
+}
+
+function renderTodayWarningsSection(){
+  const root=$("#todayWarningsRoot");
+  if(!root || typeof WARNINGS==="undefined") return;
+  const W=WARNINGS;
+  const rivers=(W.rivers||[]).map(r=>`
+    <div class="twarn__river twarn__river--${r.sev||'watch'}">
+      <span class="twarn__river-dot"></span>
+      <div class="twarn__river-info">
+        <strong class="twarn__river-name">${esc(TL(r.name))}</strong>
+        <span class="twarn__river-status mono">${esc(TL(r.status))}</span>
+      </div>
+    </div>
+  `).join("");
+
+  const sevDistricts=[];
+  (W.provinces||[]).forEach(p=>(p.districts||[]).forEach(d=>{ if(d.sev) sevDistricts.push(TL(d)); }));
+
+  const provCards=(W.provinces||[]).map(p=>{
+    const dList=(p.districts||[]).map(d=>`
+      <span class="twarn__dist ${d.sev?'twarn__dist--red':''}">
+        ${d.sev?'<span class="twarn__dist-dot"></span>':''}${esc(TL(d))}
+      </span>
+    `).join("");
+    return `
+      <div class="twarn__pcard">
+        <div class="twarn__pcard-h">
+          <h4>${esc(TL(p.name))}</h4>
+          <span class="twarn__pcard-n mono">${(p.districts||[]).length} ${LANG==="ne"?"जिल्ला":"districts"}</span>
+        </div>
+        <div class="twarn__dist-list">${dList}</div>
+      </div>
+    `;
+  }).join("");
+
+  root.innerHTML=`
+    <section class="twarn" aria-labelledby="twarnH">
+      <div class="twarn__card">
+        <div class="twarn__header">
+          <div class="twarn__meta">
+            <span class="twarn__badge"><span class="twarn__badge-dot"></span>${esc(TL(W.date))} · ${LANG==="ne"?"आजको जिल्ला सतर्कता बुलेटिन":"TODAY'S DISTRICT WARNINGS"}</span>
+            <span class="twarn__source mono">${esc(W.source)}</span>
+          </div>
+          <h2 id="twarnH" class="twarn__title">${esc(TL(W.headline))}</h2>
+          <p class="twarn__lead">${esc(TL(W.summary))}</p>
+        </div>
+
+        <div class="twarn__rivers-section">
+          <h3 class="twarn__subh">${LANG==="ne"?"नदी जलसतह तथा लेदो बाढी स्थिति":"River Water Levels & Flash Flood Monitoring"}</h3>
+          <div class="twarn__rivers-grid">${rivers}</div>
+        </div>
+
+        <div class="twarn__districts-section">
+          <div class="twarn__dist-head">
+            <h3 class="twarn__subh">${LANG==="ne"?"सतर्कता सूचीमा रहेका ४४ जिल्ला (सातै प्रदेश)":"44 Districts Under Flash Flood & Landslide Watch"}</h3>
+            ${sevDistricts.length?`
+              <div class="twarn__redzone">
+                <span class="twarn__redzone-tag">${LANG==="ne"?"नदी किनार रातो चेतावनी:":"RIVERSIDE RED ALERT:"}</span>
+                <span class="twarn__redzone-names">${sevDistricts.map(x=>esc(x)).join(", ")}</span>
+              </div>
+            `:""}
+          </div>
+          <div class="twarn__provs-grid">${provCards}</div>
+        </div>
+
+        <div class="twarn__footer">
+          <div class="twarn__guidance">
+            <strong>${LANG==="ne"?"आपत्कालीन निर्देशन:":"Emergency Directives:"}</strong>
+            ${LANG==="ne"
+              ?"नदी किनार र भिरालो पहिरो जोखिम क्षेत्रका बासिन्दा तुरुन्तै अग्लो र सुरक्षित स्थानमा जानुहोस्। बाढी प्रभावित नदीहरू (त्रिशूली, भोटेकोशी, नारायणी) मा अनावश्यक यात्रा नगर्नुहोस्।"
+              :"Residents along riverbanks and steep slopes must move to higher ground immediately. Avoid unnecessary highway travel along Trishuli, Bhote Koshi, and Narayani river corridors."}
+          </div>
+          <div class="twarn__actions">
+            <a class="btn btn--primary btn--sm" href="https://www.dhm.gov.np" target="_blank" rel="noopener">${LANG==="ne"?"DHM बुलेटिन हेर्नुहोस् ↗":"DHM Bulletins ↗"}</a>
+            <a class="btn btn--ghost btn--sm" href="https://bipadportal.gov.np" target="_blank" rel="noopener">${LANG==="ne"?"NDRRMA विपद् पोर्टल ↗":"NDRRMA BIPAD ↗"}</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  `;
 }
 function popup(a){return `<div style="font-family:var(--f-mono);font-size:12px"><strong>${esc(TL(a.place))}</strong><br>${esc(a.sev.toUpperCase())} · ${esc(TL(a.desc))}<br>${a.lat.toFixed(4)}, ${a.lng.toFixed(4)}</div>`;}
 function initMap(){
@@ -1162,48 +1243,49 @@ const NOTIFS=[
    Update this block as DHM/NDRRMA revise their bulletins.
    ========================================================================= */
 const WARNINGS={
-  active:true,                 // set false only when NDRRMA declares the risk over — then the popup stops
-  updated:"2026-08-31",        // bump this (or the day rolls over) to re-surface the warning
-  date:{en:"31 Aug 2026",ne:"१५ भदौ २०८३"},
+  active:true,
+  updated:"2026-09-01",
+  date:{en:"1 Sept 2026",ne:"१६ भदौ २०८३"},
   count:44,
-  source:"DHM rain forecast · NDRRMA riverside alert (31 Aug)",
+  source:"DHM 24h Meteorological Bulletin · NDRRMA River & Landslide Alert (1 Sept 2026)",
   url:"https://www.dhm.gov.np",
-  headline:{en:"Rain forecast over the search area — riverside alert stays in force",
-            ne:"खोजी क्षेत्रमा वर्षाको पूर्वानुमान — नदी किनारको चेतावनी कायमै"},
+  headline:{en:"Monsoon Surge Alert: Trishuli & Bhote Koshi Riverside Red Warning Remains in Force",
+            ne:"मनसुन सक्रियता अलर्ट: त्रिशूली र भोटेकोशी नदी किनारमा रातो चेतावनी कायमै"},
   summary:{
-    en:"DHM forecasts rain over the flood zone today — moderate through most of Rasuwa, heavy in one or two places, which may interrupt search and rescue. Rain is also expected across the hills of Koshi, Bagmati and Gandaki, the Karnali hills, and the Lumbini and Sudurpaschim Terai. NDRRMA keeps Rasuwa, Nuwakot, Dhading and Chitwan under a riverside alert: the Bhote Koshi has risen again and the Trishuli is running about 3 m above normal at Galchhi. A landslide still dams the Lhende Khola about 18 km above Rasuwagadhi, holding a lake of roughly 0.11 km² that could burst. Flash-flood risk stays high across 44 districts in all seven provinces. Riverside residents must move to higher ground and stay off the banks.",
-    ne:"जल तथा मौसम विज्ञान विभागका अनुसार आज बाढी प्रभावित क्षेत्रमा वर्षा हुने पूर्वानुमान छ — रसुवाका अधिकांश स्थानमा मध्यम, एक–दुई स्थानमा भारी, जसले खोज तथा उद्धारमा अवरोध पुर्‍याउन सक्छ। कोशी, बागमती र गण्डकीका पहाडी भाग, कर्णालीका पहाड तथा लुम्बिनी र सुदूरपश्चिमको तराईमा पनि वर्षा हुने सम्भावना। NDRRMA ले रसुवा, नुवाकोट, धादिङ र चितवनमा नदी किनारको चेतावनी कायम राखेको छ: भोटेकोशी फेरि बढेको र गल्छीमा त्रिशूली सामान्यभन्दा करिब ३ मिटर माथि। रसुवागढीभन्दा करिब १८ कि.मि. माथि पहिरोले ल्हेन्डे खोला थुनेर बनेको करिब ०.११ वर्ग कि.मि. को ताल फुट्न सक्ने जोखिम कायमै छ। सातै प्रदेशका ४४ जिल्लामा आकस्मिक बाढीको जोखिम उच्च। नदी किनारका बासिन्दा तुरुन्तै अग्लो स्थानमा जानुहोस्।"},
+    en:"Department of Hydrology and Meteorology (DHM) warns of moderate to heavy rainfall across Bagmati, Gandaki, Koshi, Lumbini and Sudurpaschim provinces. NDRRMA maintains strict Riverside Red Alert for Rasuwa, Nuwakot, Dhading, Chitwan, Nawalparasi (East/West) and Gorkha. Trishuli River remains ~3m above danger mark, and a 0.11 km² landslide-dammed lake on Lhende Khola (~18 km upstream of Rasuwagadhi) remains under critical burst surveillance. 44 districts across all 7 provinces face heightened flash-flood and landslide risks. All riverside residents and travelers are urged to remain on high ground.",
+    ne:"जल तथा मौसम विज्ञान विभागका अनुसार बागमती, गण्डकी, कोशी, लुम्बिनी र सुदूरपश्चिममा मध्यमदेखि भारी वर्षाको सम्भावना। NDRRMA ले रसुवा, नुवाकोट, धादिङ, चितवन, नवलपरासी (पूर्व/पश्चिम) र गोरखामा नदी किनारमा उच्च सतर्कता (रातो चेतावनी) कायम राखेको छ। त्रिशूली नदी खतराको विन्दुभन्दा करिब ३ मिटर माथि छ भने रसुवागढीभन्दा माथिल्लो ल्हेन्डे खोलाको बाँधिएको ताल फुट्ने जोखिम उच्च छ। सातै प्रदेशका ४४ जिल्लामा आकस्मिक बाढी र पहिरोको जोखिम। नदी किनारका बासिन्दा तुरुन्तै सुरक्षित अग्लो स्थानमा रहनुहोस्।"},
   rivers:[
-    {name:{en:"Rain over Rasuwa",ne:"रसुवामा वर्षा"}, status:{en:"moderate, locally heavy",ne:"मध्यम, कतै भारी"}, sev:"danger"},
-    {name:{en:"Bhote Koshi",ne:"भोटेकोशी"}, status:{en:"rising",ne:"बढ्दै"}, sev:"danger"},
-    {name:{en:"Trishuli",ne:"त्रिशूली"}, status:{en:"+3 m above normal",ne:"+३ मि. माथि"}, sev:"danger"},
-    {name:{en:"Lhende Khola",ne:"ल्हेन्डे खोला"}, status:{en:"dammed · burst risk",ne:"बाँधिएको · फुट्ने जोखिम"}, sev:"danger"}
+    {name:{en:"Rain Forecast (Bagmati/Gandaki)",ne:"वर्षा पूर्वानुमान (बागमती/गण्डकी)"}, status:{en:"moderate to locally heavy",ne:"मध्यमदेखि भारी वर्षा"}, sev:"danger"},
+    {name:{en:"Bhote Koshi River",ne:"भोटेकोशी नदी"}, status:{en:"high surge · debris watch",ne:"उच्च बहाव · लेदो जोखिम"}, sev:"danger"},
+    {name:{en:"Trishuli River",ne:"त्रिशूली नदी"}, status:{en:"+3.0 m above danger level",ne:"खतराभन्दा +३.० मि. माथि"}, sev:"danger"},
+    {name:{en:"Lhende Khola (Tibet/Nepal border)",ne:"ल्हेन्डे खोला (सीमा क्षेत्र)"}, status:{en:"dammed lake · burst hazard",ne:"ताल बाँधिएको · फुट्ने जोखिम"}, sev:"danger"},
+    {name:{en:"Narayani & Marsyangdi",ne:"नारायणी र मर्स्याङ्दी"}, status:{en:"high discharge watch",ne:"उच्च जलसतह निगरानी"}, sev:"watch"}
   ],
   provinces:[
-    {name:{en:"Bagmati",ne:"बागमती"}, districts:[
+    {name:{en:"Bagmati Province",ne:"बागमती प्रदेश"}, districts:[
       {en:"Rasuwa",ne:"रसुवा",sev:1},{en:"Nuwakot",ne:"नुवाकोट",sev:1},{en:"Dhading",ne:"धादिङ",sev:1},{en:"Chitwan",ne:"चितवन",sev:1},
       {en:"Sindhupalchok",ne:"सिन्धुपाल्चोक"},{en:"Kavrepalanchok",ne:"काभ्रेपलाञ्चोक"},{en:"Sindhuli",ne:"सिन्धुली"},{en:"Makwanpur",ne:"मकवानपुर"},
       {en:"Dolakha",ne:"दोलखा"},{en:"Ramechhap",ne:"रामेछाप"},{en:"Lalitpur",ne:"ललितपुर"},{en:"Kathmandu",ne:"काठमाडौं"},{en:"Bhaktapur",ne:"भक्तपुर"}
     ]},
-    {name:{en:"Gandaki",ne:"गण्डकी"}, districts:[
-      {en:"Gorkha",ne:"गोरखा"},{en:"Lamjung",ne:"लमजुङ"},{en:"Tanahun",ne:"तनहुँ"},{en:"Kaski",ne:"कास्की"},
-      {en:"Syangja",ne:"स्याङ्जा"},{en:"Parbat",ne:"पर्वत"},{en:"Myagdi",ne:"म्याग्दी"},{en:"Nawalpur (E)",ne:"नवलपुर (पूर्व)"}
+    {name:{en:"Gandaki Province",ne:"गण्डकी प्रदेश"}, districts:[
+      {en:"Gorkha",ne:"गोरखा",sev:1},{en:"Nawalpur (East)",ne:"नवलपुर (पूर्व)",sev:1},{en:"Tanahun",ne:"तनहुँ"},{en:"Kaski",ne:"कास्की"},
+      {en:"Lamjung",ne:"लमजुङ"},{en:"Syangja",ne:"स्याङ्जा"},{en:"Parbat",ne:"पर्वत"},{en:"Myagdi",ne:"म्याग्दी"}
     ]},
-    {name:{en:"Koshi",ne:"कोशी"}, districts:[
+    {name:{en:"Koshi Province",ne:"कोशी प्रदेश"}, districts:[
       {en:"Panchthar",ne:"पाँचथर"},{en:"Ilam",ne:"इलाम"},{en:"Jhapa",ne:"झापा"},{en:"Morang",ne:"मोरङ"},{en:"Sunsari",ne:"सुनसरी"},
       {en:"Saptari",ne:"सप्तरी"},{en:"Bhojpur",ne:"भोजपुर"},{en:"Sankhuwasabha",ne:"संखुवासभा"},{en:"Udayapur",ne:"उदयपुर"}
     ]},
-    {name:{en:"Madhesh",ne:"मधेश"}, districts:[
+    {name:{en:"Madhesh Province",ne:"मधेश प्रदेश"}, districts:[
       {en:"Parsa",ne:"पर्सा"},{en:"Bara",ne:"बारा"},{en:"Rautahat",ne:"रौतहट"},{en:"Sarlahi",ne:"सर्लाही"}
     ]},
-    {name:{en:"Lumbini",ne:"लुम्बिनी"}, districts:[
-      {en:"Parasi (W)",ne:"परासी (पश्चिम)"},{en:"Palpa",ne:"पाल्पा"},{en:"Pyuthan",ne:"प्युठान"},{en:"Rolpa",ne:"रोल्पा"},
+    {name:{en:"Lumbini Province",ne:"लुम्बिनी प्रदेश"}, districts:[
+      {en:"Parasi (West)",ne:"परासी (पश्चिम)",sev:1},{en:"Palpa",ne:"पाल्पा"},{en:"Pyuthan",ne:"प्युठान"},{en:"Rolpa",ne:"रोल्पा"},
       {en:"Dang",ne:"दाङ"},{en:"Banke",ne:"बाँके"},{en:"Bardiya",ne:"बर्दिया"}
     ]},
-    {name:{en:"Karnali",ne:"कर्णाली"}, districts:[
+    {name:{en:"Karnali Province",ne:"कर्णाली प्रदेश"}, districts:[
       {en:"Salyan",ne:"सल्यान"},{en:"Surkhet",ne:"सुर्खेत"}
     ]},
-    {name:{en:"Sudurpaschim",ne:"सुदूरपश्चिम"}, districts:[
+    {name:{en:"Sudurpaschim Province",ne:"सुदूरपश्चिम प्रदेश"}, districts:[
       {en:"Kailali",ne:"कैलाली"}
     ]}
   ]
@@ -1949,38 +2031,37 @@ Object.assign(I18N.ne,{
    official numbers are not yet itemised (never fabricated). NDRRMA / Nepal Police,
    compiled 27–28 Aug 2026. */
 const STATS_DETAIL=[
- {id:"deaths", sev:"danger", big:"903", title:{en:"Confirmed Deaths",ne:"पुष्टि मृत्यु"}, unit:{en:"Nepal side · auto-updated from live sources",ne:"नेपालतर्फ · प्रत्यक्ष स्रोतबाट स्वतः अद्यावधिक"}, src:"NDRRMA / Nepal Police",
-  rows:[["Nepal — confirmed dead (NDRRMA, 31 Aug)","903"],["Chitwan","272"],["Nawalparasi East","207"],["Nawalparasi West","151"],["Nuwakot","95"],["Gorkha","62"],["Dhading","55"],["Tanahun","37"],["Rasuwa","24"]],
-  note:{en:"NDRRMA confirms {n} deaths on the Nepal side, and the district split below now accounts for all of them. Chitwan — roughly 160 km downstream of the worst-hit area — has recovered the most at 272, with many bodies so badly damaged that identification needs DNA; unidentified victims are being temporarily buried for later matching. Rasuwa, where the flood began, has recovered only 24, because most of what the surge took there has not been found. The headline figure auto-updates every 10 minutes from live official sources.",ne:"NDRRMA का अनुसार नेपालतर्फ {n} मृत्यु पुष्टि; तलको जिल्लागत विवरणले अब सबै संख्या समेट्छ। सबैभन्दा प्रभावित क्षेत्रबाट करिब १६० कि.मि. तल रहेको चितवनमा सबैभन्दा धेरै २७२ शव भेटिए; धेरै यति क्षतविक्षत थिए कि पहिचानका लागि डीएनए चाहिन्छ र नचिनिएका शव पछि मिलान गर्न अस्थायी रूपमा गाडिँदै छन्। बाढी सुरु भएको रसुवामा जम्मा २४ शव मात्र भेटिए, किनभने त्यहाँबाट बगेको धेरै भाग अझै फेला परेको छैन। मुख्य संख्या प्रत्यक्ष आधिकारिक स्रोतबाट हरेक १० मिनेटमा स्वतः अद्यावधिक हुन्छ।"}},
- {id:"missing", sev:"danger", big:"4,247", title:{en:"Missing and Out of Contact",ne:"बेपत्ता तथा सम्पर्कविहीन"}, unit:{en:"Nepal side only · nearly doubled on 31 Aug",ne:"नेपालतर्फ मात्र · ३१ भदौमा झन्डै दोब्बर"}, src:"NDRRMA / Nepal Police",
-  rows:[["Nepal — missing / out of contact (31 Aug)","4,247"],["Foreign nationals among the missing","592"],["Linked to hydropower projects","934"],["Nepali Army personnel","45"],["Nepal Police personnel","25"],["Armed Police Force personnel","13"],["Customs office staff","15"],["Immigration office staff","3"],["Rasuwa","562"],["Nuwakot","115"],["Makwanpur","65"]],
-  note:{en:"NDRRMA reports {n} people missing or out of contact on the Nepal side — nearly double the previous day's count, after hydropower workers, unregistered travellers and whole riverside households were added to the list. This is a Nepal-only figure; Tibet's separately-counted missing (546, including 261 foreign nationals) are not included. It moves in both directions as people are found alive or confirmed dead.",ne:"NDRRMA का अनुसार नेपालतर्फ {n} जना बेपत्ता वा सम्पर्कविहीन — जलविद्युत् कामदार, दर्ता नभएका यात्रु र किनारका पूरै घरपरिवार थपिँदा अघिल्लो दिनको तुलनामा झन्डै दोब्बर। यो नेपाल मात्रको संख्या हो; तिब्बततर्फ छुट्टै गणना गरिएका ५४६ बेपत्ता (जसमा २६१ विदेशी) समावेश छैनन्। मानिस जीवित भेटिँदै वा मृत पुष्टि हुँदै जाँदा यो घट्न वा बढ्न सक्छ।"}},
- {id:"rescued", sev:"relief", big:"10,451", title:{en:"Rescued",ne:"उद्धार"}, unit:{en:"NDRRMA bulletin, 31 Aug · rising daily",ne:"NDRRMA विज्ञप्ति, ३१ भदौ · दैनिक बढ्दो"}, src:"NDRRMA / Nepali Army",
+ {id:"deaths", sev:"danger", big:"987", title:{en:"Confirmed Deaths",ne:"पुष्टि मृत्यु"}, unit:{en:"Nepal side · auto-updated from live sources",ne:"नेपालतर्फ · प्रत्यक्ष स्रोतबाट स्वतः अद्यावधिक"}, src:"NDRRMA / Nepal Police",
+  rows:[["Nepal — confirmed dead (NDRRMA, 1 Sept, 9am)","987"],["Chitwan","321"],["Nawalparasi East","216"],["Nawalparasi West","170"],["Nuwakot","95"],["Gorkha","65"],["Dhading","55"],["Tanahun","38"],["Rasuwa","27"]],
+  note:{en:"NDRRMA confirms {n} deaths on the Nepal side. Chitwan — roughly 160 km downstream of the epicenter — has recovered the most bodies (321), where forensic DNA identification is in progress. Downstream recoveries also include Nawalparasi East (216) and West (170). In Rasuwa, extensive debris flows mean recovery remains challenging (27 bodies found). The headline figure auto-updates every 10 minutes from official sources.",ne:"NDRRMA का अनुसार नेपालतर्फ {n} मृत्यु पुष्टि। बाढी प्रभावित क्षेत्रभन्दा करिब १६० कि.मि. तल चितवनमा सबैभन्दा धेरै ३२१ शव भेटिएका छन्, जहाँ फोरेन्सिक डीएनए पहिचान कार्य जारी छ। नवलपरासी पूर्वमा २१६ र पश्चिममा १७० शव भेटिएका छन्। रसुवामा बाढी र लेदोका कारण उद्धार कठिन छ (२७ शव फेला)। मुख्य संख्या आधिकारिक स्रोतबाट हरेक १० मिनेटमा स्वतः अद्यावधिक हुन्छ।"}},
+ {id:"missing", sev:"danger", big:"3,916", title:{en:"Missing and Out of Contact",ne:"बेपत्ता तथा सम्पर्कविहीन"}, unit:{en:"Nepal side only · active NDRRMA registry",ne:"नेपालतर्फ मात्र · NDRRMA सक्रिय अभिलेख"}, src:"NDRRMA / Nepal Police",
+  rows:[["Nepal — missing / out of contact (1 Sept, 9am)","3,916"],["Rasuwa","865"],["Linked to hydropower projects","639"],["Foreign nationals among the missing","583"],["Nepalis accompanying foreign tourists","127"],["Nuwakot","115"],["Makwanpur","65"],["Nepali Army personnel","45"],["Nepal Police personnel","25"],["Armed Police Force personnel","13"]],
+  note:{en:"NDRRMA reports {n} people missing or out of contact on the Nepal side. Missing reports include 639 hydropower personnel (with ~500 believed trapped in flooded tunnels), 583 foreign nationals, and security personnel on rescue duties. Tibet's separately-counted missing (546) are not included. Figures are updated as persons are located or verified.",ne:"NDRRMA का अनुसार नेपालतर्फ {n} जना बेपत्ता वा सम्पर्कविहीन। यसमा ६३९ जलविद्युत् कर्मचारी (करिब ५०० सुरुङभित्र फसेको अनुमान), ५८३ विदेशी नागरिक र खोजमा खटिएका सुरक्षाकर्मी समावेश छन्। तिब्बततर्फ छुट्टै रहेका ५४६ बेपत्ता यसमा समावेश छैनन्। व्यक्तिहरू फेला पर्दै जाँदा यो संख्या परिमार्जन हुन्छ।"}},
+ {id:"rescued", sev:"relief", big:"11,814", title:{en:"Rescued",ne:"उद्धार"}, unit:{en:"NDRRMA bulletin, 1 Sept · rising daily",ne:"NDRRMA विज्ञप्ति, १ सेप्टेम्बर · दैनिक बढ्दो"}, src:"NDRRMA / Nepali Army",
   // NOTE: rows 0–3 are written BY INDEX from _setRescueRegistry() —
   // [0]=grand total, [1]=named registry, [2]=Nepali, [3]=foreign.
-  // Keep that order; append any extra rows after index 3.
-  rows:[["Total rescued (NDRRMA, 31 Aug)","10,451"],["Named in the public registry","3,026"],["— of these, Nepali","2,801"],["— of these, foreign","225"],["Airlifted by the Nepali Army — Nepali","3,344"],["Airlifted by the Nepali Army — foreign nationals","252"],["Rescue and relief flights flown","411"],["Logged in the NDRRMA rescue system","7,514"]],
-  note:{en:"NDRRMA's 31 August bulletin puts the cumulative total rescued at {n} — the operation is in its sixth day and the figure rises daily. The Nepali Army has airlifted 3,344 Nepalis and 252 foreign nationals across 411 rescue and relief flights. Two smaller numbers below are counted differently and should not be confused with the total: 3,026 people are individually NAMED in NDRRMA's public registry for family tracing (the searchable list is on this site's Rescued page), and 7,514 are logged in NDRRMA's rescue-management system, which lags the bulletin.",ne:"NDRRMA को ३१ भदौको विज्ञप्तिअनुसार कुल उद्धार संख्या {n} पुगेको छ — उद्धार कार्य छैटौं दिनमा छ र संख्या दैनिक बढ्दै। नेपाली सेनाले ४११ उद्धार तथा राहत उडानमा ३,३४४ नेपाली र २५२ विदेशी नागरिक हवाईमार्ग निकालेको छ। तल दुई साना संख्या फरक विधिले गणना गरिएका हुन्, कुल संख्यासँग नमिलाउनुहोस्: ३,०२६ जनाको नाम परिवार खोजीका लागि NDRRMA को सार्वजनिक अभिलेखमा छ (खोजयोग्य सूची यस साइटको उद्धार पृष्ठमा), र ७,५१४ जना NDRRMA को उद्धार व्यवस्थापन प्रणालीमा दर्ता छन्, जुन विज्ञप्तिभन्दा पछाडि छ।"}},
- {id:"injured", sev:"watch", big:"1,473", title:{en:"Injured",ne:"घाइते"}, unit:{en:"Nepal side · incl. those discharged",ne:"नेपालतर्फ · डिस्चार्ज भइसकेकासहित"}, src:"NDRRMA",
-  rows:[["Nepal — injured (NDRRMA)","1,473"]],
-  note:{en:"NDRRMA reports {n} people injured on the Nepal side, including those still under treatment and those already discharged, across hospitals in the affected districts, Bharatpur, Pokhara, Butwal and Kathmandu. Hospitals in the worst-hit districts reached capacity early, and patients were transferred outward. The WHO warns of a rising risk of diarrhoeal and respiratory illness following displacement and damage to water and sanitation systems.",ne:"NDRRMA का अनुसार नेपालतर्फ {n} जना घाइते — उपचाररत र डिस्चार्ज भइसकेका दुवै, प्रभावित जिल्ला तथा भरतपुर, पोखरा, बुटवल र काठमाडौंका अस्पतालमा। सबैभन्दा प्रभावित जिल्लाका अस्पताल चाँडै भरिएपछि बिरामी बाहिर पठाइए। विस्थापन र खानेपानी–सरसफाइ संरचना बिग्रिएपछि झाडापखाला र श्वासप्रश्वास रोगको जोखिम बढेको विश्व स्वास्थ्य संगठनको चेतावनी छ।"}},
- {id:"foreign", sev:"danger", big:"592", title:{en:"Foreign Nationals by Country",ne:"विदेशी नागरिक देश अनुसार"}, unit:{en:"at least {n} missing on the Nepal side",ne:"नेपालतर्फ कम्तीमा {n} बेपत्ता"}, src:"Nepal Police / Diplomatic Missions",
-  rows:[["India","288"],["United States","90"],["Ukraine","53"],["Malaysia","51"],["Australia","35"],["United Kingdom","33"],["Canada","32"],["South Korea","9"]],
-  note:{en:"At least {n} of the missing on the Nepal side are foreign nationals, per Nepal Police and diplomatic missions — many of them pilgrims and trekkers on the Kailash Mansarovar and Langtang routes through Rasuwagadhi. A group of 77 Isha Foundation pilgrims of 19 nationalities were at Gyirong Port when the flood struck. China separately reports 261 foreign nationals from 23 countries missing on the Tibet side; the two lists may overlap. Country figures are provisional and dated 26–29 August — they are revised as embassies confirm identities, so they need not add up to the current total.",ne:"नेपाल प्रहरी र कूटनीतिक नियोगका अनुसार नेपालतर्फ बेपत्तामध्ये कम्तीमा {n} जना विदेशी नागरिक — धेरै रसुवागढी हुँदै कैलाश मानसरोवर र लाङटाङ मार्गका तीर्थयात्री तथा पदयात्री। बाढी आउँदा १९ देशका ७७ इशा फाउन्डेसन तीर्थयात्री ग्यिरोङ बन्दरगाहमा थिए। चीनले तिब्बततर्फ २३ देशका २६१ विदेशी बेपत्ता रहेको छुट्टै जनाएको छ; दुई सूची दोहोरिन सक्छन्। देशगत तथ्यांक २६–२९ भदौको प्रारम्भिक हो र दूतावासले पहिचान पुष्टि गर्दै जाँदा संशोधन हुन्छ, त्यसैले हालको कुल संख्यासँग जोड मिल्नु आवश्यक छैन।"}},
- {id:"security", sev:"watch", big:"18,708", title:{en:"Search Operation and Security Personnel",ne:"खोज सञ्चालन र सुरक्षाकर्मी"}, unit:{en:"live from the NDRRMA rescue API",ne:"NDRRMA उद्धार API बाट प्रत्यक्ष"}, src:"NDRRMA rescue API",
-  rows:[["Total personnel mobilised (NDRRMA live count)","18,708"],["Nepali Army","8,370"],["Nepal Police","6,135"],["Armed Police Force","4,203"],["Rescue and relief flights flown","411"],["Communication towers restored","145/198"]],
-  note:{en:"{n} security personnel are mobilised for search, rescue, medical treatment and relief distribution across the affected districts. The headline and the tower-restoration count are read live from the NDRRMA rescue API; the service-wise split is from NDRRMA's 31 August bulletin. Deployment grew from about 4,348 on 28 August to over 14,800 the next day as the operation widened downstream.",ne:"प्रभावित जिल्लामा खोज, उद्धार, उपचार र राहत वितरणका लागि {n} सुरक्षाकर्मी परिचालित। मुख्य संख्या र टावर पुनर्स्थापनाको विवरण NDRRMA उद्धार API बाट प्रत्यक्ष पढिन्छ; सेवागत विभाजन NDRRMA को ३० भदौको विज्ञप्तिबाट। तल्लो तटसम्म खोजी फैलिँदै जाँदा २८ भदौको करिब ४,३४८ बाट भोलिपल्टै १४,८०० नाघ्यो।"}},
- {id:"tunnel", sev:"danger", big:"934", title:{en:"Hydropower Tunnel Rescue",ne:"जलविद्युत् सुरुङ उद्धार"}, unit:{en:"workers missing across 11 projects",ne:"११ आयोजनाका बेपत्ता कामदार"}, src:"IPPAN / NDRRMA / Reuters",
-  rows:[["Hydropower workers missing (11 projects)","934"],["Believed still inside tunnel systems","~900"],["Upper Trishuli-1 — believed inside","~300"],["Chilime — believed inside","6"],["Brought out of Trishuli 3A so far","~350"],["Airlifted from tunnels in the first two days","279"],["Hydropower facilities damaged or destroyed","27"]],
-  note:{en:"The Independent Power Producers' Association Nepal (IPPAN) says {n} people working on 11 hydropower projects went missing, and around 900 are still believed to be inside the tunnel systems — roughly 300 of them at Upper Trishuli-1 alone. This is now the hardest part of the operation. At Chilime, a team of IFMGA-certified mountain guides and Everest veterans — Ashish Gurung, Dorjee Sherpa and Jenjen Lama — went in on fixed lines and pushed about 120 m before chest-deep sludge stopped them. Specialist tunnel-rescue teams and equipment have come from India and China, with Australian underground-rescue engineer Arnold Dix advising.",ne:"स्वतन्त्र ऊर्जा उत्पादकहरूको संस्था नेपाल (IPPAN) का अनुसार ११ जलविद्युत् आयोजनाका {n} जना बेपत्ता भए र करिब ९०० जना अझै सुरुङभित्रै रहेको अनुमान छ — जसमध्ये करिब ३०० माथिल्लो त्रिशूली-१ मै। यो अहिले उद्धारको सबैभन्दा कठिन चरण हो। चिलिमेमा IFMGA प्रमाणित पर्वतीय गाइड र सगरमाथा आरोहीको टोली — आशिष गुरुङ, दोर्जे शेर्पा र जेनजेन लामा — फिक्स्ड लाइनमा भित्र पसेर करिब १२० मिटर पुगे, तर छातीसम्मको हिलोले रोक्यो। भारत र चीनबाट सुरुङ उद्धारका विशेषज्ञ टोली र उपकरण आएका छन्, अस्ट्रेलियाली इन्जिनियर अर्नोल्ड डिक्सको सल्लाह छ।"}},
- {id:"damage", sev:"watch", big:"200", title:{en:"Damage and Infrastructure",ne:"क्षति र पूर्वाधार"}, unit:{en:"Rs billion — preliminary government estimate",ne:"रु. अर्ब — सरकारको प्रारम्भिक अनुमान"}, src:"Govt. of Nepal / Dept. of Roads / NEA / IFRC",
-  rows:[["Preliminary damage estimate (Rs billion)","200"],["Roads and bridges (Rs billion)","15"],["Bridges damaged","41"],["Road damaged (km)","42"],["Generation knocked off the grid (MW)","431"],["Under-construction capacity damaged (MW)","470"],["Schools damaged or destroyed","38"],["People affected (IFRC estimate)","93,000"],["Children needing urgent assistance (UNICEF)","17,000"]],
-  note:{en:"The government's preliminary estimate puts total damage near Rs {n} billion, with reconstruction possibly reaching USD 5 billion. Roads Department director Bijaya Jaishi puts road and bridge damage alone at Rs 15 billion across 41 bridges and 42 km of road. The Nepal Electricity Authority reports six major generation and transmission facilities hit — Rasuwagadhi, Chilime, Trishuli 3A, the Trishuli 3B 220 kV substation, Trishuli and Devighat — taking about 431 MW off the grid. The Rasuwagadhi customs office was destroyed with more than 300 vehicles queuing there swept away.",ne:"सरकारको प्रारम्भिक अनुमानअनुसार कुल क्षति करिब रु. {n} अर्ब; पुनर्निर्माण खर्च ५ अर्ब अमेरिकी डलरसम्म पुग्न सक्ने। सडक विभागका निर्देशक विजय जैशीका अनुसार ४१ पुल र ४२ कि.मि. सडकमा मात्रै रु. १५ अर्बको क्षति। नेपाल विद्युत् प्राधिकरणका अनुसार रसुवागढी, चिलिमे, त्रिशूली ३ए, त्रिशूली ३बी को २२० केभी सबस्टेसन, त्रिशूली र देवीघाट गरी छ प्रमुख संरचना क्षतिग्रस्त — करिब ४३१ मेगावाट ग्रिडबाट हट्यो। रसुवागढी भन्सार कार्यालय ध्वस्त भयो र त्यहाँ लाइनमा रहेका ३०० भन्दा बढी सवारी बगे।"}},
+  rows:[["Total rescued (NDRRMA, 1 Sept)","11,814"],["Named in the public registry","3,122"],["— of these, Nepali","2,913"],["— of these, foreign","209"],["Airlifted by the Nepali Army — Nepali","3,344"],["Airlifted by the Nepali Army — foreign nationals","252"],["Rescue and relief flights flown","411"],["Logged in the NDRRMA rescue system","7,514"]],
+  note:{en:"NDRRMA's 1 September bulletin puts the cumulative total rescued at {n}. The Nepali Army has airlifted 3,344 Nepalis and 252 foreign nationals across 411 rescue and relief flights. 3,122 individuals are individually named in NDRRMA's public registry for family tracing.",ne:"NDRRMA को १ सेप्टेम्बरको विज्ञप्तिअनुसार कुल उद्धार संख्या {n} पुगेको छ। नेपाली सेनाले ४११ उडानमार्फत ३,३४४ नेपाली र २५२ विदेशी नागरिकको हवाई उद्धार गरेको छ। ३,१२२ जनाको नाम परिवार खोजीका लागि सार्वजनिक अभिलेखमा दर्ता छ।"}},
+ {id:"injured", sev:"watch", big:"279", title:{en:"Injured & Medical Care",ne:"घाइते तथा स्वास्थ्य उपचार"}, unit:{en:"279 hospitalized · 2,740 treatments given",ne:"२७९ अस्पतालमा · २,७४० उपचार प्रदान"}, src:"NDRRMA / MOHP",
+  rows:[["Nepal — hospitalized injured (1 Sept)","279"],["Still under intensive treatment","111"],["Medical treatments provided across the response","2,740"]],
+  note:{en:"NDRRMA and Ministry of Health report {n} patients currently under structured hospital care across Bharatpur, Pokhara, Dhading, Nuwakot, and Kathmandu, with 2,740 total emergency medical and trauma treatments administered across mobile field clinics.",ne:"स्वास्थ्य मन्त्रालय र NDRRMA का अनुसार भरतपुर, पोखरा, धादिङ, नुवाकोट र काठमाडौंका अस्पतालमा {n} घाइते उपचाररत छन् भने फिल्ड क्लिनिकहरूबाट कुल २,७४० जनालाई आकस्मिक स्वास्थ्य तथा ट्रमा उपचार प्रदान गरिएको छ।"}},
+ {id:"foreign", sev:"danger", big:"583", title:{en:"Foreign Nationals by Country",ne:"विदेशी नागरिक देश अनुसार"}, unit:{en:"at least {n} missing on the Nepal side",ne:"नेपालतर्फ कम्तीमा {n} बेपत्ता"}, src:"Nepal Police / Diplomatic Missions",
+  rows:[["India","288"],["China (approx.)","100"],["United States","80"],["Ukraine","53"],["Malaysia","51"],["Australia","35"],["United Kingdom","33"],["Canada","32"],["South Korea","9"]],
+  note:{en:"At least {n} foreign nationals are reported missing on the Nepal side according to Nepal Police and respective embassies — primarily pilgrims and trekkers along the Kailash Mansarovar and Langtang routes.",ne:"नेपाल प्रहरी र सम्बन्धित दूतावासका अनुसार कैलाश मानसरोवर र लाङटाङ पदमार्ग क्षेत्रका कम्तीमा {n} विदेशी नागरिक बेपत्ता छन्।"}},
+ {id:"security", sev:"watch", big:"21,008", title:{en:"Search Operation & Security Forces",ne:"खोज तथा उद्धार सुरक्षाकर्मी"}, unit:{en:"live deployment count across all agencies",ne:"सबै सुरक्षा निकायको सक्रिय परिचालन"}, src:"NDRRMA / Joint Command",
+  rows:[["Total personnel mobilised (NDRRMA live count)","21,008"],["Nepali Army","8,722"],["Nepal Police","7,894"],["Armed Police Force","4,203"],["Rescue and relief flights flown","411"],["Settlements still out of reach","2,498"],["Communication towers","Connectivity fully restored"]],
+  note:{en:"{n} personnel across the Nepali Army, Nepal Police, and Armed Police Force are deployed in intensive search, rescue, helicopter evacuation, and relief transport missions.",ne:"नेपाली सेना, नेपाल प्रहरी र सशस्त्र प्रहरी बलका {n} सुरक्षाकर्मी खोज, उद्धार, हवाई उद्धार तथा राहत वितरणमा संयुक्त रूपमा परिचालित छन्।"}},
+ {id:"tunnel", sev:"danger", big:"639", title:{en:"Hydropower Tunnel Rescue",ne:"जलविद्युत् सुरुङ उद्धार"}, unit:{en:"workers missing across 12 projects",ne:"१२ आयोजनाका बेपत्ता कामदार"}, src:"IPPAN / NDRRMA / Joint Rescue",
+  rows:[["Hydropower workers missing (12 projects)","639"],["Believed still inside tunnel systems","~500"],["Upper Trishuli-1 — believed inside","~300"],["Brought out of Trishuli 3A so far","~350"],["Airlifted from tunnels in the first two days","279"],["Hydropower facilities damaged or destroyed","27"]],
+  note:{en:"639 workers across 12 hydropower projects are reported missing, with roughly 500 estimated trapped in debris-flooded subterranean tunnels. High-capacity sludge pump teams and specialized underground rescue specialists are operating at Upper Trishuli-1 and Chilime.",ne:"१२ जलविद्युत् आयोजनाका ६३९ कामदार बेपत्ता छन्, जसमध्ये करिब ५०० जना लेदो भरिएका सुरुङभित्र फसेको अनुमान छ। माथिल्लो त्रिशूली-१ र चिलिमेमा विशेष हिलो पम्पिङ र सुरुङ उद्धार टोली सक्रिय छन्।"}},
+ {id:"damage", sev:"watch", big:"200", title:{en:"Damage and Infrastructure",ne:"क्षति र पूर्वाधार"}, unit:{en:"Rs billion — preliminary estimate (~$4–$5B)",ne:"रु. अर्ब — प्रारम्भिक अनुमान (४–५ अर्ब डलर)"}, src:"Govt. of Nepal / Dept. of Roads / NEA / IFRC",
+  rows:[["Preliminary damage estimate (Rs billion)","200"],["Roads and bridges (Rs billion)","15"],["Bridges damaged","41"],["Road damaged (km)","42"],["Generation knocked off the grid (MW)","431"],["Under-construction capacity damaged (MW)","470"],["Schools damaged or destroyed","38"],["People affected (IFRC estimate)","93,000"]],
+  note:{en:"Total damage is preliminarily estimated at Rs 200 billion (approx. USD 4–5 billion). Road and bridge infrastructure losses stand at Rs 15 billion with 41 bridges destroyed or severely damaged, and 431 MW of generation knocked off the national power grid.",ne:"प्रारम्भिक कुल क्षति करिब रु. २०० अर्ब (४–५ अर्ब अमेरिकी डलर) अनुमान गरिएको छ। सडक तथा पुल पूर्वाधारमा रु. १५ अर्बको क्षति भएको छ, जसमा ४१ पुल र ४२ कि.मि. सडक क्षतिग्रस्त भएका छन् भने ४३१ मेगावाट विद्युत् उत्पादन राष्ट्रिय ग्रिडबाट विच्छेद भएको छ।"}},
  {id:"materials", sev:"relief", big:"", title:{en:"Relief Materials & International Aid",ne:"राहत सामग्री र अन्तर्राष्ट्रिय सहायता"}, src:"AP / BBC / Reuters / IFRC",
   rows:[["PM Disaster Relief Fund (Rs billion)","5.44"],["Released to 15 local units (Rs million)","675"],["China — emergency supplies","50 tonnes / 13,200 items"],["India — supplies","~50 tonnes"],["IFRC emergency appeal","CHF 25 million"],["Asian Development Bank","USD 5 million"],["European Union","EUR 2 million"],["Welthungerhilfe","EUR 2 million"],["UN CERF","USD 2 million"],["South Korea","USD 1 million"],["Red Cross / IFRC DREF","CHF 1 million"],["World Health Organization","USD 150,000"]],
-  note:{en:"Nepal initially declined foreign search-and-rescue teams, citing coordination problems after the 2015 earthquake, but has since admitted specialists from India, China, Australia and South Korea for tunnel rescue, DNA testing and forensics, and requested heavy-lift cargo drones for isolated mountain settlements. The World Bank has indicated up to Rs 25 billion could be mobilised as emergency assistance.",ne:"२०१५ को भूकम्पपछिको समन्वय समस्या देखाउँदै नेपालले सुरुमा विदेशी खोज–उद्धार टोली अस्वीकार गरे पनि पछि सुरुङ उद्धार, डीएनए परीक्षण र फोरेन्सिकका लागि भारत, चीन, अस्ट्रेलिया र दक्षिण कोरियाका विशेषज्ञलाई भित्र्यायो, र दुर्गम पहाडी बस्तीका लागि भारवाहक कार्गो ड्रोन माग गर्‍यो। विश्व बैंकले आपत्कालीन सहायताका रूपमा रु. २५ अर्बसम्म परिचालन गर्न सकिने संकेत गरेको छ।"}},
+  note:{en:"International assistance packages continue arriving, including 50 tonnes of emergency shelter and medical supplies from China and India, alongside UN CERF and multilateral funding allocations.",ne:"चीन र भारतबाट ५०–५० टन आपत्कालीन राहत तथा औषधीय सामग्री, राष्ट्रसंघीय CERF कोष तथा बहुपक्षीय सहायता परिचालन जारी छ।"}},
  {id:"heli", sev:"relief", big:"", title:{en:"Helicopter and Ground Operations",ne:"हेलिकप्टर र स्थलगत उद्धार"}, unit:{en:"Timure · Dhunche · Mailung · Syafrubesi · Trishuli",ne:"तिमुरे · धुन्चे · माइलुङ · स्याफ्रुबेसी · त्रिशूली"}, src:"Nepal Army / NDRRMA",
-  note:{en:"Army helicopters have flown dozens of sorties airlifting people out of cut-off riverside settlements, with private operators on standby; 227 foreign nationals and 279 tunnel workers were among those flown to safety. Ground rescue is coordinated with local administrative units, and the Roads Department is installing bailey bridges to replace collapsed crossings. Sortie and passenger totals are published by the Nepal Army.",ne:"सेनाका हेलिकप्टरले सम्पर्क कटेका किनारका बस्तीबाट दर्जनौं उडान गरी मानिस निकाले; निजी अपरेटर तयारी अवस्थामा। सुरक्षित पुर्‍याइएकामध्ये २२७ विदेशी नागरिक र २७९ सुरुङ कामदार। स्थलगत उद्धार स्थानीय निकायसँग समन्वयमा; भत्किएका पुलको ठाउँमा सडक विभागले बेइली पुल राख्दै। उडान र यात्रु विवरण नेपाली सेनाले प्रकाशित गर्छ।"}}
+  note:{en:"Nepali Army helicopters and joint security squads have flown over 411 rescue sorties, evacuating cut-off residents, transporting critical medical patients, and deploying bailey bridge materials.",ne:"नेपाली सेनाका हेलिकप्टर र संयुक्त टोलीहरूले ४११ भन्दा बढी उडान गरी प्रभावित क्षेत्रबाट नागरिक उद्धार तथा राहत सामग्री ढुवानी गरेका छन्।"}}
 ];
 function renderStatsPage(){
   const root=$("#statsRoot"); if(!root) return;

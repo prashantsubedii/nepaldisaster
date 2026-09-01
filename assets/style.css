@@ -2,26 +2,24 @@
    NepalDisaster.com — shared styles
    Flat civic/emergency design: hard edges, 1px borders, mono figures,
    single crimson accent, off-white paper + near-black slate. Cleaned up.
-   ========================================================================= */
-:root{
-  /* surfaces — warmer, softer paper; cards lift off the page instead of being
-     boxed in by 1px hairlines */
-  --paper:#F4F5F7; --paper-2:#FFFFFF; --paper-3:#EDEFF3;
-  --slate:#0E1218; --slate-2:#161B23; --slate-3:#1E2530;
-  --ink:#0E1218; --ink-2:#39414D; --muted:#697280;
-  --crimson:#C8102E; --crimson-ink:#9E0C24; --crimson-soft:#FDEDEF;
-  --danger:#D93025; --watch:#E08A00; --relief:#12855A;
-  --danger-soft:#FDECEA; --watch-soft:#FFF4E0; --relief-soft:#E6F5EE;
-  --line:#E3E6EB; --line-strong:#CBD1DA;
+   ========================================================================= */:root{
+  /* Modern emergency & situation surfaces */
+  --paper:#F8FAFC; --paper-2:#FFFFFF; --paper-3:#F1F5F9;
+  --slate:#090D16; --slate-2:#0F172A; --slate-3:#1E293B;
+  --ink:#0F172A; --ink-2:#334155; --muted:#64748B;
+  --crimson:#E11D48; --crimson-ink:#BE123C; --crimson-soft:#FFE4E6;
+  --danger:#EF4444; --watch:#F59E0B; --relief:#10B981;
+  --danger-soft:#FEF2F2; --watch-soft:#FFFBEB; --relief-soft:#ECFDF5;
+  --line:#E2E8F0; --line-strong:#CBD5E1;
   --line-dark:rgba(255,255,255,.09); --line-dark-strong:rgba(255,255,255,.17);
 
-  /* shape + elevation — the single biggest change from the old flat sheet */
+  /* shape + elevation — modern smooth radius & diffuse elevation */
   --r-xs:6px; --r-sm:10px; --r-md:14px; --r-lg:20px; --r-pill:999px;
-  --sh-1:0 1px 2px rgba(14,18,24,.05), 0 1px 3px rgba(14,18,24,.05);
-  --sh-2:0 2px 4px rgba(14,18,24,.04), 0 6px 16px rgba(14,18,24,.07);
-  --sh-3:0 8px 20px rgba(14,18,24,.09), 0 20px 44px rgba(14,18,24,.10);
-  --sh-crim:0 6px 18px rgba(200,16,46,.22);
-  --ring:0 0 0 3px rgba(200,16,46,.16);
+  --sh-1:0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+  --sh-2:0 4px 12px -2px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
+  --sh-3:0 12px 28px -4px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.04);
+  --sh-crim:0 8px 24px -4px rgba(225, 29, 72, 0.28);
+  --ring:0 0 0 3px rgba(225, 29, 72, 0.16);
 
   --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
   --f-cond:"Archivo Narrow","Archivo",system-ui,sans-serif;
@@ -2993,4 +2991,302 @@ html[lang="ne"] .npop__h{ font-family: var(--f-np); }
   .hero{ background: none; }
   .hero h1, .hstat .n{ color: #000 !important; }
   .hl, .news, .pcard, .sd, .omrow{ box-shadow: none; break-inside: avoid; }
+}
+
+/* =========================================================================
+   24. TODAY'S DISTRICT WARNINGS COMPONENT & MODERN UI REFINEMENTS
+   ========================================================================= */
+.twarn {
+  margin: 36px 0 20px;
+}
+.twarn__card {
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-2);
+  overflow: hidden;
+  position: relative;
+  transition: box-shadow .24s var(--ease), border-color .24s var(--ease);
+}
+.twarn__card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #E11D48, #F59E0B, #10B981);
+}
+.twarn__header {
+  padding: 28px 28px 20px;
+  border-bottom: 1px solid var(--rule);
+  background: linear-gradient(180deg, var(--paper-3) 0%, var(--paper-2) 100%);
+}
+.twarn__meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.twarn__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--f-cond);
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  font-size: .72rem;
+  font-weight: 700;
+  background: #E11D48;
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: var(--r-pill);
+  box-shadow: 0 2px 8px rgba(225, 29, 72, 0.28);
+}
+html[lang="ne"] .twarn__badge { font-family: var(--f-np); letter-spacing: 0; }
+.twarn__badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #fff;
+  animation: twarnPulse 1.8s infinite;
+}
+@keyframes twarnPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: .4; }
+}
+.twarn__source {
+  font-family: var(--f-mono);
+  font-size: .75rem;
+  color: var(--muted);
+}
+.twarn__title {
+  font-family: var(--f-display);
+  font-size: clamp(1.25rem, 3vw, 1.65rem);
+  font-weight: 800;
+  letter-spacing: -.02em;
+  line-height: 1.25;
+  color: var(--ink);
+  margin: 0 0 10px;
+}
+html[lang="ne"] .twarn__title { font-family: var(--f-np); letter-spacing: 0; }
+.twarn__lead {
+  font-size: .95rem;
+  line-height: 1.65;
+  color: var(--ink-2);
+  margin: 0;
+  max-width: 960px;
+}
+
+.twarn__rivers-section {
+  padding: 22px 28px;
+  border-bottom: 1px solid var(--rule);
+  background: var(--paper-2);
+}
+.twarn__subh {
+  font-family: var(--f-display);
+  font-size: .92rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--muted);
+  margin: 0 0 16px;
+}
+html[lang="ne"] .twarn__subh { font-family: var(--f-np); letter-spacing: 0; text-transform: none; font-size: 1rem; }
+.twarn__rivers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+.twarn__river {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--rule);
+  background: var(--paper-3);
+  transition: transform .16s var(--ease), border-color .16s var(--ease);
+}
+.twarn__river:hover {
+  transform: translateY(-2px);
+}
+.twarn__river--danger {
+  border-left: 4px solid #E11D48;
+  background: var(--danger-soft);
+}
+.twarn__river--watch {
+  border-left: 4px solid #F59E0B;
+  background: var(--watch-soft);
+}
+.twarn__river-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.twarn__river--danger .twarn__river-dot { background: #E11D48; box-shadow: 0 0 8px #E11D48; }
+.twarn__river--watch .twarn__river-dot { background: #F59E0B; box-shadow: 0 0 8px #F59E0B; }
+.twarn__river-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.twarn__river-name {
+  font-size: .88rem;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.twarn__river-status {
+  font-size: .76rem;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.twarn__districts-section {
+  padding: 24px 28px;
+  background: var(--paper-2);
+}
+.twarn__dist-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.twarn__redzone {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: var(--danger-soft);
+  border: 1px solid rgba(225, 29, 72, 0.3);
+  border-radius: var(--r-pill);
+  font-size: .8rem;
+}
+.twarn__redzone-tag {
+  font-family: var(--f-cond);
+  font-weight: 800;
+  color: #E11D48;
+  letter-spacing: .06em;
+}
+html[lang="ne"] .twarn__redzone-tag { font-family: var(--f-np); letter-spacing: 0; }
+.twarn__redzone-names {
+  font-weight: 600;
+  color: var(--ink);
+}
+.twarn__provs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+}
+.twarn__pcard {
+  padding: 16px;
+  background: var(--paper-3);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+}
+.twarn__pcard-h {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--rule);
+}
+.twarn__pcard-h h4 {
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0;
+}
+html[lang="ne"] .twarn__pcard-h h4 { font-family: var(--f-np); }
+.twarn__pcard-n {
+  font-size: .74rem;
+  color: var(--muted);
+}
+.twarn__dist-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.twarn__dist {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: var(--r-pill);
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  font-size: .8rem;
+  color: var(--ink-2);
+  transition: background .12s, border-color .12s;
+}
+.twarn__dist:hover {
+  border-color: var(--line-strong);
+  color: var(--ink);
+}
+.twarn__dist--red {
+  background: #FFF1F2;
+  border-color: #FECDD3;
+  color: #BE123C;
+  font-weight: 600;
+}
+:root[data-theme="dark"] .twarn__dist--red {
+  background: rgba(225, 29, 72, 0.16);
+  border-color: rgba(225, 29, 72, 0.4);
+  color: #FDA4AF;
+}
+.twarn__dist-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #E11D48;
+}
+
+.twarn__footer {
+  padding: 20px 28px;
+  border-top: 1px solid var(--rule);
+  background: var(--paper-3);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.twarn__guidance {
+  font-size: .84rem;
+  line-height: 1.5;
+  color: var(--ink-2);
+  max-width: 680px;
+}
+.twarn__guidance strong {
+  color: var(--ink);
+}
+.twarn__actions {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+@media (max-width: 768px) {
+  .twarn__header, .twarn__rivers-section, .twarn__districts-section, .twarn__footer {
+    padding: 18px 16px;
+  }
+  .twarn__provs-grid {
+    grid-template-columns: 1fr;
+  }
+  .twarn__footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .twarn__actions {
+    width: 100%;
+  }
+  .twarn__actions .btn {
+    flex: 1;
+  }
 }
