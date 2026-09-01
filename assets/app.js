@@ -173,7 +173,7 @@ const EVENT = {
   since:"2026-08-26T08:37:00+05:45",
   title:{en:"2026 Nepal Floods", ne:"२०२६ नेपाल बाढी"},
   region:{en:"Rasuwa · Nuwakot · Dhading · Trishuli corridor · Chitwan · Nawalparasi", ne:"रसुवा · नुवाकोट · धादिङ · त्रिशूली कोरिडोर · चितवन · नवलपरासी"},
-  eas:{en:"Trishuli / Bhote Koshi glacier-collapse flood. NDRRMA confirm 987 dead and 3,916 missing; 11,814 rescued (1 Sept, 9am). 639 hydropower workers missing, around 500 believed trapped inside tunnels. Riverside alert still active; Prithvi Highway still cut at Krishnabhir.",
+  eas:{en:"Trishuli / Bhote Koshi glacier-collapse flood. NDRRMA confirm 1,010 dead and ~4,000 missing; 11,800+ rescued (1 Sept). 639 hydropower workers missing, ~500 believed trapped inside tunnels. Kathmandu Valley on moderate flood advisory. Prithvi Highway still cut at Krishnabhir.",
        ne:"त्रिशूली / भोटेकोशी हिमनदी भत्किएर आएको बाढी। NDRRMA ले ९८७ मृत्यु र ३,९१६ बेपत्ता पुष्टि गरेको; ११,८१४ उद्धार (१ सेप्टेम्बर, बिहान ९ बजे)। ६३९ जलविद्युत् कामदार बेपत्ता, करिब ५०० सुरुङभित्रै फसेको अनुमान। नदी किनार चेतावनी कायमै; कृष्णभीरमा पृथ्वी राजमार्ग अझै अवरुद्ध।"}
 };
 /* Nepal-side figures only. Live-refreshed every 10 minutes: local feed (baseline)
@@ -182,16 +182,16 @@ const EVENT = {
    Nepal registry). The Wikipedia INFOBOX is NOT used — it reports Nepal+Tibet
    COMBINED, which is what previously inflated the toll. */
 let STATS = [
-  {key:"deaths",  n:"987", cls:"hstat--death"},
-  {key:"missing", n:"3,916"},
+  {key:"deaths",  n:"1,058", cls:"hstat--death"},
+  {key:"missing", n:"3,916", cls:"hstat--missing"},
   {key:"foreign", n:"583"},
-  {key:"rescued", n:"11,814", cls:"hstat--rescue"}   // hero = TOTAL rescued (NDRRMA rescued-statistics); the NAMED registry (3,122) is a separate figure shown on the Rescued page
+  {key:"rescued", n:"11,800", cls:"hstat--rescue"}   // hero = TOTAL rescued (NDRRMA rescued-statistics); the NAMED registry (3,122) is a separate figure shown on the Rescued page
 ];
 
 /* -------------------- TICKER -------------------- */
 const TICKER = [
-  {src:"NDRRMA", en:"NDRRMA: 987 confirmed dead, 3,916 missing, 11,814 rescued (1 Sept) — rescue and recovery operations continue",
-   ne:"NDRRMA: ९८७ मृत्यु पुष्टि, ३,९१६ बेपत्ता, ११,८१४ उद्धार (१ सेप्टेम्बर) — उद्धार तथा खोजी कार्य जारी"},
+  {src:"NDRRMA", en:"NDRRMA: 1,010 confirmed dead, ~4,000 missing, 11,800+ rescued (1 Sept, updated) — rescue and recovery operations continue",
+   ne:"NDRRMA: १,०१० मृत्यु पुष्टि, ~४,००० बेपत्ता, ११,८०० + उद्धार (१ सेप्टेम्बर) — उद्धार तथा खोजी कार्य जारी"},
   {src:"RESCUE", en:"Around 500 still believed inside hydropower tunnels — specialized international and army teams continue de-sludging at Upper Trishuli-1 & Chilime",
    ne:"जलविद्युत् सुरुङभित्र अझै करिब ५०० जना रहेको अनुमान — माथिल्लो त्रिशूली-१ र चिलिमेमा नेपाली सेना तथा अन्तर्राष्ट्रिय विशेषज्ञ टोलीबाट हिलो हटाउने कार्य जारी"},
   {src:"TRAFFIC", en:"Prithvi Highway still cut at Krishnabhir (Dhading) — Mugling–Kathmandu section diversion and restoration ongoing",
@@ -1201,33 +1201,30 @@ const GLOF={
   msg:{en:"Suspected glacial lake outburst flood (GLOF) from the Tibet side. NDRRMA urges residents of Rasuwa, Nuwakot, Dhading, Gorkha & Chitwan to stay alert and move to higher ground.",
        ne:"तिब्बततर्फबाट हिमताल विस्फोट बाढी (GLOF) को आशंका। रसुवा, नुवाकोट, धादिङ, गोरखा र चितवनका बासिन्दालाई सतर्क रही अग्लो सुरक्षित स्थानमा जान NDRRMA को आग्रह।"}
 };
-/* Notifications feed (factual, sourced) */
 const NOTIFS=[
+  {id:"toll-2026-0901", sev:"danger", tag:{en:"Toll update",ne:"मृत्यु अद्यावधिक"}, time:"1 Sept", src:"NDRRMA",
+   msg:{en:"NDRRMA, 1 Sept: 1,058 confirmed dead, 3,916 missing, 267 injured and 11,800 rescued on the Nepal side. 21,000+ security personnel deployed across the disaster zone.",
+        ne:"NDRRMA, १ सेप्टेम्बर: नेपालतर्फ १,०५८ मृत्यु पुष्टि, ३,९१६ बेपत्ता, २६७ घाइते र ११,८०० उद्धार। विपद् क्षेत्रमा २१,०००+ सुरक्षाकर्मी परिचालित।"}},
+  {id:"warn-2026-0901-ktm", sev:"watch", tag:{en:"KTM Valley advisory",ne:"काठमाडौं उपत्यका सतर्कता"}, time:"1 Sept", src:"NDRRMA / DHM", url:"https://www.dhm.gov.np",
+   msg:{en:"Kathmandu Valley on moderate flood advisory — rising water levels monitored along Bagmati, Bishnumati, Hanumante and Dhobi Khola rivers. Heavy rainfall forecast through 1–2 Sept.",
+        ne:"काठमाडौं उपत्यकामा मध्यम बाढी सतर्कता — बागमती, बिष्णुमती, हनुमन्ते र ढोबी खोलाको जलसतह निगरानीमा। १–२ सेप्टेम्बरसम्म भारी वर्षाको पूर्वानुमान।"}},
+  {id:"warn-2026-0901-riverside", sev:"danger", tag:{en:"Riverside RED alert",ne:"किनार रातो चेतावनी"}, time:"1 Sept", src:"NDRRMA / DHM", url:"https://www.dhm.gov.np",
+   msg:{en:"Riverside Red Alert maintained for Rasuwa, Nuwakot, Dhading, Chitwan, Nawalparasi (E/W) and Gorkha. Trishuli runs ~3 m above danger level at Galchhi. Stay off the banks.",
+        ne:"रसुवा, नुवाकोट, धादिङ, चितवन, नवलपरासी (पू/प) र गोरखामा नदी किनारमा रातो चेतावनी कायमै। गल्छीमा त्रिशूली खतरा विन्दुभन्दा ~३ मि. माथि। नदी किनारबाट टाढा बस्नुहोस्।"}},
+  {id:"traffic-2026-0901-nightban", sev:"watch", tag:{en:"Night travel ban",ne:"रातको यात्रा प्रतिबन्ध"}, time:"1 Sept", src:"Nepal Police Traffic", url:"highway-updates.html",
+   msg:{en:"Night travel bans in force: BP Highway closed 6 PM–4 AM; Tokha–Chhahare Road closed 10 PM–5 AM. Prithvi Highway still cut at Krishnabhir. Confirm with traffic office (103) before travelling.",
+        ne:"रातको यात्रा प्रतिबन्ध: बीपी राजमार्ग साँझ ६–बिहान ४; टोखा–छहरे सडक राति १०–बिहान ५ बजे बन्द। पृथ्वी राजमार्ग कृष्णभीरमा अझै अवरुद्ध। यात्रा अघि ट्राफिक कार्यालय (१०३) मा पुष्टि गर्नुहोस्।"}},
+  {id:"warn-2026-0901-lhende", sev:"watch", tag:{en:"Dammed lake",ne:"बाँधिएको ताल"}, time:"1 Sept", src:"NDRRMA satellite analysis",
+   msg:{en:"Lhende Khola barrier lake (~0.11 km², 18 km above Rasuwagadhi) remains under critical burst surveillance. A rupture would send a second surge down Bhote Koshi — stay on high ground.",
+        ne:"ल्हेन्डे खोलाको बाँधिएको ताल (~०.११ वर्ग कि.मि., रसुवागढीभन्दा १८ कि.मि. माथि) गम्भीर निगरानीमा। फुटेमा भोटेकोशीमा दोस्रो भल — अग्लो स्थानमा रहनुहोस्।"}},
   {id:"tunnel-2026-0831-everest", sev:"relief", tag:{en:"Tunnel rescue",ne:"सुरुङ उद्धार"}, time:"31 Aug", src:"Nepali Army / IFMGA guides",
-   msg:{en:"Everest veterans and IFMGA mountain guides have entered the Chilime tunnel on fixed lines, reaching about 120 m before chest-deep sludge stopped them. Around 900 are still believed inside tunnel systems, ~300 at Upper Trishuli-1.",
-        ne:"सगरमाथा आरोही र IFMGA पर्वतीय गाइड फिक्स्ड लाइनमा चिलिमे सुरुङभित्र पसे, छातीसम्मको हिलोले रोक्नुअघि करिब १२० मिटर पुगे। सुरुङभित्र अझै करिब ९०० जना रहेको अनुमान, माथिल्लो त्रिशूली-१ मै करिब ३००।"}},
-  {id:"rain-2026-0831", sev:"watch", tag:{en:"Rain forecast",ne:"वर्षा पूर्वानुमान"}, time:"31 Aug", src:"DHM", url:"https://www.dhm.gov.np",
-   msg:{en:"Rain forecast over the flood zone today — moderate across most of Rasuwa, heavy in one or two places. It may interrupt search and rescue and raise river levels again.",
-        ne:"आज बाढी क्षेत्रमा वर्षाको पूर्वानुमान — रसुवाका अधिकांश स्थानमा मध्यम, एक–दुई स्थानमा भारी। खोज–उद्धारमा अवरोध र नदीको सतह फेरि बढ्न सक्छ।"}},
-  {id:"warn-2026-0831-riverside", sev:"danger", tag:{en:"Riverside alert",ne:"किनार चेतावनी"}, time:"31 Aug", src:"NDRRMA / DHM", url:"https://www.dhm.gov.np",
-   msg:{en:"Riverside alert active for Rasuwa, Nuwakot, Dhading and Chitwan. The Bhote Koshi is rising again and the Trishuli runs ~3 m above normal at Galchhi. Stay off the banks and move to higher ground.",
-        ne:"रसुवा, नुवाकोट, धादिङ र चितवनमा नदी किनारको चेतावनी सक्रिय। भोटेकोशी फेरि बढ्दै; गल्छीमा त्रिशूली सामान्यभन्दा करिब ३ मि. माथि। किनारबाट टाढा रहनुहोस्, अग्लो स्थानमा जानुहोस्।"}},
-  {id:"warn-2026-0831-lhende", sev:"watch", tag:{en:"Dammed lake",ne:"बाँधिएको ताल"}, time:"31 Aug", src:"NDRRMA satellite analysis",
-   msg:{en:"A landslide has dammed the Lhende Khola ~18 km above Rasuwagadhi, forming a lake of about 0.11 km². A burst would send a second surge down the Bhote Koshi — the site stays under watch.",
-        ne:"रसुवागढीभन्दा करिब १८ कि.मि. माथि पहिरोले ल्हेन्डे खोला थुनेर करिब ०.११ वर्ग कि.मि. को ताल बनेको। फुटेमा भोटेकोशीमा दोस्रो भल आउन सक्छ — स्थल निगरानीमा।"}},
-  {id:"traffic-2026-0831-prithvi", sev:"danger", tag:{en:"Highway",ne:"राजमार्ग"}, time:"31 Aug", src:"Nepal Police Traffic", url:"highway-updates.html",
-   msg:{en:"Prithvi Highway still cut at Krishnabhir (Benighat Rorang, Dhading) — the Mugling–Kathmandu section is closed. Confirm with the traffic office (103) before travelling.",
-        ne:"पृथ्वी राजमार्ग कृष्णभीर (बेनीघाट रोराङ, धादिङ) मा अझै अवरुद्ध — मुग्लिन–काठमाडौं खण्ड बन्द। यात्रा अघि ट्राफिक कार्यालय (१०३) मा पुष्टि गर्नुहोस्।"}},
-  {id:"rescue-2026-0831-tunnel", sev:"relief", tag:{en:"Tunnel rescue",ne:"सुरुङ उद्धार"}, time:"31 Aug", src:"NDRRMA / Reuters",
-   msg:{en:"Rescuers have drilled into the upper section of the Trishuli 3A tunnel and are preparing to send crews in with oxygen. 100+ workers may still be alive inside; 35 are trapped at Upper Trishuli-1.",
-        ne:"उद्धारकर्मी त्रिशूली ३ए सुरुङको माथिल्लो भागसम्म ड्रिल गरी अक्सिजनसहित टोली पठाउने तयारीमा। भित्र १००+ कामदार जीवित हुन सक्ने; माथिल्लो त्रिशूली-१ मा ३५ जना फसेका।"}},
-  {id:"toll-2026-0831", sev:"danger", tag:{en:"Toll",ne:"मृत्यु"}, time:"31 Aug", src:"NDRRMA",
-   msg:{en:"NDRRMA, day six: 903 confirmed dead, 4,247 missing, 1,473 injured and 10,451 rescued on the Nepal side. Chitwan has recovered the most bodies (272), Rasuwa the fewest (24).",
-        ne:"NDRRMA, छैटौं दिन: नेपालतर्फ ९०३ मृत्यु पुष्टि, ४,२४७ बेपत्ता, १,४७३ घाइते र १०,४५१ उद्धार। सबैभन्दा धेरै शव चितवनमा (२७२), सबैभन्दा कम रसुवामा (२४)।"}},
-  {id:"relief-2026-0831-fund", sev:"relief", tag:{en:"Relief",ne:"राहत"}, time:"31 Aug", src:"OPMCM / Radio Nepal", url:"relief.html",
-   msg:{en:"PM Disaster Relief Fund passes Rs 5 billion; Rs 675 million released to 15 local units in Rasuwa, Nuwakot, Dhading, Gorkha and Tanahun. Donate only via the official channels.",
-        ne:"प्रधानमन्त्री विपद् राहत कोष रु. ५ अर्ब नाघ्यो; रसुवा, नुवाकोट, धादिङ, गोरखा र तनहुँका १५ स्थानीय तहलाई रु. ६७.५ करोड निकासा। आधिकारिक माध्यमबाट मात्र दान गर्नुहोस्।"}}
+   msg:{en:"Everest veterans and IFMGA guides entered the Chilime tunnel on fixed lines, reaching ~120 m before chest-deep sludge stopped them. ~500 still believed inside tunnel systems across 11 damaged projects.",
+        ne:"सगरमाथा आरोही र IFMGA गाइड फिक्स्ड लाइनमा चिलिमे सुरुङभित्र ~१२० मिटर पुगे। ११ क्षतिग्रस्त आयोजनाका सुरुङभित्र ~५०० जना अझै रहेको अनुमान।"}},
+  {id:"relief-2026-0831-fund", sev:"relief", tag:{en:"Relief fund",ne:"राहत कोष"}, time:"31 Aug", src:"OPMCM / Radio Nepal", url:"relief.html",
+   msg:{en:"PM Disaster Relief Fund passes Rs 5.44 billion; Rs 675 million released to 15 local units in Rasuwa, Nuwakot, Dhading, Gorkha and Tanahun. Donate only via official channels.",
+        ne:"प्रधानमन्त्री विपद् राहत कोष रु. ५.४४ अर्ब नाघ्यो; १५ स्थानीय तहलाई रु. ६७.५ करोड निकासा। आधिकारिक माध्यमबाट मात्र दान गर्नुहोस्।"}}
 ];
+
 
 /* =========================================================================
    TODAY'S DISTRICT FLOOD WARNINGS — the data behind the "Today's Flood

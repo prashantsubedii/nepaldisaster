@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-01T13:20:00+05:45",
+  "updated_at": "2026-09-01T19:45:00+05:45",
   "event": {
     "code": "FL-2026-0826",
     "since": "2026-08-26T08:37:00+05:45",
@@ -9,35 +9,34 @@
       "ne": "रसुवा · नुवाकोट · धादिङ · त्रिशूली कोरिडोर · चितवन · नवलपरासी"
     },
     "eas": {
-      "en": "Trishuli / Bhote Koshi glacier-collapse flood. NDRRMA confirm 987 dead and 3,916 missing; 11,814 rescued (1 Sept, 9am). 639 hydropower workers missing, around 500 believed trapped inside tunnels. Riverside alert still active; Prithvi Highway still cut at Krishnabhir.",
-      "ne": "त्रिशूली / भोटेकोशी हिमनदी भत्किएर आएको बाढी। NDRRMA ले ९८७ मृत्यु र ३,९१६ बेपत्ता पुष्टि गरेको; ११,८१४ उद्धार (१ सेप्टेम्बर, बिहान ९ बजे)। ६३९ जलविद्युत् कामदार बेपत्ता, करिब ५०० सुरुङभित्रै फसेको अनुमान। नदी किनार चेतावनी कायमै; कृष्णभीरमा पृथ्वी राजमार्ग अझै अवरुद्ध।"
+      "en": "Trishuli / Bhote Koshi glacier-collapse flood. NDRRMA confirm 1,010 dead and 4,000 missing; 11,800+ rescued (1 Sept). 639 hydropower workers missing, around 500 believed trapped inside tunnels. Kathmandu Valley on moderate flood advisory. Prithvi Highway still cut at Krishnabhir.",
+      "ne": "त्रिशूली / भोटेकोशी हिमनदी भत्किएर आएको बाढी। NDRRMA ले १,०१० मृत्यु र ४,००० बेपत्ता पुष्टि गरेको; ११,८००+ उद्धार (१ सेप्टेम्बर)। ६३९ जलविद्युत् कामदार बेपत्ता, करिब ५०० सुरुङभित्रै फसेको अनुमान। काठमाडौं उपत्यकामा मध्यम बाढी चेतावनी। कृष्णभीरमा पृथ्वी राजमार्ग अझै अवरुद्ध।"
     }
   },
   "stats": [
-    { "key": "deaths",  "n": "987", "cls": "hstat--death" },
-    { "key": "missing", "n": "3,916" },
+    { "key": "deaths",  "n": "1,058", "cls": "hstat--death" },
+    { "key": "missing", "n": "3,916", "cls": "hstat--missing" },
     { "key": "foreign", "n": "583" },
-    { "key": "rescued", "n": "11,814", "cls": "hstat--rescue" }
+    { "key": "rescued", "n": "11,800", "cls": "hstat--rescue" }
   ],
   "stats_detail": {
     "deaths": {
-      "big": "987",
+      "big": "1,058",
       "rows": [
-        ["Nepal — confirmed dead (NDRRMA, 1 Sept, 9am)", "987"],
-        ["Chitwan", "321"],
-        ["Nawalparasi East", "216"],
-        ["Nawalparasi West", "170"],
-        ["Nuwakot", "95"],
-        ["Gorkha", "65"],
-        ["Dhading", "55"],
-        ["Tanahun", "38"],
-        ["Rasuwa", "27"]
+        ["Nepal — confirmed dead (NDRRMA, 1 Sept)", "1,058"],
+        ["Chitwan", "340"],
+        ["Nawalparasi East", "228"],
+        ["Nawalparasi West", "178"],
+        ["Nuwakot", "102"],
+        ["Gorkha", "68"],
+        ["Dhading", "58"],
+        ["Tanahun", "36"]
       ]
     },
     "missing": {
       "big": "3,916",
       "rows": [
-        ["Nepal — missing / out of contact (1 Sept, 9am)", "3,916"],
+        ["Nepal — missing / out of contact (1 Sept)", "3,916"],
         ["Rasuwa", "865"],
         ["Linked to hydropower projects", "639"],
         ["Foreign nationals among the missing", "583"],
@@ -48,9 +47,9 @@
       ]
     },
     "rescued": {
-      "big": "11,814",
+      "big": "11,800",
       "rows": [
-        ["Total rescued (NDRRMA, 1 Sept)", "11,814"],
+        ["Total rescued (NDRRMA, 1 Sept)", "11,800"],
         ["Named in the public registry", "3,122"],
         ["— of these, Nepali", "2,913"],
         ["— of these, foreign", "209"],
@@ -61,17 +60,17 @@
       ]
     },
     "injured": {
-      "big": "279",
+      "big": "267",
       "rows": [
-        ["Nepal — injured (NDRRMA, 1 Sept)", "279"],
-        ["Still under treatment", "111"],
-        ["Medical treatments provided across the response", "2,740"]
+        ["Nepal \u2014 injured (NDRRMA, 1 Sept)", "267"],
+        ["Still under treatment", "105"],
+        ["Medical treatments provided across the response", "2,800+"]
       ]
     },
     "security": {
-      "big": "21,008",
+      "big": "21,000+",
       "rows": [
-        ["Total personnel mobilised (NDRRMA live count)", "21,008"],
+        ["Total personnel mobilised (NDRRMA live count)", "21,000+"],
         ["Nepali Army", "8,722"],
         ["Nepal Police", "7,894"],
         ["Armed Police Force", "4,203"],
@@ -109,7 +108,7 @@
         ["Generation knocked off the grid (MW)", "431"],
         ["Under-construction capacity damaged (MW)", "470"],
         ["Schools damaged or destroyed", "38"],
-        ["People affected (IFRC estimate)", "93,000"]
+        ["Houses damaged / destroyed", "7,570"],["Displaced households", "~10,000"],["People affected (est.)", "1.6 million"]
       ]
     }
   }

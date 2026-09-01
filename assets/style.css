@@ -124,7 +124,7 @@ html[lang="ne"] .eyebrow { letter-spacing: .04em; font-family: var(--f-np); }
   background: var(--paper-2);
   color: var(--ink);
   padding: 10px 15px;
-  border-radius: 2px;
+  border-radius: var(--r-pill);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -136,7 +136,7 @@ html[lang="ne"] .eyebrow { letter-spacing: .04em; font-family: var(--f-np); }
 }
 html[lang="ne"] .btn { text-transform: none; letter-spacing: 0; }
 .btn:hover { background: var(--paper-3); }
-.btn--primary { background: var(--crimson); border-color: var(--crimson); color: #fff; }
+.btn--primary { background: var(--crimson); border-color: var(--crimson); color: #fff; box-shadow: var(--sh-crim); }
 .btn--primary:hover { background: var(--crimson-ink); border-color: var(--crimson-ink); }
 .btn--ghost { background: transparent; border-color: var(--line-strong); color: var(--ink-2); }
 .btn--ghost:hover { border-color: var(--ink); color: var(--ink); }
@@ -2597,43 +2597,86 @@ h1,h2,h3,h4{ letter-spacing: -.028em; }
 .hero__region{ font-size: clamp(.84rem, 2.2vw, .98rem); letter-spacing: .07em; color: var(--on-dark); margin: 0 0 8px; }
 .hero__meta{ font-size: .78rem; color: var(--on-dark-2); }
 
-/* Elevated stat cards. Depth and a single hairline top accent give them shape —
-   no per-card colour coding, which is what made the old set look like confetti. */
+/* Elevated stat cards — clean glass-panel design.
+   Left border accent codes severity; no glow blobs or pulsing. */
 .hero__stats{
   display: grid; grid-template-columns: repeat(4, 1fr);
-  gap: 14px; margin-top: clamp(28px, 4vw, 40px);
+  gap: 12px; margin-top: clamp(28px, 4vw, 40px);
   border: 0; background: transparent;
 }
 .hstat{
-  border: 1px solid rgba(255,255,255,.13) !important;
-  border-radius: var(--r-lg);
-  background: rgba(255,255,255,.055);
-  padding: 20px 20px 18px;
+  border: 1px solid rgba(255,255,255,.10) !important;
+  border-left-width: 3px !important;
+  border-left-color: rgba(255,255,255,.28) !important;
+  border-radius: var(--r-md);
+  background: rgba(255,255,255,.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 22px 20px 18px;
   position: relative; overflow: hidden;
-  transition: transform .22s var(--ease), background-color .22s var(--ease), border-color .22s var(--ease), box-shadow .22s var(--ease);
+  transition: transform .25s var(--ease), background-color .25s var(--ease), box-shadow .25s var(--ease);
 }
 .hstat::before{
   content: ""; position: absolute; inset: 0 0 auto 0; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,.32), transparent);
+  background: linear-gradient(90deg, rgba(255,255,255,.18), rgba(255,255,255,.06) 60%, transparent);
 }
+.hstat::after{ content: none; }
 .hstat:hover{
-  transform: translateY(-4px);
+  transform: translateY(-3px);
   background: rgba(255,255,255,.10);
-  border-color: rgba(255,255,255,.24) !important;
-  box-shadow: 0 18px 40px rgba(0,0,0,.34);
+  box-shadow: 0 12px 32px rgba(0,0,0,.22);
 }
-.hstat .n{ font-size: clamp(1.9rem, 4.6vw, 2.9rem); font-weight: 700; letter-spacing: -.04em; line-height: 1; color: #fff; }
+
+/* Death — deep rose left accent, neutral number */
+.hstat--death{
+  border-left-color: #F87171 !important;
+  background: rgba(248, 113, 113, .07);
+}
+.hstat--death::before{ background: linear-gradient(90deg, rgba(248,113,113,.22), transparent 60%); }
+.hstat--death .n{ color: #FCA5A5 !important; }
+.hstat--death:hover{ background: rgba(248,113,113,.12); box-shadow: 0 12px 32px rgba(0,0,0,.22); }
+
+/* Missing — muted amber left accent */
+.hstat--missing{
+  border-left-color: #FCD34D !important;
+  background: rgba(252, 211, 77, .06);
+}
+.hstat--missing::before{ background: linear-gradient(90deg, rgba(252,211,77,.18), transparent 60%); }
+.hstat--missing .n{ color: #FDE68A !important; }
+.hstat--missing:hover{ background: rgba(252,211,77,.10); box-shadow: 0 12px 32px rgba(0,0,0,.22); }
+
+/* Rescue — teal/emerald left accent */
+.hstat--rescue{
+  border-left-color: #34D399 !important;
+  background: rgba(52, 211, 153, .07);
+}
+.hstat--rescue::before{ background: linear-gradient(90deg, rgba(52,211,153,.22), transparent 60%); }
+.hstat--rescue .n{ color: #6EE7B7 !important; }
+.hstat--rescue:hover{ background: rgba(52,211,153,.11); box-shadow: 0 12px 32px rgba(0,0,0,.22); }
+
+@keyframes statCount{
+  from{ opacity: 0; transform: translateY(6px); }
+  to{ opacity: 1; transform: translateY(0); }
+}
+.hstat .n{
+  font-size: clamp(1.9rem, 4.6vw, 2.9rem); font-weight: 700;
+  letter-spacing: -.04em; line-height: 1; color: #fff;
+  animation: statCount .55s var(--ease) both;
+}
 .hstat--death .n, .hstat--rescue .n{ color: #fff; }
-.hstat .lbl{ font-size: .68rem; letter-spacing: .11em; color: var(--on-dark-2); margin-top: 11px; }
+.hstat .lbl{ font-size: .68rem; letter-spacing: .11em; color: rgba(255,255,255,.55); margin-top: 11px; text-transform: uppercase; font-family: var(--f-cond); }
+html[lang="ne"] .hstat .lbl{ text-transform: none; letter-spacing: 0; font-family: var(--f-np); }
 .hstat__go{
-  font-size: .59rem; letter-spacing: .1em; color: var(--accent-2); margin-top: 10px;
+  font-size: .59rem; letter-spacing: .1em; color: rgba(255,255,255,.45); margin-top: 10px;
   opacity: 0; transform: translateY(3px);
   transition: opacity .2s var(--ease), transform .2s var(--ease);
+  text-transform: uppercase; font-family: var(--f-cond);
 }
 .hstat:hover .hstat__go, .hstat:focus-visible .hstat__go{ opacity: 1; transform: translateY(0); }
 @media (hover: none){ .hstat__go{ opacity: 1; transform: none; } }
-.hero__note{ font-size: .75rem; color: var(--on-dark-2); opacity: .8; max-width: 74ch; margin-top: 24px; }
+.hero__note{ font-size: .75rem; color: rgba(255,255,255,.45); max-width: 74ch; margin-top: 24px; }
 .hero__cta{ gap: 12px; margin-top: 24px; }
+
 
 /* ---------- 11. section headings ---------------------------------------- */
 .sec-head{
@@ -2661,7 +2704,7 @@ section[style*="var(--slate)"] .sec-head .more{ border-color: var(--line-dark-st
   transition: transform .2s var(--ease), box-shadow .2s var(--ease), border-color .2s var(--ease);
 }
 .hl::before{ content: none !important; }
-.hl:hover{ transform: translateY(-3px); box-shadow: var(--sh-2); border-color: var(--rule-2); background: var(--paper-2); }
+.hl:hover{ transform: translateY(-4px) scale(1.01); box-shadow: 0 16px 36px -6px rgba(15,23,42,.10); border-color: var(--rule-2); background: var(--paper-2); }
 .hl__top{ gap: 12px; align-items: center; }
 .hl__ic{
   width: 36px; height: 36px; flex-basis: 36px; border-radius: var(--r-sm);
@@ -2690,7 +2733,7 @@ section[style*="var(--slate)"] .sec-head .more{ border-color: var(--line-dark-st
   transition: transform .22s var(--ease), box-shadow .22s var(--ease), border-color .22s var(--ease);
 }
 .news--danger::before, .news--watch::before, .news--relief::before{ content: none !important; }
-.news:hover{ transform: translateY(-5px); box-shadow: var(--sh-3); border-color: var(--rule-2); }
+.news:hover{ transform: translateY(-6px) scale(1.01); box-shadow: 0 20px 40px -8px rgba(15,23,42,.12); border-color: var(--rule-2); }
 .news__thumb{ height: 174px; border-bottom: 0; background: var(--paper-3); overflow: hidden; }
 .news__thumb img{ transition: transform .55s var(--ease); }
 .news:hover .news__thumb img{ transform: scale(1.05); }
@@ -3289,4 +3332,37 @@ html[lang="ne"] .twarn__pcard-h h4 { font-family: var(--f-np); }
   .twarn__actions .btn {
     flex: 1;
   }
+}
+
+/* ---------- scroll-reveal entrance animations ---------- */
+@keyframes fadeUp{
+  from{ opacity: 0; transform: translateY(28px); }
+  to{ opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeScale{
+  from{ opacity: 0; transform: scale(.96) translateY(16px); }
+  to{ opacity: 1; transform: scale(1) translateY(0); }
+}
+.reveal{ opacity: 0; }
+.reveal.in{ animation: fadeUp .6s var(--ease) both; }
+.reveal-card{ opacity: 0; }
+.reveal-card.in{ animation: fadeScale .5s var(--ease) both; }
+.reveal-delay-1{ animation-delay: .08s !important; }
+.reveal-delay-2{ animation-delay: .16s !important; }
+.reveal-delay-3{ animation-delay: .24s !important; }
+.reveal-delay-4{ animation-delay: .32s !important; }
+@media (prefers-reduced-motion: reduce){
+  .reveal, .reveal-card{ opacity: 1; animation: none !important; }
+}
+
+/* ---------- subtle pulse on death stat number ---------- */
+@keyframes deathPulse{
+  0%, 100%{ opacity: 1; }
+  50%{ opacity: .82; }
+}
+.hstat--death .n{
+  animation: deathPulse 3s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce){
+  .hstat--death .n{ animation: none; }
 }
