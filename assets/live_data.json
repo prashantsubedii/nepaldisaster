@@ -1,5 +1,6 @@
 {
-  "updated_at": "2026-09-01T19:45:00+05:45",
+  "_comment": "Curated official baseline (rank 2). Rows written directly by a rank-1 API — the NDRRMA named rescue registry and its Nepali/foreign split, the rescue-system log, the comms-tower status — are deliberately NOT listed here. They used to be, and because this feed carries no source rank it silently overwrote the live API values on every refresh cycle. See _API_OWNED_ROWS in assets/app.js.",
+  "updated_at": "2026-09-02T12:30:00+05:45",
   "event": {
     "code": "FL-2026-0826",
     "since": "2026-08-26T08:37:00+05:45",
@@ -9,21 +10,23 @@
       "ne": "रसुवा · नुवाकोट · धादिङ · त्रिशूली कोरिडोर · चितवन · नवलपरासी"
     },
     "eas": {
-      "en": "Trishuli / Bhote Koshi glacier-collapse flood. NDRRMA confirm 1,010 dead and 4,000 missing; 11,800+ rescued (1 Sept). 639 hydropower workers missing, around 500 believed trapped inside tunnels. Kathmandu Valley on moderate flood advisory. Prithvi Highway still cut at Krishnabhir.",
-      "ne": "त्रिशूली / भोटेकोशी हिमनदी भत्किएर आएको बाढी। NDRRMA ले १,०१० मृत्यु र ४,००० बेपत्ता पुष्टि गरेको; ११,८००+ उद्धार (१ सेप्टेम्बर)। ६३९ जलविद्युत् कामदार बेपत्ता, करिब ५०० सुरुङभित्रै फसेको अनुमान। काठमाडौं उपत्यकामा मध्यम बाढी चेतावनी। कृष्णभीरमा पृथ्वी राजमार्ग अझै अवरुद्ध।"
+      "en": "Trishuli / Bhote Koshi glacier-collapse flood. NDRRMA confirm 1,114 dead, 3,916 missing and 1,473 injured; 11,814 rescued (2 Sept). 900 hydropower workers missing across 12 projects, around 500 believed trapped inside tunnels. Prithvi Highway still cut at Krishnabhir.",
+      "ne": "त्रिशूली / भोटेकोशी हिमनदी भत्किएर आएको बाढी। NDRRMA ले १,११४ मृत्यु, ३,९१६ बेपत्ता र १,४७३ घाइते पुष्टि गरेको; ११,८१४ उद्धार (२ सेप्टेम्बर)। १२ आयोजनाका ९०० जलविद्युत् कामदार बेपत्ता, करिब ५०० सुरुङभित्रै फसेको अनुमान। कृष्णभीरमा पृथ्वी राजमार्ग अझै अवरुद्ध।"
     }
   },
   "stats": [
-    { "key": "deaths",  "n": "1,058", "cls": "hstat--death" },
+    { "key": "deaths",  "n": "1,114", "cls": "hstat--death" },
     { "key": "missing", "n": "3,916", "cls": "hstat--missing" },
     { "key": "foreign", "n": "583" },
-    { "key": "rescued", "n": "11,800", "cls": "hstat--rescue" }
+    { "key": "rescued", "n": "11,814", "cls": "hstat--rescue" }
   ],
   "stats_detail": {
     "deaths": {
-      "big": "1,058",
+      "big": "1,114",
       "rows": [
-        ["Nepal — confirmed dead (NDRRMA, 1 Sept)", "1,058"],
+        ["Nepal — confirmed dead (NDRRMA)", "1,114"],
+        ["Bodies recovered so far (approx.)", "900"],
+        ["— of these, formally identified", "4%"],
         ["Chitwan", "340"],
         ["Nawalparasi East", "228"],
         ["Nawalparasi West", "178"],
@@ -36,47 +39,46 @@
     "missing": {
       "big": "3,916",
       "rows": [
-        ["Nepal — missing / out of contact (1 Sept)", "3,916"],
-        ["Rasuwa", "865"],
-        ["Linked to hydropower projects", "639"],
-        ["Foreign nationals among the missing", "583"],
+        ["Nepal — missing / out of contact", "3,916"],
+        ["Linked to hydropower projects (12 projects)", "900"],
+        ["Foreign nationals among the missing (38 countries)", "583"],
+        ["Trade and transport workers (est.)", "300"],
         ["Nepalis accompanying foreign tourists", "127"],
-        ["Nepali Army personnel", "45"],
-        ["Nepal Police personnel", "25"],
-        ["Armed Police Force personnel", "13"]
+        ["Nepali Army personnel", "44"],
+        ["Nepal Police personnel", "28"],
+        ["Customs office employees", "15"],
+        ["Armed Police Force personnel", "13"],
+        ["Immigration office employees", "4"]
       ]
     },
     "rescued": {
-      "big": "11,800",
+      "big": "11,814",
       "rows": [
-        ["Total rescued (NDRRMA, 1 Sept)", "11,800"],
-        ["Named in the public registry", "3,122"],
-        ["— of these, Nepali", "2,913"],
-        ["— of these, foreign", "209"],
+        ["Total rescued (NDRRMA bulletin)", "11,814"],
         ["Airlifted by the Nepali Army — Nepali", "3,344"],
         ["Airlifted by the Nepali Army — foreign nationals", "252"],
-        ["Rescue and relief flights flown", "411"],
-        ["Logged in the NDRRMA rescue system", "7,514"]
+        ["Rescue and relief flights flown", "411"]
       ]
     },
     "injured": {
-      "big": "267",
+      "big": "1,473",
       "rows": [
-        ["Nepal \u2014 injured (NDRRMA, 1 Sept)", "267"],
-        ["Still under treatment", "105"],
-        ["Medical treatments provided across the response", "2,800+"]
+        ["Nepal — injured (NDRRMA)", "1,473"],
+        ["Admitted to hospital", "279"],
+        ["Still under intensive treatment", "111"],
+        ["Medical treatments provided across the response", "2,740"]
       ]
     },
     "security": {
-      "big": "21,000+",
+      "big": "21,008",
       "rows": [
-        ["Total personnel mobilised (NDRRMA live count)", "21,000+"],
+        ["Total personnel mobilised (NDRRMA live count)", "21,008"],
         ["Nepali Army", "8,722"],
         ["Nepal Police", "7,894"],
         ["Armed Police Force", "4,203"],
         ["Rescue and relief flights flown", "411"],
-        ["Settlements still out of reach", "2,498"],
-        ["Communication towers", "Connectivity fully restored"]
+        ["Psychosocial counsellors deployed (Rasuwa & Nuwakot)", "50+"],
+        ["Settlements still out of reach", "2,498"]
       ]
     },
     "foreign": {
@@ -84,17 +86,19 @@
       "rows": [
         ["India", "288"], ["China (approx.)", "100"], ["United States", "80"],
         ["Ukraine", "53"], ["Malaysia", "51"], ["Australia", "35"],
-        ["United Kingdom", "33"], ["Canada", "32"], ["South Korea", "9"]
+        ["United Kingdom", "33"], ["Latvia", "33"], ["Canada", "32"], ["South Korea", "9"]
       ]
     },
     "tunnel": {
-      "big": "639",
+      "big": "900",
       "rows": [
-        ["Hydropower workers missing (12 projects)", "639"],
+        ["Hydropower workers missing (12 projects)", "900"],
         ["Believed still inside tunnel systems", "~500"],
-        ["Upper Trishuli-1 — believed inside", "~300"],
+        ["Upper Trishuli-1 — reported missing", "576"],
+        ["Upper Trishuli-1 — believed inside the tunnel", "~300"],
         ["Brought out of Trishuli 3A so far", "~350"],
         ["Airlifted from tunnels in the first two days", "279"],
+        ["Hydropower projects damaged (NEA)", "13"],
         ["Hydropower facilities damaged or destroyed", "27"]
       ]
     },
@@ -105,10 +109,14 @@
         ["Roads and bridges (Rs billion)", "15"],
         ["Bridges damaged", "41"],
         ["Road damaged (km)", "42"],
+        ["Hydropower projects damaged (NEA)", "13"],
         ["Generation knocked off the grid (MW)", "431"],
         ["Under-construction capacity damaged (MW)", "470"],
         ["Schools damaged or destroyed", "38"],
-        ["Houses damaged / destroyed", "7,570"],["Displaced households", "~10,000"],["People affected (est.)", "1.6 million"]
+        ["People affected (IFRC estimate)", "93,000"],
+        ["Need emergency water & sanitation (UN)", "65,000"],
+        ["Pregnant & breastfeeding women needing nutrition aid (UN)", "10,500"],
+        ["Children under 5 needing treatment for severe wasting (UN)", "2,600"]
       ]
     }
   }

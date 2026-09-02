@@ -2023,29 +2023,6 @@ html[lang="ne"] .fpop__foot { font-family: var(--f-np); }
 .wdate { margin-left: auto; font-family: var(--f-mono); font-size: .7rem; color: var(--muted); }
 .fpop--warn .fpop__card { border-top-color: var(--danger); }
 
-/* river status chips */
-.wrivers { display: flex; flex-wrap: wrap; gap: 7px; margin: 2px 0 14px; }
-.wrv {
-  display: inline-flex; align-items: baseline; gap: 6px;
-  border: 1px solid var(--line); border-left: 3px solid var(--muted);
-  border-radius: 6px; padding: 5px 10px; font-size: .8rem; background: var(--paper);
-}
-.wrv b { font-weight: 600; }
-.wrv span { font-family: var(--f-mono); font-size: .7rem; color: var(--muted); }
-.wrv--danger { border-left-color: var(--danger); }
-.wrv--danger span { color: var(--danger); }
-.wrv--watch { border-left-color: var(--watch); }
-
-/* count banner */
-.wcount {
-  display: flex; align-items: center; gap: 12px;
-  background: var(--paper-3); border: 1px solid var(--line);
-  border-left: 4px solid var(--danger);
-  border-radius: 8px; padding: 9px 14px; margin-bottom: 14px;
-}
-.wcount__n { font-size: 1.85rem; font-weight: 800; line-height: 1; color: var(--danger); }
-.wcount__l { font-size: .8rem; color: var(--ink-2); line-height: 1.25; }
-
 /* Riverside-alert districts — one short, prominent line */
 .wsev {
   display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap;
@@ -2062,19 +2039,6 @@ html[lang="ne"] .wsev__l { font-family: var(--f-np); letter-spacing: 0; }
 
 /* Full district list — calm, comma-separated text grouped by province (no boxes) */
 .wprovs { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 22px; }
-.wprov { min-width: 0; }
-.wprov__h {
-  display: flex; align-items: baseline; gap: 8px;
-  font-family: var(--f-cond); text-transform: uppercase; letter-spacing: .06em;
-  font-weight: 700; font-size: .7rem; color: var(--muted);
-  margin-bottom: 3px;
-}
-html[lang="ne"] .wprov__h { font-family: var(--f-np); letter-spacing: 0; }
-.wprov__n { margin-left: auto; font-family: var(--f-mono); font-size: .66rem; color: var(--muted); }
-.wlist { margin: 0; font-size: .875rem; line-height: 1.6; color: var(--ink-2); }
-.wd--sev { color: var(--danger); font-weight: 700; }
-
-@media (max-width: 460px) { .wprovs { grid-template-columns: 1fr; } }
 
 /* "Today's district warnings" reopen control in the alerts drawer */
 .notif__warn {
@@ -2091,7 +2055,6 @@ html[lang="ne"] .notif__warn { font-family: var(--f-np); text-transform: none; l
 
 @media (max-width: 480px) {
   .fpop__card--wide { max-width: 100%; }
-  .wcount__n { font-size: 1.7rem; }
 }
 
 /* =========================================================================
@@ -2257,8 +2220,6 @@ html[lang="ne"] .hwlegendnote, html[lang="ne"] .hwprecau li { font-family: var(-
   .hwchips { gap: 6px; }
   .hwchip { padding: 7px 11px; font-size: .7rem; }
 }
-
-
 
 /* =========================================================================
    v7 — MODERN UI
@@ -2676,7 +2637,6 @@ html[lang="ne"] .hstat .lbl{ text-transform: none; letter-spacing: 0; font-famil
 @media (hover: none){ .hstat__go{ opacity: 1; transform: none; } }
 .hero__note{ font-size: .75rem; color: rgba(255,255,255,.45); max-width: 74ch; margin-top: 24px; }
 .hero__cta{ gap: 12px; margin-top: 24px; }
-
 
 /* ---------- 11. section headings ---------------------------------------- */
 .sec-head{
@@ -3122,175 +3082,6 @@ html[lang="ne"] .twarn__title { font-family: var(--f-np); letter-spacing: 0; }
   max-width: 960px;
 }
 
-.twarn__rivers-section {
-  padding: 22px 28px;
-  border-bottom: 1px solid var(--rule);
-  background: var(--paper-2);
-}
-.twarn__subh {
-  font-family: var(--f-display);
-  font-size: .92rem;
-  text-transform: uppercase;
-  letter-spacing: .08em;
-  color: var(--muted);
-  margin: 0 0 16px;
-}
-html[lang="ne"] .twarn__subh { font-family: var(--f-np); letter-spacing: 0; text-transform: none; font-size: 1rem; }
-.twarn__rivers-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 12px;
-}
-.twarn__river {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
-  border-radius: var(--r-md);
-  border: 1px solid var(--rule);
-  background: var(--paper-3);
-  transition: transform .16s var(--ease), border-color .16s var(--ease);
-}
-.twarn__river:hover {
-  transform: translateY(-2px);
-}
-.twarn__river--danger {
-  border-left: 4px solid #E11D48;
-  background: var(--danger-soft);
-}
-.twarn__river--watch {
-  border-left: 4px solid #F59E0B;
-  background: var(--watch-soft);
-}
-.twarn__river-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-.twarn__river--danger .twarn__river-dot { background: #E11D48; box-shadow: 0 0 8px #E11D48; }
-.twarn__river--watch .twarn__river-dot { background: #F59E0B; box-shadow: 0 0 8px #F59E0B; }
-.twarn__river-info {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 0;
-}
-.twarn__river-name {
-  font-size: .88rem;
-  color: var(--ink);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.twarn__river-status {
-  font-size: .76rem;
-  color: var(--muted);
-  font-weight: 500;
-}
-
-.twarn__districts-section {
-  padding: 24px 28px;
-  background: var(--paper-2);
-}
-.twarn__dist-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 18px;
-}
-.twarn__redzone {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 14px;
-  background: var(--danger-soft);
-  border: 1px solid rgba(225, 29, 72, 0.3);
-  border-radius: var(--r-pill);
-  font-size: .8rem;
-}
-.twarn__redzone-tag {
-  font-family: var(--f-cond);
-  font-weight: 800;
-  color: #E11D48;
-  letter-spacing: .06em;
-}
-html[lang="ne"] .twarn__redzone-tag { font-family: var(--f-np); letter-spacing: 0; }
-.twarn__redzone-names {
-  font-weight: 600;
-  color: var(--ink);
-}
-.twarn__provs-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 16px;
-}
-.twarn__pcard {
-  padding: 16px;
-  background: var(--paper-3);
-  border: 1px solid var(--rule);
-  border-radius: var(--r-md);
-}
-.twarn__pcard-h {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--rule);
-}
-.twarn__pcard-h h4 {
-  font-size: .95rem;
-  font-weight: 700;
-  color: var(--ink);
-  margin: 0;
-}
-html[lang="ne"] .twarn__pcard-h h4 { font-family: var(--f-np); }
-.twarn__pcard-n {
-  font-size: .74rem;
-  color: var(--muted);
-}
-.twarn__dist-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-.twarn__dist {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 4px 10px;
-  border-radius: var(--r-pill);
-  background: var(--paper-2);
-  border: 1px solid var(--rule);
-  font-size: .8rem;
-  color: var(--ink-2);
-  transition: background .12s, border-color .12s;
-}
-.twarn__dist:hover {
-  border-color: var(--line-strong);
-  color: var(--ink);
-}
-.twarn__dist--red {
-  background: #FFF1F2;
-  border-color: #FECDD3;
-  color: #BE123C;
-  font-weight: 600;
-}
-:root[data-theme="dark"] .twarn__dist--red {
-  background: rgba(225, 29, 72, 0.16);
-  border-color: rgba(225, 29, 72, 0.4);
-  color: #FDA4AF;
-}
-.twarn__dist-dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: #E11D48;
-}
-
 .twarn__footer {
   padding: 20px 28px;
   border-top: 1px solid var(--rule);
@@ -3319,9 +3110,6 @@ html[lang="ne"] .twarn__pcard-h h4 { font-family: var(--f-np); }
   .twarn__header, .twarn__rivers-section, .twarn__districts-section, .twarn__footer {
     padding: 18px 16px;
   }
-  .twarn__provs-grid {
-    grid-template-columns: 1fr;
-  }
   .twarn__footer {
     flex-direction: column;
     align-items: flex-start;
@@ -3336,33 +3124,684 @@ html[lang="ne"] .twarn__pcard-h h4 { font-family: var(--f-np); }
 
 /* ---------- scroll-reveal entrance animations ---------- */
 @keyframes fadeUp{
-  from{ opacity: 0; transform: translateY(28px); }
+  from{ opacity: 0; transform: translateY(20px); }
   to{ opacity: 1; transform: translateY(0); }
 }
 @keyframes fadeScale{
-  from{ opacity: 0; transform: scale(.96) translateY(16px); }
+  from{ opacity: 0; transform: scale(.98) translateY(10px); }
   to{ opacity: 1; transform: scale(1) translateY(0); }
 }
-.reveal{ opacity: 0; }
-.reveal.in{ animation: fadeUp .6s var(--ease) both; }
-.reveal-card{ opacity: 0; }
-.reveal-card.in{ animation: fadeScale .5s var(--ease) both; }
-.reveal-delay-1{ animation-delay: .08s !important; }
-.reveal-delay-2{ animation-delay: .16s !important; }
-.reveal-delay-3{ animation-delay: .24s !important; }
-.reveal-delay-4{ animation-delay: .32s !important; }
 @media (prefers-reduced-motion: reduce){
   .reveal, .reveal-card{ opacity: 1; animation: none !important; }
 }
 
-/* ---------- subtle pulse on death stat number ---------- */
-@keyframes deathPulse{
-  0%, 100%{ opacity: 1; }
-  50%{ opacity: .82; }
+/* =========================================================================
+   v23 — TOP BAR RHYTHM, LIGHTER TOLL TILES, LIVE WARNINGS, HELPING HAND
+
+   Three things drove this layer:
+
+   1. The toll tiles were carrying colour three times over — a saturated left
+      rail, a tinted card wash AND a tinted number — so the hero read as a row
+      of red/amber/green blocks and the figures themselves got lost in them.
+      Colour still has to say which figure is which; it just does not need to
+      say it three times. One rail, one dot, and numbers that are essentially
+      white with the faintest cast.
+
+   2. The clock had no fixed home. On desktop it floated in the header tools;
+      on mobile it was hidden there and re-appeared stacked inside the LIVE
+      ticker block on a hand-tuned left padding that only lined up at one font
+      size. And the emergency band simply deleted its own message below 680px,
+      leaving a label and a timestamp with a hole between them.
+
+   3. New components: the live district-warning panel and the Helping Hand
+      board.
+   ========================================================================= */
+
+/* ---------- 1. ticker + the running NPT clock ---------------------------- */
+.ticker{ height: 38px; }
+.ticker__tag{
+  flex-direction: row; align-items: stretch; gap: 0;
+  padding: 0; overflow: hidden;
 }
-.hstat--death .n{
-  animation: deathPulse 3s ease-in-out infinite;
+.ticker__live{
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 0 13px; height: 100%;
 }
-@media (prefers-reduced-motion: reduce){
-  .hstat--death .n{ animation: none; }
+/* The clock sits in its own darkened cell butted against the LIVE block, so it
+   lines up on its own box instead of on a guessed padding value. */
+.ticker__time{
+  display: inline-flex; align-items: center;
+  padding: 0 11px; height: 100%;
+  background: rgba(0,0,0,.26);
+  border-left: 1px solid rgba(255,255,255,.22);
+  font-size: .68rem; font-weight: 600; letter-spacing: .04em;
+  color: #fff; font-variant-numeric: tabular-nums;
 }
+@media (min-width: 821px){
+  /* The header carries the clock on desktop; two of them is one too many. */
+  .ticker__time{ display: none; }
+}
+@media (max-width: 820px){
+  .ticker{ height: 36px; }
+  .ticker__time{ display: inline-flex; }
+  .ticker__live{ padding: 0 10px; }
+  .ticker__tag{ padding-top: 0; padding-bottom: 0; }
+}
+@media (max-width: 420px){
+  .ticker__live{ padding: 0 8px; gap: 6px; }
+  .ticker__time{ padding: 0 8px; font-size: .63rem; }
+}
+
+/* ---------- 2. header clock (desktop) ----------------------------------- */
+/* Boxed like the language switch beside it, so the header tools read as one
+   row of equal-weight controls rather than loose text next to buttons. */
+@media (min-width: 821px){
+  .hd__tools{ gap: 10px; }
+  .clock{
+    display: flex; flex-direction: column; justify-content: center;
+    text-align: left; gap: 2px;
+    padding: 5px 11px; min-width: 104px;
+    border: 1px solid var(--line); border-radius: var(--r-sm);
+    background: var(--paper-3);
+  }
+  .clock .l{ font-size: .53rem; letter-spacing: .13em; line-height: 1; }
+  .clock .v{ font-size: .88rem; line-height: 1; letter-spacing: -.01em; font-variant-numeric: tabular-nums; }
+}
+
+/* ---------- 3. emergency band ------------------------------------------- */
+.eas__inner{ gap: 14px; align-items: center; }
+.eas__label{ flex: 0 0 auto; }
+.eas__msg{
+  flex: 1 1 auto; min-width: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.eas__time{
+  flex: 0 0 auto; margin-left: 0;
+  border-left: 1px solid rgba(255,255,255,.3); padding-left: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Below 680px the band used to hide its message outright, which left the label
+   and the timer at opposite ends of an empty bar — the one part worth reading
+   was the part that got dropped. Two rows instead: identity and elapsed time
+   on top, the actual bulletin underneath. */
+@media (max-width: 680px){
+  .eas__inner{
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas: "label time" "msg msg";
+    row-gap: 5px; column-gap: 10px;
+    padding: 9px var(--gutter, 14px);
+  }
+  .eas__label{ grid-area: label; align-self: center; border-right: 0; padding-right: 0; font-size: .64rem; }
+  .eas__time{ grid-area: time; align-self: center; border-left: 0; padding-left: 0; font-size: .68rem; }
+  .eas__msg{
+    grid-area: msg; display: block; white-space: normal;
+    font-size: .74rem; line-height: 1.42;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+    overflow: hidden; text-overflow: unset;
+  }
+}
+
+/* ---------- 4. hero toll tiles ------------------------------------------ */
+/* Uniform surface for all four; severity lives in the rail and the dot. */
+.hero__stats{ gap: 10px; }
+.hstat{
+  background: rgba(255,255,255,.045) !important;
+  border: 1px solid rgba(255,255,255,.09) !important;
+  border-left-width: 3px !important;
+  border-left-color: rgba(255,255,255,.22) !important;
+  padding: 20px 18px 16px;
+}
+.hstat::before{ content: none !important; }
+.hstat:hover{ background: rgba(255,255,255,.085) !important; box-shadow: 0 10px 26px rgba(0,0,0,.20); }
+
+.hstat .n{
+  color: rgba(255,255,255,.96) !important;
+  font-weight: 700; letter-spacing: -.035em;
+}
+.hstat .lbl{
+  display: flex; align-items: center; gap: 7px;
+  color: rgba(255,255,255,.62); margin-top: 10px;
+}
+/* The severity dot — small, and the only fully saturated thing in the tile. */
+.hstat .lbl::before{
+  content: ""; width: 6px; height: 6px; border-radius: 50%;
+  flex: 0 0 6px; background: rgba(255,255,255,.4);
+}
+
+.hstat--death{ border-left-color: #F26D6D !important; background: rgba(255,255,255,.045) !important; }
+.hstat--death .lbl::before{ background: #F26D6D; }
+.hstat--death .n{ color: #FFD9D9 !important; }
+.hstat--death:hover{ background: rgba(242,109,109,.09) !important; }
+
+.hstat--missing{ border-left-color: #E8B54B !important; background: rgba(255,255,255,.045) !important; }
+.hstat--missing .lbl::before{ background: #E8B54B; }
+.hstat--missing .n{ color: #FBEBC8 !important; }
+.hstat--missing:hover{ background: rgba(232,181,75,.09) !important; }
+
+.hstat--rescue{ border-left-color: #3DBE8B !important; background: rgba(255,255,255,.045) !important; }
+.hstat--rescue .lbl::before{ background: #3DBE8B; }
+.hstat--rescue .n{ color: #CFF3E4 !important; }
+.hstat--rescue:hover{ background: rgba(61,190,139,.09) !important; }
+
+@media (max-width: 720px){
+  .hero__stats{ grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .hstat{ padding: 16px 14px 13px; }
+  .hstat .n{ font-size: clamp(1.6rem, 7vw, 2.1rem); }
+}
+
+/* ---------- 5. Helping Hand in the nav ---------------------------------- */
+.nav a.nav__hh{ color: #fff; position: relative; }
+.nav a.nav__hh::after{
+  content: ""; position: absolute; left: 16px; right: 16px; bottom: 7px; height: 2px;
+  background: var(--relief); border-radius: 2px; opacity: .85;
+}
+.nav a.nav__hh:hover::after{ opacity: 1; }
+.nav a.nav__hh[aria-current="page"]::after{ content: none; }
+@media (max-width: 820px){
+  .nav a.nav__hh::after{ left: 18px; right: auto; width: 22px; bottom: 8px; }
+}
+
+/* =========================================================================
+   LIVE DISTRICT WARNINGS — shared by the popup and the alerts-page panel
+   ========================================================================= */
+.wstats{
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+  gap: 8px; margin: 4px 0 18px;
+}
+.wstat{
+  border: 1px solid var(--line); border-radius: var(--r-sm);
+  background: var(--paper-3); padding: 11px 12px;
+  display: flex; flex-direction: column; gap: 3px;
+}
+.wstat__n{ font-size: 1.4rem; font-weight: 700; line-height: 1; letter-spacing: -.02em; }
+.wstat__l{
+  font-family: var(--f-cond); text-transform: uppercase; letter-spacing: .09em;
+  font-size: .6rem; font-weight: 700; color: var(--muted); line-height: 1.25;
+}
+html[lang="ne"] .wstat__l{ text-transform: none; letter-spacing: 0; font-family: var(--f-np); }
+.wstat--crit{ border-color: var(--danger); background: var(--danger-soft); }
+.wstat--crit .wstat__n{ color: var(--danger); }
+
+.wsec{ margin-bottom: 18px; }
+.wsec__h{
+  display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+  font-family: var(--f-cond); text-transform: uppercase; letter-spacing: .1em;
+  font-size: .68rem; font-weight: 700; color: var(--ink-2);
+  padding-bottom: 7px; margin: 0 0 10px;
+  border-bottom: 1px solid var(--line);
+}
+html[lang="ne"] .wsec__h{ text-transform: none; letter-spacing: 0; font-family: var(--f-np); }
+.wsec__x{ font-family: var(--f-mono); text-transform: none; letter-spacing: 0; font-size: .64rem; color: var(--muted); font-weight: 400; }
+
+/* district chips */
+.wchips{ display: flex; flex-wrap: wrap; gap: 7px; }
+.wchip{
+  display: inline-flex; flex-direction: column; gap: 2px;
+  border: 1px solid var(--line); border-left: 3px solid var(--watch);
+  border-radius: var(--r-xs); background: var(--paper-2);
+  padding: 7px 11px;
+}
+.wchip--danger{ border-left-color: var(--danger); }
+.wchip--crit{ border-left-color: var(--danger); background: var(--danger-soft); }
+.wchip__n{ font-size: .86rem; font-weight: 700; line-height: 1.15; }
+.wchip__k{ font-family: var(--f-mono); font-size: .63rem; color: var(--muted); line-height: 1.15; }
+
+/* river station rows */
+.wrivs{ display: flex; flex-direction: column; gap: 6px; }
+.wriv{
+  display: grid; grid-template-columns: 10px 1fr auto auto;
+  align-items: center; gap: 12px;
+  border: 1px solid var(--line); border-radius: var(--r-sm);
+  background: var(--paper-2); padding: 10px 13px;
+}
+.wriv__dot{ width: 8px; height: 8px; border-radius: 50%; background: var(--watch); }
+.wriv--danger .wriv__dot, .wriv .wriv__dot{ background: var(--watch); }
+.wriv--crit{ border-color: var(--danger); background: var(--danger-soft); }
+.wriv--crit .wriv__dot{ background: var(--danger); box-shadow: 0 0 0 3px rgba(217,48,37,.16); }
+.wriv__id{ min-width: 0; }
+.wriv__name{ display: block; font-size: .88rem; font-weight: 600; line-height: 1.25; }
+.wriv__meta{ font-family: var(--f-mono); font-size: .66rem; color: var(--muted); }
+.wriv__read{ text-align: right; }
+.wriv__lvl{ font-size: 1rem; font-weight: 700; line-height: 1; letter-spacing: -.01em; }
+.wriv__lvl small{ font-size: .62rem; font-weight: 500; color: var(--muted); margin-left: 2px; }
+.wriv__marks{ display: block; font-size: .6rem; color: var(--muted); margin-top: 3px; }
+.wriv__state{ text-align: right; min-width: 86px; }
+.wriv__tag{
+  display: block; font-family: var(--f-cond); text-transform: uppercase;
+  letter-spacing: .07em; font-size: .58rem; font-weight: 700; color: var(--watch);
+}
+.wriv--crit .wriv__tag{ color: var(--danger); }
+html[lang="ne"] .wriv__tag{ text-transform: none; letter-spacing: 0; font-family: var(--f-np); }
+.wriv__trend{ font-family: var(--f-mono); font-size: .62rem; color: var(--muted); }
+@media (max-width: 560px){
+  .wriv{ grid-template-columns: 10px 1fr auto; row-gap: 6px; }
+  .wriv__state{ grid-column: 2 / -1; text-align: left; display: flex; gap: 8px; align-items: baseline; }
+}
+
+/* plain rows: road closures, rainfall stations */
+.wrows{ display: flex; flex-direction: column; }
+.wrow{
+  display: grid; grid-template-columns: 1fr auto; gap: 4px 14px;
+  padding: 8px 0; border-bottom: 1px solid var(--line);
+}
+.wrow:last-child{ border-bottom: 0; }
+.wrow__p{ font-size: .86rem; font-weight: 600; }
+.wrow__d{ font-family: var(--f-mono); font-size: .68rem; color: var(--muted); text-align: right; }
+.wrow__r{ grid-column: 1 / -1; font-size: .74rem; color: var(--ink-2); }
+.wrow--road .wrow__p::before{ content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--watch); margin-right: 7px; vertical-align: middle; }
+.wrow--rain .wrow__p::before{ content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--relief); margin-right: 7px; vertical-align: middle; }
+
+.fpop__stale, .twarn__stalenote{
+  font-size: .78rem; line-height: 1.5; color: var(--ink-2);
+  border-left: 3px solid var(--watch); background: var(--watch-soft);
+  padding: 9px 12px; border-radius: var(--r-xs); margin: 0 0 14px;
+}
+.twarn__badge--stale{ background: var(--watch) !important; color: #1A1207 !important; }
+.twarn__body{ padding: 0 clamp(16px, 3vw, 26px); }
+
+/* ---------- 6. inline alert strip controls ------------------------------
+   .abar__link and .abar__x are <button>s and only ever had colour rules, so
+   they were still wearing the browser default chrome: a grey face, an outset
+   bevel and the UA font. Reset them to match the strip they sit in. */
+.abar__link, .abar__x{
+  font: inherit; font-family: var(--f-cond); font-weight: 700;
+  font-size: .74rem; letter-spacing: .04em; text-transform: uppercase;
+  background: transparent; border: 1px solid transparent;
+  cursor: pointer; -webkit-appearance: none; appearance: none;
+  transition: background-color .18s var(--ease), color .18s var(--ease), border-color .18s var(--ease);
+}
+html[lang="ne"] .abar__link{ text-transform: none; letter-spacing: 0; font-family: var(--f-np); }
+.abar__link{ border-color: var(--line-strong); }
+.abar__link:hover{ border-color: var(--ink-2); }
+.abar__x{
+  display: inline-grid; place-items: center;
+  width: 28px; height: 28px; padding: 0; flex: 0 0 28px;
+  border-color: var(--line);
+}
+.abar__x .ico-x{ width: 13px; height: 13px; stroke: currentColor; stroke-width: 2.2; fill: none; }
+.abar__x:hover{ border-color: var(--ink-2); }
+.abar__acts{ display: inline-flex; align-items: center; gap: 8px; margin-left: auto; }
+
+/* ---------- 7. Helping Hand band on the home page ----------------------- */
+.hhband{
+  display: grid; grid-template-columns: auto 1fr auto;
+  align-items: center; gap: 8px 18px;
+  text-decoration: none; color: inherit;
+  border: 1px solid var(--line); border-left: 4px solid var(--relief);
+  border-radius: var(--r-md); background: var(--paper-2);
+  padding: 16px 18px; margin-bottom: 18px;
+  transition: box-shadow .2s var(--ease), transform .2s var(--ease), border-color .2s var(--ease);
+}
+.hhband:hover{ box-shadow: var(--sh-2); transform: translateY(-2px); border-color: var(--line-strong); border-left-color: var(--relief); }
+.hhband__tag{
+  font-family: var(--f-cond); text-transform: uppercase; letter-spacing: .1em;
+  font-size: .58rem; font-weight: 700; color: #fff; background: var(--relief);
+  padding: 4px 9px; border-radius: var(--r-xs); white-space: nowrap;
+}
+html[lang="ne"] .hhband__tag{ text-transform: none; letter-spacing: 0; font-family: var(--f-np); }
+.hhband__txt{ display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.hhband__txt strong{ font-family: var(--f-display); font-size: 1.02rem; font-weight: 800; letter-spacing: -.01em; }
+html[lang="ne"] .hhband__txt strong{ font-family: var(--f-np); letter-spacing: 0; }
+.hhband__txt span{ font-size: .84rem; line-height: 1.5; color: var(--ink-2); }
+.hhband__go{
+  font-family: var(--f-cond); text-transform: uppercase; letter-spacing: .07em;
+  font-size: .68rem; font-weight: 700; color: var(--relief); white-space: nowrap;
+}
+html[lang="ne"] .hhband__go{ text-transform: none; letter-spacing: 0; font-family: var(--f-np); }
+@media (max-width: 700px){
+  .hhband{ grid-template-columns: 1fr; padding: 14px; }
+  .hhband__tag{ justify-self: start; }
+  .hhband__go{ margin-top: 4px; }
+}
+
+/* =========================================================================
+   HELPING HAND (v24) — replaces the first pass at this page.
+
+   What was wrong with that pass: every label on the page was set in condensed
+   uppercase at .58–.60rem, so the form read as a wall of tiny shouting
+   micro-captions with nothing to anchor the eye; fourteen category filters sat
+   in one wrapping ribbon of pills; and the form itself was an undifferentiated
+   grid of inputs with no grouping, so "what do you need" and "how do we call
+   you" carried exactly the same visual weight.
+
+   This pass:
+   • Body-font sentence-case labels at a readable size. Condensed caps are kept
+     for exactly two things — the need/offer badge and section eyebrows — so
+     they mean something again.
+   • The form is grouped into three fieldsets that match the three questions
+     actually being asked: what, where, and how to reach you.
+   • The page opens on the choice the reader arrived with, as two large
+     buttons, and the form appears under the one they pick.
+   • Fourteen categories become one select; the side filter stays as a
+     segmented control, which is the only choice worth showing as buttons.
+   ========================================================================= */
+
+.sr{
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* ---------- section headings -------------------------------------------- */
+.hhsec{ margin: 0 0 20px; }
+.hhsec__h{
+  font-family: var(--f-display); font-size: clamp(1.3rem, 3vw, 1.6rem);
+  font-weight: 800; letter-spacing: -.02em; margin: 0;
+}
+html[lang="ne"] .hhsec__h{ font-family: var(--f-np); letter-spacing: 0; }
+.hhsec__p{ margin: 7px 0 0; font-size: .92rem; line-height: 1.6; color: var(--ink-2); max-width: 68ch; }
+
+/* ---------- the safety notice ------------------------------------------- */
+.hhsafe{
+  display: flex; gap: 14px; align-items: flex-start;
+  border: 1px solid var(--danger); border-left: 4px solid var(--danger);
+  border-radius: var(--r-md); background: var(--danger-soft);
+  padding: 16px 18px; margin-bottom: 30px;
+}
+.hhsafe__ic{
+  flex: 0 0 24px; width: 24px; height: 24px; color: var(--danger); margin-top: 1px;
+}
+.hhsafe__ic svg{ width: 24px; height: 24px; }
+.hhsafe__body strong{ display: block; font-size: 1rem; font-weight: 700; color: var(--danger); margin-bottom: 4px; }
+.hhsafe__body p{ margin: 0; font-size: .9rem; line-height: 1.6; color: var(--ink-2); max-width: 78ch; }
+.hhsafe__lines{ display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 10px !important; }
+.hhsafe__lines > span{ font-size: .82rem; color: var(--muted); }
+.hhsafe__lines a{
+  font-family: var(--f-mono); font-size: .88rem; font-weight: 700;
+  color: var(--danger); text-decoration: none;
+  border: 1px solid var(--danger); border-radius: var(--r-pill);
+  padding: 3px 12px; background: var(--paper-2);
+}
+.hhsafe__lines a:hover{ background: var(--danger); color: #fff; }
+.hhsafe__lines a.hhsafe__more{
+  font-family: var(--f-body); font-weight: 600; border-style: dashed;
+}
+
+.hhoff{
+  border: 1px solid var(--watch); border-left: 4px solid var(--watch);
+  background: var(--watch-soft); border-radius: var(--r-md);
+  padding: 16px 18px; margin-bottom: 26px;
+}
+.hhoff strong{ font-size: 1rem; }
+.hhoff p{ margin: 5px 0 0; font-size: .9rem; line-height: 1.6; color: var(--ink-2); }
+
+/* ---------- the two intent buttons -------------------------------------- */
+.hhpost{ margin-bottom: 46px; }
+.hhpicks{ display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.hhpick{
+  display: grid; grid-template-columns: auto 1fr auto;
+  align-items: center; gap: 16px; text-align: left;
+  border: 1px solid var(--line); border-radius: var(--r-md);
+  background: var(--paper-2); padding: 18px 20px; cursor: pointer;
+  font: inherit; color: inherit; -webkit-appearance: none; appearance: none;
+  transition: border-color .2s var(--ease), box-shadow .2s var(--ease), transform .2s var(--ease);
+}
+.hhpick:hover{ transform: translateY(-2px); box-shadow: var(--sh-2); }
+.hhpick__ic{
+  width: 44px; height: 44px; flex: 0 0 44px; border-radius: var(--r-sm);
+  display: grid; place-items: center;
+}
+.hhpick__svg{ width: 22px; height: 22px; }
+.hhpick--need .hhpick__ic{ background: var(--danger-soft); color: var(--danger); }
+.hhpick--offer .hhpick__ic{ background: var(--relief-soft); color: var(--relief); }
+.hhpick--need:hover, .hhpick--need.is-on{ border-color: var(--danger); }
+.hhpick--offer:hover, .hhpick--offer.is-on{ border-color: var(--relief); }
+.hhpick.is-on{ box-shadow: var(--sh-2); }
+.hhpick--need.is-on .hhpick__ic{ background: var(--danger); color: #fff; }
+.hhpick--offer.is-on .hhpick__ic{ background: var(--relief); color: #fff; }
+.hhpick__body{ display: block; min-width: 0; }
+.hhpick__h{
+  display: block; font-family: var(--f-display); font-size: 1.08rem;
+  font-weight: 800; letter-spacing: -.015em; margin-bottom: 3px;
+}
+html[lang="ne"] .hhpick__h{ font-family: var(--f-np); letter-spacing: 0; }
+.hhpick__p{ display: block; font-size: .85rem; line-height: 1.5; color: var(--ink-2); }
+.hhpick__n{ display: block; text-align: right; white-space: nowrap; }
+.hhpick__n b{ display: block; font-family: var(--f-mono); font-size: 1.5rem; font-weight: 700; line-height: 1; }
+.hhpick__n i{ display: block; font-style: normal; font-size: .72rem; color: var(--muted); margin-top: 4px; }
+.hhpick--need .hhpick__n b{ color: var(--danger); }
+.hhpick--offer .hhpick__n b{ color: var(--relief); }
+.hhpicks__hint{ margin: 14px 0 0; font-size: .86rem; color: var(--muted); }
+@media (max-width: 720px){
+  .hhpicks{ grid-template-columns: 1fr; }
+  .hhpick{ grid-template-columns: auto 1fr; gap: 14px; }
+  .hhpick__n{ grid-column: 2; text-align: left; display: flex; align-items: baseline; gap: 7px; }
+  .hhpick__n b{ font-size: 1.15rem; }
+  .hhpick__n i{ margin-top: 0; }
+}
+
+/* ---------- the form ---------------------------------------------------- */
+.hhform{
+  border: 1px solid var(--line); border-radius: var(--r-md);
+  background: var(--paper-2); box-shadow: var(--sh-1);
+  padding: 24px; margin-top: 16px;
+}
+.hhform--need{ border-top: 3px solid var(--danger); }
+.hhform--offer{ border-top: 3px solid var(--relief); }
+.hhform__head{ margin-bottom: 22px; }
+.hhform__h{
+  font-family: var(--f-display); font-size: 1.24rem; font-weight: 800;
+  letter-spacing: -.02em; margin: 0;
+}
+html[lang="ne"] .hhform__h{ font-family: var(--f-np); letter-spacing: 0; }
+.hhform__lead{ margin: 6px 0 0; font-size: .9rem; line-height: 1.6; color: var(--ink-2); max-width: 70ch; }
+
+.hhfs{
+  border: 0; border-top: 1px solid var(--line);
+  margin: 0 0 4px; padding: 20px 0 4px;
+}
+.hhfs__l{
+  font-family: var(--f-cond); text-transform: uppercase; letter-spacing: .12em;
+  font-size: .66rem; font-weight: 700; color: var(--muted);
+  padding: 0; margin-bottom: 14px;
+}
+html[lang="ne"] .hhfs__l{ text-transform: none; letter-spacing: 0; font-family: var(--f-np); font-size: .78rem; }
+
+.hhrow{ display: grid; gap: 14px; margin-bottom: 14px; }
+.hhrow--2{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.hhrow--3{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 640px){
+  .hhrow--2, .hhrow--3{ grid-template-columns: 1fr; }
+}
+
+.hhf{ display: block; min-width: 0; }
+.hhf__l{
+  display: block; font-size: .86rem; font-weight: 600; color: var(--ink);
+  margin-bottom: 6px;
+}
+.hhf__l em{
+  font-style: normal; font-weight: 500; font-size: .76rem;
+  color: var(--danger); margin-left: 5px;
+}
+.hhf__hint{ display: block; margin-top: 6px; font-size: .78rem; line-height: 1.5; color: var(--muted); }
+.hhf input, .hhf select, .hhf textarea{
+  font-family: var(--f-body); font-size: .94rem; color: var(--ink);
+  background: var(--paper); border: 1px solid var(--line-strong);
+  border-radius: var(--r-sm); padding: 11px 13px; width: 100%;
+  transition: border-color .18s var(--ease), box-shadow .18s var(--ease);
+}
+html[lang="ne"] .hhf input, html[lang="ne"] .hhf select, html[lang="ne"] .hhf textarea{ font-family: var(--f-np); }
+.hhf select{
+  -webkit-appearance: none; appearance: none; padding-right: 36px; cursor: pointer;
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: calc(100% - 19px) calc(50% + 1px), calc(100% - 14px) calc(50% + 1px);
+  background-size: 5px 5px, 5px 5px; background-repeat: no-repeat;
+}
+.hhf textarea{ resize: vertical; min-height: 92px; line-height: 1.55; }
+.hhf input::placeholder, .hhf textarea::placeholder{ color: var(--faint, var(--muted)); }
+.hhf input:focus, .hhf select:focus, .hhf textarea:focus{
+  outline: none; border-color: var(--crimson); box-shadow: var(--ring);
+}
+
+.hhcheck{
+  display: flex; gap: 11px; align-items: flex-start;
+  font-size: .9rem; line-height: 1.55; color: var(--ink); cursor: pointer;
+  border: 1px solid var(--line); border-radius: var(--r-sm);
+  background: var(--paper); padding: 12px 14px; margin-bottom: 12px;
+}
+.hhcheck:hover{ border-color: var(--line-strong); }
+.hhcheck input{ margin: 2px 0 0; width: 17px; height: 17px; flex: 0 0 17px; accent-color: var(--crimson); }
+.hhform__warn{
+  margin: 0; font-size: .82rem; line-height: 1.6; color: var(--ink-2);
+  border-left: 3px solid var(--watch); background: var(--watch-soft);
+  padding: 11px 14px; border-radius: var(--r-xs);
+}
+.hhform__actions{
+  display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+  border-top: 1px solid var(--line); padding-top: 20px; margin-top: 20px;
+}
+.hhform__msg{ font-size: .86rem; color: var(--muted); }
+.hhform__msg--err{ color: var(--danger); font-weight: 600; }
+@media (max-width: 560px){
+  .hhform{ padding: 18px 15px; }
+  .hhform__actions .btn{ flex: 1 1 auto; justify-content: center; }
+}
+
+/* ---------- the board toolbar ------------------------------------------- */
+.hhbar{
+  display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+  justify-content: space-between; margin-bottom: 14px;
+}
+.hhsegs{
+  display: inline-flex; border: 1px solid var(--line-strong);
+  border-radius: var(--r-pill); overflow: hidden; background: var(--paper-2);
+}
+.hhseg{
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--f-body); font-size: .86rem; font-weight: 600;
+  color: var(--ink-2); background: transparent; border: 0;
+  padding: 9px 16px; cursor: pointer;
+  transition: background-color .18s var(--ease), color .18s var(--ease);
+}
+html[lang="ne"] .hhseg{ font-family: var(--f-np); }
+.hhseg + .hhseg{ border-left: 1px solid var(--line); }
+.hhseg:hover{ color: var(--ink); }
+.hhseg.is-on{ background: var(--slate); color: #fff; }
+.hhseg__n{
+  font-family: var(--f-mono); font-size: .74rem; font-weight: 700;
+  color: var(--muted); background: var(--paper-3);
+  border-radius: var(--r-pill); padding: 1px 7px; min-width: 22px; text-align: center;
+}
+.hhseg.is-on .hhseg__n{ background: rgba(255,255,255,.16); color: #fff; }
+
+.hhbar__tools{ display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.hhsel select, .hhsearch input{
+  font-family: var(--f-body); font-size: .88rem; color: var(--ink);
+  background: var(--paper-2); border: 1px solid var(--line-strong);
+  border-radius: var(--r-pill); padding: 9px 16px;
+}
+html[lang="ne"] .hhsel select, html[lang="ne"] .hhsearch input{ font-family: var(--f-np); }
+.hhsel select{
+  -webkit-appearance: none; appearance: none; padding-right: 36px; cursor: pointer;
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: calc(100% - 19px) calc(50% + 1px), calc(100% - 14px) calc(50% + 1px);
+  background-size: 5px 5px, 5px 5px; background-repeat: no-repeat;
+}
+.hhsearch input{ min-width: 230px; }
+.hhsel select:focus, .hhsearch input:focus{ outline: none; border-color: var(--crimson); box-shadow: var(--ring); }
+.hhresults{ margin: 0 0 16px; font-size: .82rem; color: var(--muted); }
+.hhresults span{ font-family: var(--f-mono); font-weight: 700; color: var(--ink-2); }
+@media (max-width: 640px){
+  .hhbar{ flex-direction: column; align-items: stretch; }
+  .hhsegs{ width: 100%; }
+  .hhseg{ flex: 1 1 0; justify-content: center; padding: 10px 8px; }
+  .hhbar__tools{ flex-direction: column; align-items: stretch; }
+  .hhsel select, .hhsearch input{ width: 100%; min-width: 0; }
+}
+
+/* ---------- the cards --------------------------------------------------- */
+.hhgrid{ display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 14px; }
+@media (max-width: 480px){ .hhgrid{ grid-template-columns: 1fr; } }
+.hhc{
+  display: flex; flex-direction: column;
+  border: 1px solid var(--line); border-top: 3px solid var(--line-strong);
+  border-radius: var(--r-md); background: var(--paper-2);
+  padding: 18px 20px 14px;
+  transition: box-shadow .2s var(--ease), transform .2s var(--ease);
+}
+.hhc:hover{ box-shadow: var(--sh-2); transform: translateY(-2px); }
+.hhc--need{ border-top-color: var(--danger); }
+.hhc--offer{ border-top-color: var(--relief); }
+.hhc--done{ opacity: .58; }
+
+.hhc__head{ display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 12px; }
+.hhc__kind{
+  font-family: var(--f-cond); text-transform: uppercase; letter-spacing: .1em;
+  font-size: .62rem; font-weight: 700; color: #fff;
+  padding: 4px 10px; border-radius: var(--r-pill); background: var(--muted);
+}
+html[lang="ne"] .hhc__kind{ text-transform: none; letter-spacing: 0; font-family: var(--f-np); font-size: .72rem; }
+.hhc--need .hhc__kind{ background: var(--danger); }
+.hhc--offer .hhc__kind{ background: var(--relief); }
+.hhc__urg, .hhc__flag{
+  font-family: var(--f-cond); text-transform: uppercase; letter-spacing: .09em;
+  font-size: .6rem; font-weight: 700; padding: 3px 9px;
+  border-radius: var(--r-pill); border: 1px solid currentColor;
+}
+html[lang="ne"] .hhc__urg, html[lang="ne"] .hhc__flag{ text-transform: none; letter-spacing: 0; font-family: var(--f-np); font-size: .7rem; }
+.hhc__urg--critical{ color: var(--danger); background: var(--danger-soft); }
+.hhc__urg--urgent{ color: var(--watch); background: var(--watch-soft); }
+.hhc__flag{ color: var(--relief); background: var(--relief-soft); }
+.hhc__ago{ margin-left: auto; font-size: .76rem; color: var(--muted); }
+
+.hhc__cat{
+  display: flex; align-items: center; gap: 9px;
+  font-family: var(--f-display); font-size: 1.04rem; font-weight: 700;
+  letter-spacing: -.01em; margin: 0 0 9px; text-transform: none;
+}
+html[lang="ne"] .hhc__cat{ font-family: var(--f-np); letter-spacing: 0; }
+.hhc__caticon{ width: 19px; height: 19px; flex: 0 0 19px; color: var(--muted); }
+.hhc--need .hhc__caticon{ color: var(--danger); }
+.hhc--offer .hhc__caticon{ color: var(--relief); }
+
+.hhc__detail{ margin: 0 0 14px; font-size: .93rem; line-height: 1.6; color: var(--ink); }
+
+.hhc__meta{ display: flex; flex-direction: column; gap: 6px; margin: 0 0 14px; }
+.hhc__meta > div{ display: flex; align-items: center; gap: 9px; }
+.hhc__meta dt{ display: flex; margin: 0; color: var(--muted); }
+.hhc__meta dd{ margin: 0; font-size: .86rem; color: var(--ink-2); }
+.hh__mi{ width: 15px; height: 15px; flex: 0 0 15px; }
+
+.hhc__foot{
+  display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+  border-top: 1px solid var(--line); padding-top: 12px; margin-top: auto;
+}
+.hhc__call{
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--f-mono); font-size: .9rem; font-weight: 700;
+  color: #fff; text-decoration: none;
+  background: var(--crimson); border-radius: var(--r-pill); padding: 8px 15px;
+  transition: filter .18s var(--ease);
+}
+.hhc__call svg{ width: 14px; height: 14px; fill: currentColor; }
+.hhc__call:hover{ filter: brightness(1.08); }
+.hhc__nocall{ font-size: .8rem; color: var(--muted); max-width: 30ch; line-height: 1.4; }
+.hhc__acts{ display: inline-flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-left: auto; }
+.hhc__by{ font-size: .78rem; color: var(--muted); }
+.hhc__btn{
+  font-family: var(--f-body); font-size: .78rem; font-weight: 600;
+  color: var(--ink-2); background: transparent;
+  border: 1px solid var(--line-strong); border-radius: var(--r-pill);
+  padding: 6px 12px; cursor: pointer;
+  transition: color .18s var(--ease), border-color .18s var(--ease);
+}
+html[lang="ne"] .hhc__btn{ font-family: var(--f-np); }
+.hhc__btn:hover{ color: var(--ink); border-color: var(--ink-2); }
+.hhc__btn--flag:hover{ color: var(--danger); border-color: var(--danger); }
+.hhc__btn:disabled{ opacity: .5; cursor: default; }
+
+.hhempty{
+  color: var(--muted); font-size: .92rem; line-height: 1.6;
+  border: 1px dashed var(--line-strong); border-radius: var(--r-md);
+  padding: 32px 20px; text-align: center;
+}
+.hhlegend{ margin: 20px 0 0; font-size: .78rem; line-height: 1.6; color: var(--muted); }
+
+/* ---------- 8. keep the map underneath the overlays --------------------- */
+/* Leaflet gives its internal panes z-index 400-700, and .leaflet-container is
+   position:relative with z-index:auto — which does NOT open a stacking
+   context, so those panes compete in the ROOT one and paint straight over the
+   alert dialog (z-index 210) and the notifications drawer. Pinning the
+   container to z-index 0 contains them without touching Leaflet's own layering. */
+#map, .leaflet-container{ position: relative; z-index: 0; }

@@ -173,8 +173,8 @@ const EVENT = {
   since:"2026-08-26T08:37:00+05:45",
   title:{en:"2026 Nepal Floods", ne:"२०२६ नेपाल बाढी"},
   region:{en:"Rasuwa · Nuwakot · Dhading · Trishuli corridor · Chitwan · Nawalparasi", ne:"रसुवा · नुवाकोट · धादिङ · त्रिशूली कोरिडोर · चितवन · नवलपरासी"},
-  eas:{en:"Trishuli / Bhote Koshi glacier-collapse flood. NDRRMA confirm 1,010 dead and ~4,000 missing; 11,800+ rescued (1 Sept). 639 hydropower workers missing, ~500 believed trapped inside tunnels. Kathmandu Valley on moderate flood advisory. Prithvi Highway still cut at Krishnabhir.",
-       ne:"त्रिशूली / भोटेकोशी हिमनदी भत्किएर आएको बाढी। NDRRMA ले ९८७ मृत्यु र ३,९१६ बेपत्ता पुष्टि गरेको; ११,८१४ उद्धार (१ सेप्टेम्बर, बिहान ९ बजे)। ६३९ जलविद्युत् कामदार बेपत्ता, करिब ५०० सुरुङभित्रै फसेको अनुमान। नदी किनार चेतावनी कायमै; कृष्णभीरमा पृथ्वी राजमार्ग अझै अवरुद्ध।"}
+  eas:{en:"Trishuli / Bhote Koshi glacier-collapse flood. NDRRMA confirm 1,114 dead, 3,916 missing and 1,473 injured; 11,814 rescued (2 Sept). 900 hydropower workers missing across 12 projects, around 500 believed trapped inside tunnels. Prithvi Highway still cut at Krishnabhir.",
+       ne:"त्रिशूली / भोटेकोशी हिमनदी भत्किएर आएको बाढी। NDRRMA ले १,११४ मृत्यु, ३,९१६ बेपत्ता र १,४७३ घाइते पुष्टि गरेको; ११,८१४ उद्धार (२ सेप्टेम्बर)। १२ आयोजनाका ९०० जलविद्युत् कामदार बेपत्ता, करिब ५०० सुरुङभित्रै फसेको अनुमान। कृष्णभीरमा पृथ्वी राजमार्ग अझै अवरुद्ध।"}
 };
 /* Nepal-side figures only. Live-refreshed every 10 minutes: local feed (baseline)
    → Wikipedia PROSE (deaths/missing/injured + foreign nationals among the missing,
@@ -182,22 +182,22 @@ const EVENT = {
    Nepal registry). The Wikipedia INFOBOX is NOT used — it reports Nepal+Tibet
    COMBINED, which is what previously inflated the toll. */
 let STATS = [
-  {key:"deaths",  n:"1,058", cls:"hstat--death"},
+  {key:"deaths",  n:"1,114", cls:"hstat--death"},
   {key:"missing", n:"3,916", cls:"hstat--missing"},
   {key:"foreign", n:"583"},
-  {key:"rescued", n:"11,800", cls:"hstat--rescue"}   // hero = TOTAL rescued (NDRRMA rescued-statistics); the NAMED registry (3,122) is a separate figure shown on the Rescued page
+  {key:"rescued", n:"11,814", cls:"hstat--rescue"}   // hero = TOTAL rescued (NDRRMA bulletin); the NAMED registry (4,248) is a separate, smaller figure shown on the Rescued page
 ];
 
 /* -------------------- TICKER -------------------- */
 const TICKER = [
-  {src:"NDRRMA", en:"NDRRMA: 1,010 confirmed dead, ~4,000 missing, 11,800+ rescued (1 Sept, updated) — rescue and recovery operations continue",
-   ne:"NDRRMA: १,०१० मृत्यु पुष्टि, ~४,००० बेपत्ता, ११,८०० + उद्धार (१ सेप्टेम्बर) — उद्धार तथा खोजी कार्य जारी"},
-  {src:"RESCUE", en:"Around 500 still believed inside hydropower tunnels — specialized international and army teams continue de-sludging at Upper Trishuli-1 & Chilime",
+  {src:"NDRRMA", en:"NDRRMA: 1,114 confirmed dead, 3,916 missing, 1,473 injured and 11,814 rescued (2 Sept) — search and recovery operations continue",
+   ne:"NDRRMA: १,११४ मृत्यु पुष्टि, ३,९१६ बेपत्ता, १,४७३ घाइते र ११,८१४ उद्धार (२ सेप्टेम्बर) — खोज तथा उद्धार कार्य जारी"},
+  {src:"RESCUE", en:"900 hydropower workers missing across 12 projects and around 500 still believed inside the tunnels — 576 missing at Upper Trishuli-1 alone, about 300 of them underground",
    ne:"जलविद्युत् सुरुङभित्र अझै करिब ५०० जना रहेको अनुमान — माथिल्लो त्रिशूली-१ र चिलिमेमा नेपाली सेना तथा अन्तर्राष्ट्रिय विशेषज्ञ टोलीबाट हिलो हटाउने कार्य जारी"},
   {src:"TRAFFIC", en:"Prithvi Highway still cut at Krishnabhir (Dhading) — Mugling–Kathmandu section diversion and restoration ongoing",
    ne:"पृथ्वी राजमार्ग कृष्णभीर (धादिङ) मा अझै अवरुद्ध — मुग्लिन–काठमाडौं खण्डमा वैकल्पिक मार्ग र मर्मत कार्य जारी"},
-  {src:"CHITWAN", en:"Search widening downstream in Chitwan and Nawalparasi — 321 bodies recovered in Chitwan with forensic identification ongoing",
-   ne:"चितवन र नवलपरासीमा तल्लो तटीय खोजी तीव्र — चितवनमा ३२१ शव फेला, फोरेन्सिक पहिचान कार्य जारी"},
+  {src:"HEALTH", en:"Around 900 bodies recovered so far and only 4% formally identified — DNA testing and facial photographs in use as morgues run beyond capacity",
+   ne:"अहिलेसम्म करिब ९०० शव फेला, जसमध्ये ४ प्रतिशत मात्र औपचारिक पहिचान — शवगृह क्षमताभन्दा बढी भरिएपछि डीएनए परीक्षण र तस्बिरबाट पहिचान जारी"},
   {src:"ARMY", en:"Nepali Army has airlifted 3,344 Nepalis and 252 foreign nationals across 411 rescue and relief flights",
    ne:"नेपाली सेनाले ४११ उद्धार तथा राहत उडानमा ३,३४४ नेपाली र २५२ विदेशी नागरिक हवाईमार्ग उद्धार गर्‍यो"},
   {src:"PMO", en:"PM Disaster Relief Fund passes Rs 5.44 billion; Rs 675 million released to 15 local units for immediate relief",
@@ -470,6 +470,7 @@ const ALERTS = [
   {sev:"watch", lat:27.5800, lng:84.5000, place:{en:"Chitwan (downstream)",ne:"चितवन (तल्लो तट)"}, desc:{en:"250+ bodies washed up ~160 km downstream; mass burial of the unidentified under way",ne:"करिब १६० कि.मि. तल २५०+ शव भेटिए; नचिनिएकाको सामूहिक व्यवस्थापन जारी"}},
   {sev:"watch", lat:27.6900, lng:84.0900, place:{en:"Nawalparasi (Narayani corridor)",ne:"नवलपरासी (नारायणी कोरिडोर)"}, desc:{en:"Riverside alert; recovery operations continuing along the Narayani",ne:"नदी किनार चेतावनी; नारायणी किनारमा शव खोजी जारी"}},
   {sev:"relief", lat:27.9280, lng:84.6270, place:{en:"Gorkha",ne:"गोरखा"}, desc:{en:"Riverside alert and relief distribution; local units funded from the PM relief release",ne:"नदी किनार चेतावनी र राहत वितरण; प्रधानमन्त्री राहत निकासाबाट स्थानीय तह सञ्चालन"}},
+  {sev:"watch", lat:27.7172, lng:85.3240, place:{en:"Kathmandu Valley",ne:"काठमाडौं उपत्यका"}, desc:{en:"Bagmati, Bishnumati, Hanumante & Dhobi Khola rising; riverside settlements on active flood advisory",ne:"बागमती, बिष्णुमती, हनुमन्ते र ढोबीखोलाको जलसतह वृद्धि; तटीय क्षेत्र सतर्कतामा"}},
   {sev:"danger", lat:28.3700, lng:85.3000, place:{en:"Gyirong Port (Tibet, China)",ne:"ग्यिरोङ बन्दरगाह (तिब्बत, चीन)"}, desc:{en:"Port destroyed; China reports 16 dead and 546 missing on its side",ne:"बन्दरगाह ध्वस्त; चीनतर्फ १६ मृत्यु र ५४६ बेपत्ता"}}
 ];
 
@@ -682,6 +683,12 @@ async function fetchLiveNews(){
       renderTicker();
       renderNews(document.body.dataset.newsLimit?+document.body.dataset.newsLimit:0);
       renderNewsPage();
+      // Offer the newest headline as a corner card. maybeNewsPopup() had been
+      // written but never called from anywhere, so the card could not appear at
+      // all; it now runs on every refresh AFTER the priming pass above, and
+      // takes the session popup budget only if a district warning has not
+      // already used it.
+      if(!firstLoad || NEWSPOP_SEEN.size) maybeNewsPopup();
     }
   }catch(_){ /* keep built-in bulletins */ }
 }
@@ -837,86 +844,179 @@ function renderAlerts(){
   renderTodayWarningsSection();
 }
 
-function renderTodayWarningsSection(){
-  const root=$("#todayWarningsRoot");
-  if(!root || typeof WARNINGS==="undefined") return;
-  const W=WARNINGS;
-  const rivers=(W.rivers||[]).map(r=>`
-    <div class="twarn__river twarn__river--${r.sev||'watch'}">
-      <span class="twarn__river-dot"></span>
-      <div class="twarn__river-info">
-        <strong class="twarn__river-name">${esc(TL(r.name))}</strong>
-        <span class="twarn__river-status mono">${esc(TL(r.status))}</span>
-      </div>
+/* =========================================================================
+   TODAY'S DISTRICT WARNINGS — live from /api/warnings (BIPAD Portal, NDRRMA).
+
+   What this replaced: a WARNINGS constant listing 44 districts, hand-typed
+   from a DHM bulletin. It could only ever be right on the morning somebody
+   edited it, and it was still announcing those 44 districts days later while
+   the actual feed had moved on to a completely different set. A warning panel
+   that is confidently wrong is worse than no panel.
+
+   Now the districts, the rivers and the road closures all come from NDRRMA's
+   own portal, refreshed on a timer. WARNINGS is kept below purely as the
+   offline fallback, and when it is used the panel says so rather than passing
+   stale text off as today's bulletin.
+   ========================================================================= */
+let LIVE_WARN=null, LIVE_WARN_TRIED=false;
+
+async function fetchDistrictWarnings(){
+  try{
+    const r=await fetch("/api/warnings",{signal:AbortSignal.timeout(9000)});
+    if(r.ok){
+      const j=await r.json();
+      if(j && Array.isArray(j.districts) && j.districts.length) LIVE_WARN=j;
+    }
+  }catch(_){ /* offline or endpoint unavailable — the fallback below covers it */ }
+  LIVE_WARN_TRIED=true;
+  renderTodayWarningsSection();
+  return !!LIVE_WARN;
+}
+
+function _warnAgo(ts){
+  if(!ts) return "";
+  const mins=Math.max(0,Math.round((Date.now()-ts)/60000));
+  if(mins<60) return t("warn.ago.min").replace("{n}",toNepDigits(String(mins)));
+  return t("warn.ago.hr").replace("{n}",toNepDigits(String(Math.round(mins/60))));
+}
+function _warnTrend(s){
+  const k=String(s||"").toUpperCase();
+  return k==="RISING"?t("warn.trend.rising"):k==="FALLING"?t("warn.trend.falling"):k==="STEADY"?t("warn.trend.steady"):"";
+}
+
+/* One river station as a row: where it is, what it is reading, and how that
+   reading sits against the two thresholds DHM publishes for that station. */
+function _warnRiverRow(r){
+  const lvl=r.level!=null?String(r.level):"—";
+  const marks=[];
+  if(r.warning!=null) marks.push(t("warn.lvl.warn")+" "+toNepDigits(String(r.warning)));
+  if(r.danger!=null) marks.push(t("warn.lvl.dngr")+" "+toNepDigits(String(r.danger)));
+  const trend=_warnTrend(r.steady);
+  return `<div class="wriv${r.crit?" wriv--crit":""}">
+    <span class="wriv__dot" aria-hidden="true"></span>
+    <div class="wriv__id">
+      <strong class="wriv__name">${esc(r.station||r.place)}</strong>
+      <span class="wriv__meta">${esc(r.district)}${r.basin?" · "+esc(r.basin):""}</span>
     </div>
-  `).join("");
+    <div class="wriv__read">
+      <span class="wriv__lvl mono">${esc(toNepDigits(lvl))}<small>m</small></span>
+      ${marks.length?`<span class="wriv__marks mono">${esc(marks.join(" · "))}</span>`:""}
+    </div>
+    <div class="wriv__state">
+      <span class="wriv__tag">${esc(r.crit?t("warn.st.danger"):t("warn.st.warn"))}</span>
+      ${trend?`<span class="wriv__trend">${esc(trend)}</span>`:""}
+    </div>
+  </div>`;
+}
 
-  const sevDistricts=[];
-  (W.provinces||[]).forEach(p=>(p.districts||[]).forEach(d=>{ if(d.sev) sevDistricts.push(TL(d)); }));
-
-  const provCards=(W.provinces||[]).map(p=>{
-    const dList=(p.districts||[]).map(d=>`
-      <span class="twarn__dist ${d.sev?'twarn__dist--red':''}">
-        ${d.sev?'<span class="twarn__dist-dot"></span>':''}${esc(TL(d))}
-      </span>
-    `).join("");
-    return `
-      <div class="twarn__pcard">
-        <div class="twarn__pcard-h">
-          <h4>${esc(TL(p.name))}</h4>
-          <span class="twarn__pcard-n mono">${(p.districts||[]).length} ${LANG==="ne"?"जिल्ला":"districts"}</span>
-        </div>
-        <div class="twarn__dist-list">${dList}</div>
-      </div>
-    `;
+function _warnDistrictChips(ds){
+  return ds.map(d=>{
+    const bits=[];
+    if(d.river) bits.push(toNepDigits(String(d.river))+"×"+t("warn.k.river"));
+    if(d.rain)  bits.push(toNepDigits(String(d.rain))+"×"+t("warn.k.rain"));
+    if(d.road)  bits.push(toNepDigits(String(d.road))+"×"+t("warn.k.road"));
+    return `<span class="wchip wchip--${d.sev}${d.crit?" wchip--crit":""}">
+      <span class="wchip__n">${esc(d.name)}</span>
+      <span class="wchip__k">${esc(bits.join(" · "))}</span>
+    </span>`;
   }).join("");
+}
 
-  root.innerHTML=`
-    <section class="twarn" aria-labelledby="twarnH">
+function _warnSimpleList(items, cls){
+  return items.map(x=>`<div class="wrow wrow--${cls}">
+    <span class="wrow__p">${esc(x.place)}</span>
+    <span class="wrow__d">${esc(x.district)}</span>
+    <span class="wrow__r">${esc(x.reason||x.basin||"")}</span>
+  </div>`).join("");
+}
+
+/* The body shared by the popup and the alerts-page section, so the two can
+   never drift apart. Returns "" when there is nothing live to show. */
+function _warnLiveBody(W){
+  const nCrit=W.critical||0;
+  const head=`<div class="wstats">
+      <div class="wstat"><span class="wstat__n mono">${toNepDigits(String(W.count||0))}</span><span class="wstat__l">${esc(t("warn.s.districts"))}</span></div>
+      <div class="wstat"><span class="wstat__n mono">${toNepDigits(String((W.rivers||[]).length))}</span><span class="wstat__l">${esc(t("warn.s.rivers"))}</span></div>
+      <div class="wstat"><span class="wstat__n mono">${toNepDigits(String((W.roads||[]).length))}</span><span class="wstat__l">${esc(t("warn.s.roads"))}</span></div>
+      ${nCrit?`<div class="wstat wstat--crit"><span class="wstat__n mono">${toNepDigits(String(nCrit))}</span><span class="wstat__l">${esc(t("warn.s.crit"))}</span></div>`:""}
+    </div>`;
+  const sec=(title,body,extra)=>body?`<div class="wsec"><h4 class="wsec__h">${esc(title)}${extra?`<span class="wsec__x">${esc(extra)}</span>`:""}</h4>${body}</div>`:"";
+  return head
+    + sec(t("warn.h.districts"), `<div class="wchips">${_warnDistrictChips(W.districts||[])}</div>`)
+    + sec(t("warn.h.rivers"), (W.rivers||[]).length?`<div class="wrivs">${(W.rivers||[]).map(_warnRiverRow).join("")}</div>`:"", t("warn.h.rivers.x"))
+    + sec(t("warn.h.roads"), (W.roads||[]).length?`<div class="wrows">${_warnSimpleList(W.roads,"road")}</div>`:"")
+    + sec(t("warn.h.rain"), (W.rain||[]).length?`<div class="wrows">${_warnSimpleList(W.rain,"rain")}</div>`:"");
+}
+
+function _warnSummaryLine(W){
+  return t("warn.live.sub")
+    .replace("{d}",toNepDigits(String(W.count||0)))
+    .replace("{a}",toNepDigits(String(W.alerts||0)))
+    .replace("{h}",toNepDigits(String(W.window_hours||24)));
+}
+
+/* ---- the alerts-page section ---- */
+function renderTodayWarningsSection(){
+  const root=$("#todayWarningsRoot"); if(!root) return;
+  if(!LIVE_WARN && !LIVE_WARN_TRIED){ root.innerHTML=`<p class="hwloading">${esc(t("warn.loading"))}</p>`; return; }
+
+  if(LIVE_WARN){
+    const W=LIVE_WARN;
+    root.innerHTML=`<section class="twarn" aria-labelledby="twarnH">
       <div class="twarn__card">
         <div class="twarn__header">
           <div class="twarn__meta">
-            <span class="twarn__badge"><span class="twarn__badge-dot"></span>${esc(TL(W.date))} · ${LANG==="ne"?"आजको जिल्ला सतर्कता बुलेटिन":"TODAY'S DISTRICT WARNINGS"}</span>
-            <span class="twarn__source mono">${esc(W.source)}</span>
+            <span class="twarn__badge"><span class="twarn__badge-dot"></span>${esc(t("warn.live.badge"))}</span>
+            <span class="twarn__source mono">${esc(W.source||"")} · ${esc(_warnAgo(W.at))}</span>
           </div>
-          <h2 id="twarnH" class="twarn__title">${esc(TL(W.headline))}</h2>
-          <p class="twarn__lead">${esc(TL(W.summary))}</p>
+          <h2 id="twarnH" class="twarn__title">${esc(t("warn.live.h"))}</h2>
+          <p class="twarn__lead">${esc(_warnSummaryLine(W))}</p>
         </div>
-
-        <div class="twarn__rivers-section">
-          <h3 class="twarn__subh">${LANG==="ne"?"नदी जलसतह तथा लेदो बाढी स्थिति":"River Water Levels & Flash Flood Monitoring"}</h3>
-          <div class="twarn__rivers-grid">${rivers}</div>
-        </div>
-
-        <div class="twarn__districts-section">
-          <div class="twarn__dist-head">
-            <h3 class="twarn__subh">${LANG==="ne"?"सतर्कता सूचीमा रहेका ४४ जिल्ला (सातै प्रदेश)":"44 Districts Under Flash Flood & Landslide Watch"}</h3>
-            ${sevDistricts.length?`
-              <div class="twarn__redzone">
-                <span class="twarn__redzone-tag">${LANG==="ne"?"नदी किनार रातो चेतावनी:":"RIVERSIDE RED ALERT:"}</span>
-                <span class="twarn__redzone-names">${sevDistricts.map(x=>esc(x)).join(", ")}</span>
-              </div>
-            `:""}
-          </div>
-          <div class="twarn__provs-grid">${provCards}</div>
-        </div>
-
+        <div class="twarn__body">${_warnLiveBody(W)}</div>
         <div class="twarn__footer">
-          <div class="twarn__guidance">
-            <strong>${LANG==="ne"?"आपत्कालीन निर्देशन:":"Emergency Directives:"}</strong>
-            ${LANG==="ne"
-              ?"नदी किनार र भिरालो पहिरो जोखिम क्षेत्रका बासिन्दा तुरुन्तै अग्लो र सुरक्षित स्थानमा जानुहोस्। बाढी प्रभावित नदीहरू (त्रिशूली, भोटेकोशी, नारायणी) मा अनावश्यक यात्रा नगर्नुहोस्।"
-              :"Residents along riverbanks and steep slopes must move to higher ground immediately. Avoid unnecessary highway travel along Trishuli, Bhote Koshi, and Narayani river corridors."}
-          </div>
+          <div class="twarn__guidance"><strong>${esc(t("warn.do.h"))}</strong> ${esc(t("warn.do.p"))}</div>
           <div class="twarn__actions">
-            <a class="btn btn--primary btn--sm" href="https://www.dhm.gov.np" target="_blank" rel="noopener">${LANG==="ne"?"DHM बुलेटिन हेर्नुहोस् ↗":"DHM Bulletins ↗"}</a>
-            <a class="btn btn--ghost btn--sm" href="https://bipadportal.gov.np" target="_blank" rel="noopener">${LANG==="ne"?"NDRRMA विपद् पोर्टल ↗":"NDRRMA BIPAD ↗"}</a>
+            <a class="btn btn--primary btn--sm" href="https://bipadportal.gov.np" target="_blank" rel="noopener">${esc(t("warn.cta.bipad"))}</a>
+            <a class="btn btn--ghost btn--sm" href="https://www.dhm.gov.np" target="_blank" rel="noopener">${esc(t("warn.cta.dhm"))}</a>
           </div>
         </div>
       </div>
-    </section>
-  `;
+    </section>`;
+    return;
+  }
+
+  /* Fallback: the built-in bulletin, explicitly labelled as such so nobody
+     reads a cached summary as this morning's official warning. */
+  if(typeof WARNINGS==="undefined"){ root.innerHTML=""; return; }
+  const W=WARNINGS;
+  const sevD=[]; (W.provinces||[]).forEach(p=>(p.districts||[]).forEach(d=>{ if(d.sev) sevD.push(TL(d)); }));
+  root.innerHTML=`<section class="twarn twarn--stale" aria-labelledby="twarnH">
+    <div class="twarn__card">
+      <div class="twarn__header">
+        <div class="twarn__meta">
+          <span class="twarn__badge twarn__badge--stale">${esc(t("warn.stale.badge"))}</span>
+          <span class="twarn__source mono">${esc(W.source)}</span>
+        </div>
+        <h2 id="twarnH" class="twarn__title">${esc(TL(W.headline))}</h2>
+        <p class="twarn__lead">${esc(TL(W.summary))}</p>
+        <p class="twarn__stalenote">${esc(t("warn.stale.note"))}</p>
+      </div>
+      <div class="twarn__body">
+        <div class="wsec"><h4 class="wsec__h">${esc(t("warn.h.rivers"))}</h4>
+          <div class="wrivs">${(W.rivers||[]).map(r=>`<div class="wriv wriv--${r.sev}"><span class="wriv__dot" aria-hidden="true"></span><div class="wriv__id"><strong class="wriv__name">${esc(TL(r.name))}</strong><span class="wriv__meta">${esc(TL(r.status))}</span></div></div>`).join("")}</div>
+        </div>
+        ${sevD.length?`<div class="wsev"><span class="wsev__l">${esc(t("warn.sevlabel"))}</span><span class="wsev__names">${sevD.map(esc).join(", ")}</span></div>`:""}
+      </div>
+      <div class="twarn__footer">
+        <div class="twarn__actions">
+          <a class="btn btn--primary btn--sm" href="https://bipadportal.gov.np" target="_blank" rel="noopener">${esc(t("warn.cta.bipad"))}</a>
+          <a class="btn btn--ghost btn--sm" href="https://www.dhm.gov.np" target="_blank" rel="noopener">${esc(t("warn.cta.dhm"))}</a>
+        </div>
+      </div>
+    </div>
+  </section>`;
 }
+
 function popup(a){return `<div style="font-family:var(--f-mono);font-size:12px"><strong>${esc(TL(a.place))}</strong><br>${esc(a.sev.toUpperCase())} · ${esc(TL(a.desc))}<br>${a.lat.toFixed(4)}, ${a.lng.toFixed(4)}</div>`;}
 function initMap(){
   const el=$("#map"); if(!el || !window.L) return;
@@ -1097,7 +1197,18 @@ function wire(){
   setInterval(fetchLiveNews, 600000);                            // …and every 10 minutes
   fetchLiveAlerts();                                              // live flood alerts (GDACS)…
   setInterval(fetchLiveAlerts, 180000);                          // …refreshed every 3 minutes so risky alerts surface fast
+  // Today's district warnings (BIPAD / NDRRMA). Deliberately does NOT open the
+  // dialog: a blocking modal on load is exactly what was removed from this site
+  // once already. A river over its danger mark surfaces in the inline alert
+  // strip instead, the full panel lives on the alerts page, and the dialog
+  // stays user-triggered from the alerts drawer.
+  fetchDistrictWarnings().then(()=>{ updateWarnReopen(); renderAlertBar(); });
+  setInterval(()=>fetchDistrictWarnings().then(()=>{ updateWarnReopen(); renderAlertBar(); }), 900000);   // every 15 min
   if($("#officialMissing")){ renderOfficialMissing(); loadOfficialMissing(2); }   // NDRRMA missing-persons registry
+  if($("#hhRoot")){                                              // Helping Hand — community needs & offers board
+    renderHelp(); fetchHelp();
+    setInterval(fetchHelp, 120000);                              // a needs board goes stale fast — refresh every 2 min
+  }
   if($("#hwRoot")){                                              // Highway Updates page — curated table + live road bulletins
     fetchHighways(); fetchHighwayNews();
     setInterval(fetchHighways, 300000); setInterval(fetchHighwayNews, 300000);  // auto-refresh every 5 min
@@ -1149,6 +1260,19 @@ Object.assign(I18N.en,{
   "fpop.region":"Affected area","fpop.issued":"Issued","fpop.source":"Source","fpop.report":"View official report ↗",
   "fpop.dismiss":"Dismiss","fpop.view":"See all alerts","fpop.auto":"Auto-checked every few minutes · GDACS (UN/EC)","fpop.live":"LIVE",
   "warn.badge":"TODAY · HIGH ALERT","warn.eye":"Today's Flood Warning","warn.count":"districts on flood / landslide watch","warn.legend":"Red = under today's riverside alert (NDRRMA)","warn.reopen":"Today's district warnings","warn.sevlabel":"Riverside alert today",
+  "warn.live.badge":"LIVE · OFFICIAL FEED","warn.live.h":"Today's Flood, Rainfall & Road Alerts",
+  "warn.live.sub":"{d} districts carrying {a} active alerts in the last {h} hours, from NDRRMA's BIPAD portal — DHM river and rainfall stations plus Department of Roads closures.",
+  "warn.loading":"Loading today's official alerts…",
+  "warn.stale.badge":"CACHED BULLETIN","warn.stale.note":"The live NDRRMA feed could not be reached, so this is the last bulletin stored with the site. Treat it as background, not as today's warning, and check the official portal before acting.",
+  "warn.s.districts":"districts","warn.s.rivers":"river stations","warn.s.roads":"roads closed","warn.s.crit":"above danger level",
+  "warn.h.districts":"Districts with active alerts","warn.h.rivers":"River stations","warn.h.rivers.x":"level against the station's own warning and danger marks","warn.h.roads":"Roads closed","warn.h.rain":"Heavy rainfall",
+  "warn.k.river":"flood","warn.k.rain":"rain","warn.k.road":"road",
+  "warn.st.danger":"ABOVE DANGER","warn.st.warn":"ABOVE WARNING","warn.lvl.warn":"warn","warn.lvl.dngr":"danger",
+  "warn.trend.rising":"rising","warn.trend.falling":"falling","warn.trend.steady":"steady",
+  "warn.ago.min":"updated {n} min ago","warn.ago.hr":"updated {n} h ago",
+  "warn.do.h":"What to do:","warn.do.p":"If you are on a riverbank or below a steep slope in one of these districts, move to higher ground now. Do not cross a flooded road or an active landslide. Confirm any journey with the local traffic office on 103.",
+  "warn.cta.bipad":"NDRRMA BIPAD portal ↗","warn.cta.dhm":"DHM bulletins ↗","warn.cta.all":"Full alert map",
+  "warn.strip":"{r} is above its danger level — {d}. Move off the banks.",
   "glof.tag":"GLOF Watch",
   "gallery.eye":"From the Affected Areas","gallery.h":"Ground Gallery","gallery.load":"Loading photos…","gallery.none":"Photos could not be loaded right now. See the official article.","gallery.loadall":"View all photos →","page.gallery.h":"Photo Gallery","page.gallery.p":"Photographs from the affected areas, from published news sources and Wikimedia. Verify context independently.",
   "page.news.h":"Live Bulletins","page.news.p":"Detailed reporting on the current disaster, compiled from published and official sources. Verify independently.",
@@ -1156,6 +1280,40 @@ Object.assign(I18N.en,{
   "hist.readmore":"Read full article ↗","hist.loading":"Loading details…","hist.tap":"Tap for details",
   "relief.scan":"Scan to donate","relief.fonepay":"Fonepay — PM Disaster Relief Fund","relief.fonepay.p":"Scan this Fonepay QR with any Nepali banking or wallet app to donate to the Prime Minister's relief fund.",
   "nav.highway":"Highway Updates",
+  "nav.help":"Helping Hand",
+  "hh.band.tag":"New","hh.band.h":"Helping Hand — ask for help, or offer it","hh.band.p":"Food, drinking water, shelter, medicine, blood, transport. Post what you need or what you can give, and find people near you.","hh.band.cta":"Open the board →",
+  "page.hh.eye":"Community Mutual Aid","page.hh.h":"Helping Hand","page.hh.p":"A public board for the two halves of a disaster response that rarely find each other in time: people who need food, water, shelter, medicine, blood or a way out, and people nearby who have those things to give. Post either side, search by district, and call directly.",
+  "hh.hero.needs":"open requests","hh.hero.offers":"offers available",
+  "hh.post.h":"Post to the board","hh.post.p":"Choose a side to start. Your post is public, stays up for 21 days, and you can close it yourself once it is sorted.",
+  "hh.pick.need.p":"Food, water, shelter, medicine, blood, evacuation or transport.","hh.pick.offer.p":"Supplies, a vehicle, a spare room, blood, or your time as a volunteer.",
+  "hh.pick.hint":"Pick one above and the form opens here.",
+  "hh.form.h.need":"Ask for help","hh.form.h.offer":"Offer help",
+  "hh.fs.what.need":"What you need","hh.fs.what.offer":"What you can give","hh.fs.where":"Where","hh.fs.contact":"How people reach you",
+  "hh.f.detail.hint.need":"Say what, how much, and by when. Specific requests get answered.","hh.f.detail.hint.offer":"Say how much you have, and where you can deliver or receive.",
+  "hh.f.capacity":"People you can help","hh.req":"required","hh.form.cancel":"Cancel",
+  "hh.cat.all":"All categories","hh.showing":"posts shown","hh.by":"by","hh.m.where":"Location","hh.m.people":"People",
+  "hh.board.p":"Posted by members of the public. Filter by side and category, or search a district.",
+  "hh.safe.h":"Life-threatening emergency? Call, do not post.","hh.safe.p":"This board is people helping people — it is not monitored by the emergency services and nobody is on duty here. For rescue, medical or police response use the official lines.","hh.safe.lines":"Helplines:","hh.safe.all":"all helplines →",
+  "hh.board.h":"Open requests and offers",
+  "hh.form.kind":"What are you posting?","hh.form.need":"I need help","hh.form.offer":"I can help",
+  "hh.form.need.p":"Say what you need, where you are, and how many people it is for. Be specific — 'drinking water for 12 people at Betrawati bazaar' gets answered; 'need help' does not.",
+  "hh.form.offer.p":"Say what you have and where you can get it to. Include how much and when you are available.",
+  "hh.form.post.need":"Post request","hh.form.post.offer":"Post offer",
+  "hh.form.privacy":"Your post is public and stays up for 21 days. Never share bank details, ID numbers or passwords here, and never send money to someone who contacts you through this board.",
+  "hh.f.cat":"Category","hh.f.urg":"Urgency","hh.f.district":"District","hh.f.district.ph":"e.g. Rasuwa","hh.f.place":"Village / ward / landmark","hh.f.place.ph":"e.g. Betrawati bazaar, ward 3","hh.f.people":"People affected","hh.f.name":"Your name","hh.f.optional":"optional","hh.f.detail":"Details",
+  "hh.f.detail.need":"What exactly do you need, and by when?","hh.f.detail.offer":"What can you provide, how much, and where can you deliver or receive?",
+  "hh.f.phone":"Phone number","hh.f.consent":"Show my phone number publicly so people can reach me",
+  "hh.c.food":"Food","hh.c.water":"Drinking water","hh.c.shelter":"Shelter","hh.c.medical":"Medical / medicine","hh.c.blood":"Blood donation","hh.c.rescue":"Rescue / evacuation","hh.c.transport":"Transport","hh.c.clothing":"Clothing & bedding","hh.c.baby":"Baby & child supplies","hh.c.hygiene":"Hygiene & sanitation","hh.c.power":"Power & charging","hh.c.volunteer":"Volunteers","hh.c.money":"Cash / relief fund","hh.c.other":"Other",
+  "hh.u.critical":"CRITICAL","hh.u.urgent":"URGENT","hh.u.normal":"Normal",
+  "hh.k.need":"Needs help","hh.k.offer":"Offering help","hh.all":"All",
+  "hh.search":"Search district, place or need…","hh.people":"people","hh.nocontact":"No public contact — reply through a local relief point",
+  "hh.markdone":"Mark as resolved","hh.resolved":"RESOLVED","hh.flag":"Report","hh.flag.confirm":"Report this post as fake, abusive or a scam?","hh.flag.ok":"Reported. Thank you — posts reported by several people are hidden automatically.",
+  "hh.now":"just now","hh.min":"{n} min ago","hh.hr":"{n} h ago","hh.day":"{n} d ago",
+  "hh.loading":"Loading the board…","hh.empty":"Nothing matches that filter yet. Try 'All', or be the first to post.","hh.empty.off":"The board could not be loaded. Use the helplines above.",
+  "hh.sending":"Posting…","hh.posted":"Posted to the board.","hh.doneok":"Marked as resolved.",
+  "hh.err.required":"District and details are both required.","hh.err.phone":"Add a phone number, or untick the box.","hh.err.send":"Could not post. Check your connection and try again.",
+  "hh.off.h":"The shared board is offline","hh.off.p":"Posts cannot be saved or loaded right now, so nothing you write here would reach anyone. Please use the emergency helplines above instead.","hh.off.form":"Posting is disabled while the board is offline — your message would not reach anyone. Use the helplines above.",
+  "hh.legend":"Posts are submitted by the public, are not verified by NepalDisaster.com, and expire after 21 days.",
   "page.hw.eye":"Roads & Mobility","page.hw.h":"Highway Updates","page.hw.p":"Live status of Nepal's major highways — open, closed and one-way sections by province, with the reason, expected reopening and safe detours. Verify locally before you travel.",
   "hw.updated":"Updated","hw.refresh":"Refresh","hw.all":"All","hw.f.closed":"Closed","hw.f.oneway":"One-way","hw.f.open":"Open",
   "hw.st.closed":"CLOSED","hw.st.oneway":"ONE-WAY","hw.st.caution":"CAUTION","hw.st.open":"OPEN",
@@ -1169,6 +1327,40 @@ Object.assign(I18N.en,{
 });
 Object.assign(I18N.ne,{
   "nav.highway":"राजमार्ग अपडेट",
+  "nav.help":"सहयोगी हात",
+  "hh.band.tag":"नयाँ","hh.band.h":"सहयोगी हात — सहयोग माग्नुहोस्, वा दिनुहोस्","hh.band.p":"खाना, खानेपानी, आश्रय, औषधी, रगत, यातायात। के चाहियो वा के दिन सक्नुहुन्छ पोस्ट गर्नुहोस् र नजिकका मानिस भेट्नुहोस्।","hh.band.cta":"सूची खोल्नुहोस् →",
+  "page.hh.eye":"सामुदायिक पारस्परिक सहयोग","page.hh.h":"सहयोगी हात","page.hh.p":"विपद्मा प्रायः समयमै एकअर्कासम्म नपुग्ने दुई पक्षका लागि सार्वजनिक सूची: खाना, खानेपानी, आश्रय, औषधी, रगत वा निस्कने बाटो चाहिनेहरू, र नजिकै रहेर त्यो दिन सक्नेहरू। दुवैतर्फबाट पोस्ट गर्नुहोस्, जिल्ला अनुसार खोज्नुहोस्, र सिधै फोन गर्नुहोस्।",
+  "hh.hero.needs":"खुला अनुरोध","hh.hero.offers":"उपलब्ध प्रस्ताव",
+  "hh.post.h":"सूचीमा पोस्ट गर्नुहोस्","hh.post.p":"सुरु गर्न एउटा छान्नुहोस्। तपाईंको पोस्ट सार्वजनिक हुन्छ, २१ दिनसम्म रहन्छ, र काम भएपछि तपाईं आफैं बन्द गर्न सक्नुहुन्छ।",
+  "hh.pick.need.p":"खाना, पानी, आश्रय, औषधी, रगत, उद्धार वा यातायात।","hh.pick.offer.p":"सामग्री, सवारी साधन, बस्ने ठाउँ, रगत, वा स्वयंसेवाका रूपमा तपाईंको समय।",
+  "hh.pick.hint":"माथिबाट एउटा छान्नुहोस्, फारम यहीँ खुल्छ।",
+  "hh.form.h.need":"सहयोग माग्नुहोस्","hh.form.h.offer":"सहयोग दिनुहोस्",
+  "hh.fs.what.need":"के चाहियो","hh.fs.what.offer":"के दिन सक्नुहुन्छ","hh.fs.where":"कहाँ","hh.fs.contact":"सम्पर्क कसरी गर्ने",
+  "hh.f.detail.hint.need":"के, कति र कहिलेसम्म चाहिन्छ लेख्नुहोस्। स्पष्ट अनुरोधको जवाफ छिटो आउँछ।","hh.f.detail.hint.offer":"कति परिमाण छ र कहाँ पुर्‍याउन वा लिन सक्नुहुन्छ लेख्नुहोस्।",
+  "hh.f.capacity":"कति जनालाई सहयोग गर्न सक्नुहुन्छ","hh.req":"अनिवार्य","hh.form.cancel":"रद्द गर्नुहोस्",
+  "hh.cat.all":"सबै वर्ग","hh.showing":"पोस्ट देखाइएको","hh.by":"—","hh.m.where":"स्थान","hh.m.people":"जना",
+  "hh.board.p":"सर्वसाधारणले हालेका पोस्ट। पक्ष र वर्ग अनुसार छान्नुहोस्, वा जिल्ला खोज्नुहोस्।",
+  "hh.safe.h":"ज्यान जोखिममा छ? पोस्ट होइन, फोन गर्नुहोस्।","hh.safe.p":"यो सूची नागरिकले नागरिकलाई गर्ने सहयोग हो — यसमा आपत्कालीन निकायको निगरानी छैन र कोही ड्युटीमा बसेको छैन। उद्धार, स्वास्थ्य वा प्रहरी सहायताका लागि आधिकारिक नम्बरमै सम्पर्क गर्नुहोस्।","hh.safe.lines":"हेल्पलाइन:","hh.safe.all":"सबै हेल्पलाइन →",
+  "hh.board.h":"खुला अनुरोध र प्रस्ताव",
+  "hh.form.kind":"के पोस्ट गर्दै हुनुहुन्छ?","hh.form.need":"मलाई सहयोग चाहियो","hh.form.offer":"म सहयोग गर्न सक्छु",
+  "hh.form.need.p":"के चाहिएको हो, कहाँ हुनुहुन्छ र कति जनाका लागि हो स्पष्ट लेख्नुहोस्। ‘बेत्रावती बजारमा १२ जनालाई खानेपानी’ जस्तो स्पष्ट अनुरोधको जवाफ आउँछ; ‘सहयोग चाहियो’ भन्नेको आउँदैन।",
+  "hh.form.offer.p":"तपाईंसँग के छ र कहाँसम्म पुर्‍याउन सक्नुहुन्छ लेख्नुहोस्। परिमाण र उपलब्ध समय पनि उल्लेख गर्नुहोस्।",
+  "hh.form.post.need":"अनुरोध पोस्ट गर्नुहोस्","hh.form.post.offer":"प्रस्ताव पोस्ट गर्नुहोस्",
+  "hh.form.privacy":"तपाईंको पोस्ट सार्वजनिक हुन्छ र २१ दिनसम्म रहन्छ। यहाँ बैंक विवरण, परिचयपत्र नम्बर वा पासवर्ड कहिल्यै नराख्नुहोस्, र यो सूचीबाट सम्पर्क गर्ने कसैलाई पैसा नपठाउनुहोस्।",
+  "hh.f.cat":"वर्ग","hh.f.urg":"तात्कालिकता","hh.f.district":"जिल्ला","hh.f.district.ph":"उदाहरण: रसुवा","hh.f.place":"गाउँ / वडा / ठाउँ","hh.f.place.ph":"उदाहरण: बेत्रावती बजार, वडा ३","hh.f.people":"प्रभावित संख्या","hh.f.name":"तपाईंको नाम","hh.f.optional":"वैकल्पिक","hh.f.detail":"विवरण",
+  "hh.f.detail.need":"ठ्याक्कै के चाहिएको हो र कहिलेसम्म?","hh.f.detail.offer":"के दिन सक्नुहुन्छ, कति परिमाण, र कहाँ पुर्‍याउन वा लिन सक्नुहुन्छ?",
+  "hh.f.phone":"फोन नम्बर","hh.f.consent":"मानिसहरूले सम्पर्क गर्न सकून् भनी मेरो फोन नम्बर सार्वजनिक गर्नुहोस्",
+  "hh.c.food":"खाना","hh.c.water":"खानेपानी","hh.c.shelter":"आश्रय","hh.c.medical":"स्वास्थ्य / औषधी","hh.c.blood":"रक्तदान","hh.c.rescue":"उद्धार / स्थानान्तरण","hh.c.transport":"यातायात","hh.c.clothing":"लुगा र ओछ्यान","hh.c.baby":"बालबालिकाका सामग्री","hh.c.hygiene":"सरसफाइ","hh.c.power":"बिजुली र चार्जिङ","hh.c.volunteer":"स्वयंसेवक","hh.c.money":"नगद / राहत कोष","hh.c.other":"अन्य",
+  "hh.u.critical":"अति जरुरी","hh.u.urgent":"जरुरी","hh.u.normal":"सामान्य",
+  "hh.k.need":"सहयोग चाहिएको","hh.k.offer":"सहयोग प्रस्ताव","hh.all":"सबै",
+  "hh.search":"जिल्ला, ठाउँ वा आवश्यकता खोज्नुहोस्…","hh.people":"जना","hh.nocontact":"सार्वजनिक सम्पर्क छैन — नजिकको राहत केन्द्रमार्फत सम्पर्क गर्नुहोस्",
+  "hh.markdone":"पूरा भयो भन्ने चिन्ह लगाउनुहोस्","hh.resolved":"पूरा भयो","hh.flag":"उजुरी","hh.flag.confirm":"यो पोस्ट झुटो, दुर्व्यवहारपूर्ण वा ठगी हो भनी उजुरी गर्ने?","hh.flag.ok":"उजुरी दर्ता भयो। धन्यवाद — धेरैले उजुरी गरेका पोस्ट स्वतः लुकाइन्छन्।",
+  "hh.now":"भर्खरै","hh.min":"{n} मिनेट अघि","hh.hr":"{n} घण्टा अघि","hh.day":"{n} दिन अघि",
+  "hh.loading":"सूची लोड हुँदै…","hh.empty":"यो फिल्टरमा अहिले केही छैन। ‘सबै’ हेर्नुहोस्, वा पहिलो पोस्ट तपाईं गर्नुहोस्।","hh.empty.off":"सूची लोड हुन सकेन। माथिका हेल्पलाइन प्रयोग गर्नुहोस्।",
+  "hh.sending":"पोस्ट हुँदै…","hh.posted":"सूचीमा पोस्ट भयो।","hh.doneok":"पूरा भएको चिन्ह लाग्यो।",
+  "hh.err.required":"जिल्ला र विवरण दुवै अनिवार्य छन्।","hh.err.phone":"फोन नम्बर राख्नुहोस्, वा चेकबक्स हटाउनुहोस्।","hh.err.send":"पोस्ट हुन सकेन। इन्टरनेट जाँची पुनः प्रयास गर्नुहोस्।",
+  "hh.off.h":"साझा सूची अहिले बन्द छ","hh.off.p":"अहिले पोस्ट सुरक्षित वा लोड हुन सक्दैन, त्यसैले यहाँ लेखेको कुरा कसैसम्म पुग्दैन। कृपया माथिका आपत्कालीन हेल्पलाइन प्रयोग गर्नुहोस्।","hh.off.form":"सूची बन्द भएकाले पोस्ट गर्न मिल्दैन — तपाईंको सन्देश कसैसम्म पुग्दैन। माथिका हेल्पलाइन प्रयोग गर्नुहोस्।",
+  "hh.legend":"पोस्टहरू सर्वसाधारणले हालेका हुन्, NepalDisaster.com ले प्रमाणित गरेको होइन, र २१ दिनपछि हट्छन्।",
   "page.hw.eye":"सडक तथा आवागमन","page.hw.h":"राजमार्ग अपडेट","page.hw.p":"नेपालका प्रमुख राजमार्गको प्रत्यक्ष अवस्था — प्रदेश अनुसार खुला, बन्द र एकतर्फी खण्ड, कारण, खुल्ने अनुमानित समय र सुरक्षित वैकल्पिक मार्गसहित। यात्रा गर्नुअघि स्थानीय रूपमा पुष्टि गर्नुहोस्।",
   "hw.updated":"अद्यावधिक","hw.refresh":"ताजा गर्नुहोस्","hw.all":"सबै","hw.f.closed":"बन्द","hw.f.oneway":"एकतर्फी","hw.f.open":"खुला",
   "hw.st.closed":"बन्द","hw.st.oneway":"एकतर्फी","hw.st.caution":"सावधानी","hw.st.open":"खुला",
@@ -1188,6 +1380,19 @@ Object.assign(I18N.ne,{
   "fpop.region":"प्रभावित क्षेत्र","fpop.issued":"जारी","fpop.source":"स्रोत","fpop.report":"आधिकारिक रिपोर्ट हेर्नुहोस् ↗",
   "fpop.dismiss":"हटाउनुहोस्","fpop.view":"सबै अलर्ट हेर्नुहोस्","fpop.auto":"हरेक केही मिनेटमा स्वतः जाँच · GDACS (UN/EC)","fpop.live":"प्रत्यक्ष",
   "warn.badge":"आज · उच्च सतर्कता","warn.eye":"आजको बाढी चेतावनी","warn.count":"जिल्ला बाढी / पहिरो निगरानीमा","warn.legend":"रातो = आज नदी किनार सतर्कता (NDRRMA)","warn.reopen":"आजका जिल्ला चेतावनी","warn.sevlabel":"आज नदी किनार सतर्कता",
+  "warn.live.badge":"प्रत्यक्ष · आधिकारिक स्रोत","warn.live.h":"आजका बाढी, वर्षा र सडक चेतावनी",
+  "warn.live.sub":"विगत {h} घण्टामा {d} जिल्लामा {a} सक्रिय चेतावनी — NDRRMA को बिपद् पोर्टलबाट: DHM का नदी तथा वर्षा मापन केन्द्र र सडक विभागका अवरोध सूचना।",
+  "warn.loading":"आजका आधिकारिक चेतावनी लोड हुँदै…",
+  "warn.stale.badge":"पुरानो बुलेटिन","warn.stale.note":"NDRRMA को प्रत्यक्ष स्रोतमा पुग्न सकिएन, त्यसैले यो साइटमा सुरक्षित रहेको अन्तिम बुलेटिन हो। यसलाई आजको चेतावनी होइन, पृष्ठभूमि जानकारी मात्र मान्नुहोस् र निर्णय गर्नुअघि आधिकारिक पोर्टल हेर्नुहोस्।",
+  "warn.s.districts":"जिल्ला","warn.s.rivers":"नदी केन्द्र","warn.s.roads":"सडक बन्द","warn.s.crit":"खतरा तह माथि",
+  "warn.h.districts":"सक्रिय चेतावनी भएका जिल्ला","warn.h.rivers":"नदी मापन केन्द्र","warn.h.rivers.x":"सोही केन्द्रको चेतावनी र खतरा तहसँग तुलना","warn.h.roads":"बन्द सडक","warn.h.rain":"भारी वर्षा",
+  "warn.k.river":"बाढी","warn.k.rain":"वर्षा","warn.k.road":"सडक",
+  "warn.st.danger":"खतरा तह माथि","warn.st.warn":"चेतावनी तह माथि","warn.lvl.warn":"चेतावनी","warn.lvl.dngr":"खतरा",
+  "warn.trend.rising":"बढ्दै","warn.trend.falling":"घट्दै","warn.trend.steady":"स्थिर",
+  "warn.ago.min":"{n} मिनेट अघि अद्यावधिक","warn.ago.hr":"{n} घण्टा अघि अद्यावधिक",
+  "warn.do.h":"के गर्ने:","warn.do.p":"यी जिल्लामा नदी किनार वा भिरालो पहाडमुनि हुनुहुन्छ भने तुरुन्तै अग्लो सुरक्षित स्थानमा जानुहोस्। बाढी आएको सडक वा सक्रिय पहिरो नकाट्नुहोस्। यात्रा गर्नुअघि स्थानीय ट्राफिक कार्यालय (१०३) मा पुष्टि गर्नुहोस्।",
+  "warn.cta.bipad":"NDRRMA बिपद् पोर्टल ↗","warn.cta.dhm":"DHM बुलेटिन ↗","warn.cta.all":"पूर्ण अलर्ट नक्सा",
+  "warn.strip":"{r} खतरा तहभन्दा माथि — {d}। नदी किनारबाट टाढा जानुहोस्।",
   "glof.tag":"GLOF सतर्कता",
   "gallery.eye":"प्रभावित क्षेत्रबाट","gallery.h":"स्थलगत ग्यालरी","gallery.load":"तस्बिर लोड हुँदै…","gallery.none":"अहिले तस्बिर लोड हुन सकेन। आधिकारिक लेख हेर्नुहोस्।","gallery.loadall":"सबै तस्बिर हेर्नुहोस् →","page.gallery.h":"तस्बिर ग्यालरी","page.gallery.p":"प्रभावित क्षेत्रका तस्बिरहरू, प्रकाशित समाचार र विकिमिडियाबाट। सन्दर्भ स्वतन्त्र रुजु गर्नुहोस्।",
   "page.news.h":"प्रत्यक्ष बुलेटिन","page.news.p":"हालको विपद्बारे प्रकाशित र आधिकारिक स्रोतबाट संकलित विस्तृत समाचार। स्वतन्त्र रुजु गर्नुहोस्।",
@@ -1202,9 +1407,9 @@ const GLOF={
        ne:"तिब्बततर्फबाट हिमताल विस्फोट बाढी (GLOF) को आशंका। रसुवा, नुवाकोट, धादिङ, गोरखा र चितवनका बासिन्दालाई सतर्क रही अग्लो सुरक्षित स्थानमा जान NDRRMA को आग्रह।"}
 };
 const NOTIFS=[
-  {id:"toll-2026-0901", sev:"danger", tag:{en:"Toll update",ne:"मृत्यु अद्यावधिक"}, time:"1 Sept", src:"NDRRMA",
-   msg:{en:"NDRRMA, 1 Sept: 1,058 confirmed dead, 3,916 missing, 267 injured and 11,800 rescued on the Nepal side. 21,000+ security personnel deployed across the disaster zone.",
-        ne:"NDRRMA, १ सेप्टेम्बर: नेपालतर्फ १,०५८ मृत्यु पुष्टि, ३,९१६ बेपत्ता, २६७ घाइते र ११,८०० उद्धार। विपद् क्षेत्रमा २१,०००+ सुरक्षाकर्मी परिचालित।"}},
+  {id:"toll-2026-0902", sev:"danger", tag:{en:"Toll update",ne:"मृत्यु अद्यावधिक"}, time:"2 Sept", src:"NDRRMA",
+   msg:{en:"NDRRMA, 2 Sept: 1,114 confirmed dead, 3,916 missing, 1,473 injured and 11,814 rescued on the Nepal side. 21,000+ security personnel deployed; 4,248 rescued people are now named in the public registry.",
+        ne:"NDRRMA, २ सेप्टेम्बर: नेपालतर्फ १,११४ मृत्यु पुष्टि, ३,९१६ बेपत्ता, १,४७३ घाइते र ११,८१४ उद्धार। २१,०००+ सुरक्षाकर्मी परिचालित; सार्वजनिक नामावलीमा ४,२४८ उद्धारितको नाम दर्ता।"}},
   {id:"warn-2026-0901-ktm", sev:"watch", tag:{en:"KTM Valley advisory",ne:"काठमाडौं उपत्यका सतर्कता"}, time:"1 Sept", src:"NDRRMA / DHM", url:"https://www.dhm.gov.np",
    msg:{en:"Kathmandu Valley on moderate flood advisory — rising water levels monitored along Bagmati, Bishnumati, Hanumante and Dhobi Khola rivers. Heavy rainfall forecast through 1–2 Sept.",
         ne:"काठमाडौं उपत्यकामा मध्यम बाढी सतर्कता — बागमती, बिष्णुमती, हनुमन्ते र ढोबी खोलाको जलसतह निगरानीमा। १–२ सेप्टेम्बरसम्म भारी वर्षाको पूर्वानुमान।"}},
@@ -1217,9 +1422,9 @@ const NOTIFS=[
   {id:"warn-2026-0901-lhende", sev:"watch", tag:{en:"Dammed lake",ne:"बाँधिएको ताल"}, time:"1 Sept", src:"NDRRMA satellite analysis",
    msg:{en:"Lhende Khola barrier lake (~0.11 km², 18 km above Rasuwagadhi) remains under critical burst surveillance. A rupture would send a second surge down Bhote Koshi — stay on high ground.",
         ne:"ल्हेन्डे खोलाको बाँधिएको ताल (~०.११ वर्ग कि.मि., रसुवागढीभन्दा १८ कि.मि. माथि) गम्भीर निगरानीमा। फुटेमा भोटेकोशीमा दोस्रो भल — अग्लो स्थानमा रहनुहोस्।"}},
-  {id:"tunnel-2026-0831-everest", sev:"relief", tag:{en:"Tunnel rescue",ne:"सुरुङ उद्धार"}, time:"31 Aug", src:"Nepali Army / IFMGA guides",
-   msg:{en:"Everest veterans and IFMGA guides entered the Chilime tunnel on fixed lines, reaching ~120 m before chest-deep sludge stopped them. ~500 still believed inside tunnel systems across 11 damaged projects.",
-        ne:"सगरमाथा आरोही र IFMGA गाइड फिक्स्ड लाइनमा चिलिमे सुरुङभित्र ~१२० मिटर पुगे। ११ क्षतिग्रस्त आयोजनाका सुरुङभित्र ~५०० जना अझै रहेको अनुमान।"}},
+  {id:"tunnel-2026-0902-ut3a", sev:"watch", tag:{en:"Tunnel rescue",ne:"सुरुङ उद्धार"}, time:"2 Sept", src:"Nepali Army / NDRRMA",
+   msg:{en:"A controlled explosion was set off inside the Upper Trishuli 3A tunnel and the Army has dug about 10 m down with excavators to clear water, mud and debris. 900 hydropower workers are missing across 12 projects and around 500 are believed still inside the tunnels.",
+        ne:"माथिल्लो त्रिशूली ३A सुरुङभित्र नियन्त्रित विस्फोट गरिएको छ र सेनाले एक्साभेटरले करिब १० मिटर गहिरो खनेर पानी, हिलो र लेदो हटाउँदै छ। १२ आयोजनाका ९०० जलविद्युत् कामदार बेपत्ता छन् र करिब ५०० अझै सुरुङभित्रै रहेको अनुमान छ।"}},
   {id:"relief-2026-0831-fund", sev:"relief", tag:{en:"Relief fund",ne:"राहत कोष"}, time:"31 Aug", src:"OPMCM / Radio Nepal", url:"relief.html",
    msg:{en:"PM Disaster Relief Fund passes Rs 5.44 billion; Rs 675 million released to 15 local units in Rasuwa, Nuwakot, Dhading, Gorkha and Tanahun. Donate only via official channels.",
         ne:"प्रधानमन्त्री विपद् राहत कोष रु. ५.४४ अर्ब नाघ्यो; १५ स्थानीय तहलाई रु. ६७.५ करोड निकासा। आधिकारिक माध्यमबाट मात्र दान गर्नुहोस्।"}}
@@ -1246,13 +1451,13 @@ const WARNINGS={
   count:44,
   source:"DHM 24h Meteorological Bulletin · NDRRMA River & Landslide Alert (1 Sept 2026)",
   url:"https://www.dhm.gov.np",
-  headline:{en:"Monsoon Surge Alert: Trishuli & Bhote Koshi Riverside Red Warning Remains in Force",
-            ne:"मनसुन सक्रियता अलर्ट: त्रिशूली र भोटेकोशी नदी किनारमा रातो चेतावनी कायमै"},
+  headline:{en:"Monsoon Surge Alert: Trishuli, Bhote Koshi & Kathmandu Valley River Watch Active",
+            ne:"मनसुन सक्रियता अलर्ट: त्रिशूली, भोटेकोशी र काठमाडौं उपत्यका नदी सतर्कता कायमै"},
   summary:{
-    en:"Department of Hydrology and Meteorology (DHM) warns of moderate to heavy rainfall across Bagmati, Gandaki, Koshi, Lumbini and Sudurpaschim provinces. NDRRMA maintains strict Riverside Red Alert for Rasuwa, Nuwakot, Dhading, Chitwan, Nawalparasi (East/West) and Gorkha. Trishuli River remains ~3m above danger mark, and a 0.11 km² landslide-dammed lake on Lhende Khola (~18 km upstream of Rasuwagadhi) remains under critical burst surveillance. 44 districts across all 7 provinces face heightened flash-flood and landslide risks. All riverside residents and travelers are urged to remain on high ground.",
-    ne:"जल तथा मौसम विज्ञान विभागका अनुसार बागमती, गण्डकी, कोशी, लुम्बिनी र सुदूरपश्चिममा मध्यमदेखि भारी वर्षाको सम्भावना। NDRRMA ले रसुवा, नुवाकोट, धादिङ, चितवन, नवलपरासी (पूर्व/पश्चिम) र गोरखामा नदी किनारमा उच्च सतर्कता (रातो चेतावनी) कायम राखेको छ। त्रिशूली नदी खतराको विन्दुभन्दा करिब ३ मिटर माथि छ भने रसुवागढीभन्दा माथिल्लो ल्हेन्डे खोलाको बाँधिएको ताल फुट्ने जोखिम उच्च छ। सातै प्रदेशका ४४ जिल्लामा आकस्मिक बाढी र पहिरोको जोखिम। नदी किनारका बासिन्दा तुरुन्तै सुरक्षित अग्लो स्थानमा रहनुहोस्।"},
+    en:"Department of Hydrology and Meteorology (DHM) and NDRRMA issue heightened flood warnings across Bagmati Province, including the Kathmandu Valley (Bagmati, Bishnumati, Hanumante and Dhobi Khola rivers on rising watch). Strict Riverside Red Alert continues for Rasuwa, Nuwakot, Dhading, Chitwan, Nawalparasi and Gorkha. Trishuli River remains ~3m above danger level, and the Lhende Khola barrier lake stays under critical watch. 44 districts across all 7 provinces face active flash-flood risks.",
+    ne:"जल तथा मौसम विज्ञान विभाग र NDRRMA ले काठमाडौं उपत्यका (बागमती, बिष्णुमती, हनुमन्ते र ढोबीखोला) सहित बागमती प्रदेशभर बाढी सतर्कता जारी गरेको छ। रसुवा, नुवाकोट, धादिङ, चितवन, नवलपरासी र गोरखामा नदी किनारमा रातो चेतावनी कायमै छ। त्रिशूली नदी खतराको विन्दुभन्दा करिब ३ मिटर माथि छ भने ल्हेन्डे खोलाको बाँधिएको ताल फुट्ने जोखिम उच्च छ। ४४ जिल्लामा बाढी र पहिरोको जोखिम।"},
   rivers:[
-    {name:{en:"Rain Forecast (Bagmati/Gandaki)",ne:"वर्षा पूर्वानुमान (बागमती/गण्डकी)"}, status:{en:"moderate to locally heavy",ne:"मध्यमदेखि भारी वर्षा"}, sev:"danger"},
+    {name:{en:"Kathmandu Valley (Bagmati & Bishnumati)",ne:"काठमाडौं उपत्यका (बागमती र बिष्णुमती)"}, status:{en:"rising water levels · flood watch",ne:"जलसतह वृद्धि · बाढी सतर्कता"}, sev:"watch"},
     {name:{en:"Bhote Koshi River",ne:"भोटेकोशी नदी"}, status:{en:"high surge · debris watch",ne:"उच्च बहाव · लेदो जोखिम"}, sev:"danger"},
     {name:{en:"Trishuli River",ne:"त्रिशूली नदी"}, status:{en:"+3.0 m above danger level",ne:"खतराभन्दा +३.० मि. माथि"}, sev:"danger"},
     {name:{en:"Lhende Khola (Tibet/Nepal border)",ne:"ल्हेन्डे खोला (सीमा क्षेत्र)"}, status:{en:"dammed lake · burst hazard",ne:"ताल बाँधिएको · फुट्ने जोखिम"}, sev:"danger"},
@@ -1407,14 +1612,29 @@ function _freshestNews(){
   return null;
 }
 
+let _newsPopScheduled=false;
 function maybeNewsPopup(){
-  if(_newsPopOpenFor) return;                       // one at a time
+  if(_newsPopOpenFor || _newsPopScheduled) return;
   if(document.getElementById("newsPop")) return;
+  if(sessionStorage.getItem("nd_npop_dismissed")) return;
+  // A headline is the LOWEST-priority interruption on this site. If the session
+  // has already spent its one popup — almost always on a district flood warning,
+  // which is fetched first precisely so it gets the chance — the headline stays
+  // in the ticker and the bulletins list, where it was going to appear anyway.
+  if(popupBudgetSpent()) return;
   const pick=_freshestNews();
   if(!pick) return;
-  // On a browser that has never seen the site, don't fire immediately on load —
-  // let the page settle first so the popup reads as an update, not an interstitial.
-  openNewsPopup(pick);
+  _newsPopScheduled=true;
+  // Let the reader get their bearings first; the helplines and the toll are why
+  // they opened the page, not this.
+  setTimeout(()=>{
+    _newsPopScheduled=false;
+    if(popupBudgetSpent()) return;                 // the warning popup may have run in the meantime
+    if(!document.getElementById("newsPop") && !sessionStorage.getItem("nd_npop_dismissed")){
+      spendPopupBudget();
+      openNewsPopup(pick);
+    }
+  }, 12000);
 }
 
 function openNewsPopup(pick){
@@ -1454,14 +1674,14 @@ function openNewsPopup(pick){
   requestAnimationFrame(()=>el.classList.add("open"));
 
   const x=el.querySelector("#npopX");
-  if(x) x.addEventListener("click", closeNewsPopup);
-  el.addEventListener("keydown", e=>{ if(e.key==="Escape") closeNewsPopup(); });
-  // Long enough to read a headline, short enough not to nag.
+  if(x) x.addEventListener("click", ()=>{ try{sessionStorage.setItem("nd_npop_dismissed","1");}catch(_){} closeNewsPopup(); });
+  el.addEventListener("keydown", e=>{ if(e.key==="Escape"){ try{sessionStorage.setItem("nd_npop_dismissed","1");}catch(_){} closeNewsPopup(); } });
+  // Polite duration: 7s auto-dismiss
   clearTimeout(_newsPopTimer);
-  _newsPopTimer=setTimeout(closeNewsPopup, 15000);
-  // Don't yank it away mid-read.
+  _newsPopTimer=setTimeout(closeNewsPopup, 7000);
+  // Don't yank it away mid-read
   el.addEventListener("mouseenter", ()=>clearTimeout(_newsPopTimer));
-  el.addEventListener("mouseleave", ()=>{ clearTimeout(_newsPopTimer); _newsPopTimer=setTimeout(closeNewsPopup, 6000); });
+  el.addEventListener("mouseleave", ()=>{ clearTimeout(_newsPopTimer); _newsPopTimer=setTimeout(closeNewsPopup, 4000); });
 }
 
 function closeNewsPopup(){
@@ -1479,10 +1699,32 @@ function closeNewsPopup(){
    glance, never covers the helplines, needs no click to get past, and links
    straight into the alerts drawer for the full list. Dismissals are remembered
    per alert id, so a genuinely new alert reappears on its own. */
+/* A river reported ABOVE ITS DANGER LEVEL is the most specific and most urgent
+   thing this site knows, and it deserves to be seen without a dialog. It is
+   turned into an alert-strip entry alongside the GDACS ones — same slim strip,
+   same per-id dismissal, no backdrop, page stays usable.
+   The id carries the stations and the date, so dismissing today's strip is
+   remembered, while a different river crossing tomorrow shows up as new. */
+function criticalWarnAlert(){
+  if(!LIVE_WARN || !(LIVE_WARN.critical>0)) return null;
+  const crit=(LIVE_WARN.rivers||[]).filter(r=>r.crit);
+  if(!crit.length) return null;
+  const names=crit.map(r=>r.station).join(", ");
+  const where=[...new Set(crit.map(r=>r.district))].join(", ");
+  return {
+    id:"warn-crit-"+new Date().toLocaleDateString("en-CA")+"-"+crit.map(r=>r.station).sort().join("|"),
+    sev:"danger", ts:Math.max(...crit.map(r=>r.ts||0)),
+    title:t("warn.strip").replace("{r}",names).replace("{d}",where),
+    url:"alerts.html", __warn:true
+  };
+}
 function topRiskyAlert(){
-  return LIVE_ALERTS
+  const list=LIVE_ALERTS.concat(criticalWarnAlert()||[]);
+  return list
     .filter(a=>RISKY_SEV.has(a.sev) && !NOTIF_CLEARED.has(a.id) && !POPUP_SEEN.has(a.id))
-    .sort((a,b)=>(a.sev==="danger"?0:1)-(b.sev==="danger"?0:1) || (b.ts||0)-(a.ts||0))[0] || null;
+    // A river over its danger mark outranks a country-level GDACS bulletin: it
+    // names the place the reader can act on.
+    .sort((a,b)=>(b.__warn?1:0)-(a.__warn?1:0) || (a.sev==="danger"?0:1)-(b.sev==="danger"?0:1) || (b.ts||0)-(a.ts||0))[0] || null;
 }
 function renderAlertBar(){
   let host=$("#alertBar");
@@ -1534,60 +1776,80 @@ function _wireFpop(pop){
 }
 
 /* =========================================================================
-   TODAY'S FLOOD WARNING popup — the consolidated, district-level bulletin.
-   Shows once per calendar day (deduped by WARNINGS.updated) on load, and can
-   be reopened any time from the alerts drawer. Takes priority over the single
-   GDACS pop so a visitor sees the full picture — the river surge, the second-
-   flood risk, and every district DHM/NDRRMA has placed on watch today.
+   POPUP BUDGET
+   At most ONE automatic popup per session, and none at all once the reader has
+   dismissed something. In practice that one is the latest-headline corner card:
+   nothing else on this site auto-opens any more. The district warning is a
+   slim inline strip plus a panel on the alerts page, and its dialog only ever
+   opens when the reader asks for it from the alerts drawer.
+
+   Anything the reader opens themselves is not automatic and is never budgeted.
    ========================================================================= */
-function openWarningsPopup(force){
-  const pop=$("#fpop"); if(!pop || typeof WARNINGS==="undefined") return;
+const POPUP_BUDGET_KEY="nd_popup_budget";
+function popupBudgetSpent(){
+  try{ return sessionStorage.getItem(POPUP_BUDGET_KEY)==="1"; }catch(_){ return false; }
+}
+function spendPopupBudget(){
+  try{ sessionStorage.setItem(POPUP_BUDGET_KEY,"1"); }catch(_){}
+}
+
+/* =========================================================================
+   TODAY'S FLOOD WARNING panel — the consolidated district-level bulletin,
+   rendered from the live BIPAD feed (see fetchDistrictWarnings) and falling
+   back to the built-in bulletin only when that feed cannot be reached.
+
+   USER-TRIGGERED ONLY. Nothing calls this on load. It opens from "Today's
+   district warnings" in the alerts drawer, and that is the whole contract —
+   this dialog covers the page, and a dialog covering the page is precisely
+   what was taken off this site before. The same content reaches a reader who
+   did not ask for it through two non-blocking routes instead: the slim alert
+   strip under the banner when a river is over its danger mark, and the full
+   panel on the alerts page.
+   ========================================================================= */
+function openWarningsPopup(){
+  const pop=$("#fpop"); if(!pop) return;
   if(_popupOpenFor) return;
-  if(WARNINGS.active===false && !force) return;               // NDRRMA declared the risk over
-  // The warning persists until: (a) it's a new calendar day (re-shows "tomorrow"),
-  // (b) a new alert is issued (WARNINGS.updated changes), or (c) risk is declared over.
-  const stamp=WARNINGS.updated+"@"+new Date().toLocaleDateString("en-CA");
-  if(!force){
-    let seen=""; try{ seen=localStorage.getItem("nd_warn_seen")||""; }catch(e){}
-    if(seen===stamp) return;                                  // already shown for this alert, this day
-  }
-  try{ localStorage.setItem("nd_warn_seen",stamp); }catch(e){}
   _warnShownThisLoad=true;
-  if(typeof LIVE_ALERTS!=="undefined"){ LIVE_ALERTS.forEach(a=>POPUP_SEEN.add(a.id)); _savePopupSeen(); } // suppress redundant single pop
+  // Suppress the redundant single-alert strip for anything already covered here.
+  if(typeof LIVE_ALERTS!=="undefined"){ LIVE_ALERTS.forEach(a=>POPUP_SEEN.add(a.id)); _savePopupSeen(); }
   _popupOpenFor="__warn__";
-  const W=WARNINGS;
-  const rivers=W.rivers.map(r=>`<span class="wrv wrv--${r.sev}"><b>${esc(TL(r.name))}</b><span>${esc(TL(r.status))}</span></span>`).join("");
-  // Riverside-alert districts pulled out as a short, prominent row.
-  const sev=[]; W.provinces.forEach(p=>p.districts.forEach(d=>{ if(d.sev) sev.push(TL(d)); }));
-  const sevRow=sev.length?`<div class="wsev"><span class="wsev__l">${esc(t("warn.sevlabel"))}</span><span class="wsev__names">${sev.map(n=>esc(n)).join(", ")}</span></div>`:"";
-  // Everything else as calm, comma-separated text per province (no boxes).
-  const provs=W.provinces.map(p=>{
-    const names=p.districts.map(d=>`<span class="wd${d.sev?" wd--sev":""}">${esc(TL(d))}</span>`).join(", ");
-    return `<div class="wprov"><div class="wprov__h">${esc(TL(p.name))}<span class="wprov__n">${p.districts.length}</span></div><p class="wlist">${names}</p></div>`;
-  }).join("");
+
+  let title, lead, body, src, stale=false;
+  if(LIVE_WARN){
+    title=t("warn.live.h");
+    lead=_warnSummaryLine(LIVE_WARN);
+    body=_warnLiveBody(LIVE_WARN);
+    src=(LIVE_WARN.source||"")+" · "+_warnAgo(LIVE_WARN.at);
+  } else if(typeof WARNINGS!=="undefined"){
+    stale=true;
+    const W=WARNINGS;
+    title=TL(W.headline); lead=TL(W.summary); src=W.source;
+    const sevD=[]; (W.provinces||[]).forEach(p=>(p.districts||[]).forEach(d=>{ if(d.sev) sevD.push(TL(d)); }));
+    body=`<p class="fpop__stale">${esc(t("warn.stale.note"))}</p>
+      <div class="wrivs">${(W.rivers||[]).map(r=>`<div class="wriv wriv--${r.sev}"><span class="wriv__dot" aria-hidden="true"></span><div class="wriv__id"><strong class="wriv__name">${esc(TL(r.name))}</strong><span class="wriv__meta">${esc(TL(r.status))}</span></div></div>`).join("")}</div>
+      ${sevD.length?`<div class="wsev"><span class="wsev__l">${esc(t("warn.sevlabel"))}</span><span class="wsev__names">${sevD.map(esc).join(", ")}</span></div>`:""}`;
+  } else { _popupOpenFor=null; return; }
+
   pop.className="fpop fpop--danger fpop--warn open";
   pop.innerHTML=`
     <div class="fpop__card fpop__card--wide" role="alertdialog" aria-modal="true" aria-labelledby="fpopH">
-      <button class="fpop__x" id="fpopX" aria-label="Close">${XICON}</button>
+      <button class="fpop__x" id="fpopX" aria-label="${esc(t("npop.dismiss"))}">${XICON}</button>
       <div class="fpop__scroll">
         <div class="fpop__top">
-          <span class="fpop__chip">${esc(t("warn.badge"))}</span>
-          <span class="fpop__pulse"><span class="fpop__dot"></span>${esc(t("fpop.live"))}</span>
-          <span class="wdate mono">${esc(TL(W.date))}</span>
+          <span class="fpop__chip">${esc(stale?t("warn.stale.badge"):t("warn.live.badge"))}</span>
+          ${stale?"":`<span class="fpop__pulse"><span class="fpop__dot"></span>${esc(t("fpop.live"))}</span>`}
+          <span class="wdate mono">${esc(nptNow().toLocaleDateString(LANG==="ne"?"ne-NP":"en-GB",{day:"numeric",month:"short",year:"numeric"}))}</span>
         </div>
         <div class="fpop__eye">${esc(t("warn.eye"))}</div>
-        <h3 class="fpop__h" id="fpopH">${esc(TL(W.headline))}</h3>
-        <p class="fpop__body">${esc(TL(W.summary))}</p>
-        <div class="wrivers">${rivers}</div>
-        <div class="wcount"><span class="wcount__n mono">${W.count}</span><span class="wcount__l">${esc(t("warn.count"))}</span></div>
-        ${sevRow}
-        <div class="wprovs">${provs}</div>
+        <h3 class="fpop__h" id="fpopH">${esc(title)}</h3>
+        <p class="fpop__body">${esc(lead)}</p>
+        ${body}
         <div class="fpop__actions">
-          <a class="btn btn--primary" href="${esc(W.url)}" target="_blank" rel="noopener">${esc(t("fpop.report"))}</a>
+          <a class="btn btn--primary" href="alerts.html">${esc(t("warn.cta.all"))}</a>
           <button class="btn btn--ghost" id="fpopEnable"${notifSupported()&&Notification.permission==="default"?"":" hidden"}>${BELL_ICO}<span>${esc(t("notif.enable"))}</span></button>
           <button class="btn btn--ghost" id="fpopMore">${esc(t("fpop.view"))}</button>
         </div>
-        <div class="fpop__foot">SRC · ${esc(W.source)} · ${esc(t("fpop.auto"))}</div>
+        <div class="fpop__foot">SRC · ${esc(src)}</div>
       </div>
     </div>`;
   pop.setAttribute("aria-hidden","false");
@@ -1873,7 +2135,7 @@ function injectChrome(){
     const scrim=document.createElement("div"); scrim.className="scrim"; scrim.id="scrim"; document.body.appendChild(scrim);
     const p=document.createElement("aside"); p.className="notif"; p.id="notif"; p.setAttribute("aria-label","Alerts"); p.setAttribute("aria-hidden","true");
     p.innerHTML=`<div class="notif__h"><div><span class="eyebrow" data-i18n="notif.eye">Signal Feed</span><h3 data-i18n="notif.h">Alerts</h3></div><button class="notif__x" id="notifX" aria-label="Close">${XICON}</button></div>
-      <button class="notif__warn" id="warnReopen"><span class="notif__warn-l">${XTRI}<span data-i18n="warn.reopen">Today's district warnings</span></span><span class="notif__warn-n mono">${(typeof WARNINGS!=="undefined"?WARNINGS.count:"")}</span></button>
+      <button class="notif__warn" id="warnReopen"><span class="notif__warn-l">${XTRI}<span data-i18n="warn.reopen">Today's district warnings</span></span><span class="notif__warn-n mono" id="warnReopenN"></span></button>
       <div class="notif__bar"><span class="lbl"><span id="notifCount">0</span> <span data-i18n="notif.count">active</span></span><button class="notif__enable" id="notifEnable" hidden>${BELL_ICO}<span class="ntf-lbl" data-i18n="notif.enable">Notify me</span></button><button class="notif__clear" id="notifClear" data-i18n="notif.clear">Clear all</button></div>
       <div class="notif__list" id="notifList"></div>`;
     document.body.appendChild(p);
@@ -1882,8 +2144,8 @@ function injectChrome(){
     $("#notifClear").addEventListener("click",clearNotifs);
     $("#notifEnable").addEventListener("click",requestNotifPerm);
     const wr=$("#warnReopen");
-    if(typeof WARNINGS==="undefined" || WARNINGS.active===false) wr.hidden=true;
-    wr.addEventListener("click",()=>{ notifClose(); openWarningsPopup(true); });
+    wr.addEventListener("click",()=>{ notifClose(); openWarningsPopup(); });
+    updateWarnReopen();
     document.addEventListener("keydown",e=>{if(e.key==="Escape"&&$("#notif").classList.contains("open"))notifClose();});
   }
   // dialog host for the user-opened "Today's district warnings" panel
@@ -1895,6 +2157,18 @@ function injectChrome(){
   }
   updateNotifEnableBtn();
 }
+/* The alerts-drawer button that reopens today's warnings. Its badge is the
+   live district count, and the whole control disappears when neither the live
+   feed nor the fallback bulletin has anything to show — a button promising
+   "today's district warnings" that opens an empty panel is worse than absent. */
+function updateWarnReopen(){
+  const wr=$("#warnReopen"); if(!wr) return;
+  const n=LIVE_WARN ? (LIVE_WARN.count||0)
+        : (typeof WARNINGS!=="undefined" && WARNINGS.active!==false ? (WARNINGS.count||0) : 0);
+  const badge=$("#warnReopenN"); if(badge) badge.textContent=n?toNepDigits(String(n)):"";
+  wr.hidden=!n;
+}
+
 function notifOpen(){const p=$("#notif"),s=$("#scrim"); if(!p)return; p.classList.add("open");s.classList.add("open");p.setAttribute("aria-hidden","false");updateNotifEnableBtn();$("#notifX").focus();}
 function notifClose(){const p=$("#notif"),s=$("#scrim"); if(!p)return; p.classList.remove("open");s.classList.remove("open");p.setAttribute("aria-hidden","true");const b=$("#bell");b&&b.focus();}
 function renderNotifs(){
@@ -2028,32 +2302,38 @@ Object.assign(I18N.ne,{
    official numbers are not yet itemised (never fabricated). NDRRMA / Nepal Police,
    compiled 27–28 Aug 2026. */
 const STATS_DETAIL=[
- {id:"deaths", sev:"danger", big:"987", title:{en:"Confirmed Deaths",ne:"पुष्टि मृत्यु"}, unit:{en:"Nepal side · auto-updated from live sources",ne:"नेपालतर्फ · प्रत्यक्ष स्रोतबाट स्वतः अद्यावधिक"}, src:"NDRRMA / Nepal Police",
-  rows:[["Nepal — confirmed dead (NDRRMA, 1 Sept, 9am)","987"],["Chitwan","321"],["Nawalparasi East","216"],["Nawalparasi West","170"],["Nuwakot","95"],["Gorkha","65"],["Dhading","55"],["Tanahun","38"],["Rasuwa","27"]],
-  note:{en:"NDRRMA confirms {n} deaths on the Nepal side. Chitwan — roughly 160 km downstream of the epicenter — has recovered the most bodies (321), where forensic DNA identification is in progress. Downstream recoveries also include Nawalparasi East (216) and West (170). In Rasuwa, extensive debris flows mean recovery remains challenging (27 bodies found). The headline figure auto-updates every 10 minutes from official sources.",ne:"NDRRMA का अनुसार नेपालतर्फ {n} मृत्यु पुष्टि। बाढी प्रभावित क्षेत्रभन्दा करिब १६० कि.मि. तल चितवनमा सबैभन्दा धेरै ३२१ शव भेटिएका छन्, जहाँ फोरेन्सिक डीएनए पहिचान कार्य जारी छ। नवलपरासी पूर्वमा २१६ र पश्चिममा १७० शव भेटिएका छन्। रसुवामा बाढी र लेदोका कारण उद्धार कठिन छ (२७ शव फेला)। मुख्य संख्या आधिकारिक स्रोतबाट हरेक १० मिनेटमा स्वतः अद्यावधिक हुन्छ।"}},
+ {id:"deaths", sev:"danger", big:"1,114", title:{en:"Confirmed Deaths",ne:"पुष्टि मृत्यु"}, unit:{en:"Nepal side · auto-updated from live sources",ne:"नेपालतर्फ · प्रत्यक्ष स्रोतबाट स्वतः अद्यावधिक"}, src:"NDRRMA / Nepal Police",
+  // Row 0 is the national total and is rewritten live. The district rows below
+  // it are the last breakdown NDRRMA published by district and lag the national
+  // figure — they are labelled as such rather than scaled to make them add up.
+  rows:[["Nepal — confirmed dead (NDRRMA)","1,114"],["Bodies recovered so far (approx.)","900"],["— of these, formally identified","4%"],["By district — last published breakdown",""],["Chitwan","340"],["Nawalparasi East","228"],["Nawalparasi West","178"],["Nuwakot","102"],["Gorkha","68"],["Dhading","58"],["Tanahun","36"]],
+  note:{en:"NDRRMA confirms {n} deaths on the Nepal side. Around 900 bodies have been recovered so far and the Ministry of Health reports that just 4% have been formally identified — DNA testing and facial photographs are being used as morgues run past capacity. Chitwan, roughly 160 km downstream, has recovered the most. The district breakdown below is the last one published by district and lags the national total, which auto-updates every 10 minutes from official sources.",ne:"NDRRMA का अनुसार नेपालतर्फ {n} मृत्यु पुष्टि। अहिलेसम्म करिब ९०० शव फेला परेका छन्, तर स्वास्थ्य मन्त्रालयका अनुसार ४ प्रतिशतको मात्र औपचारिक पहिचान भएको छ — शवगृह क्षमताभन्दा बढी भरिएपछि डीएनए परीक्षण र तस्बिरबाट पहिचान गरिँदै छ। करिब १६० कि.मि. तल रहेको चितवनमा सबैभन्दा धेरै शव भेटिएका छन्। तलको जिल्लागत विवरण अन्तिम पटक प्रकाशित तथ्यांक हो र राष्ट्रिय संख्याभन्दा पछाडि छ; राष्ट्रिय संख्या हरेक १० मिनेटमा स्वतः अद्यावधिक हुन्छ।"}},
  {id:"missing", sev:"danger", big:"3,916", title:{en:"Missing and Out of Contact",ne:"बेपत्ता तथा सम्पर्कविहीन"}, unit:{en:"Nepal side only · active NDRRMA registry",ne:"नेपालतर्फ मात्र · NDRRMA सक्रिय अभिलेख"}, src:"NDRRMA / Nepal Police",
-  rows:[["Nepal — missing / out of contact (1 Sept, 9am)","3,916"],["Rasuwa","865"],["Linked to hydropower projects","639"],["Foreign nationals among the missing","583"],["Nepalis accompanying foreign tourists","127"],["Nuwakot","115"],["Makwanpur","65"],["Nepali Army personnel","45"],["Nepal Police personnel","25"],["Armed Police Force personnel","13"]],
-  note:{en:"NDRRMA reports {n} people missing or out of contact on the Nepal side. Missing reports include 639 hydropower personnel (with ~500 believed trapped in flooded tunnels), 583 foreign nationals, and security personnel on rescue duties. Tibet's separately-counted missing (546) are not included. Figures are updated as persons are located or verified.",ne:"NDRRMA का अनुसार नेपालतर्फ {n} जना बेपत्ता वा सम्पर्कविहीन। यसमा ६३९ जलविद्युत् कर्मचारी (करिब ५०० सुरुङभित्र फसेको अनुमान), ५८३ विदेशी नागरिक र खोजमा खटिएका सुरक्षाकर्मी समावेश छन्। तिब्बततर्फ छुट्टै रहेका ५४६ बेपत्ता यसमा समावेश छैनन्। व्यक्तिहरू फेला पर्दै जाँदा यो संख्या परिमार्जन हुन्छ।"}},
- {id:"rescued", sev:"relief", big:"11,814", title:{en:"Rescued",ne:"उद्धार"}, unit:{en:"NDRRMA bulletin, 1 Sept · rising daily",ne:"NDRRMA विज्ञप्ति, १ सेप्टेम्बर · दैनिक बढ्दो"}, src:"NDRRMA / Nepali Army",
+  rows:[["Nepal — missing / out of contact","3,916"],["Linked to hydropower projects (12 projects)","900"],["Foreign nationals among the missing (38 countries)","583"],["Trade and transport workers (est.)","300"],["Nepalis accompanying foreign tourists","127"],["Nepali Army personnel","44"],["Nepal Police personnel","28"],["Customs office employees","15"],["Armed Police Force personnel","13"],["Immigration office employees","4"]],
+  note:{en:"NDRRMA reports {n} people missing or out of contact on the Nepal side. The list includes 900 workers from 12 hydropower projects (around 500 of them believed trapped in flooded tunnels), 583 foreign nationals from 38 countries, an estimated 300 trade and transport workers who used the Gyirong crossing, and 85 security personnel on duty. Tibet's separately-counted missing (546) are not included. Figures are revised as people are located or verified.",ne:"NDRRMA का अनुसार नेपालतर्फ {n} जना बेपत्ता वा सम्पर्कविहीन। यसमा १२ जलविद्युत् आयोजनाका ९०० कामदार (करिब ५०० सुरुङभित्र फसेको अनुमान), ३८ देशका ५८३ विदेशी नागरिक, ग्यीरोङ नाका प्रयोग गर्ने करिब ३०० व्यापार तथा यातायात कामदार र ८५ सुरक्षाकर्मी समावेश छन्। तिब्बततर्फ छुट्टै रहेका ५४६ बेपत्ता यसमा समावेश छैनन्। व्यक्तिहरू फेला पर्दै जाँदा यो संख्या परिमार्जन हुन्छ।"}},
+ {id:"rescued", sev:"relief", big:"11,814", title:{en:"Rescued",ne:"उद्धार"}, unit:{en:"NDRRMA bulletin · rising daily",ne:"NDRRMA विज्ञप्ति · दैनिक बढ्दो"}, src:"NDRRMA / Nepali Army",
   // NOTE: rows 0–3 are written BY INDEX from _setRescueRegistry() —
   // [0]=grand total, [1]=named registry, [2]=Nepali, [3]=foreign.
-  rows:[["Total rescued (NDRRMA, 1 Sept)","11,814"],["Named in the public registry","3,122"],["— of these, Nepali","2,913"],["— of these, foreign","209"],["Airlifted by the Nepali Army — Nepali","3,344"],["Airlifted by the Nepali Army — foreign nationals","252"],["Rescue and relief flights flown","411"],["Logged in the NDRRMA rescue system","7,514"]],
-  note:{en:"NDRRMA's 1 September bulletin puts the cumulative total rescued at {n}. The Nepali Army has airlifted 3,344 Nepalis and 252 foreign nationals across 411 rescue and relief flights. 3,122 individuals are individually named in NDRRMA's public registry for family tracing.",ne:"NDRRMA को १ सेप्टेम्बरको विज्ञप्तिअनुसार कुल उद्धार संख्या {n} पुगेको छ। नेपाली सेनाले ४११ उडानमार्फत ३,३४४ नेपाली र २५२ विदेशी नागरिकको हवाई उद्धार गरेको छ। ३,१२२ जनाको नाम परिवार खोजीका लागि सार्वजनिक अभिलेखमा दर्ता छ।"}},
- {id:"injured", sev:"watch", big:"279", title:{en:"Injured & Medical Care",ne:"घाइते तथा स्वास्थ्य उपचार"}, unit:{en:"279 hospitalized · 2,740 treatments given",ne:"२७९ अस्पतालमा · २,७४० उपचार प्रदान"}, src:"NDRRMA / MOHP",
-  rows:[["Nepal — hospitalized injured (1 Sept)","279"],["Still under intensive treatment","111"],["Medical treatments provided across the response","2,740"]],
-  note:{en:"NDRRMA and Ministry of Health report {n} patients currently under structured hospital care across Bharatpur, Pokhara, Dhading, Nuwakot, and Kathmandu, with 2,740 total emergency medical and trauma treatments administered across mobile field clinics.",ne:"स्वास्थ्य मन्त्रालय र NDRRMA का अनुसार भरतपुर, पोखरा, धादिङ, नुवाकोट र काठमाडौंका अस्पतालमा {n} घाइते उपचाररत छन् भने फिल्ड क्लिनिकहरूबाट कुल २,७४० जनालाई आकस्मिक स्वास्थ्य तथा ट्रमा उपचार प्रदान गरिएको छ।"}},
- {id:"foreign", sev:"danger", big:"583", title:{en:"Foreign Nationals by Country",ne:"विदेशी नागरिक देश अनुसार"}, unit:{en:"at least {n} missing on the Nepal side",ne:"नेपालतर्फ कम्तीमा {n} बेपत्ता"}, src:"Nepal Police / Diplomatic Missions",
-  rows:[["India","288"],["China (approx.)","100"],["United States","80"],["Ukraine","53"],["Malaysia","51"],["Australia","35"],["United Kingdom","33"],["Canada","32"],["South Korea","9"]],
-  note:{en:"At least {n} foreign nationals are reported missing on the Nepal side according to Nepal Police and respective embassies — primarily pilgrims and trekkers along the Kailash Mansarovar and Langtang routes.",ne:"नेपाल प्रहरी र सम्बन्धित दूतावासका अनुसार कैलाश मानसरोवर र लाङटाङ पदमार्ग क्षेत्रका कम्तीमा {n} विदेशी नागरिक बेपत्ता छन्।"}},
+  rows:[["Total rescued (NDRRMA bulletin)","11,814"],["Named in the public registry","4,248"],["— of these, Nepali","3,918"],["— of these, foreign","330"],["Airlifted by the Nepali Army — Nepali","3,344"],["Airlifted by the Nepali Army — foreign nationals","252"],["Rescue and relief flights flown","411"],["Logged in the NDRRMA rescue system","7,514"]],
+  note:{en:"NDRRMA's bulletin puts the cumulative total rescued at {n}. Three different official numbers describe this and they are not interchangeable: the bulletin total above, the named public registry used for family tracing (live from NDRRMA's API), and NDRRMA's internal rescue-management log, which trails both. All three are listed separately rather than merged into one figure. The Nepali Army has airlifted 3,344 Nepalis and 252 foreign nationals across 411 rescue and relief flights.",ne:"NDRRMA को विज्ञप्तिअनुसार कुल उद्धार संख्या {n} पुगेको छ। यसका तीन फरक आधिकारिक संख्या छन् र ती एउटै होइनन्: माथिको विज्ञप्ति संख्या, परिवार खोजीका लागि प्रयोग हुने नामावली अभिलेख (NDRRMA को API बाट प्रत्यक्ष), र दुवैभन्दा पछाडि रहेको NDRRMA को आन्तरिक उद्धार अभिलेख। तीनवटै छुट्टाछुट्टै देखाइएका छन्। नेपाली सेनाले ४११ उडानमार्फत ३,३४४ नेपाली र २५२ विदेशी नागरिकको हवाई उद्धार गरेको छ।"}},
+ {id:"injured", sev:"watch", big:"1,473", title:{en:"Injured & Medical Care",ne:"घाइते तथा स्वास्थ्य उपचार"}, unit:{en:"Nepal side · NDRRMA injured count",ne:"नेपालतर्फ · NDRRMA घाइते संख्या"}, src:"NDRRMA / MOHP",
+  // Row 0 is the national injured total and is rewritten live. The rows under it
+  // are narrower counts — hospital admissions, still-critical cases — and are NOT
+  // the same number, which is why the headline no longer reads 279.
+  rows:[["Nepal — injured (NDRRMA)","1,473"],["Admitted to hospital","279"],["Still under intensive treatment","111"],["Medical treatments provided across the response","2,740"]],
+  note:{en:"NDRRMA reports {n} injured on the Nepal side. That national figure is wider than the hospital caseload: 279 people have been admitted for structured care across Bharatpur, Pokhara, Dhading, Nuwakot and Kathmandu, 111 of them still under intensive treatment, while 2,740 emergency and trauma treatments have been given in total, largely through mobile field clinics. The government is covering treatment costs for those injured.",ne:"NDRRMA का अनुसार नेपालतर्फ {n} जना घाइते छन्। यो राष्ट्रिय संख्या अस्पतालको संख्याभन्दा फराकिलो हो: भरतपुर, पोखरा, धादिङ, नुवाकोट र काठमाडौंका अस्पतालमा २७९ जना भर्ना छन्, जसमध्ये १११ जना गम्भीर उपचारमा छन्; फिल्ड क्लिनिकसहित कुल २,७४० जनालाई आकस्मिक तथा ट्रमा उपचार दिइएको छ। घाइतेको उपचार खर्च सरकारले बेहोरेको छ।"}},
+ {id:"foreign", sev:"danger", big:"583", title:{en:"Foreign Nationals by Country",ne:"विदेशी नागरिक देश अनुसार"}, unit:{en:"at least {n} missing on the Nepal side · 38 countries",ne:"नेपालतर्फ कम्तीमा {n} बेपत्ता · ३८ देश"}, src:"Nepal Police / Diplomatic Missions",
+  rows:[["India","288"],["China (approx.)","100"],["United States","80"],["Ukraine","53"],["Malaysia","51"],["Australia","35"],["United Kingdom","33"],["Latvia","33"],["Canada","32"],["South Korea","9"]],
+  note:{en:"At least {n} foreign nationals from 38 countries are reported missing on the Nepal side according to Nepal Police and the respective embassies — primarily pilgrims and trekkers on the Kailash Mansarovar and Langtang routes, and travellers who were at the Gyirong border crossing when the flood struck. Individual embassy counts are announced separately and do not sum to the national total.",ne:"नेपाल प्रहरी र सम्बन्धित दूतावासका अनुसार ३८ देशका कम्तीमा {n} विदेशी नागरिक नेपालतर्फ बेपत्ता छन् — मुख्यतः कैलाश मानसरोवर र लाङटाङ पदमार्गका तीर्थयात्री तथा पदयात्री, र बाढी आउँदा ग्यीरोङ नाकामा रहेका यात्रुहरू। दूतावासहरूले छुट्टाछुट्टै घोषणा गरेका संख्या जोड्दा राष्ट्रिय संख्या बन्दैन।"}},
  {id:"security", sev:"watch", big:"21,008", title:{en:"Search Operation & Security Forces",ne:"खोज तथा उद्धार सुरक्षाकर्मी"}, unit:{en:"live deployment count across all agencies",ne:"सबै सुरक्षा निकायको सक्रिय परिचालन"}, src:"NDRRMA / Joint Command",
-  rows:[["Total personnel mobilised (NDRRMA live count)","21,008"],["Nepali Army","8,722"],["Nepal Police","7,894"],["Armed Police Force","4,203"],["Rescue and relief flights flown","411"],["Settlements still out of reach","2,498"],["Communication towers","Connectivity fully restored"]],
+  rows:[["Total personnel mobilised (NDRRMA live count)","21,008"],["Nepali Army","8,722"],["Nepal Police","7,894"],["Armed Police Force","4,203"],["Rescue and relief flights flown","411"],["Psychosocial counsellors deployed (Rasuwa & Nuwakot)","50+"],["Settlements still out of reach","2,498"],["Communication towers","Connectivity fully restored"]],
   note:{en:"{n} personnel across the Nepali Army, Nepal Police, and Armed Police Force are deployed in intensive search, rescue, helicopter evacuation, and relief transport missions.",ne:"नेपाली सेना, नेपाल प्रहरी र सशस्त्र प्रहरी बलका {n} सुरक्षाकर्मी खोज, उद्धार, हवाई उद्धार तथा राहत वितरणमा संयुक्त रूपमा परिचालित छन्।"}},
- {id:"tunnel", sev:"danger", big:"639", title:{en:"Hydropower Tunnel Rescue",ne:"जलविद्युत् सुरुङ उद्धार"}, unit:{en:"workers missing across 12 projects",ne:"१२ आयोजनाका बेपत्ता कामदार"}, src:"IPPAN / NDRRMA / Joint Rescue",
-  rows:[["Hydropower workers missing (12 projects)","639"],["Believed still inside tunnel systems","~500"],["Upper Trishuli-1 — believed inside","~300"],["Brought out of Trishuli 3A so far","~350"],["Airlifted from tunnels in the first two days","279"],["Hydropower facilities damaged or destroyed","27"]],
-  note:{en:"639 workers across 12 hydropower projects are reported missing, with roughly 500 estimated trapped in debris-flooded subterranean tunnels. High-capacity sludge pump teams and specialized underground rescue specialists are operating at Upper Trishuli-1 and Chilime.",ne:"१२ जलविद्युत् आयोजनाका ६३९ कामदार बेपत्ता छन्, जसमध्ये करिब ५०० जना लेदो भरिएका सुरुङभित्र फसेको अनुमान छ। माथिल्लो त्रिशूली-१ र चिलिमेमा विशेष हिलो पम्पिङ र सुरुङ उद्धार टोली सक्रिय छन्।"}},
+ {id:"tunnel", sev:"danger", big:"900", title:{en:"Hydropower Tunnel Rescue",ne:"जलविद्युत् सुरुङ उद्धार"}, unit:{en:"workers missing across 12 projects",ne:"१२ आयोजनाका बेपत्ता कामदार"}, src:"IPPAN / NDRRMA / NEA / Joint Rescue",
+  rows:[["Hydropower workers missing (12 projects)","900"],["Believed still inside tunnel systems","~500"],["Upper Trishuli-1 — reported missing","576"],["Upper Trishuli-1 — believed inside the tunnel","~300"],["Brought out of Trishuli 3A so far","~350"],["Airlifted from tunnels in the first two days","279"],["Hydropower projects damaged (NEA)","13"],["Hydropower facilities damaged or destroyed","27"]],
+  note:{en:"{n} workers across 12 hydropower projects are reported missing, with roughly 500 believed trapped in debris-flooded tunnels. Upper Trishuli-1 accounts for 576 of the missing, around 300 of them underground. On 31 August a controlled explosion was carried out in the Upper Trishuli 3A tunnel and the Nepali Army dug about 10 m down with excavators to begin clearing water, mud and debris. Specialist tunnel-rescue teams from India and China are on site.",ne:"१२ जलविद्युत् आयोजनाका {n} कामदार बेपत्ता छन्, जसमध्ये करिब ५०० जना लेदो भरिएका सुरुङभित्र फसेको अनुमान छ। माथिल्लो त्रिशूली-१ मा मात्रै ५७६ जना बेपत्ता छन्, जसमध्ये करिब ३०० सुरुङभित्रै रहेको अनुमान छ। ३१ अगस्टमा माथिल्लो त्रिशूली ३A सुरुङमा नियन्त्रित विस्फोट गरी नेपाली सेनाले करिब १० मिटर गहिरो खनेर पानी, हिलो र लेदो हटाउन सुरु गरेको छ। भारत र चीनबाट सुरुङ उद्धार विशेषज्ञ टोली स्थलगत छन्।"}},
  {id:"damage", sev:"watch", big:"200", title:{en:"Damage and Infrastructure",ne:"क्षति र पूर्वाधार"}, unit:{en:"Rs billion — preliminary estimate (~$4–$5B)",ne:"रु. अर्ब — प्रारम्भिक अनुमान (४–५ अर्ब डलर)"}, src:"Govt. of Nepal / Dept. of Roads / NEA / IFRC",
-  rows:[["Preliminary damage estimate (Rs billion)","200"],["Roads and bridges (Rs billion)","15"],["Bridges damaged","41"],["Road damaged (km)","42"],["Generation knocked off the grid (MW)","431"],["Under-construction capacity damaged (MW)","470"],["Schools damaged or destroyed","38"],["People affected (IFRC estimate)","93,000"]],
-  note:{en:"Total damage is preliminarily estimated at Rs 200 billion (approx. USD 4–5 billion). Road and bridge infrastructure losses stand at Rs 15 billion with 41 bridges destroyed or severely damaged, and 431 MW of generation knocked off the national power grid.",ne:"प्रारम्भिक कुल क्षति करिब रु. २०० अर्ब (४–५ अर्ब अमेरिकी डलर) अनुमान गरिएको छ। सडक तथा पुल पूर्वाधारमा रु. १५ अर्बको क्षति भएको छ, जसमा ४१ पुल र ४२ कि.मि. सडक क्षतिग्रस्त भएका छन् भने ४३१ मेगावाट विद्युत् उत्पादन राष्ट्रिय ग्रिडबाट विच्छेद भएको छ।"}},
+  rows:[["Preliminary damage estimate (Rs billion)","200"],["Roads and bridges (Rs billion)","15"],["Bridges damaged","41"],["Road damaged (km)","42"],["Hydropower projects damaged (NEA)","13"],["Generation knocked off the grid (MW)","431"],["Under-construction capacity damaged (MW)","470"],["Schools damaged or destroyed","38"],["People affected (IFRC estimate)","93,000"],["Need emergency water & sanitation (UN)","65,000"],["Pregnant & breastfeeding women needing nutrition aid (UN)","10,500"],["Children under 5 needing treatment for severe wasting (UN)","2,600"]],
+  note:{en:"Total damage is preliminarily estimated at Rs 200 billion (approx. USD 4–5 billion). Road and bridge infrastructure losses stand at Rs 15 billion with 41 bridges destroyed or severely damaged, and 431 MW of generation knocked off the national grid; the Nepal Electricity Authority counts 13 hydropower projects damaged. The IFRC estimates 93,000 people affected, and the UN puts 65,000 in need of emergency water, sanitation and hygiene supplies.",ne:"प्रारम्भिक कुल क्षति करिब रु. २०० अर्ब (४–५ अर्ब अमेरिकी डलर) अनुमान गरिएको छ। सडक तथा पुल पूर्वाधारमा रु. १५ अर्बको क्षति भएको छ, जसमा ४१ पुल र ४२ कि.मि. सडक क्षतिग्रस्त छन् भने ४३१ मेगावाट उत्पादन राष्ट्रिय ग्रिडबाट विच्छेद भएको छ; नेपाल विद्युत् प्राधिकरणका अनुसार १३ जलविद्युत् आयोजना क्षतिग्रस्त छन्। IFRC का अनुसार ९३,००० जना प्रभावित छन् भने संयुक्त राष्ट्रसंघका अनुसार ६५,००० जनालाई आकस्मिक खानेपानी तथा सरसफाइ सामग्री आवश्यक छ।"}},
  {id:"materials", sev:"relief", big:"", title:{en:"Relief Materials & International Aid",ne:"राहत सामग्री र अन्तर्राष्ट्रिय सहायता"}, src:"AP / BBC / Reuters / IFRC",
   rows:[["PM Disaster Relief Fund (Rs billion)","5.44"],["Released to 15 local units (Rs million)","675"],["China — emergency supplies","50 tonnes / 13,200 items"],["India — supplies","~50 tonnes"],["IFRC emergency appeal","CHF 25 million"],["Asian Development Bank","USD 5 million"],["European Union","EUR 2 million"],["Welthungerhilfe","EUR 2 million"],["UN CERF","USD 2 million"],["South Korea","USD 1 million"],["Red Cross / IFRC DREF","CHF 1 million"],["World Health Organization","USD 150,000"]],
   note:{en:"International assistance packages continue arriving, including 50 tonnes of emergency shelter and medical supplies from China and India, alongside UN CERF and multilateral funding allocations.",ne:"चीन र भारतबाट ५०–५० टन आपत्कालीन राहत तथा औषधीय सामग्री, राष्ट्रसंघीय CERF कोष तथा बहुपक्षीय सहायता परिचालन जारी छ।"}},
@@ -2622,6 +2902,16 @@ function _updateForeignRow(countryName, countStr){
    All run CONCURRENTLY (Promise.allSettled) so one slow endpoint never blocks
    the others. */
 
+/* Detail rows a rank-1 API writes directly. The curated JSON feed must never
+   touch them: it carries no rank, so a hand-typed value silently overwrote the
+   live one on every cycle. That is what pinned "Named in the public registry"
+   at 3,122 while NDRRMA's own API was already publishing 4,248 — the fetch was
+   working, the feed just clobbered it a moment later. */
+const _API_OWNED_ROWS={
+  rescued:new Set(["Named in the public registry","— of these, Nepali","— of these, foreign","Logged in the NDRRMA rescue system"]),
+  security:new Set(["Communication towers"])
+};
+
 // Tier 1 — local, same-origin feed (instant, no CORS, curated official baseline).
 async function _srcLocalFeed(){
   let changed=false, j=null;
@@ -2644,7 +2934,9 @@ async function _srcLocalFeed(){
       if(item.big && _setStat(k,_num(item.big),FR)) changed=true;
       if(Array.isArray(item.rows)){
         const seg=STATS_DETAIL.find(s=>s.id===k);
+        const owned=_API_OWNED_ROWS[k];
         if(seg && seg.rows) item.rows.forEach(nr=>{
+          if(owned && owned.has(nr[0])) return;   // a live API owns this row
           const m=seg.rows.find(r=>r[0]===nr[0]);
           if(m && m[1]!==nr[1]){ m[1]=nr[1]; changed=true; }
         });
@@ -2666,6 +2958,74 @@ async function _srcLocalFeed(){
 // it reports Nepal+Tibet COMBINED, which is what once inflated this Nepal-only
 // site. Wikipedia is rank 3: it fills gaps and catches up when it is AHEAD of
 // our curated feed, but it can never pull an official figure backwards.
+/* Pull the Nepal-side casualty figures out of the article prose.
+
+   This used to be three regexes, each pinned to one exact sentence shape.
+   Wikipedia rewrites those sentences constantly and every rewrite silently
+   broke the match: "3,916 missing were confirmed" became "3,916 missing
+   PERSONS were confirmed", and "1,473 were injured AND 4,247 were missing"
+   gained a whole new clause ("...11,814 people have been rescued and..."),
+   so the parser matched nothing, reported no change, and the entire site sat
+   frozen on its hand-typed baseline while the real toll moved. A silent
+   no-match is the worst failure mode here, because it looks exactly like
+   "nothing has changed".
+
+   So: don't match a sentence, scan one. Isolate the sentences that are
+   explicitly scoped to Nepal, trim off any clause where the article switches
+   to the Tibet-side figures, and then read each number together with the word
+   that says what it counts. Clause order, inserted words and brand-new
+   clauses no longer matter.  */
+const _CAS_WORD={ dead:"deaths", deaths:"deaths", death:"deaths", died:"deaths", die:"deaths",
+                  missing:"missing", injured:"injured", rescued:"rescued" };
+/* Words allowed to sit between the figure and the word it counts, e.g.
+   "11,814 PEOPLE HAVE BEEN rescued". Anything else means the number belongs to
+   a different noun ("900 BODIES found", "93,000 people were IMPACTED") and the
+   pair is dropped rather than guessed at. */
+const _CAS_FILLER=/^(?:people|person|persons|individuals|residents|others|more|than|at|least|about|around|some|were|was|are|is|had|have|has|been|being|remain|remains|remained|still|also|now|reported|confirmed|listed|declared)$/i;
+
+function _nepalCasualties(txt){
+  const out={};
+  String(txt||"").split(/(?<=[.!?])\s+/).forEach(raw=>{
+    // Nepal-scoped sentences only. "in Nepal" is the phrase the article uses to
+    // separate its Nepal figures from its Tibet ones, and mixing the two is what
+    // once inflated the toll on this Nepal-only site.
+    if(!/\bin\s+Nepal\b/i.test(raw)) return;
+    // Keep only the part before the article hands over to the Tibet side, e.g.
+    // "...confirmed in Nepal WITH AN ADDITIONAL 16 dead and 546 missing in the
+    // Tibet Autonomous Region."
+    let s=raw.split(/\b(?:with|and|plus)\s+(?:an\s+)?additional\b/i)[0]
+            .split(/\bin\s+(?:the\s+)?Tibet\b/i)[0]
+            .split(/\bTibet\s+Autonomous\b/i)[0];
+    if(/\bTibet\b|\bChina\b/i.test(s)) return;
+    // Walk every figure in the sentence and read the words that follow it. A
+    // single combined regex cannot do this: one alternative consumes the text
+    // the next reading needs ("1,114 PEOPLE died" hides "died" behind
+    // "people"), so each number is scanned forward on its own.
+    const re=/([1-9][\d,]{1,9})/g;
+    let m;
+    while((m=re.exec(s))){
+      const after=s.slice(m.index+m[0].length, m.index+m[0].length+64);
+      const words=after.split(/[^A-Za-z]+/).filter(Boolean).slice(0,4);
+      for(let i=0;i<words.length;i++){
+        const key=_CAS_WORD[words[i].toLowerCase()];
+        if(key){
+          const v=_int(m[1]);
+          // The article states the same figure more than once in different
+          // words; keep the larger reading rather than whichever sentence
+          // happened to come last.
+          if(v>0 && (out[key]==null || v>out[key])) out[key]=v;
+          break;
+        }
+        // A word that is neither a casualty word nor connective tissue means
+        // this figure counts something else ("900 BODIES", "93,000 people were
+        // IMPACTED") — stop rather than reach past it for a match.
+        if(!_CAS_FILLER.test(words[i])) break;
+      }
+    }
+  });
+  return out;
+}
+
 async function _srcSummary(){
   let txt="";
   try{
@@ -2675,26 +3035,26 @@ async function _srcSummary(){
   }catch(_){}
   if(!txt) return false;
   let changed=false;
-  const dm=txt.match(/([\d,]{2,7})\s+deaths?\s+and\s+([\d,]{2,7})\s+(?:people\s+)?(?:were\s+)?missing\s+(?:were\s+)?confirmed\s+in\s+Nepal/i);
-  if(dm){
-    if(_setStat("deaths",_num(dm[1]),"wiki")) changed=true;
-    if(_setStat("missing",_num(dm[2]),"wiki")) changed=true;
-  }
-  // The NDRRMA-attributed, explicitly Nepal-scoped casualty sentence, e.g.
-  // "…at least 903 people died, 1,473 were injured and 4,247 were missing in
-  // Nepal." Only this phrasing is trusted for INJURED — the infobox and the
-  // free-standing injury figures elsewhere in the article mix Nepal and Tibet.
-  const nd=txt.match(/([\d,]{2,7})\s+people\s+died,\s*([\d,]{2,7})\s+were\s+injured\s+and\s+([\d,]{2,7})\s+were\s+missing\s+in\s+Nepal/i);
-  if(nd){
-    if(_setStat("deaths",_num(nd[1]),"wiki")) changed=true;
-    if(_setStat("injured",_num(nd[2]),"wiki")) changed=true;
-    if(_setStat("missing",_num(nd[3]),"wiki")) changed=true;
-  }
-  // Foreign nationals among the missing, e.g. "As of 29 August 2026, 589 foreign
-  // nationals are among the missing." / "At least 668 tourists from 34 countries…"
-  const fgn=txt.match(/([\d,]{2,7})\s+foreign\s+nationals?\s+(?:are|were)\s+among\s+the\s+missing/i)
-         || txt.match(/([\d,]{2,7})\s+(?:foreign\s+)?tourists?\s+from\s+\d+\s+countries?\s+(?:are|were)\s+among\s+the\s+missing/i);
+  // Casualty figures come out of the prose through _nepalCasualties() below
+  // rather than a sentence-shaped regex — see the note on that function for
+  // why. Each key still goes through _setStat, so ranking and the rising-only
+  // guard on deaths/rescued apply exactly as before.
+  const cas=_nepalCasualties(txt);
+  ["deaths","missing","injured","rescued"].forEach(k=>{
+    if(cas[k]!=null && _setStat(k,String(cas[k]),"wiki")) changed=true;
+  });
+  // Foreign nationals among the missing. The count and the phrase are routinely
+  // separated by a clause ("583 foreign nationals FROM 38 COUNTRIES are among
+  // the missing"), so the gap is matched loosely instead of exactly.
+  const fgn=txt.match(/([\d][\d,]{1,7})\s+foreign\s+nationals?[^.]{0,60}?among\s+the\s+missing/i)
+         || txt.match(/([\d][\d,]{1,7})\s+(?:foreign\s+)?tourists?[^.]{0,60}?among\s+the\s+missing/i);
   if(fgn && _setStat("foreign",_num(fgn[1]),"wiki")) changed=true;
+  // Hydropower tunnel figures, e.g. "900 people involved in 12 hydropower
+  // projects were reported missing, with 500 believed to be trapped in tunnels."
+  const hyd=txt.match(/([\d][\d,]{1,7})\s+(?:people|workers?)[^.]{0,60}?hydropower\s+projects?[^.]{0,40}?missing/i);
+  if(hyd && _setStat("tunnel",_num(hyd[1]),"wiki")) changed=true;
+  const trap=txt.match(/([\d][\d,]{1,7})\s+believed\s+to\s+be\s+trapped/i);
+  if(trap && _setDetailRow("tunnel","believed still inside","~"+_fmtInt(trap[1]))) changed=true;
   // Relief-fund balance, e.g. "…Relief Fund was launched … raising over रू
   // 5,440,000,000 by 29 August." (the currency mark is रू, not ₹). The published
   // balance INCLUDES the government release, so store the public share.
@@ -2811,7 +3171,7 @@ function setupManualSync(){
   // refresh immediately when the tab becomes visible again (cheap, catches up fast)
   if(!window.__ndVis){
     window.__ndVis=true;
-    document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="visible"){ liveRefresh(); fetchLiveAlerts(); fetchLiveNews(); if($("#hwRoot")){ fetchHighways(); fetchHighwayNews(); } } });
+    document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="visible"){ liveRefresh(); fetchLiveAlerts(); fetchLiveNews(); fetchDistrictWarnings().then(updateWarnReopen); if($("#hwRoot")){ fetchHighways(); fetchHighwayNews(); } } });
   }
 }
 
@@ -2960,6 +3320,404 @@ function renderHighways(){
 
   root.querySelectorAll("[data-hwf]").forEach(b=>b.addEventListener("click",()=>{ const f=b.getAttribute("data-hwf"); HW_FILTER=(HW_FILTER===f&&f!=="all")?"all":f; renderHighways(); }));
   const rf=$("#hwRefresh"); if(rf) rf.addEventListener("click",()=>{ rf.disabled=true; Promise.all([fetchHighways(),fetchHighwayNews()]).finally(()=>{ toast(LANG==="ne"?"राजमार्ग अवस्था अद्यावधिक भयो।":"Highway status refreshed.","crim"); }); });
+}
+
+/* =========================================================================
+   HELPING HAND — the two-sided request/offer board.
+
+   Everything here runs only where #hhRoot exists (helping-hand.html).
+
+   Layout follows the decision the reader arrives with. They are not browsing;
+   they either need something or have something, so the page opens with that
+   choice, the form reflects the side they picked, and the board sits below for
+   people who came to look rather than post.
+
+   Two decisions worth stating, because they shaped the module:
+
+   1. If the backend is unreachable the form is DISABLED and says so. The
+      tempting fallback — keep posting into localStorage so the page still
+      "works" — would mean somebody asking for insulin sees a success message
+      for a post that exists only in their own browser. Better a page that
+      admits it is offline and points at the phone numbers.
+
+   2. Official helplines sit above everything. This is a community board; it
+      is not a substitute for calling 1149, and the layout must not imply
+      otherwise.
+   ========================================================================= */
+const HH_CATS=["food","water","shelter","medical","blood","rescue","transport","clothing","baby","hygiene","power","volunteer","money","other"];
+const HH_URG=["critical","urgent","normal"];
+const HH_STATE={ kind:"all", cat:"all", q:"", posting:false, form:null };
+let HH_POSTS=null, HH_ERR=false, HH_LOADED=false;
+
+/* Tokens proving "this post is mine", so the poster can close it when the
+   need is met. Kept in this browser only; the server stores just a hash. */
+function hhMine(){ try{ return JSON.parse(localStorage.getItem("nd_help_mine")||"{}"); }catch(_){ return {}; } }
+function hhSaveMine(m){ try{ localStorage.setItem("nd_help_mine",JSON.stringify(m)); }catch(_){} }
+
+const HH_ICON={
+  food:"M4 3v8a3 3 0 0 0 6 0V3M7 11v10M17 3c-1.7 1.3-2.5 3.4-2.5 6s.8 4 2.5 4v8",
+  water:"M12 2.7 6.5 9.4A7 7 0 1 0 17.5 9.4L12 2.7Z",
+  shelter:"M3 10.5 12 3l9 7.5M5.5 9.5V21h13V9.5",
+  medical:"M9 3h6v6h6v6h-6v6H9v-6H3V9h6V3Z",
+  blood:"M12 2.7 6.5 9.4A7 7 0 1 0 17.5 9.4L12 2.7ZM9.5 13.5h5M12 11v5",
+  rescue:"M12 2 3 6v6c0 5 3.8 8.4 9 10 5.2-1.6 9-5 9-10V6l-9-4Z",
+  transport:"M3 16V8h13v8M16 11h3.5L22 14v2h-3M6.5 19a1.8 1.8 0 1 0 0-3.6 1.8 1.8 0 0 0 0 3.6ZM18 19a1.8 1.8 0 1 0 0-3.6 1.8 1.8 0 0 0 0 3.6Z",
+  clothing:"M9 3 4 6.5 6 10l2-1v12h8V9l2 1 2-3.5L15 3a3 3 0 0 1-6 0Z",
+  baby:"M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18ZM9 10h.01M15 10h.01M9.5 14.5c1.5 1.2 3.5 1.2 5 0",
+  hygiene:"M7 8h10l-1 13H8L7 8ZM9 8V5a3 3 0 0 1 6 0v3",
+  power:"M13 2 4 14h7l-1 8 9-12h-7l1-8Z",
+  volunteer:"M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10Z",
+  money:"M12 2v20M17 6.5c0-1.9-2.2-3-5-3s-5 1.1-5 3 2.2 2.7 5 3.2 5 1.4 5 3.3-2.2 3-5 3-5-1.1-5-3",
+  other:"M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18ZM12 8v5M12 16h.01"
+};
+function hhIcon(c,cls){
+  return `<svg class="${cls||"hh__ico"}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${HH_ICON[c]||HH_ICON.other}"/></svg>`;
+}
+const HH_PIN='<svg class="hh__mi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="2.8"/></svg>';
+const HH_PPL='<svg class="hh__mi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 20v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="3.2"/><path d="M22 20v-2a4 4 0 0 0-3-3.8"/><path d="M16.5 3.7a4 4 0 0 1 0 7.5"/></svg>';
+
+function hhAgo(ts){
+  const m=Math.max(0,Math.round((Date.now()-ts)/60000));
+  if(m<1) return t("hh.now");
+  if(m<60) return t("hh.min").replace("{n}",toNepDigits(String(m)));
+  const h=Math.round(m/60);
+  if(h<24) return t("hh.hr").replace("{n}",toNepDigits(String(h)));
+  return t("hh.day").replace("{n}",toNepDigits(String(Math.round(h/24))));
+}
+
+async function fetchHelp(){
+  if(!$("#hhRoot")) return;
+  try{
+    const r=await fetch("/api/help",{cache:"no-store",signal:AbortSignal.timeout(9000)});
+    const j=await r.json();
+    if(!r.ok || j.error) throw new Error(j.error||("http "+r.status));
+    HH_POSTS=Array.isArray(j.posts)?j.posts:[];
+    HH_ERR=false;
+  }catch(_){
+    HH_ERR=true; if(!HH_POSTS) HH_POSTS=[];
+  }
+  HH_LOADED=true;
+  renderHelp();
+}
+
+function hhFiltered(){
+  const q=HH_STATE.q.trim().toLowerCase();
+  return (HH_POSTS||[]).filter(p=>{
+    if(HH_STATE.kind!=="all" && p.kind!==HH_STATE.kind) return false;
+    if(HH_STATE.cat!=="all" && p.category!==HH_STATE.cat) return false;
+    if(!q) return true;
+    return (p.district+" "+p.place+" "+p.detail+" "+(p.name||"")).toLowerCase().indexOf(q)>=0;
+  }).sort((a,b)=>{
+    // Open before resolved, then critical needs first, then newest.
+    const st=(a.status==="open"?0:1)-(b.status==="open"?0:1); if(st) return st;
+    const rank=p=>p.kind==="need"?(p.urgency==="critical"?0:p.urgency==="urgent"?1:2):3;
+    return rank(a)-rank(b) || b.at-a.at;
+  });
+}
+
+function hhCard(p){
+  const mine=!!hhMine()[p.id];
+  const done=p.status!=="open";
+  const urg=p.kind==="need"?p.urgency:"";
+  const tel=(p.phone||"").replace(/[^0-9+]/g,"");
+  const where=[p.place,p.district].filter(Boolean).join(", ");
+  return `<article class="hhc hhc--${p.kind}${done?" hhc--done":""}" data-hh="${esc(p.id)}">
+    <header class="hhc__head">
+      <span class="hhc__kind">${esc(p.kind==="need"?t("hh.k.need"):t("hh.k.offer"))}</span>
+      ${urg&&urg!=="normal"?`<span class="hhc__urg hhc__urg--${urg}">${esc(t("hh.u."+urg))}</span>`:""}
+      ${done?`<span class="hhc__flag">${esc(t("hh.resolved"))}</span>`:""}
+      <time class="hhc__ago">${esc(hhAgo(p.at))}</time>
+    </header>
+    <h3 class="hhc__cat">${hhIcon(p.category,"hhc__caticon")}<span>${esc(t("hh.c."+p.category))}</span></h3>
+    <p class="hhc__detail">${esc(p.detail)}</p>
+    <dl class="hhc__meta">
+      ${where?`<div><dt>${HH_PIN}<span class="sr">${esc(t("hh.m.where"))}</span></dt><dd>${esc(where)}</dd></div>`:""}
+      ${p.people?`<div><dt>${HH_PPL}<span class="sr">${esc(t("hh.m.people"))}</span></dt><dd>${esc(toNepDigits(String(p.people)))} ${esc(t("hh.people"))}</dd></div>`:""}
+    </dl>
+    <footer class="hhc__foot">
+      ${tel?`<a class="hhc__call" href="tel:${esc(tel)}">${PH}<span>${esc(p.phone)}</span></a>`
+           :`<span class="hhc__nocall">${esc(t("hh.nocontact"))}</span>`}
+      <span class="hhc__acts">
+        ${p.name?`<span class="hhc__by">${esc(t("hh.by"))} ${esc(p.name)}</span>`:""}
+        ${mine&&!done?`<button type="button" class="hhc__btn" data-hh-resolve="${esc(p.id)}">${esc(t("hh.markdone"))}</button>`:""}
+        <button type="button" class="hhc__btn hhc__btn--flag" data-hh-flag="${esc(p.id)}">${esc(t("hh.flag"))}</button>
+      </span>
+    </footer>
+  </article>`;
+}
+
+function hhListHTML(shown){
+  return shown.length
+    ? `<div class="hhgrid">${shown.map(hhCard).join("")}</div>`
+    : `<p class="hhempty">${esc(HH_ERR?t("hh.empty.off"):t("hh.empty"))}</p>`;
+}
+/* Repaint just the results, leaving the filters and the search field alone. */
+function paintHelpList(){
+  const list=$("#hhList"); if(!list) return;
+  list.innerHTML=hhListHTML(hhFiltered());
+  const n=$("#hhCount"); if(n) n.textContent=toNepDigits(String(hhFiltered().length));
+  wireHelpCards();
+}
+
+/* ---- the two intent cards that open the page ---- */
+function hhIntentHTML(nNeed,nOffer){
+  const card=(kind,n)=>`<button type="button" class="hhpick hhpick--${kind}${HH_STATE.form===kind?" is-on":""}" data-hh-form="${kind}">
+      <span class="hhpick__ic">${hhIcon(kind==="need"?"rescue":"volunteer","hhpick__svg")}</span>
+      <span class="hhpick__body">
+        <span class="hhpick__h">${esc(kind==="need"?t("hh.form.need"):t("hh.form.offer"))}</span>
+        <span class="hhpick__p">${esc(kind==="need"?t("hh.pick.need.p"):t("hh.pick.offer.p"))}</span>
+      </span>
+      <span class="hhpick__n"><b>${toNepDigits(String(n))}</b><i>${esc(kind==="need"?t("hh.hero.needs"):t("hh.hero.offers"))}</i></span>
+    </button>`;
+  return `<div class="hhpicks">${card("need",nNeed)}${card("offer",nOffer)}</div>`;
+}
+
+/* ---- the post form ---- */
+function hhFormHTML(){
+  const kind=HH_STATE.form;
+  const opt=(v,l,sel)=>`<option value="${esc(v)}"${sel?" selected":""}>${esc(l)}</option>`;
+  const need=kind==="need";
+  return `<form class="hhform hhform--${kind}" id="hhForm" novalidate>
+    <div class="hhform__head">
+      <h3 class="hhform__h">${esc(need?t("hh.form.h.need"):t("hh.form.h.offer"))}</h3>
+      <p class="hhform__lead">${esc(need?t("hh.form.need.p"):t("hh.form.offer.p"))}</p>
+    </div>
+
+    <fieldset class="hhfs">
+      <legend class="hhfs__l">${esc(need?t("hh.fs.what.need"):t("hh.fs.what.offer"))}</legend>
+      <div class="hhrow hhrow--2">
+        <label class="hhf"><span class="hhf__l">${esc(t("hh.f.cat"))}</span>
+          <select name="category">${HH_CATS.map(c=>opt(c,t("hh.c."+c),c==="food")).join("")}</select></label>
+        ${need?`<label class="hhf"><span class="hhf__l">${esc(t("hh.f.urg"))}</span>
+          <select name="urgency">${HH_URG.map(u=>opt(u,t("hh.u."+u),u==="urgent")).join("")}</select></label>`:""}
+      </div>
+      <label class="hhf"><span class="hhf__l">${esc(t("hh.f.detail"))} <em>${esc(t("hh.req"))}</em></span>
+        <textarea name="detail" maxlength="600" rows="3" required placeholder="${esc(need?t("hh.f.detail.need"):t("hh.f.detail.offer"))}"></textarea>
+        <span class="hhf__hint">${esc(need?t("hh.f.detail.hint.need"):t("hh.f.detail.hint.offer"))}</span></label>
+    </fieldset>
+
+    <fieldset class="hhfs">
+      <legend class="hhfs__l">${esc(t("hh.fs.where"))}</legend>
+      <div class="hhrow hhrow--3">
+        <label class="hhf"><span class="hhf__l">${esc(t("hh.f.district"))} <em>${esc(t("hh.req"))}</em></span>
+          <input name="district" maxlength="60" required autocomplete="address-level1" placeholder="${esc(t("hh.f.district.ph"))}"></label>
+        <label class="hhf"><span class="hhf__l">${esc(t("hh.f.place"))}</span>
+          <input name="place" maxlength="120" placeholder="${esc(t("hh.f.place.ph"))}"></label>
+        <label class="hhf"><span class="hhf__l">${esc(need?t("hh.f.people"):t("hh.f.capacity"))}</span>
+          <input name="people" type="number" min="0" max="9999" inputmode="numeric" placeholder="0"></label>
+      </div>
+    </fieldset>
+
+    <fieldset class="hhfs">
+      <legend class="hhfs__l">${esc(t("hh.fs.contact"))}</legend>
+      <div class="hhrow hhrow--2">
+        <label class="hhf"><span class="hhf__l">${esc(t("hh.f.name"))}</span>
+          <input name="name" maxlength="60" autocomplete="name" placeholder="${esc(t("hh.f.optional"))}"></label>
+        <label class="hhf"><span class="hhf__l">${esc(t("hh.f.phone"))}</span>
+          <input name="phone" type="tel" maxlength="20" inputmode="tel" autocomplete="tel" placeholder="98########"></label>
+      </div>
+      <label class="hhcheck"><input type="checkbox" name="shareContact"><span>${esc(t("hh.f.consent"))}</span></label>
+      <p class="hhform__warn">${esc(t("hh.form.privacy"))}</p>
+    </fieldset>
+
+    <div class="hhform__actions">
+      <button class="btn btn--primary" type="submit" id="hhSubmit">${esc(need?t("hh.form.post.need"):t("hh.form.post.offer"))}</button>
+      <button class="btn btn--ghost" type="button" id="hhCancel">${esc(t("hh.form.cancel"))}</button>
+      <span class="hhform__msg" id="hhMsg" role="status"></span>
+    </div>
+  </form>`;
+}
+
+function renderHelp(){
+  const root=$("#hhRoot"); if(!root) return;
+
+  const posts=HH_POSTS||[];
+  const nNeed=posts.filter(p=>p.kind==="need"&&p.status==="open").length;
+  const nOffer=posts.filter(p=>p.kind==="offer"&&p.status==="open").length;
+  const shown=hhFiltered();
+
+  const seg=(f,label,n)=>`<button type="button" class="hhseg${HH_STATE.kind===f?" is-on":""}" data-hhk="${f}">${esc(label)}<span class="hhseg__n">${toNepDigits(String(n))}</span></button>`;
+
+  const offline=HH_ERR?`<div class="hhoff">
+      <strong>${esc(t("hh.off.h"))}</strong>
+      <p>${esc(t("hh.off.p"))}</p>
+    </div>`:"";
+
+  const postPanel = HH_ERR
+    ? `<p class="hhempty">${esc(t("hh.off.form"))}</p>`
+    : hhIntentHTML(nNeed,nOffer) + (HH_STATE.form?hhFormHTML():`<p class="hhpicks__hint">${esc(t("hh.pick.hint"))}</p>`);
+
+  const board = !HH_LOADED
+    ? `<p class="hwloading">${esc(t("hh.loading"))}</p>`
+    : `<div id="hhList">${hhListHTML(shown)}</div>`;
+
+  root.innerHTML=`
+    <div class="hhsafe">
+      <span class="hhsafe__ic" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 8v5M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+      </span>
+      <div class="hhsafe__body">
+        <strong>${esc(t("hh.safe.h"))}</strong>
+        <p>${esc(t("hh.safe.p"))}</p>
+        <p class="hhsafe__lines"><span>${esc(t("hh.safe.lines"))}</span>
+          <a href="tel:1149">1149</a><a href="tel:100">100</a><a href="tel:1155">1155</a>
+          <a class="hhsafe__more" href="index.html#helplines">${esc(t("hh.safe.all"))}</a></p>
+      </div>
+    </div>
+
+    ${offline}
+
+    <section class="hhpost" aria-labelledby="hhPostH">
+      <div class="hhsec">
+        <h2 class="hhsec__h" id="hhPostH">${esc(t("hh.post.h"))}</h2>
+        <p class="hhsec__p">${esc(t("hh.post.p"))}</p>
+      </div>
+      ${postPanel}
+    </section>
+
+    <section class="hhboard" aria-labelledby="hhBoardH">
+      <div class="hhsec">
+        <h2 class="hhsec__h" id="hhBoardH">${esc(t("hh.board.h"))}</h2>
+        <p class="hhsec__p">${esc(t("hh.board.p"))}</p>
+      </div>
+      <div class="hhbar">
+        <div class="hhsegs" role="group" aria-label="${esc(t("hh.board.h"))}">
+          ${seg("all",t("hh.all"),posts.filter(p=>p.status==="open").length)}
+          ${seg("need",t("hh.k.need"),nNeed)}
+          ${seg("offer",t("hh.k.offer"),nOffer)}
+        </div>
+        <div class="hhbar__tools">
+          <label class="hhsel"><span class="sr">${esc(t("hh.f.cat"))}</span>
+            <select id="hhCat">
+              <option value="all"${HH_STATE.cat==="all"?" selected":""}>${esc(t("hh.cat.all"))}</option>
+              ${HH_CATS.map(c=>`<option value="${c}"${HH_STATE.cat===c?" selected":""}>${esc(t("hh.c."+c))}</option>`).join("")}
+            </select></label>
+          <label class="hhsearch"><span class="sr">${esc(t("hh.search"))}</span>
+            <input id="hhSearch" type="search" placeholder="${esc(t("hh.search"))}" value="${esc(HH_STATE.q)}"></label>
+        </div>
+      </div>
+      <p class="hhresults"><span id="hhCount">${toNepDigits(String(shown.length))}</span> ${esc(t("hh.showing"))}</p>
+      ${board}
+      <p class="hhlegend">${esc(t("hh.legend"))}</p>
+    </section>`;
+
+  wireHelp();
+}
+
+function wireHelp(){
+  const root=$("#hhRoot"); if(!root) return;
+
+  root.querySelectorAll("[data-hhk]").forEach(b=>b.addEventListener("click",()=>{
+    HH_STATE.kind=b.dataset.hhk;
+    root.querySelectorAll("[data-hhk]").forEach(x=>x.classList.toggle("is-on",x===b));
+    paintHelpList();
+  }));
+  root.querySelectorAll("[data-hh-form]").forEach(b=>b.addEventListener("click",()=>{
+    // Tapping the active side again closes the form rather than trapping the
+    // reader in it.
+    HH_STATE.form = (HH_STATE.form===b.dataset.hhForm) ? null : b.dataset.hhForm;
+    renderHelp();
+    const f=$("#hhForm");
+    if(f){ f.scrollIntoView({block:"nearest"}); const first=f.querySelector("select,input"); if(first) first.focus({preventScroll:true}); }
+  }));
+
+  const cat=$("#hhCat");
+  if(cat) cat.addEventListener("change",()=>{ HH_STATE.cat=cat.value; paintHelpList(); });
+
+  const search=$("#hhSearch");
+  if(search) search.addEventListener("input",()=>{
+    HH_STATE.q=search.value;
+    // Repaint the results only. Re-rendering the whole panel on every keystroke
+    // would tear the input out of the DOM and drop focus mid-word.
+    paintHelpList();
+  });
+
+  wireHelpCards();
+
+  const cancel=$("#hhCancel");
+  if(cancel) cancel.addEventListener("click",()=>{ HH_STATE.form=null; renderHelp(); });
+
+  const form=$("#hhForm");
+  if(form) form.addEventListener("submit", async e=>{
+    e.preventDefault();
+    if(HH_STATE.posting) return;
+    const msg=$("#hhMsg"), btn=$("#hhSubmit");
+    const fd=new FormData(form);
+    const body={
+      kind:HH_STATE.form||"need",
+      category:fd.get("category")||"other",
+      urgency:fd.get("urgency")||"normal",
+      district:(fd.get("district")||"").toString().trim(),
+      place:(fd.get("place")||"").toString().trim(),
+      people:fd.get("people")||0,
+      name:(fd.get("name")||"").toString().trim(),
+      detail:(fd.get("detail")||"").toString().trim(),
+      phone:(fd.get("phone")||"").toString().trim(),
+      shareContact:fd.get("shareContact")==="on"
+    };
+    const fail=(key,field)=>{
+      msg.textContent=t(key); msg.className="hhform__msg hhform__msg--err";
+      const el=form.querySelector('[name="'+field+'"]'); if(el){ el.focus(); }
+    };
+    if(!body.district) return fail("hh.err.required","district");
+    if(!body.detail) return fail("hh.err.required","detail");
+    if(body.shareContact && !body.phone) return fail("hh.err.phone","phone");
+    HH_STATE.posting=true; btn.disabled=true;
+    msg.textContent=t("hh.sending"); msg.className="hhform__msg";
+    try{
+      const r=await fetch("/api/help",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
+      const j=await r.json();
+      if(!r.ok || j.error){ const e=new Error(j.error||"failed"); e.fromServer=!!j.error; throw e; }
+      const mine=hhMine(); mine[j.id]=j.token; hhSaveMine(mine);
+      HH_POSTS=[j.post].concat(HH_POSTS||[]);
+      HH_STATE.form=null; HH_STATE.kind="all"; HH_STATE.cat="all";
+      toast(t("hh.posted"),"crim");
+      renderHelp();
+      const list=$("#hhList"); if(list) list.scrollIntoView({block:"start"});
+    }catch(err){
+      // The endpoint sends a specific reason for the refusals a poster can act on
+      // — the rate limit above all — so pass it through instead of flattening
+      // every failure into "check your connection", which sends someone off to
+      // fix a network that is working fine.
+      const reason=String(err.message||"");
+      msg.textContent = reason==="unavailable" ? t("hh.off.p")
+                      : (err.fromServer && reason) ? reason
+                      : t("hh.err.send");
+      msg.className="hhform__msg hhform__msg--err";
+    }finally{
+      HH_STATE.posting=false;
+      const b2=$("#hhSubmit"); if(b2) b2.disabled=false;
+    }
+  });
+}
+
+function wireHelpCards(){
+  const root=$("#hhRoot"); if(!root) return;
+  root.querySelectorAll("[data-hh-resolve]").forEach(b=>{
+    if(b.__w) return; b.__w=true;
+    b.addEventListener("click", async ()=>{
+      const id=b.dataset.hhResolve, token=hhMine()[id];
+      if(!token) return;
+      b.disabled=true;
+      try{
+        const r=await fetch("/api/help?action=resolve",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({id,token})});
+        if(!r.ok) throw new Error("failed");
+        const p=(HH_POSTS||[]).find(x=>x.id===id); if(p) p.status="resolved";
+        toast(t("hh.doneok"),"crim"); paintHelpList();
+      }catch(_){ b.disabled=false; toast(t("hh.err.send")); }
+    });
+  });
+  root.querySelectorAll("[data-hh-flag]").forEach(b=>{
+    if(b.__w) return; b.__w=true;
+    b.addEventListener("click", async ()=>{
+      if(!confirm(t("hh.flag.confirm"))) return;
+      b.disabled=true;
+      try{
+        await fetch("/api/help?action=flag",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({id:b.dataset.hhFlag})});
+        toast(t("hh.flag.ok"),"crim");
+      }catch(_){ b.disabled=false; }
+    });
+  });
 }
 
 if(document.readyState!=="loading") wire(); else document.addEventListener("DOMContentLoaded",wire);
