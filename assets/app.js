@@ -2425,7 +2425,7 @@ const STATS_DETAIL=[
   rows:[["Preliminary damage estimate (Rs billion)","200"],["Roads and bridges (Rs billion)","15"],["Bridges damaged","41"],["Road damaged (km)","42"],["Hydropower projects damaged (NEA)","13"],["Generation knocked off the grid (MW)","431"],["Under-construction capacity damaged (MW)","470"],["Schools damaged or destroyed","38"],["People affected (IFRC estimate)","93,000"],["Need emergency water & sanitation (UN)","65,000"],["Pregnant & breastfeeding women needing nutrition aid (UN)","10,500"],["Children under 5 needing treatment for severe wasting (UN)","2,600"]],
   note:{en:"Total damage is preliminarily estimated at Rs 200 billion (approx. USD 4–5 billion). Road and bridge infrastructure losses stand at Rs 15 billion with 41 bridges destroyed or severely damaged, and 431 MW of generation knocked off the national grid; the Nepal Electricity Authority counts 13 hydropower projects damaged. The IFRC estimates 93,000 people affected, and the UN puts 65,000 in need of emergency water, sanitation and hygiene supplies.",ne:"प्रारम्भिक कुल क्षति करिब रु. २०० अर्ब (४–५ अर्ब अमेरिकी डलर) अनुमान गरिएको छ। सडक तथा पुल पूर्वाधारमा रु. १५ अर्बको क्षति भएको छ, जसमा ४१ पुल र ४२ कि.मि. सडक क्षतिग्रस्त छन् भने ४३१ मेगावाट उत्पादन राष्ट्रिय ग्रिडबाट विच्छेद भएको छ; नेपाल विद्युत् प्राधिकरणका अनुसार १३ जलविद्युत् आयोजना क्षतिग्रस्त छन्। IFRC का अनुसार ९३,००० जना प्रभावित छन् भने संयुक्त राष्ट्रसंघका अनुसार ६५,००० जनालाई आकस्मिक खानेपानी तथा सरसफाइ सामग्री आवश्यक छ।"}},
  {id:"materials", sev:"relief", big:"", title:{en:"Relief Materials & International Aid",ne:"राहत सामग्री र अन्तर्राष्ट्रिय सहायता"}, src:"AP / BBC / Reuters / IFRC",
-  rows:[["PM Disaster Relief Fund (Rs billion)","5.44"],["Released to 15 local units (Rs million)","675"],["Released to Rasuwa (Rs crore)","1"],["Released to Nuwakot (Rs crore)","1"],["Truckloads of relief material despatched","10"],["Ministers' salary pledge","One month, all ministers"],["India — DNA testing & body management","Lab support provided"],["China — emergency supplies","50 tonnes / 13,200 items"],["India — supplies","~50 tonnes"],["IFRC emergency appeal","CHF 25 million"],["Asian Development Bank","USD 5 million"],["European Union","EUR 2 million"],["Welthungerhilfe","EUR 2 million"],["UN CERF","USD 2 million"],["South Korea","USD 1 million"],["Red Cross / IFRC DREF","CHF 1 million"],["World Health Organization","USD 150,000"]],
+  rows:[["PM Disaster Relief Fund — total collected (Rs billion)","6.36"],["— of which, in nine commercial banks (Rs billion)","5.87"],["— of which, in the fund's dollar accounts (USD)","3,193,238"],["Released from the fund on 1 Sept (Rs billion)","1"],["Balance remaining in the fund (Rs billion)","5.36"],["Released to 15 local units, Disaster Management Fund (Rs million)","675"],["Released to Rasuwa (Rs crore)","1"],["Released to Nuwakot (Rs crore)","1"],["Truckloads of relief material despatched","10"],["Ministers' salary pledge","One month, all ministers"],["India — DNA testing & body management","Lab support provided"],["Red Cross Society of China — to the relief fund (USD)","200,000"],["China — emergency supplies","50 tonnes / 13,200 items"],["India — supplies","~50 tonnes"],["IFRC emergency appeal","CHF 25 million"],["Asian Development Bank","USD 5 million"],["European Union","EUR 2 million"],["Welthungerhilfe","EUR 2 million"],["UN CERF","USD 2 million"],["South Korea","USD 1 million"],["Red Cross / IFRC DREF","CHF 1 million"],["World Health Organization","USD 150,000"]],
   note:{en:"International assistance packages continue arriving, including 50 tonnes of emergency shelter and medical supplies from China and India, alongside UN CERF and multilateral funding allocations.",ne:"चीन र भारतबाट ५०–५० टन आपत्कालीन राहत तथा औषधीय सामग्री, राष्ट्रसंघीय CERF कोष तथा बहुपक्षीय सहायता परिचालन जारी छ।"}},
  {id:"heli", sev:"relief", big:"", title:{en:"Helicopter and Ground Operations",ne:"हेलिकप्टर र स्थलगत उद्धार"}, unit:{en:"Timure · Dhunche · Mailung · Syafrubesi · Trishuli",ne:"तिमुरे · धुन्चे · माइलुङ · स्याफ्रुबेसी · त्रिशूली"}, src:"Nepal Army / NDRRMA",
   note:{en:"Nepali Army helicopters and joint security squads have flown over 411 rescue sorties, evacuating cut-off residents, transporting critical medical patients, and deploying bailey bridge materials.",ne:"नेपाली सेनाका हेलिकप्टर र संयुक्त टोलीहरूले ४११ भन्दा बढी उडान गरी प्रभावित क्षेत्रबाट नागरिक उद्धार तथा राहत सामग्री ढुवानी गरेका छन्।"}}
@@ -2798,35 +2798,59 @@ async function renderRescuePage(){
    Edit these figures to update; donor amounts are in millions of NPR.
    ========================================================================= */
 Object.assign(I18N.en,{
-  "rfund.eye":"PM Disaster Relief Fund","rfund.h":"Collected So Far",
-  "rfund.total":"Total in Fund","rfund.donations":"Public Donations","rfund.govt":"Govt Release",
-  "rfund.top":"Named Contributors (early published list)","rfund.updated":"Updated",
-  "rfund.note":"The fund's published balance passed Rs 5 billion — it includes the Government's own Rs 1 billion release, so the two bars always add back to the real total. The contributors listed below are only the donors named in the first days of the appeal; they account for a small share of the total, and thousands of individual donations are not itemised publicly. The balance rises daily and syncs automatically. Source: Radio Nepal / OnlineKhabar / OPMCM — verify before relying on any amount."
+  "rfund.eye":"PM Disaster Relief Fund","rfund.h":"Collected & Released",
+  "rfund.total":"Total Collected","rfund.released":"Released to Districts","rfund.balance":"Balance in Fund",
+  "rfund.split":"{npr} sits across {banks} commercial banks; a further USD {usd} (about {fx}) is held in the fund's dollar accounts at Himalayan Bank and Laxmi Bank.",
+  "rfund.top":"Named Contributors","rfund.top.share":"about {p}% of the total — a sample, not a breakdown","rfund.updated":"Updated",
+  "rfund.note":"Rs 6.36 billion has been deposited into the fund and Rs 1 billion was released on 1 September through the District Disaster Management Committees, for rescue and relief, immediate infrastructure repairs and temporary housing — leaving the balance shown. Districts apply through their own disaster management committees; the Fund Management Committee is chaired by the Home Secretary. The contributors below are only those whose donations were announced publicly, so they are a sample of the total, not a breakdown of it — thousands of individual donations are never itemised. The total rises daily and syncs automatically. Source: OPMCM, via NepalNews / The Rising Nepal / myRepublica — verify before relying on any amount."
 });
 Object.assign(I18N.ne,{
-  "rfund.eye":"प्रधानमन्त्री विपद् राहत कोष","rfund.h":"अहिलेसम्म संकलन",
-  "rfund.total":"कोषमा कुल","rfund.donations":"सार्वजनिक दान","rfund.govt":"सरकारी निकासा",
-  "rfund.top":"नाम सार्वजनिक भएका दाता (सुरुको सूची)","rfund.updated":"अद्यावधिक",
-  "rfund.note":"कोषको सार्वजनिक रकम रु. ५ अर्ब नाघ्यो — यसमा सरकारकै रु. १ अर्बको निकासा समावेश छ, त्यसैले दुवै पट्टी जोड्दा वास्तविक कुल रकम नै आउँछ। तल उल्लेखित दाता अपिलका सुरुका दिनमा नाम सार्वजनिक भएका मात्र हुन्; कुल रकमको सानो अंश ओगट्छन् र हजारौं व्यक्तिगत दान छुट्टै सार्वजनिक गरिएको छैन। रकम दैनिक बढ्छ र स्वतः अद्यावधिक हुन्छ। स्रोत: रेडियो नेपाल / अनलाइनखबर / OPMCM — कुनै रकममा भर पर्नुअघि रुजु गर्नुहोस्।"
+  "rfund.eye":"प्रधानमन्त्री विपद् राहत कोष","rfund.h":"संकलन र निकासा",
+  "rfund.total":"कुल संकलन","rfund.released":"जिल्लामा निकासा","rfund.balance":"कोषमा बाँकी",
+  "rfund.split":"{npr} रकम {banks} वाणिज्य बैंकका खातामा छ; थप अमेरिकी डलर {usd} (करिब {fx}) हिमालयन बैंक र लक्ष्मी बैंकका डलर खातामा छ।",
+  "rfund.top":"नाम सार्वजनिक भएका दाता","rfund.top.share":"कुलको करिब {p}% — नमुना मात्र, पूर्ण विवरण होइन","rfund.updated":"अद्यावधिक",
+  "rfund.note":"कोषमा रु. ६.३६ अर्ब जम्मा भएको छ भने १ सेप्टेम्बरमा रु. १ अर्ब जिल्ला विपद् व्यवस्थापन समितिमार्फत उद्धार तथा राहत, तत्काल पूर्वाधार मर्मत र अस्थायी आवासका लागि निकासा भएको छ — बाँकी रकम माथि देखाइएको छ। जिल्लाहरूले आ-आफ्नो विपद् व्यवस्थापन समितिमार्फत माग गर्नुपर्छ; कोष व्यवस्थापन समितिको नेतृत्व गृह सचिवले गर्छन्। तल उल्लेखित दाता सार्वजनिक रूपमा घोषणा भएका मात्र हुन् — यो कुल रकमको नमुना हो, पूर्ण विवरण होइन; हजारौं व्यक्तिगत दान छुट्टै सार्वजनिक हुँदैन। कुल रकम दैनिक बढ्छ र स्वतः अद्यावधिक हुन्छ। स्रोत: OPMCM, नेपालन्यूज / गोरखापत्र (द राइजिङ नेपाल) / रिपब्लिका — कुनै रकममा भर पर्नुअघि रुजु गर्नुहोस्।"
 });
 const RELIEF_COLLECTED = {
-  updated:"30 Aug 2026",
-  /* The fund's published balance passed Rs 5.02bn on 30 Aug (Radio Nepal) and
-     Rs 5.44bn on the government's latest count. That balance INCLUDES the
-     Rs 1bn government release, so `donations` holds the public/corporate share
-     (balance − govt) and the two always add back up to the real total. */
-  donations:4440,    // million NPR — public & corporate donations to the PM Disaster Relief Fund
-  govt:1000,         // million NPR — Government release to the fund
+  updated:"2 Sept 2026",
+  /* OPMCM's published position, carried identically by NepalNews (31 Aug),
+     The Rising Nepal (1 Sept) and myRepublica (2 Sept).
+
+     The earlier model here was wrong in a way worth naming: it treated the
+     Rs 1 billion as money the government put INTO the fund, and showed it
+     beside "public donations" as if the two summed to the balance. The
+     reporting is the other way round — the Rs 1 billion was released OUT of
+     the fund on 1 September, through the District Disaster Management
+     Committees. So the panel now answers the question a relief-fund page is
+     actually for: how much came in, how much has gone out, what is left.
+
+     `balance` is derived rather than stored, so the three figures cannot drift
+     apart. `npr` + `fx` is the currency split of `collected`. */
+  collected:6360,   // million NPR — total deposited into the fund
+  npr:5870,         // million NPR — across nine commercial banks
+  fx:486,           // million NPR — USD 3,193,238 in the Himalayan / Laxmi Bank dollar accounts, at NRB's rate
+  fxUsd:"3,193,238",
+  released:1000,    // million NPR — released 1 Sept via the District Disaster Management Committees
+  banks:9,
+  /* Named contributors only. Thousands of individual donations are not
+     itemised publicly, so this list is a sample, never a breakdown of the
+     total — the note under the chart says so. */
   donors:[
     {name:{en:"Gorkha Brewery",ne:"गोर्खा ब्रुअरी"}, amt:100},
+    {name:{en:"BYD Nepal",ne:"बीवाईडी नेपाल"}, amt:70},
     {name:{en:"Nepal Bank Ltd",ne:"नेपाल बैंक लि."}, amt:30.1},
     {name:{en:"Rastriya Banijya Bank",ne:"राष्ट्रिय वाणिज्य बैंक"}, amt:30},
     {name:{en:"Kumari Bank",ne:"कुमारी बैंक"}, amt:30},
     {name:{en:"NIFRA",ne:"निफ्रा"}, amt:25},
+    {name:{en:"Employees Provident Fund",ne:"कर्मचारी सञ्चय कोष"}, amt:25},
     {name:{en:"NIC Asia Bank",ne:"एनआईसी एशिया बैंक"}, amt:22.1},
     {name:{en:"Saras Beverages (Red Bull)",ne:"सरस बेभरेजेज (रेड बुल)"}, amt:20},
+    {name:{en:"Nepal Liquors",ne:"नेपाल लिकर्स"}, amt:10.1},
     {name:{en:"Ncell",ne:"एनसेल"}, amt:10},
+    {name:{en:"Nepali Congress",ne:"नेपाली कांग्रेस"}, amt:10},
+    {name:{en:"Sun Nepal Life Insurance",ne:"सन नेपाल लाइफ इन्स्योरेन्स"}, amt:6},
     {name:{en:"Shree Shakti Group",ne:"श्री शक्ति समूह"}, amt:5.1},
+    {name:{en:"REBAN Pokhara",ne:"रेवान पोखरा"}, amt:1.2},
     {name:{en:"Reliance Sugar & Chemicals",ne:"रिलायन्स सुगर"}, amt:1}
   ]
 };
@@ -2847,26 +2871,36 @@ function fmtMoney(m){
 function renderReliefCollected(){
   const el=$("#reliefCollected"); if(!el) return;
   const rc=RELIEF_COLLECTED;
-  const total=rc.donations+rc.govt;
+  const collected=rc.collected||0;
+  const released=Math.min(rc.released||0, collected);
+  const balance=Math.max(0, collected-released);           // derived, never stored
+  const relPct=collected?Math.round(released/collected*100):0;
+  const balPct=100-relPct;
   const donors=rc.donors.slice().sort((a,b)=>b.amt-a.amt);
   const max=Math.max(1,...donors.map(d=>d.amt));
-  const govtPct=Math.round(rc.govt/total*100), donPct=100-govtPct;
+  const named=donors.reduce((s,d)=>s+d.amt,0);
+  const namedPct=collected?Math.max(1,Math.round(named/collected*100)):0;
   const M=v=>LANG==="ne"?toNepDigits(v):v;
   el.innerHTML=`
     <div class="rfund">
       <div class="rfund__top">
-        <div><span class="eyebrow" data-i18n="rfund.eye">PM Disaster Relief Fund</span><h3 data-i18n="rfund.h">Collected So Far</h3></div>
+        <div><span class="eyebrow" data-i18n="rfund.eye">PM Disaster Relief Fund</span><h3 data-i18n="rfund.h">Collected &amp; Released</h3></div>
         <div class="rfund__kpis">
-          <div class="rfund__kpi"><div class="k mono">${esc(M(fmtMoney(total)))}</div><div class="l">${esc(t("rfund.total"))}</div></div>
-          <div class="rfund__kpi"><div class="k mono" style="color:var(--relief)">${esc(M(fmtMoney(rc.donations)))}</div><div class="l">${esc(t("rfund.donations"))}</div></div>
-          <div class="rfund__kpi"><div class="k mono">${esc(M(fmtMoney(rc.govt)))}</div><div class="l">${esc(t("rfund.govt"))}</div></div>
+          <div class="rfund__kpi"><div class="k mono">${esc(M(fmtMoney(collected)))}</div><div class="l">${esc(t("rfund.total"))}</div></div>
+          <div class="rfund__kpi"><div class="k mono">${esc(M(fmtMoney(released)))}</div><div class="l">${esc(t("rfund.released"))}</div></div>
+          <div class="rfund__kpi"><div class="k mono">${esc(M(fmtMoney(balance)))}</div><div class="l">${esc(t("rfund.balance"))}</div></div>
         </div>
       </div>
       <div class="rfund__bar">
-        <span class="rfund__seg rfund__seg--govt" style="width:${govtPct}%"><span>${esc(t("rfund.govt"))} · ${esc(M(fmtMoney(rc.govt)))}</span></span>
-        <span class="rfund__seg rfund__seg--don" style="width:${donPct}%"><span>${esc(t("rfund.donations"))} · ${esc(M(fmtMoney(rc.donations)))}</span></span>
+        <span class="rfund__seg rfund__seg--rel" style="width:${relPct}%"><span>${esc(t("rfund.released"))} · ${esc(M(fmtMoney(released)))}</span></span>
+        <span class="rfund__seg rfund__seg--bal" style="width:${balPct}%"><span>${esc(t("rfund.balance"))} · ${esc(M(fmtMoney(balance)))}</span></span>
       </div>
-      <div class="rfund__ttl">${esc(t("rfund.top"))}</div>
+      ${(rc.npr&&rc.fx)?`<p class="rfund__split">${esc(applyTokens(t("rfund.split")
+          .replace("{npr}",M(fmtMoney(rc.npr)))
+          .replace("{banks}",M(String(rc.banks||9)))
+          .replace("{usd}",M(rc.fxUsd||""))
+          .replace("{fx}",M(fmtMoney(rc.fx)))))}</p>`:""}
+      <div class="rfund__ttl">${esc(t("rfund.top"))}<span class="rfund__ttlnote">${esc(t("rfund.top.share").replace("{p}",M(String(namedPct))))}</span></div>
       <div class="rfund__donors">
         ${donors.map(d=>{const pct=Math.max(4,Math.round(d.amt/max*100));return `
           <div class="rfund__row"><span class="rfund__nm" title="${esc(TL(d.name))}">${esc(TL(d.name))}</span><span class="rfund__track"><span class="rfund__fill" style="width:${pct}%"></span></span><span class="rfund__amt mono">${esc(M(fmtMoney(d.amt)))}</span></div>`;}).join("")}
@@ -2874,7 +2908,6 @@ function renderReliefCollected(){
       <p class="rfund__note">${esc(t("rfund.note"))} <span class="mono">${esc(t("rfund.updated"))}: ${esc(M(rc.updated))}</span></p>
     </div>`;
 }
-
 /* ---------- live sync stamp + 10-min refresh from CORS-open live source ---------- */
 /* ================= Multi-Tier Real-Time Auto Fetching Engine =================
    Every figure on the site is refreshed from live sources. Because several
@@ -3150,10 +3183,13 @@ async function _srcSummary(){
   // balance INCLUDES the government release, so store the public share.
   const fund=txt.match(/Relief Fund[^.]*?(?:रू|रु|₹|Rs\.?|NPR)\s*([\d,]{7,15})/i);
   if(fund && typeof RELIEF_COLLECTED==="object"){
-    const balanceM=_int(fund[1])/1e6;                  // rupees → millions
-    const publicM=Math.max(0, balanceM-(RELIEF_COLLECTED.govt||0));
-    if(publicM>0 && publicM>=(RELIEF_COLLECTED.donations||0) && RELIEF_COLLECTED.donations!==publicM){
-      RELIEF_COLLECTED.donations=publicM;
+    // Cumulative deposits only ever rise, so a smaller figure is an older
+    // snapshot rather than a correction — the article still says 5.44bn while
+    // OPMCM is publishing 6.36bn. `balance` stays derived from collected minus
+    // released; nothing here touches it.
+    const collectedM=_int(fund[1])/1e6;                // rupees → millions
+    if(collectedM>(RELIEF_COLLECTED.collected||0)){
+      RELIEF_COLLECTED.collected=collectedM;
       RELIEF_COLLECTED.updated=nptNow().toLocaleDateString("en-GB",{day:"2-digit",month:"short",year:"numeric"});
       changed=true;
     }

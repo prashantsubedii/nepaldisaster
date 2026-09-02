@@ -1882,8 +1882,8 @@ html[lang="ne"] .rfund__kpi .l { text-transform: none; letter-spacing: 0; font-f
 .rfund__seg { display: flex; align-items: center; justify-content: center; overflow: hidden; white-space: nowrap; font-family: var(--f-cond); text-transform: uppercase; letter-spacing: .04em; font-weight: 700; font-size: .66rem; color: #fff; min-width: 0; }
 .rfund__seg span { padding: 0 8px; overflow: hidden; text-overflow: ellipsis; }
 html[lang="ne"] .rfund__seg { text-transform: none; letter-spacing: 0; font-family: var(--f-np); }
-.rfund__seg--govt { background: var(--slate); }
-.rfund__seg--don { background: var(--relief); }
+.rfund__seg--rel { background: var(--slate); }
+.rfund__seg--bal { background: var(--relief); }
 .rfund__ttl { font-family: var(--f-cond); text-transform: uppercase; letter-spacing: .08em; font-weight: 700; font-size: .72rem; color: var(--muted); margin-bottom: 12px; }
 html[lang="ne"] .rfund__ttl { text-transform: none; letter-spacing: 0; font-family: var(--f-np); }
 .rfund__donors { display: grid; grid-template-columns: 1fr 1fr; gap: 9px 24px; }
@@ -2760,8 +2760,8 @@ section[style*="var(--slate)"] .sec-head .more{ border-color: var(--line-dark-st
 /* bars in the summary/fund charts: one ink, no green/red pairing */
 .msum__fill, .rfund__fill{ background: var(--accent) !important; border-radius: var(--r-pill); }
 .msum__track, .rfund__track{ border-radius: var(--r-pill); }
-.rfund__seg--govt{ background: var(--rule-2) !important; }
-.rfund__seg--don{ background: var(--accent) !important; }
+.rfund__seg--rel{ background: var(--rule-2) !important; }
+.rfund__seg--bal{ background: var(--accent) !important; }
 .rfund__kpi .k[style], .msum__kpi .k[style]{ color: var(--ink) !important; }
 
 /* ---------- 16. maps, tables, registries -------------------------------- */
@@ -3852,3 +3852,16 @@ html[lang="ne"] .npop__fig i{ text-transform: none; letter-spacing: 0; font-fami
   .npop--brief{ width: auto; }
   .npop__thumb{ margin: 0 -17px 12px; }
 }
+
+/* ---------- 10. relief fund: currency split + contributor caveat -------- */
+.rfund__split{
+  font-size: .82rem; line-height: 1.6; color: var(--ink-2);
+  margin: -8px 0 18px; max-width: 80ch;
+}
+html[lang="ne"] .rfund__split{ font-family: var(--f-np); }
+.rfund__ttl{ display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; }
+.rfund__ttlnote{
+  font-family: var(--f-body); text-transform: none; letter-spacing: 0;
+  font-weight: 400; font-size: .76rem; color: var(--faint, var(--muted));
+}
+html[lang="ne"] .rfund__ttlnote{ font-family: var(--f-np); }
