@@ -173,8 +173,8 @@ const EVENT = {
   since:"2026-08-26T08:37:00+05:45",
   title:{en:"2026 Nepal Floods", ne:"२०२६ नेपाल बाढी"},
   region:{en:"Rasuwa · Nuwakot · Dhading · Trishuli corridor · Chitwan · Nawalparasi", ne:"रसुवा · नुवाकोट · धादिङ · त्रिशूली कोरिडोर · चितवन · नवलपरासी"},
-  eas:{en:"Trishuli / Bhote Koshi glacier-collapse flood. NDRRMA confirm 1,114 dead, 3,916 missing and 1,473 injured; 11,814 rescued (2 Sept). 900 hydropower workers missing across 12 projects, around 500 believed trapped inside tunnels. Prithvi Highway still cut at Krishnabhir.",
-       ne:"त्रिशूली / भोटेकोशी हिमनदी भत्किएर आएको बाढी। NDRRMA ले १,११४ मृत्यु, ३,९१६ बेपत्ता र १,४७३ घाइते पुष्टि गरेको; ११,८१४ उद्धार (२ सेप्टेम्बर)। १२ आयोजनाका ९०० जलविद्युत् कामदार बेपत्ता, करिब ५०० सुरुङभित्रै फसेको अनुमान। कृष्णभीरमा पृथ्वी राजमार्ग अझै अवरुद्ध।"}
+  eas:{en:"Trishuli / Bhote Koshi glacier-collapse flood. PM Balen Shah told Parliament on 2 Sept that 11,993 have been rescued and 3,916 remain missing; Nepal Police put the toll at 1,127 dead, with 1,473 injured. 900 hydropower workers missing across 12 projects, around 500 believed trapped inside tunnels. Prithvi Highway still cut at Krishnabhir.",
+       ne:"त्रिशूली / भोटेकोशी हिमनदी भत्किएर आएको बाढी। प्रधानमन्त्री बालेन्द्र शाहले २ सेप्टेम्बरमा संसदमा ११,९९३ जनाको उद्धार भएको र ३,९१६ बेपत्ता रहेको जानकारी दिए; नेपाल प्रहरीका अनुसार मृत्यु संख्या १,१२७ र घाइते १,४७३। १२ आयोजनाका ९०० जलविद्युत् कामदार बेपत्ता, करिब ५०० सुरुङभित्रै फसेको अनुमान। कृष्णभीरमा पृथ्वी राजमार्ग अझै अवरुद्ध।"}
 };
 /* Nepal-side figures only. Live-refreshed every 10 minutes: local feed (baseline)
    → Wikipedia PROSE (deaths/missing/injured + foreign nationals among the missing,
@@ -182,16 +182,18 @@ const EVENT = {
    Nepal registry). The Wikipedia INFOBOX is NOT used — it reports Nepal+Tibet
    COMBINED, which is what previously inflated the toll. */
 let STATS = [
-  {key:"deaths",  n:"1,114", cls:"hstat--death"},
+  {key:"deaths",  n:"1,127", cls:"hstat--death"},
   {key:"missing", n:"3,916", cls:"hstat--missing"},
   {key:"foreign", n:"583"},
-  {key:"rescued", n:"11,814", cls:"hstat--rescue"}   // hero = TOTAL rescued (NDRRMA bulletin); the NAMED registry (4,248) is a separate, smaller figure shown on the Rescued page
+  {key:"rescued", n:"11,993", cls:"hstat--rescue"}   // hero = TOTAL rescued (PM Shah to Parliament, 2 Sept); the NAMED registry (4,248) is a separate, smaller figure shown on the Rescued page
 ];
 
 /* -------------------- TICKER -------------------- */
 const TICKER = [
-  {src:"NDRRMA", en:"NDRRMA: 1,114 confirmed dead, 3,916 missing, 1,473 injured and 11,814 rescued (2 Sept) — search and recovery operations continue",
-   ne:"NDRRMA: १,११४ मृत्यु पुष्टि, ३,९१६ बेपत्ता, १,४७३ घाइते र ११,८१४ उद्धार (२ सेप्टेम्बर) — खोज तथा उद्धार कार्य जारी"},
+  {src:"PARLIAMENT", en:"PM Balen Shah briefs Parliament (2 Sept): 11,993 rescued, 3,916 still missing; Nepal Police put the toll at 1,127 — 'we have no alternative but to fight with determination and courage'",
+   ne:"प्रधानमन्त्री बालेन्द्र शाहको संसदमा सम्बोधन (२ सेप्टेम्बर): ११,९९३ उद्धार, ३,९१६ बेपत्ता; नेपाल प्रहरीका अनुसार मृत्यु १,१२७ — 'दृढता र साहसका साथ लड्नुबाहेक विकल्प छैन'"},
+  {src:"RELIEF", en:"Rs 1 crore released to each of Rasuwa and Nuwakot from the PM Disaster Relief Fund; 10 truckloads of relief material despatched and all ministers pledge one month's salary",
+   ne:"प्रधानमन्त्री विपद् राहत कोषबाट रसुवा र नुवाकोट प्रत्येकलाई रु. १ करोड निकासा; १० ट्रक राहत सामग्री पठाइयो र सबै मन्त्रीले एक महिनाको तलब दिने घोषणा"},
   {src:"RESCUE", en:"900 hydropower workers missing across 12 projects and around 500 still believed inside the tunnels — 576 missing at Upper Trishuli-1 alone, about 300 of them underground",
    ne:"जलविद्युत् सुरुङभित्र अझै करिब ५०० जना रहेको अनुमान — माथिल्लो त्रिशूली-१ र चिलिमेमा नेपाली सेना तथा अन्तर्राष्ट्रिय विशेषज्ञ टोलीबाट हिलो हटाउने कार्य जारी"},
   {src:"TRAFFIC", en:"Prithvi Highway still cut at Krishnabhir (Dhading) — Mugling–Kathmandu section diversion and restoration ongoing",
@@ -757,6 +759,7 @@ document.addEventListener("error", e=>{
     case "hl": if(img.parentNode) img.parentNode.innerHTML=window.__hlfallback(img); break;
     case "avatar": { img.style.display="none"; const ph=(img.parentNode&&img.parentNode.querySelector(".person__ph, .dev-avatar-ph"))||document.getElementById("devAvatarPh"); if(ph){ ph.hidden=false; ph.style.display="grid"; } break; }
     case "qr": { img.style.display="none"; const fb=document.getElementById("qrFallback"); if(fb) fb.style.display="block"; break; }
+    case "npopthumb": { const box=img.closest(".npop__thumb"); if(box) box.remove(); break; }
   }
 }, true);
 const THUMB_PH='<div class="ph"><svg viewBox="0 0 48 48"><path d="M4 34c4-6 8-6 12 0s8 6 12 0 8-6 12 0"/><path d="M4 24c4-6 8-6 12 0s8 6 12 0 8-6 12 0" opacity=".5"/><path d="M10 14 24 6l14 8"/></svg></div>';
@@ -1254,6 +1257,7 @@ Object.assign(I18N.en,{
   "news.read":"Read full bulletin","news.live":"LIVE",
   "npop.eye":"Latest update","npop.badge":"JUST IN","npop.read":"Read the full story ↗","npop.all":"All bulletins",
   "npop.dismiss":"Dismiss","npop.auto":"Newest headline · checked every 10 minutes","npop.more":"more new headlines",
+  "npop.brief.read":"Read the full briefing ↗",
   "theme.light":"Theme: light","theme.dark":"Theme: dark","theme.system":"Theme: follows your device",
   "notif.h":"Alerts","notif.eye":"Signal Feed","notif.clear":"Clear all","notif.empty":"No active alerts.","notif.count":"active","notif.enable":"Notify me",
   "fpop.eye":"Risky Flood Alert","fpop.red":"RED · SEVERE","fpop.orange":"ORANGE · RISKY","fpop.title":"Flood alert — Nepal",
@@ -1374,6 +1378,7 @@ Object.assign(I18N.ne,{
   "news.read":"पूरा बुलेटिन पढ्नुहोस्","news.live":"प्रत्यक्ष",
   "npop.eye":"पछिल्लो अद्यावधिक","npop.badge":"भर्खरै","npop.read":"पूरा समाचार पढ्नुहोस् ↗","npop.all":"सबै समाचार",
   "npop.dismiss":"बन्द गर्नुहोस्","npop.auto":"नवीनतम शीर्षक · हरेक १० मिनेटमा जाँच","npop.more":"थप नयाँ शीर्षक",
+  "npop.brief.read":"पूरा सम्बोधन पढ्नुहोस् ↗",
   "theme.light":"थिम: उज्यालो","theme.dark":"थिम: अँध्यारो","theme.system":"थिम: यन्त्रअनुसार",
   "notif.h":"अलर्टहरू","notif.eye":"सिग्नल फिड","notif.clear":"सबै हटाउनुहोस्","notif.empty":"कुनै सक्रिय अलर्ट छैन।","notif.count":"सक्रिय","notif.enable":"सूचना पाउनुहोस्",
   "fpop.eye":"जोखिमपूर्ण बाढी अलर्ट","fpop.red":"रातो · गम्भीर","fpop.orange":"सुन्तला · जोखिमपूर्ण","fpop.title":"बाढी अलर्ट — नेपाल",
@@ -1407,9 +1412,13 @@ const GLOF={
        ne:"तिब्बततर्फबाट हिमताल विस्फोट बाढी (GLOF) को आशंका। रसुवा, नुवाकोट, धादिङ, गोरखा र चितवनका बासिन्दालाई सतर्क रही अग्लो सुरक्षित स्थानमा जान NDRRMA को आग्रह।"}
 };
 const NOTIFS=[
-  {id:"toll-2026-0902", sev:"danger", tag:{en:"Toll update",ne:"मृत्यु अद्यावधिक"}, time:"2 Sept", src:"NDRRMA",
-   msg:{en:"NDRRMA, 2 Sept: 1,114 confirmed dead, 3,916 missing, 1,473 injured and 11,814 rescued on the Nepal side. 21,000+ security personnel deployed; 4,248 rescued people are now named in the public registry.",
-        ne:"NDRRMA, २ सेप्टेम्बर: नेपालतर्फ १,११४ मृत्यु पुष्टि, ३,९१६ बेपत्ता, १,४७३ घाइते र ११,८१४ उद्धार। २१,०००+ सुरक्षाकर्मी परिचालित; सार्वजनिक नामावलीमा ४,२४८ उद्धारितको नाम दर्ता।"}},
+  {id:"brief-2026-0902-pm-parliament", sev:"watch", tag:{en:"PM briefing",ne:"प्रधानमन्त्रीको सम्बोधन"}, time:"2 Sept", src:"Office of the PM · ANI / Kathmandu Post",
+   url:"https://www.aninews.in/news/world/asia/have-to-fight-with-courage-and-determination-nepal-pm-balen-shah-details-govt-response-to-flood-crisis20260902140138/",
+   msg:{en:"PM Balen Shah briefed Parliament on the flood response: 11,993 rescued and 3,916 still missing. Rs 1 crore each released to Rasuwa and Nuwakot, 10 truckloads of relief material sent, and all ministers pledged one month's salary. 'We have no alternative but to fight with determination and courage.'",
+        ne:"प्रधानमन्त्री बालेन्द्र शाहले संसदमा बाढी प्रतिकार्यबारे सम्बोधन गरे: ११,९९३ जनाको उद्धार, ३,९१६ अझै बेपत्ता। रसुवा र नुवाकोट प्रत्येकलाई रु. १ करोड निकासा, १० ट्रक राहत सामग्री पठाइयो र सबै मन्त्रीले एक महिनाको तलब दिने घोषणा। 'दृढता र साहसका साथ लड्नुबाहेक विकल्प छैन।'"}},
+  {id:"toll-2026-0902b", sev:"danger", tag:{en:"Toll update",ne:"मृत्यु अद्यावधिक"}, time:"2 Sept", src:"Nepal Police / NDRRMA",
+   msg:{en:"Nepal Police put the death toll at 1,127 on Wednesday. 3,916 remain missing and 1,473 are injured; 21,000+ security personnel are deployed and 4,248 rescued people are named in the public registry. India is assisting with DNA testing and body management.",
+        ne:"नेपाल प्रहरीका अनुसार बुधबार मृत्यु संख्या १,१२७ पुग्यो। ३,९१६ बेपत्ता र १,४७३ घाइते; २१,०००+ सुरक्षाकर्मी परिचालित र सार्वजनिक नामावलीमा ४,२४८ उद्धारितको नाम दर्ता। शव व्यवस्थापन र डीएनए परीक्षणमा भारतको सहयोग जारी।"}},
   {id:"warn-2026-0901-ktm", sev:"watch", tag:{en:"KTM Valley advisory",ne:"काठमाडौं उपत्यका सतर्कता"}, time:"1 Sept", src:"NDRRMA / DHM", url:"https://www.dhm.gov.np",
    msg:{en:"Kathmandu Valley on moderate flood advisory — rising water levels monitored along Bagmati, Bishnumati, Hanumante and Dhobi Khola rivers. Heavy rainfall forecast through 1–2 Sept.",
         ne:"काठमाडौं उपत्यकामा मध्यम बाढी सतर्कता — बागमती, बिष्णुमती, हनुमन्ते र ढोबी खोलाको जलसतह निगरानीमा। १–२ सेप्टेम्बरसम्म भारी वर्षाको पूर्वानुमान।"}},
@@ -1592,13 +1601,73 @@ const NEWSPOP_SEEN=(()=>{try{return new Set(JSON.parse(localStorage.getItem("nd_
 function _saveNewsPopSeen(){ try{localStorage.setItem("nd_newspop_seen",JSON.stringify([...NEWSPOP_SEEN].slice(-120)));}catch(e){} }
 let _newsPopTimer=null, _newsPopOpenFor=null;
 
+/* =========================================================================
+   PINNED BRIEFING — a single item that jumps the news-popup queue.
+
+   When the Prime Minister briefs Parliament on the disaster, that outranks
+   whatever happens to be newest on the wire, so it is pinned rather than left
+   to compete on timestamp. It still uses the same corner card as every other
+   headline: no backdrop, page stays usable, one per session, dismissible.
+
+   `until` is the point after which it stops being news and falls back to the
+   normal newest-first behaviour. Set it, or the card outlives the story.
+
+   `hl` is the phrase highlighted inside the title. It is matched against the
+   escaped title at render time — see _npopTitle — so the highlight never
+   becomes an injection route.
+   ========================================================================= */
+const PINNED_NEWS={
+  id:"brief-2026-0902-pm-parliament",
+  until:"2026-09-05T23:59:00+05:45",
+  url:"https://www.aninews.in/news/world/asia/have-to-fight-with-courage-and-determination-nepal-pm-balen-shah-details-govt-response-to-flood-crisis20260902140138/",
+  img:"https://d3lzcn6mbbadaf.cloudfront.net/media/details/__sized__/ANI-20260902083127-thumbnail-320x180-70.jpg",
+  imgAlt:{en:"Nepal Prime Minister Balen Shah addressing Parliament",ne:"प्रधानमन्त्री बालेन्द्र शाह संसदमा सम्बोधन गर्दै"},
+  source:"ANI · Kathmandu Post",
+  time:{en:"2 Sept 2026",ne:"१६ भदौ २०८३"},
+  badge:{en:"PM BRIEFING",ne:"प्रधानमन्त्रीको सम्बोधन"},
+  title:{en:"PM Balen Shah briefs Parliament on the flood response",
+         ne:"प्रधानमन्त्री बालेन्द्र शाहको संसदमा बाढीबारे सम्बोधन"},
+  hl:{en:"briefs Parliament",ne:"संसदमा"},
+  body:{en:"“We have no alternative but to fight with determination and courage.” The Prime Minister set out the government's response and gave updated figures.",
+        ne:"“दृढता र साहसका साथ लड्नुबाहेक हामीसँग विकल्प छैन।” प्रधानमन्त्रीले सरकारको प्रतिकार्य र अद्यावधिक तथ्यांक सार्वजनिक गरे।"},
+  figs:[
+    {n:"11,993", l:{en:"rescued",ne:"उद्धार"}},
+    {n:"3,916",  l:{en:"still missing",ne:"बेपत्ता"}},
+    {n:"1,127",  l:{en:"dead",ne:"मृत्यु"}}
+  ]
+};
+function _pinnedLive(){
+  if(typeof PINNED_NEWS==="undefined" || !PINNED_NEWS.id) return null;
+  const until=Date.parse(PINNED_NEWS.until||"");
+  if(!isNaN(until) && Date.now()>until) return null;
+  if(NEWSPOP_SEEN.has(PINNED_NEWS.id)) return null;
+  return PINNED_NEWS;
+}
+
+/* Escape first, then wrap the highlighted phrase — so the mark-up is ours and
+   the title text can never carry any of its own. */
+function _npopTitle(title, needle){
+  const safe=esc(title);
+  if(!needle) return safe;
+  const n=esc(needle);
+  const i=safe.indexOf(n);
+  if(i<0) return safe;
+  return safe.slice(0,i)+'<mark class="npop__mark">'+n+"</mark>"+safe.slice(i+n.length);
+}
+
 /* A stable id for a headline: live items key on their URL, built-in bulletins
    on their English title. */
 function _newsId(n){ return n && (n.url || (n.title && (n.title.en||n.title)) || ""); }
 
-/* The newest item the reader has not been shown yet. Live wire headlines take
-   priority; the built-in bulletins are the fallback when the feed is down. */
+/* The newest item the reader has not been shown yet. A pinned briefing jumps
+   the queue while it is current; then live wire headlines; then the built-in
+   bulletins as the fallback when the feed is down. */
 function _freshestNews(){
+  const pin=_pinnedLive();
+  if(pin){
+    const others=(LIVE_NEWS||[]).filter(n=>_newsId(n) && !NEWSPOP_SEEN.has(_newsId(n)));
+    return { item:pin, extra:others.length, pinned:true };
+  }
   if(LIVE_NEWS && LIVE_NEWS.length){
     const unseen=LIVE_NEWS.filter(n=>_newsId(n) && !NEWSPOP_SEEN.has(_newsId(n)));
     if(!unseen.length) return null;
@@ -1638,33 +1707,53 @@ function maybeNewsPopup(){
 }
 
 function openNewsPopup(pick){
-  const n=pick.item, id=_newsId(n);
+  const n=pick.item;
+  const id = pick.pinned ? n.id : _newsId(n);
   if(!id) return;
   _newsPopOpenFor=id;
   NEWSPOP_SEEN.add(id); _saveNewsPopSeen();
 
-  const title = pick.live ? (n.title||"") : TL(n.title);
-  const body  = pick.live ? "" : TL(n.body);
-  const src   = pick.live ? (n.source||"") : (n.src||"");
-  const when  = pick.live ? newsDate(n) : (n.time||"");
-  const href  = pick.live ? n.url : ("news.html?id="+pick.index);
-  const ext   = pick.live;
+  const title = pick.pinned ? TL(n.title) : (pick.live ? (n.title||"") : TL(n.title));
+  const body  = pick.pinned ? TL(n.body)  : (pick.live ? "" : TL(n.body));
+  const src   = pick.pinned ? (n.source||"") : (pick.live ? (n.source||"") : (n.src||""));
+  const when  = pick.pinned ? TL(n.time) : (pick.live ? newsDate(n) : (n.time||""));
+  const href  = pick.pinned ? n.url : (pick.live ? n.url : ("news.html?id="+pick.index));
+  const ext   = pick.pinned || pick.live;
+  const badge = pick.pinned ? TL(n.badge) : t("npop.badge");
+  const titleHTML = pick.pinned ? _npopTitle(title, TL(n.hl)) : esc(title);
+  // The thumbnail is hotlinked from the publisher. If it 404s or the CDN blocks
+  // the referrer, the frame is dropped rather than left broken — the card still
+  // reads fine without it. The removal is handled by the delegated "error"
+  // listener above via data-fallback, NOT an inline onerror: this site runs
+  // under a CSP with no 'unsafe-inline', so an inline handler would never fire.
+  // Deliberately NOT loading="lazy": the card is inserted already faded out and
+  // mid-transform, and the lazy heuristic can defer an image in that state past
+  // the card's own auto-dismiss — so the one picture we chose to show never
+  // arrives.
+  const thumb = (pick.pinned && n.img)
+    ? `<div class="npop__thumb"><img src="${esc(n.img)}" alt="${esc(TL(n.imgAlt)||"")}" decoding="async" referrerpolicy="no-referrer" data-fallback="npopthumb"></div>`
+    : "";
+  const figs = (pick.pinned && n.figs && n.figs.length)
+    ? `<div class="npop__figs">${n.figs.map(f=>`<span class="npop__fig"><b class="mono">${esc(toNepDigits(f.n))}</b><i>${esc(TL(f.l))}</i></span>`).join("")}</div>`
+    : "";
 
   const el=document.createElement("aside");
-  el.id="newsPop"; el.className="npop"; el.setAttribute("role","status"); el.setAttribute("aria-live","polite");
+  el.id="newsPop"; el.className="npop"+(pick.pinned?" npop--brief":""); el.setAttribute("role","status"); el.setAttribute("aria-live","polite");
   el.innerHTML=`
     <div class="npop__card">
       <button class="npop__x" id="npopX" aria-label="${esc(t("npop.dismiss"))}">${XICON}</button>
+      ${thumb}
       <div class="npop__top">
-        <span class="npop__badge">${esc(t("npop.badge"))}</span>
+        <span class="npop__badge">${esc(badge)}</span>
         <span class="npop__eye">${esc(t("npop.eye"))}</span>
         ${when?`<span class="npop__time mono">${esc(when)}</span>`:""}
       </div>
-      <h3 class="npop__h">${esc(title)}</h3>
+      <h3 class="npop__h">${titleHTML}</h3>
       ${body?`<p class="npop__body">${esc(body)}</p>`:""}
+      ${figs}
       ${src?`<div class="npop__src">SRC · ${esc(src)}</div>`:""}
       <div class="npop__actions">
-        <a class="btn btn--primary btn--sm" href="${esc(href)}"${ext?' target="_blank" rel="noopener"':''}>${esc(t("npop.read"))}</a>
+        <a class="btn btn--primary btn--sm" href="${esc(href)}"${ext?' target="_blank" rel="noopener"':''}>${esc(pick.pinned?t("npop.brief.read"):t("npop.read"))}</a>
         <a class="btn btn--ghost btn--sm" href="news.html">${esc(t("npop.all"))}</a>
       </div>
       ${pick.extra>0?`<div class="npop__foot">+${pick.extra} ${esc(t("npop.more"))} · ${esc(t("npop.auto"))}</div>`
@@ -1676,9 +1765,10 @@ function openNewsPopup(pick){
   const x=el.querySelector("#npopX");
   if(x) x.addEventListener("click", ()=>{ try{sessionStorage.setItem("nd_npop_dismissed","1");}catch(_){} closeNewsPopup(); });
   el.addEventListener("keydown", e=>{ if(e.key==="Escape"){ try{sessionStorage.setItem("nd_npop_dismissed","1");}catch(_){} closeNewsPopup(); } });
-  // Polite duration: 7s auto-dismiss
+  // Polite duration. The briefing card carries a picture, a pull-quote and
+  // three figures, so it gets longer than a bare headline does.
   clearTimeout(_newsPopTimer);
-  _newsPopTimer=setTimeout(closeNewsPopup, 7000);
+  _newsPopTimer=setTimeout(closeNewsPopup, pick.pinned?14000:7000);
   // Don't yank it away mid-read
   el.addEventListener("mouseenter", ()=>clearTimeout(_newsPopTimer));
   el.addEventListener("mouseleave", ()=>{ clearTimeout(_newsPopTimer); _newsPopTimer=setTimeout(closeNewsPopup, 4000); });
@@ -2302,19 +2392,19 @@ Object.assign(I18N.ne,{
    official numbers are not yet itemised (never fabricated). NDRRMA / Nepal Police,
    compiled 27–28 Aug 2026. */
 const STATS_DETAIL=[
- {id:"deaths", sev:"danger", big:"1,114", title:{en:"Confirmed Deaths",ne:"पुष्टि मृत्यु"}, unit:{en:"Nepal side · auto-updated from live sources",ne:"नेपालतर्फ · प्रत्यक्ष स्रोतबाट स्वतः अद्यावधिक"}, src:"NDRRMA / Nepal Police",
+ {id:"deaths", sev:"danger", big:"1,127", title:{en:"Confirmed Deaths",ne:"पुष्टि मृत्यु"}, unit:{en:"Nepal side · auto-updated from live sources",ne:"नेपालतर्फ · प्रत्यक्ष स्रोतबाट स्वतः अद्यावधिक"}, src:"Nepal Police / NDRRMA",
   // Row 0 is the national total and is rewritten live. The district rows below
   // it are the last breakdown NDRRMA published by district and lag the national
   // figure — they are labelled as such rather than scaled to make them add up.
-  rows:[["Nepal — confirmed dead (NDRRMA)","1,114"],["Bodies recovered so far (approx.)","900"],["— of these, formally identified","4%"],["By district — last published breakdown",""],["Chitwan","340"],["Nawalparasi East","228"],["Nawalparasi West","178"],["Nuwakot","102"],["Gorkha","68"],["Dhading","58"],["Tanahun","36"]],
+  rows:[["Nepal — confirmed dead (Nepal Police, 2 Sept)","1,127"],["Bodies recovered so far (approx.)","900"],["— of these, formally identified","4%"],["By district — last published breakdown",""],["Chitwan","340"],["Nawalparasi East","228"],["Nawalparasi West","178"],["Nuwakot","102"],["Gorkha","68"],["Dhading","58"],["Tanahun","36"]],
   note:{en:"NDRRMA confirms {n} deaths on the Nepal side. Around 900 bodies have been recovered so far and the Ministry of Health reports that just 4% have been formally identified — DNA testing and facial photographs are being used as morgues run past capacity. Chitwan, roughly 160 km downstream, has recovered the most. The district breakdown below is the last one published by district and lags the national total, which auto-updates every 10 minutes from official sources.",ne:"NDRRMA का अनुसार नेपालतर्फ {n} मृत्यु पुष्टि। अहिलेसम्म करिब ९०० शव फेला परेका छन्, तर स्वास्थ्य मन्त्रालयका अनुसार ४ प्रतिशतको मात्र औपचारिक पहिचान भएको छ — शवगृह क्षमताभन्दा बढी भरिएपछि डीएनए परीक्षण र तस्बिरबाट पहिचान गरिँदै छ। करिब १६० कि.मि. तल रहेको चितवनमा सबैभन्दा धेरै शव भेटिएका छन्। तलको जिल्लागत विवरण अन्तिम पटक प्रकाशित तथ्यांक हो र राष्ट्रिय संख्याभन्दा पछाडि छ; राष्ट्रिय संख्या हरेक १० मिनेटमा स्वतः अद्यावधिक हुन्छ।"}},
  {id:"missing", sev:"danger", big:"3,916", title:{en:"Missing and Out of Contact",ne:"बेपत्ता तथा सम्पर्कविहीन"}, unit:{en:"Nepal side only · active NDRRMA registry",ne:"नेपालतर्फ मात्र · NDRRMA सक्रिय अभिलेख"}, src:"NDRRMA / Nepal Police",
   rows:[["Nepal — missing / out of contact","3,916"],["Linked to hydropower projects (12 projects)","900"],["Foreign nationals among the missing (38 countries)","583"],["Trade and transport workers (est.)","300"],["Nepalis accompanying foreign tourists","127"],["Nepali Army personnel","44"],["Nepal Police personnel","28"],["Customs office employees","15"],["Armed Police Force personnel","13"],["Immigration office employees","4"]],
   note:{en:"NDRRMA reports {n} people missing or out of contact on the Nepal side. The list includes 900 workers from 12 hydropower projects (around 500 of them believed trapped in flooded tunnels), 583 foreign nationals from 38 countries, an estimated 300 trade and transport workers who used the Gyirong crossing, and 85 security personnel on duty. Tibet's separately-counted missing (546) are not included. Figures are revised as people are located or verified.",ne:"NDRRMA का अनुसार नेपालतर्फ {n} जना बेपत्ता वा सम्पर्कविहीन। यसमा १२ जलविद्युत् आयोजनाका ९०० कामदार (करिब ५०० सुरुङभित्र फसेको अनुमान), ३८ देशका ५८३ विदेशी नागरिक, ग्यीरोङ नाका प्रयोग गर्ने करिब ३०० व्यापार तथा यातायात कामदार र ८५ सुरक्षाकर्मी समावेश छन्। तिब्बततर्फ छुट्टै रहेका ५४६ बेपत्ता यसमा समावेश छैनन्। व्यक्तिहरू फेला पर्दै जाँदा यो संख्या परिमार्जन हुन्छ।"}},
- {id:"rescued", sev:"relief", big:"11,814", title:{en:"Rescued",ne:"उद्धार"}, unit:{en:"NDRRMA bulletin · rising daily",ne:"NDRRMA विज्ञप्ति · दैनिक बढ्दो"}, src:"NDRRMA / Nepali Army",
+ {id:"rescued", sev:"relief", big:"11,993", title:{en:"Rescued",ne:"उद्धार"}, unit:{en:"PM's statement to Parliament, 2 Sept · rising daily",ne:"प्रधानमन्त्रीको संसद सम्बोधन, २ सेप्टेम्बर · दैनिक बढ्दो"}, src:"Office of the PM / NDRRMA / Nepali Army",
   // NOTE: rows 0–3 are written BY INDEX from _setRescueRegistry() —
   // [0]=grand total, [1]=named registry, [2]=Nepali, [3]=foreign.
-  rows:[["Total rescued (NDRRMA bulletin)","11,814"],["Named in the public registry","4,248"],["— of these, Nepali","3,918"],["— of these, foreign","330"],["Airlifted by the Nepali Army — Nepali","3,344"],["Airlifted by the Nepali Army — foreign nationals","252"],["Rescue and relief flights flown","411"],["Logged in the NDRRMA rescue system","7,514"]],
+  rows:[["Total rescued (PM to Parliament, 2 Sept)","11,993"],["Named in the public registry","4,248"],["— of these, Nepali","3,918"],["— of these, foreign","330"],["Airlifted by the Nepali Army — Nepali","3,344"],["Airlifted by the Nepali Army — foreign nationals","252"],["Rescue and relief flights flown","411"],["Logged in the NDRRMA rescue system","7,514"]],
   note:{en:"NDRRMA's bulletin puts the cumulative total rescued at {n}. Three different official numbers describe this and they are not interchangeable: the bulletin total above, the named public registry used for family tracing (live from NDRRMA's API), and NDRRMA's internal rescue-management log, which trails both. All three are listed separately rather than merged into one figure. The Nepali Army has airlifted 3,344 Nepalis and 252 foreign nationals across 411 rescue and relief flights.",ne:"NDRRMA को विज्ञप्तिअनुसार कुल उद्धार संख्या {n} पुगेको छ। यसका तीन फरक आधिकारिक संख्या छन् र ती एउटै होइनन्: माथिको विज्ञप्ति संख्या, परिवार खोजीका लागि प्रयोग हुने नामावली अभिलेख (NDRRMA को API बाट प्रत्यक्ष), र दुवैभन्दा पछाडि रहेको NDRRMA को आन्तरिक उद्धार अभिलेख। तीनवटै छुट्टाछुट्टै देखाइएका छन्। नेपाली सेनाले ४११ उडानमार्फत ३,३४४ नेपाली र २५२ विदेशी नागरिकको हवाई उद्धार गरेको छ।"}},
  {id:"injured", sev:"watch", big:"1,473", title:{en:"Injured & Medical Care",ne:"घाइते तथा स्वास्थ्य उपचार"}, unit:{en:"Nepal side · NDRRMA injured count",ne:"नेपालतर्फ · NDRRMA घाइते संख्या"}, src:"NDRRMA / MOHP",
   // Row 0 is the national injured total and is rewritten live. The rows under it
@@ -2335,7 +2425,7 @@ const STATS_DETAIL=[
   rows:[["Preliminary damage estimate (Rs billion)","200"],["Roads and bridges (Rs billion)","15"],["Bridges damaged","41"],["Road damaged (km)","42"],["Hydropower projects damaged (NEA)","13"],["Generation knocked off the grid (MW)","431"],["Under-construction capacity damaged (MW)","470"],["Schools damaged or destroyed","38"],["People affected (IFRC estimate)","93,000"],["Need emergency water & sanitation (UN)","65,000"],["Pregnant & breastfeeding women needing nutrition aid (UN)","10,500"],["Children under 5 needing treatment for severe wasting (UN)","2,600"]],
   note:{en:"Total damage is preliminarily estimated at Rs 200 billion (approx. USD 4–5 billion). Road and bridge infrastructure losses stand at Rs 15 billion with 41 bridges destroyed or severely damaged, and 431 MW of generation knocked off the national grid; the Nepal Electricity Authority counts 13 hydropower projects damaged. The IFRC estimates 93,000 people affected, and the UN puts 65,000 in need of emergency water, sanitation and hygiene supplies.",ne:"प्रारम्भिक कुल क्षति करिब रु. २०० अर्ब (४–५ अर्ब अमेरिकी डलर) अनुमान गरिएको छ। सडक तथा पुल पूर्वाधारमा रु. १५ अर्बको क्षति भएको छ, जसमा ४१ पुल र ४२ कि.मि. सडक क्षतिग्रस्त छन् भने ४३१ मेगावाट उत्पादन राष्ट्रिय ग्रिडबाट विच्छेद भएको छ; नेपाल विद्युत् प्राधिकरणका अनुसार १३ जलविद्युत् आयोजना क्षतिग्रस्त छन्। IFRC का अनुसार ९३,००० जना प्रभावित छन् भने संयुक्त राष्ट्रसंघका अनुसार ६५,००० जनालाई आकस्मिक खानेपानी तथा सरसफाइ सामग्री आवश्यक छ।"}},
  {id:"materials", sev:"relief", big:"", title:{en:"Relief Materials & International Aid",ne:"राहत सामग्री र अन्तर्राष्ट्रिय सहायता"}, src:"AP / BBC / Reuters / IFRC",
-  rows:[["PM Disaster Relief Fund (Rs billion)","5.44"],["Released to 15 local units (Rs million)","675"],["China — emergency supplies","50 tonnes / 13,200 items"],["India — supplies","~50 tonnes"],["IFRC emergency appeal","CHF 25 million"],["Asian Development Bank","USD 5 million"],["European Union","EUR 2 million"],["Welthungerhilfe","EUR 2 million"],["UN CERF","USD 2 million"],["South Korea","USD 1 million"],["Red Cross / IFRC DREF","CHF 1 million"],["World Health Organization","USD 150,000"]],
+  rows:[["PM Disaster Relief Fund (Rs billion)","5.44"],["Released to 15 local units (Rs million)","675"],["Released to Rasuwa (Rs crore)","1"],["Released to Nuwakot (Rs crore)","1"],["Truckloads of relief material despatched","10"],["Ministers' salary pledge","One month, all ministers"],["India — DNA testing & body management","Lab support provided"],["China — emergency supplies","50 tonnes / 13,200 items"],["India — supplies","~50 tonnes"],["IFRC emergency appeal","CHF 25 million"],["Asian Development Bank","USD 5 million"],["European Union","EUR 2 million"],["Welthungerhilfe","EUR 2 million"],["UN CERF","USD 2 million"],["South Korea","USD 1 million"],["Red Cross / IFRC DREF","CHF 1 million"],["World Health Organization","USD 150,000"]],
   note:{en:"International assistance packages continue arriving, including 50 tonnes of emergency shelter and medical supplies from China and India, alongside UN CERF and multilateral funding allocations.",ne:"चीन र भारतबाट ५०–५० टन आपत्कालीन राहत तथा औषधीय सामग्री, राष्ट्रसंघीय CERF कोष तथा बहुपक्षीय सहायता परिचालन जारी छ।"}},
  {id:"heli", sev:"relief", big:"", title:{en:"Helicopter and Ground Operations",ne:"हेलिकप्टर र स्थलगत उद्धार"}, unit:{en:"Timure · Dhunche · Mailung · Syafrubesi · Trishuli",ne:"तिमुरे · धुन्चे · माइलुङ · स्याफ्रुबेसी · त्रिशूली"}, src:"Nepal Army / NDRRMA",
   note:{en:"Nepali Army helicopters and joint security squads have flown over 411 rescue sorties, evacuating cut-off residents, transporting critical medical patients, and deploying bailey bridge materials.",ne:"नेपाली सेनाका हेलिकप्टर र संयुक्त टोलीहरूले ४११ भन्दा बढी उडान गरी प्रभावित क्षेत्रबाट नागरिक उद्धार तथा राहत सामग्री ढुवानी गरेका छन्।"}}

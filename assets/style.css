@@ -3805,3 +3805,50 @@ html[lang="ne"] .hhc__btn{ font-family: var(--f-np); }
    alert dialog (z-index 210) and the notifications drawer. Pinning the
    container to z-index 0 contains them without touching Leaflet's own layering. */
 #map, .leaflet-container{ position: relative; z-index: 0; }
+
+/* ---------- 9. pinned briefing card ------------------------------------- */
+/* Same corner card as any headline, given a picture, a highlighted phrase and
+   the three figures the briefing moved. Slightly wider, because a 384px card
+   with a 16:9 image above three stat columns starts to feel cramped. */
+.npop--brief{ width: min(430px, calc(100vw - 24px)); }
+.npop--brief .npop__card{ padding-top: 0; }
+.npop__thumb{
+  margin: 0 -20px 14px; position: relative; background: var(--paper-3);
+  aspect-ratio: 16 / 9; overflow: hidden;
+}
+.npop__thumb img{ width: 100%; height: 100%; object-fit: cover; display: block; }
+/* A soft floor under the image so the badge row never sits on a bright edge. */
+.npop__thumb::after{
+  content: ""; position: absolute; inset: auto 0 0 0; height: 46%;
+  background: linear-gradient(180deg, transparent, rgba(0,0,0,.34));
+  pointer-events: none;
+}
+.npop--brief .npop__top{ margin-bottom: 9px; }
+.npop--brief .npop__x{
+  background: rgba(12,16,22,.55); color: #fff; backdrop-filter: blur(4px);
+}
+.npop--brief .npop__x:hover{ background: rgba(12,16,22,.78); color: #fff; }
+.npop__mark{
+  background: none; color: var(--accent); font-weight: 800;
+  box-shadow: inset 0 -.32em 0 var(--accent-wash);
+  border-radius: 2px; padding: 0 1px;
+}
+.npop__figs{
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+  border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+  padding: 11px 0; margin: 0 0 12px;
+}
+.npop__fig{ display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.npop__fig b{ font-size: 1.06rem; font-weight: 700; line-height: 1; letter-spacing: -.02em; }
+.npop__fig i{
+  font-style: normal; font-family: var(--f-cond); text-transform: uppercase;
+  letter-spacing: .08em; font-size: .58rem; font-weight: 700; color: var(--muted);
+}
+html[lang="ne"] .npop__fig i{ text-transform: none; letter-spacing: 0; font-family: var(--f-np); font-size: .68rem; }
+.npop__fig:nth-child(1) b{ color: var(--relief); }
+.npop__fig:nth-child(2) b{ color: var(--watch); }
+.npop__fig:nth-child(3) b{ color: var(--danger); }
+@media (max-width: 520px){
+  .npop--brief{ width: auto; }
+  .npop__thumb{ margin: 0 -17px 12px; }
+}

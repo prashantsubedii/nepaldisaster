@@ -1,30 +1,33 @@
 {
   "_comment": "Curated official baseline (rank 2). Rows written directly by a rank-1 API — the NDRRMA named rescue registry and its Nepali/foreign split, the rescue-system log, the comms-tower status — are deliberately NOT listed here. They used to be, and because this feed carries no source rank it silently overwrote the live API values on every refresh cycle. See _API_OWNED_ROWS in assets/app.js.",
-  "updated_at": "2026-09-02T12:30:00+05:45",
+  "updated_at": "2026-09-02T14:30:00+05:45",
   "event": {
     "code": "FL-2026-0826",
     "since": "2026-08-26T08:37:00+05:45",
-    "title": { "en": "2026 Nepal Floods", "ne": "२०२६ नेपाल बाढी" },
+    "title": {
+      "en": "2026 Nepal Floods",
+      "ne": "२०२६ नेपाल बाढी"
+    },
     "region": {
       "en": "Rasuwa · Nuwakot · Dhading · Trishuli corridor · Chitwan · Nawalparasi",
       "ne": "रसुवा · नुवाकोट · धादिङ · त्रिशूली कोरिडोर · चितवन · नवलपरासी"
     },
     "eas": {
-      "en": "Trishuli / Bhote Koshi glacier-collapse flood. NDRRMA confirm 1,114 dead, 3,916 missing and 1,473 injured; 11,814 rescued (2 Sept). 900 hydropower workers missing across 12 projects, around 500 believed trapped inside tunnels. Prithvi Highway still cut at Krishnabhir.",
-      "ne": "त्रिशूली / भोटेकोशी हिमनदी भत्किएर आएको बाढी। NDRRMA ले १,११४ मृत्यु, ३,९१६ बेपत्ता र १,४७३ घाइते पुष्टि गरेको; ११,८१४ उद्धार (२ सेप्टेम्बर)। १२ आयोजनाका ९०० जलविद्युत् कामदार बेपत्ता, करिब ५०० सुरुङभित्रै फसेको अनुमान। कृष्णभीरमा पृथ्वी राजमार्ग अझै अवरुद्ध।"
+      "en": "Trishuli / Bhote Koshi glacier-collapse flood. PM Balen Shah told Parliament on 2 Sept that 11,993 have been rescued and 3,916 remain missing; Nepal Police put the toll at 1,127 dead, with 1,473 injured. 900 hydropower workers missing across 12 projects, around 500 believed trapped inside tunnels. Prithvi Highway still cut at Krishnabhir.",
+      "ne": "त्रिशूली / भोटेकोशी हिमनदी भत्किएर आएको बाढी। प्रधानमन्त्री बालेन्द्र शाहले २ सेप्टेम्बरमा संसदमा ११,९९३ जनाको उद्धार भएको र ३,९१६ बेपत्ता रहेको जानकारी दिए; नेपाल प्रहरीका अनुसार मृत्यु संख्या १,१२७ र घाइते १,४७३। १२ आयोजनाका ९०० जलविद्युत् कामदार बेपत्ता, करिब ५०० सुरुङभित्रै फसेको अनुमान। कृष्णभीरमा पृथ्वी राजमार्ग अझै अवरुद्ध।"
     }
   },
   "stats": [
-    { "key": "deaths",  "n": "1,114", "cls": "hstat--death" },
+    { "key": "deaths", "n": "1,127", "cls": "hstat--death" },
     { "key": "missing", "n": "3,916", "cls": "hstat--missing" },
     { "key": "foreign", "n": "583" },
-    { "key": "rescued", "n": "11,814", "cls": "hstat--rescue" }
+    { "key": "rescued", "n": "11,993", "cls": "hstat--rescue" }
   ],
   "stats_detail": {
     "deaths": {
-      "big": "1,114",
+      "big": "1,127",
       "rows": [
-        ["Nepal — confirmed dead (NDRRMA)", "1,114"],
+        ["Nepal — confirmed dead (Nepal Police, 2 Sept)", "1,127"],
         ["Bodies recovered so far (approx.)", "900"],
         ["— of these, formally identified", "4%"],
         ["Chitwan", "340"],
@@ -52,9 +55,9 @@
       ]
     },
     "rescued": {
-      "big": "11,814",
+      "big": "11,993",
       "rows": [
-        ["Total rescued (NDRRMA bulletin)", "11,814"],
+        ["Total rescued (PM to Parliament, 2 Sept)", "11,993"],
         ["Airlifted by the Nepali Army — Nepali", "3,344"],
         ["Airlifted by the Nepali Army — foreign nationals", "252"],
         ["Rescue and relief flights flown", "411"]
@@ -84,9 +87,16 @@
     "foreign": {
       "big": "583",
       "rows": [
-        ["India", "288"], ["China (approx.)", "100"], ["United States", "80"],
-        ["Ukraine", "53"], ["Malaysia", "51"], ["Australia", "35"],
-        ["United Kingdom", "33"], ["Latvia", "33"], ["Canada", "32"], ["South Korea", "9"]
+        ["India", "288"],
+        ["China (approx.)", "100"],
+        ["United States", "80"],
+        ["Ukraine", "53"],
+        ["Malaysia", "51"],
+        ["Australia", "35"],
+        ["United Kingdom", "33"],
+        ["Latvia", "33"],
+        ["Canada", "32"],
+        ["South Korea", "9"]
       ]
     },
     "tunnel": {
