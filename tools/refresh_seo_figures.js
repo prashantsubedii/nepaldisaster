@@ -22,8 +22,15 @@
    one hop (last published → current), so leaving old rows in place would make
    a second run rewrite numbers that have already moved on.
 
-   Current hop: 2 Sept midday → 2 Sept, after PM Balen Shah's statement to
-   Parliament (11,993 rescued) and the Nepal Police toll of 1,127.
+   Current hop: 2 Sept (Nepal Police toll 1,127 / 3,916 missing / 1,473 injured)
+   → NDRRMA's 3 September update (1,259 dead / 5,083 missing / 5,000+ injured /
+   590 foreign nationals from 39 countries).
+
+   NOTE ON DATES: the rescued total of 11,993 is still the PM's 2 September
+   statement to Parliament and has NOT moved, so "2 September" must survive
+   wherever it dates the rescue figure. Only the sentences that date the toll
+   are re-dated, which is why those swaps are written out in full below rather
+   than done as a blanket date replacement.
    ========================================================================= */
 "use strict";
 const fs = require("fs");
@@ -36,37 +43,56 @@ const DRY = process.argv.includes("--dry");
    before the numeric table so their wording stays coherent. */
 const PROSE = [
   [
-    "1,114 confirmed dead, 3,916 missing, 11,814 rescued (NDRRMA, 2 Sept)",
-    "1,127 dead, 3,916 missing, 11,993 rescued (2 Sept)"
+    "1,127 dead, 3,916 missing, 11,993 rescued (2 Sept)",
+    "1,259 dead, 5,083 missing, 11,993 rescued (3 Sept)"
   ],
   [
-    "Security forces had rescued 11,814 people as of 2 September 2026",
-    "Prime Minister Balen Shah told Parliament on 2 September 2026 that 11,993 people had been rescued"
+    "NDRRMA confirms 1,127 dead and 3,916 missing in the Bhotekoshi–Trishuli flood as of 2 September 2026.",
+    "NDRRMA confirms 1,259 dead and 5,083 missing in the Bhotekoshi–Trishuli flood as of 3 September 2026."
   ],
-  ["1,127 confirmed (NDRRMA, 2 Sept, Nepal side)", "1,127 confirmed (Nepal Police, 2 Sept, Nepal side)"],
-  ["1,114 confirmed (NDRRMA, 2 Sept, Nepal side)", "1,127 confirmed (Nepal Police, 2 Sept, Nepal side)"],
   [
-    "NDRRMA confirmed 1,114 deaths as of 2 September 2026",
-    "Nepal Police put the death toll at 1,127 as of 2 September 2026"
+    "Nepal Police put the death toll at 1,127 as of 2 September 2026.",
+    "NDRRMA put the death toll at 1,259 as of 3 September 2026."
+  ],
+  [
+    "3,916 people remain missing as of 2 September 2026.",
+    "5,083 people remain missing as of 3 September 2026."
+  ],
+  [
+    "583 foreign nationals from 38 countries",
+    "590 foreign nationals from 39 countries"
+  ],
+  [
+    "1,127 confirmed (Nepal Police, 2 Sept, Nepal side)",
+    "1,259 confirmed (NDRRMA, 3 Sept, Nepal side)"
+  ],
+  [
+    "3,916 reported missing or out of contact (Nepal side)",
+    "5,083 reported missing or out of contact (Nepal side)"
+  ],
+  [
+    "3,916 reported missing including 583 foreign nationals",
+    "5,083 reported missing including 590 foreign nationals"
+  ],
+  [
+    "1,127 dead, 3,916 missing, 11,993 rescued, 1,473 injured / 2,740 treated",
+    "1,259 dead, 5,083 missing, 11,993 rescued, 5,000+ injured / 2,740 treated"
+  ],
+  [
+    "killing 1,120+ people and leaving more than 3,900 missing",
+    "killing 1,250+ people and leaving more than 5,000 missing"
   ],
 ];
 
 /* Previous value → current value. Order matters: longer/more specific strings
    must come before shorter ones that they contain. */
 const FIGURES = [
-  ["1,114 confirmed dead, 3,916 missing, 11,814 rescued", "1,127 confirmed dead, 3,916 missing, 11,993 rescued"],
-  ["1,114 dead, 3,916 missing, 11,814 rescued", "1,127 dead, 3,916 missing, 11,993 rescued"],
-  ["1,114 dead and 3,916 missing", "1,127 dead and 3,916 missing"],
-  ["11,814 rescued by security forces", "11,993 rescued by security forces"],
-  ["11,814 rescued by joint security for", "11,993 rescued by joint security for"],
-  ["11,814 people have been rescued", "11,993 people have been rescued"],
-  ["11,814 people as of", "11,993 people as of"],
-  ["1,114 deaths as of", "1,127 deaths as of"],
-  ["1,114 confirmed dead", "1,127 confirmed dead"],
-  ["killing 1,100+ people", "killing 1,120+ people"],
-  ["11,814 rescued", "11,993 rescued"],
-  ["11,814", "11,993"],
-  ["1,114", "1,127"],
+  ["1,127 dead, 3,916 missing, 11,993 rescued", "1,259 dead, 5,083 missing, 11,993 rescued"],
+  ["1,127 dead and 3,916 missing", "1,259 dead and 5,083 missing"],
+  ["583 foreign nationals", "590 foreign nationals"],
+  ["1,473 injured", "5,000+ injured"],
+  ["1,127", "1,259"],
+  ["3,916", "5,083"],
 ];
 
 function run() {
