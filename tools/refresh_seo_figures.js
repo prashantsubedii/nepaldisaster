@@ -22,15 +22,18 @@
    one hop (last published → current), so leaving old rows in place would make
    a second run rewrite numbers that have already moved on.
 
-   Current hop: 2 Sept (Nepal Police toll 1,127 / 3,916 missing / 1,473 injured)
-   → NDRRMA's 3 September update (1,259 dead / 5,083 missing / 5,000+ injured /
-   590 foreign nationals from 39 countries).
+   Current hop: NDRRMA's 3 September update (1,259 dead / 5,083 missing /
+   5,000+ injured / 590 foreign) → its 5 September update (1,344 dead / 4,886
+   missing / 5,300 injured / 589 foreign / 13,013 rescued including 324 foreign
+   nationals), plus Nepal's first official damage estimate of Rs 387.54 billion
+   published on 4 September.
 
-   NOTE ON DATES: the rescued total of 11,993 is still the PM's 2 September
-   statement to Parliament and has NOT moved, so "2 September" must survive
-   wherever it dates the rescue figure. Only the sentences that date the toll
-   are re-dated, which is why those swaps are written out in full below rather
-   than done as a blanket date replacement.
+   NOTE ON DATES: the rescued total moved this time — it is no longer the PM's
+   2 September statement but the officials' 5 September figure — so the "2
+   September" wording that dated it is retired along with the number. The
+   missing count FELL, from 5,083 to 4,886, as names were matched against the
+   rescue registry and the recovered dead; that is a real revision, not a
+   lagging report, and the crawler copy has to follow it down as well as up.
    ========================================================================= */
 "use strict";
 const fs = require("fs");
@@ -43,56 +46,91 @@ const DRY = process.argv.includes("--dry");
    before the numeric table so their wording stays coherent. */
 const PROSE = [
   [
-    "1,127 dead, 3,916 missing, 11,993 rescued (2 Sept)",
-    "1,259 dead, 5,083 missing, 11,993 rescued (3 Sept)"
+    "1,259 dead, 5,083 missing, 11,993 rescued (3 Sept)",
+    "1,344 dead, 4,886 missing, 13,013 rescued (5 Sept)"
   ],
   [
-    "NDRRMA confirms 1,127 dead and 3,916 missing in the Bhotekoshi–Trishuli flood as of 2 September 2026.",
-    "NDRRMA confirms 1,259 dead and 5,083 missing in the Bhotekoshi–Trishuli flood as of 3 September 2026."
+    "NDRRMA confirms 1,259 dead and 5,083 missing in the Bhotekoshi–Trishuli flood as of 3 September 2026.",
+    "NDRRMA confirms 1,344 dead and 4,886 missing in the Bhotekoshi–Trishuli flood as of 5 September 2026."
   ],
   [
-    "Nepal Police put the death toll at 1,127 as of 2 September 2026.",
-    "NDRRMA put the death toll at 1,259 as of 3 September 2026."
+    "NDRRMA put the death toll at 1,259 as of 3 September 2026. Around 900 bodies have been recovered",
+    "NDRRMA put the death toll at 1,344 as of 5 September 2026. 1,030 bodies have been temporarily buried after procedure"
   ],
   [
-    "3,916 people remain missing as of 2 September 2026.",
-    "5,083 people remain missing as of 3 September 2026."
+    "5,083 people remain missing as of 3 September 2026.",
+    "4,886 people remain missing as of 5 September 2026."
   ],
   [
-    "583 foreign nationals from 38 countries",
-    "590 foreign nationals from 39 countries"
+    "590 foreign nationals from 39 countries",
+    "589 foreign nationals from 39 countries"
   ],
   [
-    "1,127 confirmed (Nepal Police, 2 Sept, Nepal side)",
-    "1,259 confirmed (NDRRMA, 3 Sept, Nepal side)"
+    "1,259 confirmed (NDRRMA, 3 Sept, Nepal side)",
+    "1,344 confirmed (NDRRMA, 5 Sept, Nepal side)"
   ],
   [
-    "3,916 reported missing or out of contact (Nepal side)",
-    "5,083 reported missing or out of contact (Nepal side)"
+    "5,083 reported missing or out of contact (Nepal side)",
+    "4,886 reported missing or out of contact (Nepal side)"
   ],
   [
-    "3,916 reported missing including 583 foreign nationals",
-    "5,083 reported missing including 590 foreign nationals"
+    "5,083 reported missing including 590 foreign nationals",
+    "4,886 reported missing including 589 foreign nationals"
   ],
   [
-    "1,127 dead, 3,916 missing, 11,993 rescued, 1,473 injured / 2,740 treated",
-    "1,259 dead, 5,083 missing, 11,993 rescued, 5,000+ injured / 2,740 treated"
+    "1,259 dead, 5,083 missing, 11,993 rescued, 5,000+ injured / 2,740 treated",
+    "1,344 dead, 4,886 missing, 13,013 rescued, 5,300 injured / 2,740 treated"
   ],
   [
-    "killing 1,120+ people and leaving more than 3,900 missing",
-    "killing 1,250+ people and leaving more than 5,000 missing"
+    "killing 1,250+ people and leaving more than 5,000 missing",
+    "killing 1,340+ people and leaving nearly 4,900 missing"
+  ],
+  [
+    "11,993 rescued by joint security forces (NDRRMA, 2 Sept)",
+    "13,013 rescued by joint security forces (Nepali officials, 5 Sept)"
+  ],
+  [
+    "11,993 rescued by security forces; 4,248 individually named in the official NDRRMA registry",
+    "13,013 rescued by security forces; 5,006 individually named in the official NDRRMA registry"
+  ],
+  [
+    "total preliminary damages estimated near Rs 200 billion ($4–$5B)",
+    "Nepal's first official damage estimate at Rs 387.54 billion ($2.56B, NDRRMA, 4 Sept)"
+  ],
+  [
+    "4,248 individually named in the public family tracing registry",
+    "5,006 individually named in the public family tracing registry"
+  ],
+  [
+    "as of 5 September 2026. 11,993 people have been rescued and 21,000+ security personnel are deployed.",
+    "as of 5 September 2026. 13,013 people have been rescued and 21,400+ security personnel are deployed."
+  ],
+  /* The PM statement is dated and still true as history, but it is answering
+     the question "how many have been rescued", so it has to carry the current
+     figure and cite the authority that published it. */
+  [
+    "Prime Minister Balen Shah told Parliament on 2 September 2026 that 11,993 people had been rescued, including 279 airlifted from a hydropower tunnel over two days and 252 foreign nationals flown out by helicopter. 21,000+ security personnel are deployed — 8,722 Nepali Army, 7,894 Nepal Police and 4,203 Armed Police Force.",
+    "Nepali officials put the total rescued at 13,013 as of 5 September 2026, including 324 foreign nationals; 5,006 of them are individually named in the public NDRRMA tracing registry. The Prime Minister had given Parliament a figure of 11,993 on 2 September. 21,400+ security personnel are deployed — 9,300 Nepali Army, 7,912 Nepal Police and 4,203 Armed Police Force."
+  ],
+  [
+    "21,000+ active personnel (Nepali Army 8,722, Nepal Police 7,894, Armed Police Force 4,203)",
+    "21,400+ active personnel (Nepali Army 9,300, Nepal Police 7,912, Armed Police Force 4,203)"
+  ],
+  [
+    "and 21,000+ security personnel deployed",
+    "and 21,400+ security personnel deployed"
   ],
 ];
 
 /* Previous value → current value. Order matters: longer/more specific strings
    must come before shorter ones that they contain. */
 const FIGURES = [
-  ["1,127 dead, 3,916 missing, 11,993 rescued", "1,259 dead, 5,083 missing, 11,993 rescued"],
-  ["1,127 dead and 3,916 missing", "1,259 dead and 5,083 missing"],
-  ["583 foreign nationals", "590 foreign nationals"],
-  ["1,473 injured", "5,000+ injured"],
-  ["1,127", "1,259"],
-  ["3,916", "5,083"],
+  ["1,259 dead, 5,083 missing, 11,993 rescued", "1,344 dead, 4,886 missing, 13,013 rescued"],
+  ["1,259 dead and 5,083 missing", "1,344 dead and 4,886 missing"],
+  ["590 foreign nationals", "589 foreign nationals"],
+  ["5,000+ injured", "5,300 injured"],
+  ["1,259", "1,344"],
+  ["5,083", "4,886"],
 ];
 
 function run() {

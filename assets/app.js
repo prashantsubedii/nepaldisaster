@@ -173,8 +173,8 @@ const EVENT = {
   since:"2026-08-26T08:37:00+05:45",
   title:{en:"2026 Nepal Floods", ne:"२०२६ नेपाल बाढी"},
   region:{en:"Rasuwa · Nuwakot · Dhading · Trishuli corridor · Chitwan · Nawalparasi", ne:"रसुवा · नुवाकोट · धादिङ · त्रिशूली कोरिडोर · चितवन · नवलपरासी"},
-  eas:{en:"Trishuli / Bhote Koshi glacier-collapse flood. Rescuers pulled TWO WORKERS ALIVE from the Trishuli 3A tunnel on 4 Sept, nine days in — about 115 are still believed trapped there and 557 workers are missing from that project alone. NDRRMA's 3 Sept figures: 1,259 dead, 5,083 missing, more than 5,000 injured; 11,993 rescued (PM to Parliament, 2 Sept). Prithvi Highway still cut at Krishnabhir.",
-       ne:"त्रिशूली / भोटेकोशी हिमनदी भत्किएर आएको बाढी। ४ सेप्टेम्बरमा, नवौं दिन, त्रिशूली ३ए सुरुङबाट दुई कामदार जीवितै निकालिए — त्यहाँ अझै करिब ११५ जना फसेको अनुमान छ र सोही आयोजनाका ५५७ कामदार बेपत्ता छन्। NDRRMA को ३ सेप्टेम्बरको तथ्यांक: १,२५९ मृत्यु, ५,०८३ बेपत्ता, ५,००० भन्दा बढी घाइते; ११,९९३ उद्धार (प्रधानमन्त्रीको संसद सम्बोधन, २ सेप्टेम्बर)। कृष्णभीरमा पृथ्वी राजमार्ग अझै अवरुद्ध।"}
+  eas:{en:"Trishuli / Bhote Koshi glacier-collapse flood. Chinese worker Lu Haitao was pulled ALIVE from the Upper Trishuli-1 tunnel at 1:20pm on 5 Sept, ten days in — the third survivor found underground in two days. NDRRMA's 5 Sept figures: 1,344 dead, 4,886 missing, 5,300 injured; 13,013 rescued including 324 foreign nationals. First official damage estimate: Rs 387.54 billion. Prithvi Highway still cut at Krishnabhir.",
+       ne:"त्रिशूली / भोटेकोशी हिमनदी भत्किएर आएको बाढी। ५ सेप्टेम्बर दिउँसो १:२० बजे माथिल्लो त्रिशूली-१ को सुरुङबाट चिनियाँ कामदार लु हाइताओलाई जीवितै निकालियो — दस दिनपछि, र दुई दिनमा सुरुङभित्र भेटिएका तेस्रो जीवित व्यक्ति। NDRRMA को ५ सेप्टेम्बरको तथ्यांक: १,३४४ मृत्यु, ४,८८६ बेपत्ता, ५,३०० घाइते; ३२४ विदेशी नागरिकसहित १३,०१३ उद्धार। पहिलो आधिकारिक क्षति अनुमान: रु. ३८७.५४ अर्ब। कृष्णभीरमा पृथ्वी राजमार्ग अझै अवरुद्ध।"}
 };
 /* Nepal-side figures only. Live-refreshed every 10 minutes: local feed (baseline)
    → Wikipedia PROSE (deaths/missing/injured + foreign nationals among the missing,
@@ -182,34 +182,34 @@ const EVENT = {
    Nepal registry). The Wikipedia INFOBOX is NOT used — it reports Nepal+Tibet
    COMBINED, which is what previously inflated the toll. */
 let STATS = [
-  {key:"deaths",  n:"1,259", cls:"hstat--death"},
-  {key:"missing", n:"5,083", cls:"hstat--missing"},
-  {key:"foreign", n:"590"},
-  {key:"rescued", n:"11,993", cls:"hstat--rescue"}   // hero = TOTAL rescued (PM Shah to Parliament, 2 Sept); the NAMED registry (4,248) is a separate, smaller figure shown on the Rescued page
+  {key:"deaths",  n:"1,344", cls:"hstat--death"},
+  {key:"missing", n:"4,886", cls:"hstat--missing"},
+  {key:"foreign", n:"589"},
+  {key:"rescued", n:"13,013", cls:"hstat--rescue"}   // hero = TOTAL rescued (Nepali officials, 5 Sept); the NAMED registry (5,006) is a separate, smaller figure shown on the Rescued page
 ];
 
 /* -------------------- TICKER -------------------- */
 const TICKER = [
-  {src:"TUNNEL", en:"Two workers pulled out ALIVE from the Trishuli 3A tunnel on 4 Sept, nine days after the flood — one told rescuers more people are still alive inside; about 115 are believed trapped there",
-   ne:"बाढी गएको नवौं दिन ४ सेप्टेम्बरमा त्रिशूली ३ए सुरुङबाट दुई कामदार जीवितै निकालिए — एक जनाले भित्र अरू पनि जीवित रहेको बताए; त्यहाँ करिब ११५ जना फसेको अनुमान"},
-  {src:"NDRRMA", en:"NDRRMA update (3 Sept): 1,259 dead, 5,083 missing or out of contact and more than 5,000 injured on the Nepal side; 11,993 rescued as of the PM's statement to Parliament",
-   ne:"NDRRMA अद्यावधिक (३ सेप्टेम्बर): नेपालतर्फ १,२५९ मृत्यु, ५,०८३ बेपत्ता वा सम्पर्कविहीन र ५,००० भन्दा बढी घाइते; प्रधानमन्त्रीको संसद सम्बोधनअनुसार ११,९९३ उद्धार"},
+  {src:"TUNNEL", en:"Chinese worker Lu Haitao, 49, pulled out ALIVE from the Upper Trishuli-1 tunnel at 1:20pm on 5 Sept — found 225 m inside by the Nepali Army and a South Korean rescue team, ten days after the flood",
+   ne:"५ सेप्टेम्बर दिउँसो १:२० बजे माथिल्लो त्रिशूली-१ सुरुङबाट ४९ वर्षीय चिनियाँ कामदार लु हाइताओ जीवितै निकालिए — बाढी गएको दस दिनपछि नेपाली सेना र दक्षिण कोरियाली टोलीले सुरुङभित्र २२५ मिटरमा भेटे"},
+  {src:"NDRRMA", en:"NDRRMA update (5 Sept): 1,344 dead, 4,886 missing or out of contact and 5,300 injured on the Nepal side; 13,013 rescued including 324 foreign nationals",
+   ne:"NDRRMA अद्यावधिक (५ सेप्टेम्बर): नेपालतर्फ १,३४४ मृत्यु, ४,८८६ बेपत्ता वा सम्पर्कविहीन र ५,३०० घाइते; ३२४ विदेशी नागरिकसहित १३,०१३ उद्धार"},
   {src:"RELIEF", en:"Rs 1 crore released to each of Rasuwa and Nuwakot from the PM Disaster Relief Fund; 10 truckloads of relief material despatched and all ministers pledge one month's salary",
    ne:"प्रधानमन्त्री विपद् राहत कोषबाट रसुवा र नुवाकोट प्रत्येकलाई रु. १ करोड निकासा; १० ट्रक राहत सामग्री पठाइयो र सबै मन्त्रीले एक महिनाको तलब दिने घोषणा"},
   {src:"RESCUE", en:"900 hydropower workers missing across 12 projects and around 500 still believed inside the tunnels — 557 missing at Trishuli 3A alone (IPPAN) and 576 at Upper Trishuli-1",
    ne:"१२ आयोजनाका ९०० जलविद्युत् कामदार बेपत्ता, सुरुङभित्र अझै करिब ५०० जना रहेको अनुमान — त्रिशूली ३ए मै ५५७ (IPPAN) र माथिल्लो त्रिशूली-१ मा ५७६ जना बेपत्ता"},
   {src:"TRAFFIC", en:"Prithvi Highway still cut at Krishnabhir (Dhading) — Mugling–Kathmandu section diversion and restoration ongoing",
    ne:"पृथ्वी राजमार्ग कृष्णभीर (धादिङ) मा अझै अवरुद्ध — मुग्लिन–काठमाडौं खण्डमा वैकल्पिक मार्ग र मर्मत कार्य जारी"},
-  {src:"HEALTH", en:"Around 900 bodies recovered so far and only 4% formally identified — DNA testing and facial photographs in use as morgues run beyond capacity",
-   ne:"अहिलेसम्म करिब ९०० शव फेला, जसमध्ये ४ प्रतिशत मात्र औपचारिक पहिचान — शवगृह क्षमताभन्दा बढी भरिएपछि डीएनए परीक्षण र तस्बिरबाट पहिचान जारी"},
+  {src:"HEALTH", en:"1,030 bodies temporarily buried after procedure and only 96 identified and handed to families — 2,272 DNA samples collected and 1,270 unidentified bodies posted online for relatives to check",
+   ne:"प्रक्रिया पूरा गरी १,०३० शव अस्थायी रूपमा गाडिए, तर ९६ को मात्र पहिचान भई परिवारलाई सुम्पिइयो — २,२७२ डीएनए नमुना संकलन र १,२७० अपरिचित शवको विवरण अनलाइनमा राखियो"},
   {src:"ARMY", en:"Nepali Army has airlifted 3,344 Nepalis and 252 foreign nationals across 411 rescue and relief flights",
    ne:"नेपाली सेनाले ४११ उद्धार तथा राहत उडानमा ३,३४४ नेपाली र २५२ विदेशी नागरिक हवाईमार्ग उद्धार गर्‍यो"},
   {src:"PMO", en:"PM Disaster Relief Fund passes Rs 5.44 billion; Rs 675 million released to 15 local units for immediate relief",
    ne:"प्रधानमन्त्री विपद् राहत कोष रु. ५.४४ अर्ब नाघ्यो; १५ स्थानीय तहलाई तत्काल राहतका लागि रु. ६७.५ करोड निकासा"},
   {src:"USGS", en:"Glacier collapse near Langtang Lirung confirmed as cause of catastrophic debris surge down Bhote Koshi",
    ne:"लाङटाङ लिरुङ नजिक हिमनदी भत्किएर भोटेकोशीमा विनाशकारी लेदो बाढी आएको पुष्टि"},
-  {src:"GOVT", en:"Preliminary damage put at Rs 200 billion ($4–$5B); 41 bridges and 42 km of road destroyed; 431 MW off the grid",
-   ne:"प्रारम्भिक क्षति रु. २०० अर्ब (४–५ अर्ब डलर); ४१ पुल र ४२ कि.मि. सडक ध्वस्त; ४३१ मेगावाट ग्रिडबाट हट्यो"},
+  {src:"GOVT", en:"NDRRMA's first official damage estimate (4 Sept): Rs 387.54 billion ($2.56B); about Rs 8 billion needed over the next four months just to restore services",
+   ne:"NDRRMA को पहिलो आधिकारिक क्षति अनुमान (४ सेप्टेम्बर): रु. ३८७.५४ अर्ब (२.५६ अर्ब डलर); सेवा पुनःस्थापनाका लागि मात्रै आगामी चार महिनामा करिब रु. ८ अर्ब आवश्यक"},
   {src:"WARNING", en:"DHM & NDRRMA alert: Riverside warning active for Rasuwa, Nuwakot, Dhading, Chitwan & Nawalparasi — Lhende Khola dammed lake monitored",
    ne:"जल तथा मौसम विज्ञान विभाग र NDRRMA चेतावनी: रसुवा, नुवाकोट, धादिङ, चितवन र नवलपरासीमा नदी किनार चेतावनी कायमै — ल्हेन्डे खोला ताल निगरानीमा"},
   {src:"AID", en:"International assistance mobilised: IFRC CHF 25m appeal, ADB $5m, EU €2m, UN CERF $2m, China 50t supplies",
@@ -219,6 +219,24 @@ const TICKER = [
 /* -------------------- NEWS / BULLETINS (20, sourced; full articles) -------------------- */
 const WK="https://en.wikipedia.org/wiki/2026_Nepal_floods";
 const NEWS = [
+  {sev:"relief", tag:{en:"Rescued alive",ne:"जीवित उद्धार"}, time:"5 Sept 2026", src:"Kathmandu Post / Nepali Army",
+   url:"https://kathmandupost.com/national/2026/09/05/chinese-national-rescued-alive-after-10-days-trapped-in-hydropower-tunnel",
+   img:"https://assets-cdn.kathmandupost.com/uploads/source/news/2026/third-party/Rescue-1788596684.jpg",
+   imgAlt:{en:"Rescuers bring Chinese worker Lu Haitao out of the Upper Trishuli-1 hydropower tunnel in Rasuwa, 5 September 2026",ne:"रसुवाको माथिल्लो त्रिशूली-१ जलविद्युत् सुरुङबाट चिनियाँ कामदार लु हाइताओलाई बाहिर निकाल्दै उद्धारकर्मी, ५ सेप्टेम्बर २०२६"},
+   title:{en:"Chinese worker pulled alive from the Upper Trishuli-1 tunnel after ten days underground",
+          ne:"दस दिन सुरुङभित्र रहेका चिनियाँ कामदार माथिल्लो त्रिशूली-१ बाट जीवितै निकालिए"},
+   body:{en:"The Nepali Army and a South Korean disaster response team reached Lu Haitao, 49, about 225 metres inside Adit-4 and brought him out at 1:20pm on Saturday. He is the third person taken alive out of a flooded tunnel in two days.",
+         ne:"नेपाली सेना र दक्षिण कोरियाली विपद् उद्धार टोलीले एडिट-४ सुरुङभित्र करिब २२५ मिटरमा रहेका ४९ वर्षीय लु हाइताओसम्म पुगेर शनिबार दिउँसो १:२० बजे बाहिर निकाले। दुई दिनमा लेदो भरिएको सुरुङबाट जीवितै निकालिएका उनी तेस्रो व्यक्ति हुन्।"},
+   long:{en:"Ten days after the 26 August glacier-collapse flood tore through the Bhotekoshi and Trishuli valleys, a Chinese national was brought out of a hydropower tunnel alive. The Nepali Army, working with a disaster response team from South Korea, reached Lu Haitao, 49, roughly 225 metres inside Adit-4 of the Upper Trishuli-1 Hydroelectric Project in Rasuwa and carried him out at 1:20pm on Saturday, 5 September. Army spokesperson Brig. Gen. Raja Ram Basnet said the team 'brought him out of the tunnel alive'. He was taken for a medical check-up and search teams stayed at the site, where more people are believed to be trapped. It is the third life saved underground in two days: a mechanical foreman and a mechanical supervisor were pulled from the Trishuli 3A tunnel on 4 September, one of them telling rescuers that others were still alive inside. Upper Trishuli-1 accounts for 576 of the missing on its own, around 300 of them believed to be in the tunnel; across 12 damaged hydropower projects about 900 workers are unaccounted for and roughly 500 are thought to be underground. Tunnel-rescue specialists from India, China, Australia and South Korea are now working alongside Nepali crews.",
+         ne:"२६ अगस्टको हिमनदी भत्किएर भोटेकोशी र त्रिशूली उपत्यकामा आएको बाढीको दस दिनपछि एक चिनियाँ नागरिकलाई जलविद्युत् सुरुङबाट जीवितै निकालियो। नेपाली सेनाले दक्षिण कोरियाली विपद् उद्धार टोलीसँग मिलेर रसुवास्थित माथिल्लो त्रिशूली-१ जलविद्युत् आयोजनाको एडिट-४ सुरुङभित्र करिब २२५ मिटरमा रहेका ४९ वर्षीय लु हाइताओसम्म पुगेर शनिबार ५ सेप्टेम्बर दिउँसो १:२० बजे बाहिर निकाल्यो। सेनाका प्रवक्ता सहायक रथी राजाराम बस्नेतले उद्धार टोलीले 'उनलाई सुरुङबाट जीवितै निकालेको' बताए। उनलाई स्वास्थ्य परीक्षणका लागि लगियो भने थप मानिस फसेको अनुमान गरिएको स्थलमा खोज जारी छ। दुई दिनमा सुरुङभित्र बचेको यो तेस्रो ज्यान हो: ४ सेप्टेम्बरमा त्रिशूली ३ए सुरुङबाट एक मेकानिकल फोरमेन र एक मेकानिकल सुपरभाइजर निकालिएका थिए, जसमध्ये एक जनाले भित्र अरू पनि जीवित रहेको बताएका थिए। माथिल्लो त्रिशूली-१ मा मात्रै ५७६ जना बेपत्ता छन्, जसमध्ये करिब ३०० सुरुङभित्रै रहेको अनुमान छ; १२ क्षतिग्रस्त जलविद्युत् आयोजनामा करिब ९०० कामदारको अत्तोपत्तो छैन र करिब ५०० सुरुङभित्र रहेको अनुमान छ। भारत, चीन, अस्ट्रेलिया र दक्षिण कोरियाका सुरुङ उद्धार विशेषज्ञ नेपाली टोलीसँगै खटिएका छन्।"}},
+  {sev:"danger", tag:{en:"Toll & damage",ne:"मृत्यु र क्षति"}, time:"5 Sept 2026", src:"NDRRMA / Nepal Police",
+   url:"https://kathmandupost.com/national/2026/09/05/nepal-flood-death-toll-reaches-1-342",
+   title:{en:"Toll reaches 1,344 as Nepal puts its first official damage figure at Rs 387.54 billion",
+          ne:"मृत्यु १,३४४ पुग्यो, नेपालको पहिलो आधिकारिक क्षति अनुमान रु. ३८७.५४ अर्ब"},
+   body:{en:"NDRRMA counted 1,344 dead and 4,886 missing on 5 September, with 5,300 injured and 13,013 rescued. Its first official damage estimate, published a day earlier, is Rs 387.54 billion — about USD 2.56 billion.",
+         ne:"NDRRMA का अनुसार ५ सेप्टेम्बरसम्म १,३४४ मृत्यु र ४,८८६ बेपत्ता, ५,३०० घाइते र १३,०१३ उद्धार। एक दिनअघि सार्वजनिक पहिलो आधिकारिक क्षति अनुमान रु. ३८७.५४ अर्ब — करिब २.५६ अर्ब अमेरिकी डलर।"},
+   long:{en:"The National Disaster Risk Reduction and Management Authority put the Nepal-side toll at 1,344 on Saturday 5 September — 758 adults, 85 children and 501 recovered only as body parts. Nepal Police had counted 1,342 at 08:00 the same morning, and its district breakdown runs Chitwan 360, Nawalparasi West 230, Nawalparasi East 222, Nuwakot 192, Rasuwa 160, Gorkha 73, Dhading 67 and Tanahun 38. The number of missing fell to 4,886 from 5,083 as names were matched against the rescue registry and the recovered dead; 589 foreign nationals from 39 countries are still among them. 5,300 people have been injured and officials say 13,013 have been rescued, including 324 foreign nationals. Identification remains the hardest part of the response: 1,030 bodies have been temporarily buried after the required procedure and only 96 have been identified and handed back to families, while 2,272 DNA samples have been collected — 1,260 from bodies and 1,012 from relatives — and details of 1,270 unidentified bodies have been posted online. On 4 September NDRRMA published Nepal's first official damage estimate, Rs 387.54 billion (about USD 2.56 billion) in property, housing and infrastructure, cautioning that a detailed assessment is still to come; about Rs 8 billion is needed over the next four months simply to restore services.",
+         ne:"राष्ट्रिय विपद् जोखिम न्यूनीकरण तथा व्यवस्थापन प्राधिकरणका अनुसार शनिबार ५ सेप्टेम्बरसम्म नेपालतर्फ मृत्यु संख्या १,३४४ पुगेको छ — ७५८ वयस्क, ८५ बालबालिका र ५०१ शरीरका अंश मात्र प्राप्त। नेपाल प्रहरीले सोही बिहान ८ बजे १,३४२ गणना गरेको थियो; प्रहरीको जिल्लागत विवरणअनुसार चितवन ३६०, नवलपरासी पश्चिम २३०, नवलपरासी पूर्व २२२, नुवाकोट १९२, रसुवा १६०, गोरखा ७३, धादिङ ६७ र तनहुँ ३८। नामावली उद्धार अभिलेख र प्राप्त शवसँग मिलान हुँदै जाँदा बेपत्ता संख्या ५,०८३ बाट ४,८८६ मा झरेको छ; तीमध्ये ३९ देशका ५८९ विदेशी नागरिक छन्। ५,३०० जना घाइते छन् भने अधिकारीहरूका अनुसार ३२४ विदेशी नागरिकसहित १३,०१३ जनाको उद्धार भइसकेको छ। पहिचान नै सबैभन्दा कठिन काम बनेको छ: प्रक्रिया पूरा गरी १,०३० शव अस्थायी रूपमा गाडिएका छन् र ९६ को मात्र पहिचान भई परिवारलाई सुम्पिएको छ, २,२७२ डीएनए नमुना संकलन गरिएको छ — १,२६० शवबाट र १,०१२ आफन्तबाट — र १,२७० अपरिचित शवको विवरण अनलाइनमा राखिएको छ। ४ सेप्टेम्बरमा NDRRMA ले नेपालको पहिलो आधिकारिक क्षति अनुमान सार्वजनिक गर्‍यो: सम्पत्ति, आवास र पूर्वाधारमा रु. ३८७.५४ अर्ब (करिब २.५६ अर्ब अमेरिकी डलर), तर विस्तृत आकलन अझै बाँकी रहेको जनायो; सेवा पुनःस्थापनाका लागि मात्रै आगामी चार महिनामा करिब रु. ८ अर्ब आवश्यक छ।"}},
   {sev:"relief", tag:{en:"Rescued alive",ne:"जीवित उद्धार"}, time:"4 Sept 2026", src:"Associated Press / Nepali Army",
    url:"https://www.wsls.com/news/world/2026/09/04/one-trapped-worker-rescued-alive-from-a-tunnel-in-nepal-official-says/",
    img:"https://res.cloudinary.com/graham-media-group/image/upload/f_auto/q_auto/w_1200/v1/media/gmg/JAHWPKPC4VGGDARFX6LCZAUQR4.jpg",
@@ -1214,7 +1232,9 @@ function wire(){
   setLang(LANG);
   tickClocks(); setInterval(tickClocks,1000);
   setSync(nptNow());
-  liveRefresh(); setInterval(liveRefresh, 600000);               // live figures auto-refresh every 10 minutes
+  // Self-scheduling rather than setInterval: the next wait depends on whether
+  // this cycle actually reached anything. See scheduleLiveRefresh().
+  Promise.resolve(liveRefresh()).then(scheduleLiveRefresh, scheduleLiveRefresh);
   setupManualSync();
   fetchLiveNews();                                                // pull live headlines now…
   setInterval(fetchLiveNews, 600000);                            // …and every 10 minutes
@@ -1652,24 +1672,24 @@ let _newsPopTimer=null, _newsPopOpenFor=null;
    becomes an injection route.
    ========================================================================= */
 const PINNED_NEWS={
-  id:"brief-2026-0904-trishuli3a-alive",
-  until:"2026-09-07T23:59:00+05:45",
-  url:"https://www.wsls.com/news/world/2026/09/04/one-trapped-worker-rescued-alive-from-a-tunnel-in-nepal-official-says/",
-  img:"https://res.cloudinary.com/graham-media-group/image/upload/f_auto/q_auto/c_thumb,w_700/v1/media/gmg/JAHWPKPC4VGGDARFX6LCZAUQR4.jpg",
-  imgAlt:{en:"Nepali Army soldiers carry a worker rescued alive from the Trishuli 3A tunnel, Rasuwa, 4 September 2026",ne:"त्रिशूली ३ए सुरुङबाट जीवितै उद्धार गरिएका कामदारलाई बोक्दै नेपाली सेनाका जवान, रसुवा, ४ सेप्टेम्बर २०२६"},
-  imgCredit:"Nepal Army via AP",
-  source:"Nepali Army · Associated Press",
-  time:{en:"4 Sept 2026",ne:"१८ भदौ २०८३"},
+  id:"brief-2026-0905-uppertrishuli1-alive",
+  until:"2026-09-08T23:59:00+05:45",
+  url:"https://kathmandupost.com/national/2026/09/05/chinese-national-rescued-alive-after-10-days-trapped-in-hydropower-tunnel",
+  img:"https://assets-cdn.kathmandupost.com/uploads/source/news/2026/third-party/Rescue-1788596684.jpg",
+  imgAlt:{en:"Rescuers bring Chinese worker Lu Haitao out of the Upper Trishuli-1 hydropower tunnel, Rasuwa, 5 September 2026",ne:"रसुवाको माथिल्लो त्रिशूली-१ जलविद्युत् सुरुङबाट चिनियाँ कामदार लु हाइताओलाई निकाल्दै उद्धारकर्मी, ५ सेप्टेम्बर २०२६"},
+  imgCredit:"via Kathmandu Post",
+  source:"Nepali Army · Kathmandu Post",
+  time:{en:"5 Sept 2026",ne:"१९ भदौ २०८३"},
   badge:{en:"RESCUED ALIVE",ne:"जीवित उद्धार"},
-  title:{en:"Two workers pulled alive from the Trishuli 3A tunnel, nine days on",
-         ne:"नवौं दिन त्रिशूली ३ए सुरुङबाट दुई कामदार जीवितै निकालिए"},
+  title:{en:"Chinese worker pulled alive from the Upper Trishuli-1 tunnel, ten days on",
+         ne:"दसौं दिन माथिल्लो त्रिशूली-१ सुरुङबाट चिनियाँ कामदार जीवितै निकालिए"},
   hl:{en:"pulled alive",ne:"जीवितै"},
-  body:{en:"Rescuers heard voices inside on Friday morning and reached a mechanical foreman and a mechanical supervisor. Both are stable and were flown to Kathmandu; one told rescuers more people are still alive inside.",
-        ne:"शुक्रबार बिहान सुरुङभित्रबाट आवाज सुनिएपछि उद्धारकर्मी एक मेकानिकल फोरमेन र एक मेकानिकल सुपरभाइजरसम्म पुगे। दुवैको अवस्था स्थिर छ र काठमाडौं ल्याइएको छ; एक जनाले भित्र अरू पनि जीवित रहेको बताए।"},
+  body:{en:"The Nepali Army and a South Korean team reached Lu Haitao, 49, about 225 m inside Adit-4 and carried him out at 1:20pm on Saturday. He is the third person taken alive from a flooded tunnel in two days.",
+        ne:"नेपाली सेना र दक्षिण कोरियाली टोलीले एडिट-४ भित्र करिब २२५ मिटरमा रहेका ४९ वर्षीय लु हाइताओसम्म पुगेर शनिबार दिउँसो १:२० बजे बाहिर निकाले। दुई दिनमा सुरुङबाट जीवितै निकालिएका उनी तेस्रो व्यक्ति हुन्।"},
   figs:[
-    {n:"2",   l:{en:"pulled out alive",ne:"जीवित उद्धार"}},
-    {n:"115", l:{en:"believed in tunnel",ne:"सुरुङभित्र अनुमान"}},
-    {n:"557", l:{en:"missing at 3A",ne:"३ए मा बेपत्ता"}}
+    {n:"10", l:{en:"days underground",ne:"दिन सुरुङभित्र"}},
+    {n:"225",l:{en:"metres inside",ne:"मिटर भित्र"}},
+    {n:"576",l:{en:"missing at UT-1",ne:"UT-१ मा बेपत्ता"}}
   ]
 };
 function _pinnedLive(){
@@ -2449,38 +2469,38 @@ Object.assign(I18N.ne,{
    official numbers are not yet itemised (never fabricated). NDRRMA / Nepal Police,
    compiled 27–28 Aug 2026. */
 const STATS_DETAIL=[
- {id:"deaths", sev:"danger", big:"1,259", title:{en:"Confirmed Deaths",ne:"पुष्टि मृत्यु"}, unit:{en:"Nepal side · auto-updated from live sources",ne:"नेपालतर्फ · प्रत्यक्ष स्रोतबाट स्वतः अद्यावधिक"}, src:"NDRRMA / Nepal Police",
+ {id:"deaths", sev:"danger", big:"1,344", title:{en:"Confirmed Deaths",ne:"पुष्टि मृत्यु"}, unit:{en:"Nepal side · auto-updated from live sources",ne:"नेपालतर्फ · प्रत्यक्ष स्रोतबाट स्वतः अद्यावधिक"}, src:"NDRRMA / Nepal Police",
   // Row 0 is the national total and is rewritten live. The district rows below
   // it are the last breakdown NDRRMA published by district and lag the national
   // figure — they are labelled as such rather than scaled to make them add up.
-  rows:[["Nepal — confirmed dead (NDRRMA, 3 Sept)","1,259"],["Bodies recovered so far (approx.)","900"],["— of these, formally identified","4%"],["By district — last published breakdown",""],["Chitwan","340"],["Nawalparasi East","228"],["Nawalparasi West","178"],["Nuwakot","102"],["Gorkha","68"],["Dhading","58"],["Tanahun","36"]],
-  note:{en:"NDRRMA confirms {n} deaths on the Nepal side. Around 900 bodies have been recovered so far and the Ministry of Health reports that just 4% have been formally identified — DNA testing and facial photographs are being used as morgues run past capacity. Chitwan, roughly 160 km downstream, has recovered the most. The district breakdown below is the last one published by district and lags the national total, which auto-updates every 10 minutes from official sources.",ne:"NDRRMA का अनुसार नेपालतर्फ {n} मृत्यु पुष्टि। अहिलेसम्म करिब ९०० शव फेला परेका छन्, तर स्वास्थ्य मन्त्रालयका अनुसार ४ प्रतिशतको मात्र औपचारिक पहिचान भएको छ — शवगृह क्षमताभन्दा बढी भरिएपछि डीएनए परीक्षण र तस्बिरबाट पहिचान गरिँदै छ। करिब १६० कि.मि. तल रहेको चितवनमा सबैभन्दा धेरै शव भेटिएका छन्। तलको जिल्लागत विवरण अन्तिम पटक प्रकाशित तथ्यांक हो र राष्ट्रिय संख्याभन्दा पछाडि छ; राष्ट्रिय संख्या हरेक १० मिनेटमा स्वतः अद्यावधिक हुन्छ।"}},
- {id:"missing", sev:"danger", big:"5,083", title:{en:"Missing and Out of Contact",ne:"बेपत्ता तथा सम्पर्कविहीन"}, unit:{en:"Nepal side only · active NDRRMA registry",ne:"नेपालतर्फ मात्र · NDRRMA सक्रिय अभिलेख"}, src:"NDRRMA / Nepal Police",
-  rows:[["Nepal — missing / out of contact","5,083"],["Linked to hydropower projects (12 projects)","900"],["Trishuli 3A alone — workers missing (IPPAN, 4 Sept)","557"],["Foreign nationals among the missing (39 countries)","590"],["Trade and transport workers (est.)","300"],["Nepalis accompanying foreign tourists","127"],["Nepali Army personnel","44"],["Nepal Police personnel","28"],["Customs office employees","15"],["Armed Police Force personnel","13"],["Immigration office employees","4"]],
-  note:{en:"NDRRMA's 3 September update puts {n} people missing or out of contact on the Nepal side. The list includes 900 workers from 12 hydropower projects (around 500 of them believed trapped in flooded tunnels) — 557 at Trishuli 3A alone, according to the Independent Power Producers' Association Nepal — 590 foreign nationals from 39 countries, an estimated 300 trade and transport workers who used the Gyirong crossing, and 85 security personnel on duty. Tibet's separately-counted missing (541) are not included. Figures are revised as people are located or verified.",ne:"NDRRMA को ३ सेप्टेम्बरको अद्यावधिकअनुसार नेपालतर्फ {n} जना बेपत्ता वा सम्पर्कविहीन छन्। यसमा १२ जलविद्युत् आयोजनाका ९०० कामदार (करिब ५०० सुरुङभित्र फसेको अनुमान) — स्वतन्त्र ऊर्जा उत्पादकहरूको संस्था नेपालका अनुसार त्रिशूली ३ए मै ५५७ — ३९ देशका ५९० विदेशी नागरिक, ग्यीरोङ नाका प्रयोग गर्ने करिब ३०० व्यापार तथा यातायात कामदार र ८५ सुरक्षाकर्मी समावेश छन्। तिब्बततर्फ छुट्टै रहेका ५४१ बेपत्ता यसमा समावेश छैनन्। व्यक्तिहरू फेला पर्दै जाँदा यो संख्या परिमार्जन हुन्छ।"}},
- {id:"rescued", sev:"relief", big:"11,993", title:{en:"Rescued",ne:"उद्धार"}, unit:{en:"PM's statement to Parliament, 2 Sept · rising daily",ne:"प्रधानमन्त्रीको संसद सम्बोधन, २ सेप्टेम्बर · दैनिक बढ्दो"}, src:"Office of the PM / NDRRMA / Nepali Army",
+  rows:[["Nepal — confirmed dead (NDRRMA, 5 Sept)","1,344"],["Nepal Police count at 08:00, 5 Sept","1,342"],["— adults","758"],["— children","85"],["— recovered with body parts missing","501"],["Bodies temporarily buried after procedure","1,030"],["— of these, identified and handed to families","96"],["DNA samples collected for identification","2,272"],["— from recovered bodies","1,260"],["— from relatives of the missing","1,012"],["Unidentified bodies posted online for relatives","1,270"],["By district — Nepal Police, 5 Sept",""],["Chitwan","360"],["Nawalparasi West","230"],["Nawalparasi East","222"],["Nuwakot","192"],["Rasuwa","160"],["Gorkha","73"],["Dhading","67"],["Tanahun","38"]],
+  note:{en:"NDRRMA confirms {n} deaths on the Nepal side — 758 adults, 85 children, and 501 recovered only as body parts. Nepal Police counted 1,342 at 08:00 on 5 September; the two authorities publish a few hours apart and the site labels each row with which one it came from rather than merging them. 1,030 bodies have been temporarily buried after the required procedure and only 96 have been identified and handed back to families. 2,272 DNA samples have been collected — 1,260 from bodies and 1,012 from relatives — and details of 1,270 unidentified bodies have been posted online for families to check. Chitwan, roughly 160 km downstream, has recovered the most. The national total auto-updates every 10 minutes from official sources.",ne:"NDRRMA का अनुसार नेपालतर्फ {n} मृत्यु पुष्टि — ७५८ वयस्क, ८५ बालबालिका र ५०१ शरीरका अंश मात्र प्राप्त। नेपाल प्रहरीले ५ सेप्टेम्बर बिहान ८ बजे १,३४२ गणना गरेको थियो; दुई निकायले केही घण्टाको फरकमा तथ्यांक प्रकाशित गर्ने भएकाले यहाँ दुवैलाई छुट्टाछुट्टै स्रोतसहित राखिएको छ। प्रक्रिया पूरा गरी १,०३० शव अस्थायी रूपमा गाडिएका छन् र ९६ को मात्र पहिचान भई परिवारलाई सुम्पिएको छ। पहिचानका लागि २,२७२ डीएनए नमुना संकलन गरिएको छ — १,२६० शवबाट र १,०१२ आफन्तबाट — र १,२७० अपरिचित शवको विवरण परिवारले हेर्न अनलाइनमा राखिएको छ। करिब १६० कि.मि. तल रहेको चितवनमा सबैभन्दा धेरै शव भेटिएका छन्। राष्ट्रिय संख्या हरेक १० मिनेटमा स्वतः अद्यावधिक हुन्छ।"}},
+ {id:"missing", sev:"danger", big:"4,886", title:{en:"Missing and Out of Contact",ne:"बेपत्ता तथा सम्पर्कविहीन"}, unit:{en:"Nepal side only · active NDRRMA registry, 5 Sept",ne:"नेपालतर्फ मात्र · NDRRMA सक्रिय अभिलेख"}, src:"NDRRMA / Nepal Police",
+  rows:[["Nepal — missing / out of contact","4,886"],["Linked to hydropower projects (12 projects)","900"],["Upper Trishuli-1 — workers missing","576"],["Trishuli 3A alone — workers missing (IPPAN, 4 Sept)","557"],["Foreign nationals among the missing (39 countries)","589"],["Trade and transport workers (est.)","300"],["Nepalis accompanying foreign tourists","127"],["Government officials and staff, all grades","147"],["Nepali Army personnel","44"],["Nepal Police personnel","28"],["Customs office employees","15"],["Armed Police Force personnel","13"],["Immigration office employees","4"]],
+  note:{en:"NDRRMA's 5 September update puts {n} people missing or out of contact on the Nepal side — down from 5,083 on 3 September as names are matched against the rescue registry and the recovered dead. This is the one headline figure on the site that can legitimately fall. The list includes 900 workers from 12 hydropower projects (around 500 of them believed trapped in flooded tunnels) — 576 at Upper Trishuli-1 and 557 at Trishuli 3A, according to the Independent Power Producers' Association Nepal — 589 foreign nationals from 39 countries, an estimated 300 trade and transport workers who used the Gyirong crossing, and 147 government officials and staff, among them 85 security personnel on duty. Tibet's separately-counted missing (531) are not included.",ne:"NDRRMA को ५ सेप्टेम्बरको अद्यावधिकअनुसार नेपालतर्फ {n} जना बेपत्ता वा सम्पर्कविहीन छन् — नामावली उद्धार अभिलेख र प्राप्त शवसँग मिलान हुँदै जाँदा ३ सेप्टेम्बरको ५,०८३ बाट घटेको। यो साइटको एउटै त्यस्तो मुख्य संख्या हो जुन घट्नु स्वाभाविक हो। यसमा १२ जलविद्युत् आयोजनाका ९०० कामदार (करिब ५०० सुरुङभित्र फसेको अनुमान) — स्वतन्त्र ऊर्जा उत्पादकहरूको संस्था नेपालका अनुसार माथिल्लो त्रिशूली-१ मा ५७६ र त्रिशूली ३ए मा ५५७ — ३९ देशका ५८९ विदेशी नागरिक, ग्यीरोङ नाका प्रयोग गर्ने करिब ३०० व्यापार तथा यातायात कामदार र ८५ सुरक्षाकर्मीसहित १४७ सरकारी कर्मचारी समावेश छन्। तिब्बततर्फ छुट्टै रहेका ५३१ बेपत्ता यसमा समावेश छैनन्।"}},
+ {id:"rescued", sev:"relief", big:"13,013", title:{en:"Rescued",ne:"उद्धार"}, unit:{en:"Nepali officials, 5 Sept · rising daily",ne:"नेपाली अधिकारीहरू, ५ सेप्टेम्बर · दैनिक बढ्दो"}, src:"Office of the PM / NDRRMA / Nepali Army",
   // NOTE: rows 0–3 are written BY INDEX from _setRescueRegistry() —
   // [0]=grand total, [1]=named registry, [2]=Nepali, [3]=foreign.
-  rows:[["Total rescued (PM to Parliament, 2 Sept)","11,993"],["Named in the public registry","4,248"],["— of these, Nepali","3,918"],["— of these, foreign","330"],["Airlifted by the Nepali Army — Nepali","3,344"],["Airlifted by the Nepali Army — foreign nationals","252"],["Rescue and relief flights flown","411"],["Logged in the NDRRMA rescue system","7,514"],["Pulled alive from the Trishuli 3A tunnel (4 Sept)","2"]],
-  note:{en:"NDRRMA's bulletin puts the cumulative total rescued at {n}. Three different official numbers describe this and they are not interchangeable: the bulletin total above, the named public registry used for family tracing (live from NDRRMA's API), and NDRRMA's internal rescue-management log, which trails both. All three are listed separately rather than merged into one figure. The Nepali Army has airlifted 3,344 Nepalis and 252 foreign nationals across 411 rescue and relief flights.",ne:"NDRRMA को विज्ञप्तिअनुसार कुल उद्धार संख्या {n} पुगेको छ। यसका तीन फरक आधिकारिक संख्या छन् र ती एउटै होइनन्: माथिको विज्ञप्ति संख्या, परिवार खोजीका लागि प्रयोग हुने नामावली अभिलेख (NDRRMA को API बाट प्रत्यक्ष), र दुवैभन्दा पछाडि रहेको NDRRMA को आन्तरिक उद्धार अभिलेख। तीनवटै छुट्टाछुट्टै देखाइएका छन्। नेपाली सेनाले ४११ उडानमार्फत ३,३४४ नेपाली र २५२ विदेशी नागरिकको हवाई उद्धार गरेको छ।"}},
- {id:"injured", sev:"watch", big:"5,000+", title:{en:"Injured & Medical Care",ne:"घाइते तथा स्वास्थ्य उपचार"}, unit:{en:"Nepal side · NDRRMA, 3 Sept — published as “more than 5,000”",ne:"नेपालतर्फ · NDRRMA, ३ सेप्टेम्बर — “५,००० भन्दा बढी” भनी प्रकाशित"}, src:"NDRRMA / MOHP",
+  rows:[["Total rescued (Nepali officials, 5 Sept)","13,013"],["Named in the public registry","5,006"],["— of these, Nepali","4,596"],["— of these, foreign","410"],["Foreign nationals among those rescued","324"],["Airlifted by the Nepali Army — Nepali","3,344"],["Airlifted by the Nepali Army — foreign nationals","252"],["Rescue and relief flights flown","411"],["Logged in the NDRRMA rescue system","7,514"],["Pulled alive from tunnels, 4–5 Sept","3"]],
+  note:{en:"Nepali officials put the cumulative total rescued at {n} as of 5 September, including 324 foreign nationals. Three different official numbers describe this and they are not interchangeable: the bulletin total above, the named public registry used for family tracing (live from NDRRMA's API, and the reason that row moves on its own), and NDRRMA's internal rescue-management log, which trails both. All three are listed separately rather than merged into one figure. The Nepali Army has airlifted 3,344 Nepalis and 252 foreign nationals across 411 rescue and relief flights. Three people have been brought out of flooded hydropower tunnels alive since 4 September.",ne:"नेपाली अधिकारीहरूका अनुसार ५ सेप्टेम्बरसम्म कुल उद्धार संख्या {n} पुगेको छ, जसमा ३२४ विदेशी नागरिक छन्। यसका तीन फरक आधिकारिक संख्या छन् र ती एउटै होइनन्: माथिको विज्ञप्ति संख्या, परिवार खोजीका लागि प्रयोग हुने नामावली अभिलेख (NDRRMA को API बाट प्रत्यक्ष, त्यसैले त्यो हरफ आफैँ परिवर्तन हुन्छ), र दुवैभन्दा पछाडि रहेको NDRRMA को आन्तरिक उद्धार अभिलेख। तीनवटै छुट्टाछुट्टै देखाइएका छन्। नेपाली सेनाले ४११ उडानमार्फत ३,३४४ नेपाली र २५२ विदेशी नागरिकको हवाई उद्धार गरेको छ। ४ सेप्टेम्बरयता जलविद्युत् सुरुङबाट तीन जनालाई जीवितै निकालिएको छ।"}},
+ {id:"injured", sev:"watch", big:"5,300", title:{en:"Injured & Medical Care",ne:"घाइते तथा स्वास्थ्य उपचार"}, unit:{en:"Nepal side · NDRRMA, 5 Sept",ne:"नेपालतर्फ · NDRRMA, ५ सेप्टेम्बर"}, src:"NDRRMA / MOHP",
   // Row 0 is the national injured total and is rewritten live. The rows under it
   // are narrower counts — hospital admissions, still-critical cases — and are NOT
   // the same number, which is why the headline no longer reads 279.
-  rows:[["Nepal — injured (NDRRMA, 3 Sept)","5,000+"],["Admitted to hospital","279"],["Still under intensive treatment","111"],["Medical treatments provided across the response","2,740"]],
-  note:{en:"NDRRMA's 3 September update reports {n} injured on the Nepal side — a sharp revision upward from the 1,473 published on 2 September, as field clinics and district hospitals reported in. That national figure is much wider than the hospital caseload: 279 people have been admitted for structured care across Bharatpur, Pokhara, Dhading, Nuwakot and Kathmandu, 111 of them still under intensive treatment, while 2,740 emergency and trauma treatments have been given in total, largely through mobile field clinics. The government is covering treatment costs for those injured.",ne:"NDRRMA को ३ सेप्टेम्बरको अद्यावधिकअनुसार नेपालतर्फ {n} जना घाइते छन् — २ सेप्टेम्बरको १,४७३ भन्दा निकै बढी, किनभने फिल्ड क्लिनिक र जिल्ला अस्पतालका विवरण थपिए। यो राष्ट्रिय संख्या अस्पतालको संख्याभन्दा धेरै फराकिलो हो: भरतपुर, पोखरा, धादिङ, नुवाकोट र काठमाडौंका अस्पतालमा २७९ जना भर्ना छन्, जसमध्ये १११ जना गम्भीर उपचारमा छन्; फिल्ड क्लिनिकसहित कुल २,७४० जनालाई आकस्मिक तथा ट्रमा उपचार दिइएको छ। घाइतेको उपचार खर्च सरकारले बेहोरेको छ।"}},
- {id:"foreign", sev:"danger", big:"590", title:{en:"Foreign Nationals by Country",ne:"विदेशी नागरिक देश अनुसार"}, unit:{en:"at least {n} missing on the Nepal side · 39 countries",ne:"नेपालतर्फ कम्तीमा {n} बेपत्ता · ३९ देश"}, src:"Nepal Police / Diplomatic Missions",
+  rows:[["Nepal — injured (NDRRMA, 5 Sept)","5,300"],["Admitted to hospital","279"],["Still under intensive treatment","111"],["Medical treatments provided across the response","2,740"]],
+  note:{en:"NDRRMA now reports {n} injured on the Nepal side as of 5 September — a sharp revision upward from the 1,473 published on 2 September, as field clinics and district hospitals reported in. That national figure is much wider than the hospital caseload: 279 people have been admitted for structured care across Bharatpur, Pokhara, Dhading, Nuwakot and Kathmandu, 111 of them still under intensive treatment, while 2,740 emergency and trauma treatments have been given in total, largely through mobile field clinics. The government is covering treatment costs for those injured.",ne:"NDRRMA का अनुसार ५ सेप्टेम्बरसम्म नेपालतर्फ {n} जना घाइते छन् — २ सेप्टेम्बरको १,४७३ भन्दा निकै बढी, किनभने फिल्ड क्लिनिक र जिल्ला अस्पतालका विवरण थपिए। यो राष्ट्रिय संख्या अस्पतालको संख्याभन्दा धेरै फराकिलो हो: भरतपुर, पोखरा, धादिङ, नुवाकोट र काठमाडौंका अस्पतालमा २७९ जना भर्ना छन्, जसमध्ये १११ जना गम्भीर उपचारमा छन्; फिल्ड क्लिनिकसहित कुल २,७४० जनालाई आकस्मिक तथा ट्रमा उपचार दिइएको छ। घाइतेको उपचार खर्च सरकारले बेहोरेको छ।"}},
+ {id:"foreign", sev:"danger", big:"589", title:{en:"Foreign Nationals by Country",ne:"विदेशी नागरिक देश अनुसार"}, unit:{en:"at least {n} missing on the Nepal side · 39 countries",ne:"नेपालतर्फ कम्तीमा {n} बेपत्ता · ३९ देश"}, src:"Nepal Police / Diplomatic Missions",
   rows:[["India","288"],["China (approx.)","100"],["United States","75"],["Ukraine","53"],["Malaysia","51"],["Australia","38"],["United Kingdom","33"],["Latvia","33"],["Canada","32"],["South Korea","9"]],
   note:{en:"At least {n} foreign nationals from 39 countries are reported missing on the Nepal side according to Nepal Police and the respective embassies — primarily pilgrims and trekkers on the Kailash Mansarovar and Langtang routes, and travellers who were at the Gyirong border crossing when the flood struck. Individual embassy counts are announced separately and do not sum to the national total.",ne:"नेपाल प्रहरी र सम्बन्धित दूतावासका अनुसार ३९ देशका कम्तीमा {n} विदेशी नागरिक नेपालतर्फ बेपत्ता छन् — मुख्यतः कैलाश मानसरोवर र लाङटाङ पदमार्गका तीर्थयात्री तथा पदयात्री, र बाढी आउँदा ग्यीरोङ नाकामा रहेका यात्रुहरू। दूतावासहरूले छुट्टाछुट्टै घोषणा गरेका संख्या जोड्दा राष्ट्रिय संख्या बन्दैन।"}},
- {id:"security", sev:"watch", big:"21,011", title:{en:"Search Operation & Security Forces",ne:"खोज तथा उद्धार सुरक्षाकर्मी"}, unit:{en:"live deployment count across all agencies",ne:"सबै सुरक्षा निकायको सक्रिय परिचालन"}, src:"NDRRMA / Joint Command",
-  rows:[["Total personnel mobilised (NDRRMA live count)","21,011"],["Nepali Army","8,896"],["Nepal Police","7,912"],["Armed Police Force","4,203"],["Rescue and relief flights flown","411"],["Psychosocial counsellors deployed (Rasuwa & Nuwakot)","50+"],["Settlements still out of reach","2,498"],["Communication towers","Connectivity fully restored"]],
+ {id:"security", sev:"watch", big:"21,402", title:{en:"Search Operation & Security Forces",ne:"खोज तथा उद्धार सुरक्षाकर्मी"}, unit:{en:"live deployment count across all agencies",ne:"सबै सुरक्षा निकायको सक्रिय परिचालन"}, src:"NDRRMA / Joint Command",
+  rows:[["Total personnel mobilised (NDRRMA live count)","21,402"],["Nepali Army","9,300"],["Nepal Police","7,912"],["Armed Police Force","4,203"],["Rescue and relief flights flown","411"],["Psychosocial counsellors deployed (Rasuwa & Nuwakot)","50+"],["Settlements still out of reach","2,498"],["Communication towers","Connectivity fully restored"]],
   note:{en:"{n} personnel across the Nepali Army, Nepal Police, and Armed Police Force are deployed in intensive search, rescue, helicopter evacuation, and relief transport missions.",ne:"नेपाली सेना, नेपाल प्रहरी र सशस्त्र प्रहरी बलका {n} सुरक्षाकर्मी खोज, उद्धार, हवाई उद्धार तथा राहत वितरणमा संयुक्त रूपमा परिचालित छन्।"}},
  {id:"tunnel", sev:"danger", big:"900", title:{en:"Hydropower Tunnel Rescue",ne:"जलविद्युत् सुरुङ उद्धार"}, unit:{en:"workers missing across 12 projects",ne:"१२ आयोजनाका बेपत्ता कामदार"}, src:"IPPAN / NDRRMA / NEA / Joint Rescue",
-  rows:[["Hydropower workers missing (12 projects)","900"],["Believed still inside tunnel systems","~500"],["Upper Trishuli-1 — reported missing","576"],["Upper Trishuli-1 — believed inside the tunnel","~300"],["Brought out of Trishuli 3A so far","~350"],["Airlifted from tunnels in the first two days","279"],["Hydropower projects damaged (NEA)","13"],["Hydropower facilities damaged or destroyed","27"]],
-  note:{en:"{n} workers across 12 hydropower projects are reported missing, with roughly 500 believed trapped in debris-flooded tunnels. Upper Trishuli-1 accounts for 576 of the missing, around 300 of them underground. On 31 August a controlled explosion was carried out in the Upper Trishuli 3A tunnel and the Nepali Army dug about 10 m down with excavators to begin clearing water, mud and debris. Specialist tunnel-rescue teams from India and China are on site.",ne:"१२ जलविद्युत् आयोजनाका {n} कामदार बेपत्ता छन्, जसमध्ये करिब ५०० जना लेदो भरिएका सुरुङभित्र फसेको अनुमान छ। माथिल्लो त्रिशूली-१ मा मात्रै ५७६ जना बेपत्ता छन्, जसमध्ये करिब ३०० सुरुङभित्रै रहेको अनुमान छ। ३१ अगस्टमा माथिल्लो त्रिशूली ३A सुरुङमा नियन्त्रित विस्फोट गरी नेपाली सेनाले करिब १० मिटर गहिरो खनेर पानी, हिलो र लेदो हटाउन सुरु गरेको छ। भारत र चीनबाट सुरुङ उद्धार विशेषज्ञ टोली स्थलगत छन्।"}},
- {id:"damage", sev:"watch", big:"200", title:{en:"Damage and Infrastructure",ne:"क्षति र पूर्वाधार"}, unit:{en:"Rs billion — preliminary estimate (~$4–$5B)",ne:"रु. अर्ब — प्रारम्भिक अनुमान (४–५ अर्ब डलर)"}, src:"Govt. of Nepal / Dept. of Roads / NEA / IFRC",
-  rows:[["Preliminary damage estimate (Rs billion)","200"],["Roads and bridges (Rs billion)","15"],["Bridges damaged","41"],["Road damaged (km)","42"],["Hydropower projects damaged (NEA)","13"],["Generation knocked off the grid (MW)","431"],["Under-construction capacity damaged (MW)","470"],["Schools damaged or destroyed","38"],["People affected (IFRC estimate)","93,000"],["Need emergency water & sanitation (UN)","65,000"],["Pregnant & breastfeeding women needing nutrition aid (UN)","10,500"],["Children under 5 needing treatment for severe wasting (UN)","2,600"]],
-  note:{en:"Total damage is preliminarily estimated at Rs 200 billion (approx. USD 4–5 billion). Road and bridge infrastructure losses stand at Rs 15 billion with 41 bridges destroyed or severely damaged, and 431 MW of generation knocked off the national grid; the Nepal Electricity Authority counts 13 hydropower projects damaged. The IFRC estimates 93,000 people affected, and the UN puts 65,000 in need of emergency water, sanitation and hygiene supplies.",ne:"प्रारम्भिक कुल क्षति करिब रु. २०० अर्ब (४–५ अर्ब अमेरिकी डलर) अनुमान गरिएको छ। सडक तथा पुल पूर्वाधारमा रु. १५ अर्बको क्षति भएको छ, जसमा ४१ पुल र ४२ कि.मि. सडक क्षतिग्रस्त छन् भने ४३१ मेगावाट उत्पादन राष्ट्रिय ग्रिडबाट विच्छेद भएको छ; नेपाल विद्युत् प्राधिकरणका अनुसार १३ जलविद्युत् आयोजना क्षतिग्रस्त छन्। IFRC का अनुसार ९३,००० जना प्रभावित छन् भने संयुक्त राष्ट्रसंघका अनुसार ६५,००० जनालाई आकस्मिक खानेपानी तथा सरसफाइ सामग्री आवश्यक छ।"}},
+  rows:[["Hydropower workers missing (12 projects)","900"],["Believed still inside tunnel systems","~500"],["Upper Trishuli-1 — reported missing","576"],["Upper Trishuli-1 — believed inside the tunnel","~300"],["Upper Trishuli-1 — pulled out alive on 5 Sept","1"],["Trishuli 3A — workers missing (IPPAN, 4 Sept)","557"],["Trishuli 3A — pulled out alive on 4 Sept","2"],["Brought out of Trishuli 3A so far","~350"],["Airlifted from tunnels in the first two days","279"],["Hydropower projects damaged (NEA)","13"],["Hydropower facilities damaged or destroyed","27"]],
+  note:{en:"{n} workers across 12 hydropower projects are reported missing, with roughly 500 believed trapped in debris-flooded tunnels. Upper Trishuli-1 accounts for 576 of the missing, around 300 of them underground. Three have come out alive: a mechanical foreman and a mechanical supervisor from Trishuli 3A on 4 September, and Chinese worker Lu Haitao, 49, found 225 m inside Adit-4 at Upper Trishuli-1 and brought out at 1:20pm on 5 September by the Nepali Army with a South Korean disaster response team. On 31 August a controlled explosion was carried out in the Upper Trishuli 3A tunnel and the Nepali Army dug about 10 m down with excavators to begin clearing water, mud and debris. Specialist tunnel-rescue teams from India, China, Australia and South Korea are on site.",ne:"१२ जलविद्युत् आयोजनाका {n} कामदार बेपत्ता छन्, जसमध्ये करिब ५०० जना लेदो भरिएका सुरुङभित्र फसेको अनुमान छ। माथिल्लो त्रिशूली-१ मा मात्रै ५७६ जना बेपत्ता छन्, जसमध्ये करिब ३०० सुरुङभित्रै रहेको अनुमान छ। तीन जना जीवितै बाहिर आएका छन्: ४ सेप्टेम्बरमा त्रिशूली ३ए बाट एक मेकानिकल फोरमेन र एक मेकानिकल सुपरभाइजर, र ५ सेप्टेम्बर दिउँसो १:२० बजे माथिल्लो त्रिशूली-१ को एडिट-४ सुरुङभित्र २२५ मिटरमा भेटिएका ४९ वर्षीय चिनियाँ कामदार लु हाइताओ — नेपाली सेना र दक्षिण कोरियाली विपद् उद्धार टोलीले निकालेका। ३१ अगस्टमा माथिल्लो त्रिशूली ३A सुरुङमा नियन्त्रित विस्फोट गरी नेपाली सेनाले करिब १० मिटर गहिरो खनेर पानी, हिलो र लेदो हटाउन सुरु गरेको छ। भारत, चीन, अस्ट्रेलिया र दक्षिण कोरियाबाट सुरुङ उद्धार विशेषज्ञ टोली स्थलगत छन्।"}},
+ {id:"damage", sev:"watch", big:"387.54", title:{en:"Damage and Infrastructure",ne:"क्षति र पूर्वाधार"}, unit:{en:"Rs billion — first official estimate, NDRRMA 4 Sept (~$2.56B)",ne:"रु. अर्ब — पहिलो आधिकारिक अनुमान, NDRRMA ४ सेप्टेम्बर (~२.५६ अर्ब डलर)"}, src:"Govt. of Nepal / Dept. of Roads / NEA / IFRC",
+  rows:[["Preliminary damage estimate (Rs billion)","387.54"],["— the same figure in US dollars (billion)","2.56"],["Needed over the next four months to restore services (Rs billion)","8"],["Rebuilding cost projection, Finance Minister (Rs billion)","762"],["Roads and bridges (Rs billion)","15"],["Bridges damaged","41"],["Road damaged (km)","42"],["Hydropower projects damaged (NEA)","13"],["Generation knocked off the grid (MW)","431"],["Under-construction capacity damaged (MW)","470"],["Schools damaged or destroyed","38"],["People affected (IFRC estimate)","93,000"],["Need emergency water & sanitation (UN)","65,000"],["Pregnant & breastfeeding women needing nutrition aid (UN)","10,500"],["Children under 5 needing treatment for severe wasting (UN)","2,600"]],
+  note:{en:"NDRRMA published Nepal's first official damage estimate on 4 September: Rs {n} billion, about USD 2.56 billion in property, housing and infrastructure — and its chief cautioned that a detailed assessment is still to come. About Rs 8 billion is needed over the next four months simply to restore buildings, communications, energy, transport, health, education, agriculture and livestock; the Finance Minister has put eventual rebuilding at around Rs 762 billion. Road and bridge losses stand at Rs 15 billion with 41 bridges destroyed or severely damaged, and 431 MW of generation knocked off the national grid; the Nepal Electricity Authority counts 13 hydropower projects damaged. The IFRC estimates 93,000 people affected, and the UN puts 65,000 in need of emergency water, sanitation and hygiene supplies.",ne:"NDRRMA ले ४ सेप्टेम्बरमा नेपालको पहिलो आधिकारिक क्षति अनुमान सार्वजनिक गर्‍यो: सम्पत्ति, आवास र पूर्वाधारमा रु. {n} अर्ब, करिब २.५६ अर्ब अमेरिकी डलर — तर विस्तृत आकलन अझै बाँकी रहेको संस्थाका प्रमुखले बताएका छन्। भवन, सञ्चार, ऊर्जा, यातायात, स्वास्थ्य, शिक्षा, कृषि तथा पशुपन्छी सेवा पुनःस्थापनाका लागि मात्रै आगामी चार महिनामा करिब रु. ८ अर्ब आवश्यक छ; अर्थमन्त्रीका अनुसार पुनर्निर्माण खर्च करिब रु. ७६२ अर्ब पुग्न सक्छ। सडक तथा पुलमा रु. १५ अर्बको क्षति भएको छ, ४१ पुल र ४२ कि.मि. सडक क्षतिग्रस्त छन् भने ४३१ मेगावाट उत्पादन राष्ट्रिय ग्रिडबाट विच्छेद भएको छ; नेपाल विद्युत् प्राधिकरणका अनुसार १३ जलविद्युत् आयोजना क्षतिग्रस्त छन्। IFRC का अनुसार ९३,००० जना प्रभावित छन् भने संयुक्त राष्ट्रसंघका अनुसार ६५,००० जनालाई आकस्मिक खानेपानी तथा सरसफाइ सामग्री आवश्यक छ।"}},
  {id:"materials", sev:"relief", big:"", title:{en:"Relief Materials & International Aid",ne:"राहत सामग्री र अन्तर्राष्ट्रिय सहायता"}, src:"AP / BBC / Reuters / IFRC",
   rows:[["PM Disaster Relief Fund — total collected (Rs billion)","8.82"],["— of which, in nine commercial banks (Rs billion)","7.89"],["— of which, in the fund's dollar accounts (USD)","6,141,702"],["Released from the fund on 1 Sept (Rs billion)","1"],["Balance remaining in the fund (Rs billion)","7.82"],["Released to 15 local units, Disaster Management Fund (Rs million)","675"],["Released to Rasuwa (Rs crore)","1"],["Released to Nuwakot (Rs crore)","1"],["Truckloads of relief material despatched","10"],["Ministers' salary pledge","One month, all ministers"],["India — DNA testing & body management","Lab support provided"],["Red Cross Society of China — to the relief fund (USD)","200,000"],["China — emergency supplies","50 tonnes / 13,200 items"],["India — supplies","~50 tonnes"],["IFRC emergency appeal","CHF 25 million"],["Asian Development Bank","USD 5 million"],["European Union","EUR 2 million"],["Welthungerhilfe","EUR 2 million"],["UN CERF","USD 2 million"],["South Korea","USD 1 million"],["Red Cross / IFRC DREF","CHF 1 million"],["World Health Organization","USD 150,000"]],
   note:{en:"International assistance packages continue arriving, including 50 tonnes of emergency shelter and medical supplies from China and India, alongside UN CERF and multilateral funding allocations.",ne:"चीन र भारतबाट ५०–५० टन आपत्कालीन राहत तथा औषधीय सामग्री, राष्ट्रसंघीय CERF कोष तथा बहुपक्षीय सहायता परिचालन जारी छ।"}},
@@ -2983,21 +3003,83 @@ function renderReliefCollected(){
    even after NDRRMA's live count corrected downward. Ranking fixes both without
    letting a bad parse through: implausible jumps are still rejected.
    ============================================================================= */
-let _lastSync=null;
+let _lastSync=null, _lastSyncMs=0;
+const SYNC_STALE_MS=30*60*1000;
 function setSync(d){
-  if(d)_lastSync=d;
+  if(d){ _lastSync=d; _lastSyncMs=Date.now(); }
   const s=fmt(_lastSync||nptNow());
+  // If no source has answered for half an hour the figures on screen are the
+  // last known ones, not live ones. Saying "updated 14:32" without saying that
+  // is the same class of lie as printing a number nobody published.
+  const stale = _lastSyncMs && (Date.now()-_lastSyncMs) > SYNC_STALE_MS;
+  const tail  = stale ? " · "+(LANG==="ne"?"स्रोत अनुपलब्ध":"source unreachable") : " · "+t("sync.auto");
   $$("[data-updated]").forEach(e=>{
-    e.textContent=(t("sync.updated")+" "+s+" · "+t("sync.auto")).toUpperCase();
+    e.textContent=(t("sync.updated")+" "+s+tail).toUpperCase();
+    e.classList.toggle("is-stale", !!stale);
   });
 }
 function _num(x){ return x ? (""+x).replace(/[,\s+]/g,"") : null; }
 function _int(x){ const n=parseInt(String(x==null?"":x).replace(/[^0-9]/g,""),10); return isNaN(n)?0:n; }
 function _fmtInt(x){ return String(_int(x)).replace(/\B(?=(\d{3})+(?!\d))/g,","); }
+/* Not every headline figure counts people. The damage estimate is published as
+   "Rs 387.54 billion", and _int() reads that as 38,754 — a decimal point is not
+   a thousands separator, and stripping it multiplies the number by a hundred
+   without anything looking wrong. Comparison and display for the hero/detail
+   figures therefore go through the float pair below; _int / _fmtInt stay for the
+   row writers that genuinely are counting people. */
+function _numf(x){
+  const m=String(x==null?"":x).replace(/,/g,"").match(/-?\d+(?:\.\d+)?/);
+  const v=m?parseFloat(m[0]):NaN;
+  return isNaN(v)?0:v;
+}
+function _fmtStat(x){
+  const raw=String(x==null?"":x).replace(/,/g,"");
+  const v=_numf(raw);
+  const dec=((raw.match(/\.(\d+)/)||["",""])[1]).slice(0,2).replace(/0+$/,"");
+  const ip=Math.floor(Math.abs(v)).toString().replace(/\B(?=(\d{3})+(?!\d))/g,",");
+  return (v<0?"-":"")+ip+(dec?"."+dec:"");
+}
 
 const SRC_RANK={ ndrrma:1, feed:2, wiki:3, feed_stale:4 };
 let _cycleSrc={};                    // key -> rank that already claimed it this cycle
 function _beginCycle(){ _cycleSrc={}; }
+
+/* ---- per-source health --------------------------------------------------
+   A source that quietly answers nothing is indistinguishable, from the page,
+   from a source that answered "no change" — which is exactly how the Wikipedia
+   tier sat dead for days while the site went on advertising itself as
+   auto-updating. So every source now says whether it ANSWERED, separately from
+   whether it CHANGED anything, consecutive silences are counted and warned
+   about, and liveRefresh() refuses to stamp a fresh sync time when nothing
+   answered at all. window.ndSources() prints the table. */
+const FETCH_HEALTH={};
+function _srcHealth(name){
+  return FETCH_HEALTH[name] || (FETCH_HEALTH[name]={ ok:0, fail:0, streak:0, last:0, lastOk:0, note:"" });
+}
+function _reportSrc(name, answered, note){
+  const h=_srcHealth(name);
+  h.last=Date.now(); h.note=note||"";
+  if(answered){ h.ok++; h.streak=0; h.lastOk=h.last; }
+  else{
+    h.fail++; h.streak++;
+    // Warn on the third consecutive silence, then once an hour, so a genuinely
+    // broken source is visible in the console without spamming it.
+    if(h.streak===3 || h.streak%6===0) console.warn("[nd] live source \""+name+"\" has answered nothing for "+h.streak+" cycles"+(note?" — "+note:""));
+  }
+  return answered;
+}
+if(typeof window!=="undefined"){
+  window.ndSources=function(){
+    const rows={};
+    Object.keys(FETCH_HEALTH).forEach(k=>{
+      const h=FETCH_HEALTH[k];
+      rows[k]={ answered:h.ok, silent:h.fail, "silent streak":h.streak,
+                "last answer":h.lastOk?new Date(h.lastOk).toLocaleTimeString():"never", note:h.note };
+    });
+    if(console.table) console.table(rows); else console.log(rows);
+    return rows;
+  };
+}
 
 /* The curated feed is only authoritative while somebody is keeping it current.
    If assets/live_data.json has not been touched for FEED_FRESH_MS it drops
@@ -3018,12 +3100,12 @@ function _feedRank(updatedAt){
 const RISING_ONLY=new Set(["deaths","rescued"]);
 function _currentStat(key){
   const s=STATS.find(x=>x.key===key);
-  if(s) return _int(s.n);
+  if(s) return _numf(s.n);
   const d=STATS_DETAIL.find(x=>x.id===key);
-  return d?_int(d.big):0;
+  return d?_numf(d.big):0;
 }
 function _acceptStat(key,val,src){
-  const v=_int(val); if(v<=0) return false;
+  const v=_numf(val); if(v<=0) return false;
   const c=_currentStat(key);
   if(c>0 && v>c*8) return false;                       // implausible spike → bad parse
   if(RISING_ONLY.has(key)) return v>=c;                // rank is irrelevant: up only
@@ -3037,7 +3119,7 @@ function _setStat(key,val,src){
   src=src||"feed";
   if(!_acceptStat(key,val,src)) return false;
   _cycleSrc[key]=SRC_RANK[src]||9;
-  const disp=_fmtInt(val);
+  const disp=_fmtStat(val);
   let changed=false;
   const s=STATS.find(x=>x.key===key);
   if(s && s.n!==disp){ s.n=disp; changed=true; }
@@ -3103,10 +3185,12 @@ async function _srcLocalFeed(){
   }catch(err){
     if(window.__restoreFromCache){
       j = window.__restoreFromCache();
-      if(!j) return false;
-    } else { return false; }
+      if(!j){ _reportSrc("feed", false, "fetch failed, no cache"); return false; }
+      _reportSrc("feed", true, "served from offline cache");
+    } else { _reportSrc("feed", false, "fetch failed"); return false; }
   }
   const FR=_feedRank(j.updated_at);
+  if(j.updated_at) _reportSrc("feed", true, "rank "+FR+", stamped "+j.updated_at);
   if(Array.isArray(j.stats)) j.stats.forEach(st=>{ if(_setStat(st.key,_num(st.n),FR)) changed=true; });
   if(j.stats_detail){
     Object.keys(j.stats_detail).forEach(k=>{
@@ -3206,23 +3290,92 @@ function _nepalCasualties(txt){
   return out;
 }
 
+/* Sentences giving the rescued total are NOT tagged "in Nepal" the way the
+   casualty sentence is — the article says "Nepali officials reported that over
+   13,013 people had been rescued, including 324 foreign nationals". Demanding
+   Nepal scope there returns nothing, so this pass inverts the test: reject any
+   sentence scoped to the other side of the border, and read the rest. Only
+   three-digit-and-longer figures count, so "Two survivors were rescued" cannot
+   be mistaken for a cumulative total. */
+const _TIBET_SCOPE=/\b(Tibet|Tibetan|Gyirong|Kyirong|Nyalam|Shigatse|Lhasa|Sichuan|China|Chinese)\b/i;
+function _nepalRescued(txt){
+  const out={};
+  String(txt||"").split(/(?<=[.!?])\s+/).forEach(raw=>{
+    if(!/\brescued\b/i.test(raw)) return;
+    if(_TIBET_SCOPE.test(raw)) return;
+    const re=/([1-9][\d,]{2,9})/g;
+    let m;
+    while((m=re.exec(raw))){
+      const after=raw.slice(m.index+m[0].length, m.index+m[0].length+64);
+      const words=after.split(/[^A-Za-z]+/).filter(Boolean).slice(0,5);
+      for(let i=0;i<words.length;i++){
+        if(/^rescued$/i.test(words[i])){
+          const v=_int(m[1]);
+          if(v>0 && (out.rescued==null || v>out.rescued)) out.rescued=v;
+          break;
+        }
+        if(!_CAS_FILLER.test(words[i])) break;
+      }
+    }
+    const fg=raw.match(/rescued[^.]{0,50}?including\s+([\d][\d,]{1,7})\s+foreign/i);
+    if(fg){ const v=_int(fg[1]); if(v>0 && (out.rescuedForeign==null || v>out.rescuedForeign)) out.rescuedForeign=v; }
+  });
+  return out;
+}
+
+/* The article moved. "2026 Nepal floods" is now a REDIRECT to "2026
+   Nepal–Tibet floods", and the extracts API does NOT follow redirects unless
+   asked: it answers 200 with an EMPTY extract, which every layer below read as
+   "the article says nothing new". The tier had been dead since the rename while
+   reporting no error at all. redirects=1 fixes it; the length check makes the
+   same failure loud instead of silent if the article is renamed again with no
+   redirect left behind, and the second title is the fallback for that day. */
+const WIKI_TITLES=["2026 Nepal–Tibet floods","2026 Nepal floods"];
+async function _wikiExtract(){
+  let why="no response";
+  for(const title of WIKI_TITLES){
+    try{
+      const url="https://en.wikipedia.org/w/api.php?action=query&prop=extracts&explaintext=1&format=json&redirects=1&titles="+encodeURIComponent(title)+"&origin=*";
+      const r=await fetch(url,{signal:AbortSignal.timeout(7000)});
+      if(!r.ok){ why="http "+r.status; continue; }
+      const j=await r.json();
+      const pgs=j.query&&j.query.pages;
+      if(!pgs){ why="no pages"; continue; }
+      const p=pgs[Object.keys(pgs)[0]];
+      const txt=(p&&p.extract)||"";
+      // A redirect stub or a missing page comes back as an empty or tiny
+      // extract. Treat that as a failure, not as an article with no news in it.
+      if(txt.length>1500) return {txt:txt, title:(p&&p.title)||title};
+      why="empty extract for \""+title+"\" ("+txt.length+" chars)";
+    }catch(e){ why=(e&&e.name)||"fetch error"; }
+  }
+  return {txt:"", why:why};
+}
+
 async function _srcSummary(){
-  let txt="";
-  try{
-    const url="https://en.wikipedia.org/w/api.php?action=query&prop=extracts&explaintext=1&format=json&titles=2026%20Nepal%20floods&origin=*";
-    const r=await fetch(url,{signal:AbortSignal.timeout(6000)});
-    if(r.ok){ const j=await r.json(); const pgs=j.query&&j.query.pages; if(pgs){ const p=pgs[Object.keys(pgs)[0]]; txt=(p&&p.extract)||""; } }
-  }catch(_){}
-  if(!txt) return false;
+  const got=await _wikiExtract();
+  const txt=got.txt;
+  if(!txt){ _reportSrc("wiki", false, got.why); return false; }
   let changed=false;
   // Casualty figures come out of the prose through _nepalCasualties() below
   // rather than a sentence-shaped regex — see the note on that function for
   // why. Each key still goes through _setStat, so ranking and the rising-only
   // guard on deaths/rescued apply exactly as before.
   const cas=_nepalCasualties(txt);
+  // The rescued total is stated outside any Nepal-scoped sentence, so it gets
+  // its own pass; whichever reading is larger wins, and rising-only does the
+  // rest.
+  const resc=_nepalRescued(txt);
+  if(resc.rescued!=null && (cas.rescued==null || resc.rescued>cas.rescued)) cas.rescued=resc.rescued;
   ["deaths","missing","injured","rescued"].forEach(k=>{
     if(cas[k]!=null && _setStat(k,String(cas[k]),"wiki")) changed=true;
   });
+  if(resc.rescuedForeign!=null && _setDetailRow("rescued","foreign nationals among those rescued", _fmtInt(resc.rescuedForeign))) changed=true;
+  // A parse that finds NOTHING is the failure mode this whole tier was rewritten
+  // for — the fetch succeeds, every match silently misses, and the site looks
+  // like it is up to date. Say so.
+  _reportSrc("wiki", Object.keys(cas).length>0,
+             Object.keys(cas).length ? got.title+": "+Object.keys(cas).join("/") : "fetched "+txt.length+" chars from "+got.title+" but parsed no figures");
   // Foreign nationals among the missing. The count and the phrase are routinely
   // separated by a clause ("583 foreign nationals FROM 38 COUNTRIES are among
   // the missing"), so the gap is matched loosely instead of exactly.
@@ -3264,10 +3417,12 @@ async function _srcSummary(){
 //   • rescued-statistics.tower          = comms towers restored
 //   • status-counts.total_count         = NAMED public registry → Rescued page
 async function _srcNDRRMA(){
-  let changed=false, grand=null;
+  let changed=false, grand=null, answered=false, why="unreachable";
   try{
     const r=await fetch("https://ndrrma.gov.np/api/v1/rescues/rescued-statistics/?_="+Date.now(),{signal:AbortSignal.timeout(6000)});
+    if(!r.ok) why="statistics http "+r.status;
     if(r.ok){
+      answered=true;
       const j=await r.json();
       grand=j&&j.rescued_count;
       // NOT the headline: rescued_count is NDRRMA's rescue-management system
@@ -3275,13 +3430,18 @@ async function _srcNDRRMA(){
       // own labelled row so both numbers are visible and neither is misread.
       if(grand && _setDetailRow("rescued","logged in the ndrrma rescue system", _fmtInt(grand))) changed=true;
       if(j&&j.force_deployed && _setStat("security", String(j.force_deployed), "ndrrma")) changed=true;
-      if(j&&j.tower && _setDetailRow("security","towers restored", j.tower)) changed=true;
+      // The fragment must stay in step with the ROW LABEL, which is "Communication
+      // towers" — "towers restored" matched an older label and had been writing
+      // nothing at all, silently, exactly as _setDetailRow always fails.
+      if(j&&j.tower && _setDetailRow("security","communication towers", j.tower)) changed=true;
     }
   }catch(_){}
   try{
     const r=await fetch("https://ndrrma.gov.np/api/v1/rescues/status-counts/?limit=-1&_="+Date.now(),{signal:AbortSignal.timeout(6000)});
-    if(r.ok){ const j=await r.json(); if(j && _setRescueRegistry(grand, j.total_count, j.nepali_count, j.foreign_count)) changed=true; }
+    if(r.ok){ answered=true; const j=await r.json(); if(j && _setRescueRegistry(grand, j.total_count, j.nepali_count, j.foreign_count)) changed=true; }
+    else if(!answered) why="status-counts http "+r.status;
   }catch(_){}
+  _reportSrc("ndrrma", answered, answered ? ("registry + deployment counts"+(grand?" (log "+_fmtInt(grand)+")":"")) : why);
   return changed;
 }
 
@@ -3305,9 +3465,11 @@ async function _srcMissingRegistry(){
       })) };
     const changed = !OFFICIAL_MISSING || OFFICIAL_MISSING.count!==next.count;
     OFFICIAL_MISSING=next; OFFICIAL_MISSING_ERR=false;
+    _reportSrc("missing-registry", true, next.count+" people listed");
     if(typeof renderOfficialMissing==="function") renderOfficialMissing();
     return changed;
-  }catch(_){
+  }catch(e){
+    _reportSrc("missing-registry", false, (e&&e.message)||"fetch error");
     if(!OFFICIAL_MISSING){ OFFICIAL_MISSING_ERR=true; if(typeof renderOfficialMissing==="function") renderOfficialMissing(); }
     return false;
   }
@@ -3322,8 +3484,11 @@ function loadOfficialMissing(retries){
 }
 
 let _refreshing=false;
+/* True once at least one source has answered in this page's lifetime. Until
+   then the sync stamp is a page-load time, not a claim about the figures. */
+let _syncedOnce=false;
 async function liveRefresh(isManual){
-  if(_refreshing) return;               // never overlap two refreshes
+  if(_refreshing) return false;         // never overlap two refreshes
   _refreshing=true;
   try{
     _beginCycle();
@@ -3332,14 +3497,38 @@ async function liveRefresh(isManual){
     const primary = await Promise.allSettled([_srcNDRRMA(), _srcLocalFeed()]);
     const rest    = await Promise.allSettled([_srcSummary(), _srcMissingRegistry()]);
     const changed = primary.concat(rest).some(r=>r.status==="fulfilled" && r.value===true);
+    // "Answered" is not "changed": a source repeating yesterday's number is
+    // healthy, a source saying nothing at all is not. Only the first justifies
+    // moving the sync stamp forward.
+    const answered = Object.keys(FETCH_HEALTH).some(k=>FETCH_HEALTH[k].last && FETCH_HEALTH[k].streak===0);
     if(changed || isManual){
       renderStats(); renderStatsPage(); renderMissingSummary(); renderEvent(); renderReliefCollected();
-      if(isManual) toast(LANG==="ne"?"तथ्यांक अद्यावधिक भयो (Live)":"Latest disaster figures synced.","crim");
+      if(isManual) toast(answered ? (LANG==="ne"?"तथ्यांक अद्यावधिक भयो (Live)":"Latest disaster figures synced.")
+                                  : (LANG==="ne"?"कुनै पनि स्रोतमा पुग्न सकिएन — पछिल्लो ज्ञात तथ्यांक देखाइँदै":"No source could be reached — showing the last known figures."),"crim");
+    }else if(isManual && !answered){
+      toast(LANG==="ne"?"कुनै पनि स्रोतमा पुग्न सकिएन — पछिल्लो ज्ञात तथ्यांक देखाइँदै":"No source could be reached — showing the last known figures.","crim");
     }
-    setSync(nptNow());
+    if(answered){ _syncedOnce=true; setSync(nptNow()); }
+    else setSync();                     // re-render the stamp, do NOT move it
+    _liveBackoff = answered ? 0 : Math.min(_liveBackoff+1, 5);
+    return answered;
   } finally {
     _refreshing=false;
   }
+}
+
+/* Self-scheduling refresh. A healthy cycle waits the full ten minutes; a cycle
+   in which NOTHING answered — upstream down, radio dropped, captive portal —
+   comes back in a minute and backs off from there, so the page recovers on its
+   own instead of sitting on a stale figure for the whole interval. A fixed
+   setInterval could not do this, and on a phone that loses signal in a valley
+   it is the difference between catching up in 60 seconds and in 10 minutes. */
+let _liveTimer=null, _liveBackoff=0;
+const LIVE_PERIOD=600000, LIVE_RETRY_MIN=60000, LIVE_RETRY_MAX=300000;
+function scheduleLiveRefresh(){
+  clearTimeout(_liveTimer);
+  const wait=_liveBackoff ? Math.min(LIVE_RETRY_MAX, LIVE_RETRY_MIN*Math.pow(2,_liveBackoff-1)) : LIVE_PERIOD;
+  _liveTimer=setTimeout(()=>{ Promise.resolve(liveRefresh()).then(scheduleLiveRefresh, scheduleLiveRefresh); }, wait);
 }
 
 /* Manual "sync now" affordance — wires any [data-sync] control if a page adds one,
@@ -3354,7 +3543,13 @@ function setupManualSync(){
   // refresh immediately when the tab becomes visible again (cheap, catches up fast)
   if(!window.__ndVis){
     window.__ndVis=true;
-    document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="visible"){ liveRefresh(); fetchLiveAlerts(); fetchLiveNews(); fetchDistrictWarnings().then(updateWarnReopen); if($("#hwRoot")){ fetchHighways(); fetchHighwayNews(); } } });
+    const catchUp=()=>{ liveRefresh(); fetchLiveAlerts(); fetchLiveNews(); fetchDistrictWarnings().then(updateWarnReopen); if($("#hwRoot")){ fetchHighways(); fetchHighwayNews(); } };
+    document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="visible") catchUp(); });
+    // Coming back onto a signal is the other moment worth catching up on, and
+    // the one that matters on a phone in a valley. Reset the backoff so the
+    // retry ladder does not keep the page waiting five minutes after the
+    // connection is already back.
+    window.addEventListener("online",()=>{ _liveBackoff=0; catchUp(); scheduleLiveRefresh(); });
   }
 }
 
