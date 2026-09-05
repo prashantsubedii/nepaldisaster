@@ -3926,3 +3926,21 @@ html[lang="ne"] .rfund__ttlnote{ font-family: var(--f-np); }
 .fpop__x{ width: 34px; height: 34px; }
 .fpop__x .ico-x{ width: 16px; height: 16px; }
 .notif__x .ico-x{ width: 16px; height: 16px; }
+
+/* ---------- live-sync stamp ---------------------------------------------
+   Written by setSync(). The page states that its figures refresh themselves,
+   so the reader is given the means to check: the time of the last answer, and
+   a plain label when no source has answered for half an hour. The stale state
+   is the one case here that earns colour, because the colour IS the fact. */
+.syncstamp{
+  display: inline-block;
+  margin-top: 6px;
+  font-size: .66rem;
+  letter-spacing: .09em;
+  color: var(--muted);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-pill);
+  padding: 3px 10px;
+}
+.syncstamp:empty{ display: none; }
+.syncstamp.is-stale{ color: var(--danger); border-color: color-mix(in srgb, var(--danger) 45%, var(--rule)); }

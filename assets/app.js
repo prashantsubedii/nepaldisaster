@@ -1231,7 +1231,10 @@ function wire(){
   initMap(); initMissingForm(); initHistoryDetail();
   setLang(LANG);
   tickClocks(); setInterval(tickClocks,1000);
-  setSync(nptNow());
+  // Render the stamp, but do NOT record a sync: nothing has been fetched yet,
+  // and passing nptNow() here would have the page vouch for figures no source
+  // had confirmed. The first liveRefresh() below sets it for real.
+  setSync();
   // Self-scheduling rather than setInterval: the next wait depends on whether
   // this cycle actually reached anything. See scheduleLiveRefresh().
   Promise.resolve(liveRefresh()).then(scheduleLiveRefresh, scheduleLiveRefresh);
@@ -1755,10 +1758,19 @@ function maybeNewsPopup(){
   setTimeout(()=>{
     _newsPopScheduled=false;
     if(popupBudgetSpent()) return;                 // the warning popup may have run in the meantime
-    if(!document.getElementById("newsPop") && !sessionStorage.getItem("nd_npop_dismissed")){
-      spendPopupBudget();
-      openNewsPopup(pick);
+    if(document.getElementById("newsPop") || sessionStorage.getItem("nd_npop_dismissed")) return;
+    // Opening onto a tab nobody is looking at spends the card for nothing: the
+    // headline's id goes into NEWSPOP_SEEN, the session's one popup is spent,
+    // the dismiss timer runs, and the reader comes back to an empty corner
+    // having never seen it. Wait for them instead — the whole point of this
+    // card is that it is the one thing on the site allowed to interrupt.
+    if(document.visibilityState==="hidden"){
+      const again=()=>{ document.removeEventListener("visibilitychange",again); maybeNewsPopup(); };
+      document.addEventListener("visibilitychange",again);
+      return;
     }
+    spendPopupBudget();
+    openNewsPopup(pick);
   }, 12000);
 }
 
@@ -1816,7 +1828,14 @@ function openNewsPopup(pick){
                     :`<div class="npop__foot">${esc(t("npop.auto"))}</div>`}
     </div>`;
   document.body.appendChild(el);
+  // The card is inserted faded out and is revealed by the .open class. rAF is
+  // the right moment for that on a visible tab, but rAF does not fire at all
+  // while the tab is in the background — the card would sit at opacity 0 with
+  // pointer-events:none until its own dismiss timer removed it, invisible and
+  // unclickable, having already been marked as seen. The timeout is the
+  // backstop; adding the class twice is harmless.
   requestAnimationFrame(()=>el.classList.add("open"));
+  setTimeout(()=>el.classList.add("open"), 80);
 
   const x=el.querySelector("#npopX");
   if(x) x.addEventListener("click", ()=>{ try{sessionStorage.setItem("nd_npop_dismissed","1");}catch(_){} closeNewsPopup(); });
@@ -1824,7 +1843,16 @@ function openNewsPopup(pick){
   // Polite duration. The briefing card carries a picture, a pull-quote and
   // three figures, so it gets longer than a bare headline does.
   clearTimeout(_newsPopTimer);
-  _newsPopTimer=setTimeout(closeNewsPopup, pick.pinned?14000:7000);
+  // Count the reading time from when the card is on screen, not from when it
+  // was inserted: a tab hidden right after insertion would otherwise burn the
+  // whole window in the background.
+  const _hold=pick.pinned?14000:7000;
+  const _armDismiss=()=>{ clearTimeout(_newsPopTimer); _newsPopTimer=setTimeout(closeNewsPopup,_hold); };
+  _armDismiss();
+  document.addEventListener("visibilitychange", function _vis(){
+    if(!document.getElementById("newsPop")){ document.removeEventListener("visibilitychange",_vis); return; }
+    if(document.visibilityState==="visible") _armDismiss(); else clearTimeout(_newsPopTimer);
+  });
   // Don't yank it away mid-read
   el.addEventListener("mouseenter", ()=>clearTimeout(_newsPopTimer));
   el.addEventListener("mouseleave", ()=>{ clearTimeout(_newsPopTimer); _newsPopTimer=setTimeout(closeNewsPopup, 4000); });
@@ -2119,7 +2147,12 @@ function fetchEventImages(){
    all; making the one photograph we actually chose wait behind that would have
    left it as a placeholder for exactly the readers whose connection is worst. */
 function _putThumb(cell, src, alt, onfail){
-  const el=new Image(); el.alt=alt||""; el.loading="lazy";
+  const el=new Image(); el.alt=alt||""; el.loading="lazy"; el.decoding="async";
+  // Publisher CDNs routinely refuse a hotlink that arrives with a Referer, and
+  // a bulletin picture is hotlinked by definition. The popup card already sends
+  // no referrer, which is why the SAME photograph loaded there and fell back to
+  // the placeholder here. Keep the two in step.
+  el.referrerPolicy="no-referrer";
   el.onload=()=>{cell.innerHTML="";cell.appendChild(el);};
   el.onerror=onfail||(()=>{});   // keep placeholder if this one fails
   el.src=src;
@@ -2511,6 +2544,12 @@ function renderStatsPage(){
   const root=$("#statsRoot"); if(!root) return;
   root.innerHTML=`
     <p class="verify" style="margin-bottom:18px">${esc(applyTokens(t("stats.disclaimer")))}<br>
+      <!-- The page claims the figures refresh themselves, so it has to show
+           WHETHER they did. setSync() writes every [data-updated] element and
+           marks it .is-stale when no source has answered for half an hour;
+           until now the site rendered that stamp nowhere, so the claim was
+           unfalsifiable from the reader's side. -->
+      <span class="syncstamp mono" data-updated></span>
       <span style="display:inline-flex;gap:14px;flex-wrap:wrap;margin-top:4px">
         <a href="https://bipadportal.gov.np" target="_blank" rel="noopener" style="color:var(--crimson);font-weight:600">${esc(t("stats.official"))}</a>
         <a href="https://www.facebook.com/NDRRMA" target="_blank" rel="noopener" style="color:var(--crimson);font-weight:600">${esc(t("stats.fb"))}</a>
@@ -3003,7 +3042,11 @@ function renderReliefCollected(){
    even after NDRRMA's live count corrected downward. Ranking fixes both without
    letting a bad parse through: implausible jumps are still rejected.
    ============================================================================= */
-let _lastSync=null, _lastSyncMs=0;
+/* Seeded at load, not left at zero: the staleness clock has to start
+   somewhere, and if no source ever answers on this page view the stamp must
+   still turn over to "source unreachable" rather than sitting on a page-load
+   time forever. */
+let _lastSync=null, _lastSyncMs=Date.now();
 const SYNC_STALE_MS=30*60*1000;
 function setSync(d){
   if(d){ _lastSync=d; _lastSyncMs=Date.now(); }
