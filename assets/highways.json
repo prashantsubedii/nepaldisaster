@@ -1,10 +1,10 @@
 {
-  "updated_at": "2026-08-31T12:00:00+05:45",
+  "updated_at": "2026-09-06T10:15:00+05:45",
   "summary": {
-    "en": "Nine highways nationwide remain blocked or disrupted by the 26 August Bhote Koshi glacier-collapse flood and continuing monsoon rain. The key route into Kathmandu — the Prithvi Highway’s Mugling–Kathmandu section — is still CUT at Krishnabhir (Benighat Rorang, Dhading), where the carriageway subsided on 30 August after the Trishuli eroded its base. The Betrawati–Rasuwagadhi road to the China border was destroyed outright, and traffic on the Galchhi–Syaphrubesi and Narayanghat–Mugling stretches is being halted whenever the Trishuli rises. The Department of Roads has 155 pieces of heavy equipment deployed on major highways with 122 more on standby. Night one-way bans are in force on several hill sections. Conditions change hour to hour — always confirm with the local traffic office (dial 103) before travelling.",
-    "ne": "२६ भदौको भोटेकोशी हिमनदी भत्किएर आएको बाढी र निरन्तर मनसुनी वर्षाले देशभरका नौ राजमार्ग अझै अवरुद्ध वा प्रभावित छन्। काठमाडौं छिर्ने मुख्य मार्ग — पृथ्वी राजमार्गको मुग्लिन–काठमाडौं खण्ड — कृष्णभीर (बेनीघाट रोराङ, धादिङ) मा अझै अवरुद्ध छ; त्रिशूलीले जग खियाएपछि ३० भदौमा सडक भासिएको हो। चीन सिमानातर्फको बेत्रावती–रसुवागढी सडक पूरै ध्वस्त छ भने त्रिशूली बढ्दा गल्छी–स्याफ्रुबेसी र नारायणघाट–मुग्लिन खण्डमा आवागमन रोकिँदै आएको छ। सडक विभागले प्रमुख राजमार्गमा १५५ भारी उपकरण परिचालन गरेको छ, थप १२२ तयारी अवस्थामा। कयौं पहाडी खण्डमा राति एकतर्फी रोक लागू छ। अवस्था घण्टै पिच्छे बदलिन्छ — यात्रा गर्नुअघि स्थानीय ट्राफिक कार्यालय (१०३) मा पुष्टि गर्नुहोस्।"
+    "en": "Kathmandu is still cut off from the west by road. At Krishnabhir (Benighat Rorang, Dhading) a 252-metre temporary track was opened on 6 September — seven days after the Prithvi Highway carriageway was washed away — but the Department of Roads says it carries construction plant only and that normal traffic is about a week away. Further east on the same highway, the Parewabhir section in Gajuri Rural Municipality-2 is CLOSED to everything except ambulances and hearses from 6 am to 6 pm today while it is repaired. Until the Prithvi Highway reopens, large buses and freight entering Kathmandu must use the Tribhuvan Highway and Hetauda-bound vehicles the Kanti Lokpath; vehicles carrying fewer than 14 passengers may enter via Bhimphedi, Kulekhani, Sisneri and Dakshinkali. The Betrawati–Rasuwagadhi road to the China border was destroyed outright on 26 August and needs reconstruction. Night one-way bans remain in force on several hill sections. Conditions change hour to hour — always confirm with the local traffic office (dial 103) before travelling.",
+    "ne": "काठमाडौं पश्चिमतर्फ सडक मार्गबाट अझै जोडिएको छैन। पृथ्वी राजमार्गको सडक बगेको सात दिनपछि, ६ सेप्टेम्बरमा कृष्णभीर (बेनीघाट रोराङ, धादिङ) मा २५२ मिटर अस्थायी ट्र्याक खुल्यो — तर सडक विभागका अनुसार यसबाट निर्माण उपकरण मात्र गुड्न सक्छ र नियमित आवागमन सुरु हुन करिब एक साता लाग्छ। सोही राजमार्गको गजुरी गाउँपालिका-२ स्थित परेवाभीर खण्ड आज बिहान ६ देखि बेलुका ६ बजेसम्म मर्मतका लागि एम्बुलेन्स र शव बोक्ने सवारीबाहेक सबैका लागि बन्द छ। पृथ्वी राजमार्ग नखुल्दासम्म काठमाडौं छिर्ने ठूला बस र मालवाहक सवारीले त्रिभुवन राजमार्ग र हेटौंडातर्फका सवारीले कान्ति लोकपथ प्रयोग गर्नुपर्नेछ; १४ भन्दा कम यात्रु बोक्ने सवारी भीमफेदी, कुलेखानी, सिस्नेरी र दक्षिणकाली हुँदै छिर्न सक्नेछन्। चीन सिमानातर्फको बेत्रावती–रसुवागढी सडक १० भदौमै पूरै ध्वस्त भएको छ र पुनर्निर्माण आवश्यक छ। कयौं पहाडी खण्डमा राति एकतर्फी रोक कायमै छ। अवस्था घण्टै पिच्छे बदलिन्छ — यात्रा गर्नुअघि स्थानीय ट्राफिक कार्यालय (१०३) मा पुष्टि गर्नुहोस्।"
   },
-  "source": "Kathmandu Post · Nepal Press · NDRRMA · Nepal Police Traffic · Dept. of Roads · District Administration (31 Aug 2026)",
+  "source": "Kathmandu Post · Onlinekhabar · Dept. of Roads · District Administration Office Dhading · Nepal Police Traffic · NDRRMA (6 Sept 2026)",
   "provinces": [
     {
       "name": {
@@ -17,22 +17,66 @@
           "highway": "Prithvi Highway (H04)",
           "status": "closed",
           "since": {
-            "en": "Cut since 30 Aug (road subsided) — still closed",
-            "ne": "३० भदौदेखि बन्द (सडक भासियो) — अझै बन्द"
+            "en": "Cut since 30 Aug — 252 m temporary track opened 6 Sept",
+            "ne": "१४ भदौदेखि अवरुद्ध — २१ भदौमा २५२ मिटर अस्थायी ट्र्याक खुल्यो"
           },
           "reason": {
-            "en": "The carriageway sank at Krishnabhir in Benighat Rorang, Dhading, after the swollen Trishuli eroded its base — the main route into Kathmandu is fully cut. Bhote Koshi flood debris also blocks the Dhading stretch at Galoudi, Bahuni Bhir (Gajuri) and Mahesh Dobhan (Galchhi).",
-            "ne": "त्रिशूली बढेर जग खियाएपछि धादिङको बेनीघाट रोराङस्थित कृष्णभीरमा सडक भासियो — काठमाडौं छिर्ने मुख्य मार्ग पूर्ण अवरुद्ध। भोटेकोशी बाढीको सामग्रीले धादिङको गलौदी, बाहुनीभीर (गजुरी) र महेशडोभान (गल्छी) मा पनि अवरोध।"
+            "en": "The carriageway sank at Krishnabhir in Benighat Rorang, Dhading, after the swollen Trishuli eroded its base. Seven days later, on 6 September, a 252-metre track cut above the slide reconnected the two ends — but the Department of Roads says it is wide enough for construction plant only, not for regular vehicles, and that substantial work remains before normal traffic can resume.",
+            "ne": "त्रिशूली बढेर जग खियाएपछि धादिङको बेनीघाट रोराङस्थित कृष्णभीरमा सडक भासिएको थियो। सात दिनपछि, ६ सेप्टेम्बरमा पहिरोमाथि काटिएको २५२ मिटर ट्र्याकले दुवै छेउ जोड्यो — तर सडक विभागका अनुसार यो निर्माण उपकरण गुड्ने चौडाइ मात्र भएको हो, नियमित सवारीका लागि होइन, र नियमित आवागमन सुरु हुनुअघि धेरै काम बाँकी छ।"
           },
           "eta": {
-            "en": "No reopening time — 155 heavy machines deployed nationwide",
-            "ne": "खुल्ने समय अनिश्चित — देशभर १५५ भारी उपकरण परिचालन"
+            "en": "Normal traffic about a week away (Dept. of Roads, 6 Sept)",
+            "ne": "नियमित आवागमन करिब एक सातापछि (सडक विभाग, ६ सेप्टेम्बर)"
           },
           "detour": {
-            "en": "No direct alternative; ask the traffic office. BP/Kanti routes are night-restricted.",
-            "ne": "प्रत्यक्ष विकल्प छैन; ट्राफिक कार्यालयमा सोध्नुहोस्। बीपी/कान्ति मार्गमा राति रोक छ।"
+            "en": "Large buses and freight into Kathmandu: Tribhuvan Highway. Towards Hetauda: Kanti Lokpath. Under 14 seats: Bhimphedi, Kulekhani, Sisneri or Dakshinkali; return by Pharping–Phakhel–Kulekhani–Bhimphedi.",
+            "ne": "काठमाडौं छिर्ने ठूला बस र मालवाहक: त्रिभुवन राजमार्ग। हेटौंडातर्फ: कान्ति लोकपथ। १४ सिटभन्दा कम: भीमफेदी, कुलेखानी, सिस्नेरी वा दक्षिणकाली; फर्कँदा फर्पिङ–फाखेल–कुलेखानी–भीमफेदी।"
           },
           "contact": "Dhading DPO · Traffic 103"
+        },
+        {
+          "name": "Parewabhir (Gajuri) — Malekhu side",
+          "highway": "Prithvi Highway (H04)",
+          "status": "closed",
+          "since": {
+            "en": "Closed 6 am – 6 pm today (6 Sept) for repairs",
+            "ne": "आज (२१ भदौ) बिहान ६ – बेलुका ६ बजेसम्म मर्मतका लागि बन्द"
+          },
+          "reason": {
+            "en": "The District Administration Office, Dhading has barred every vehicle except ambulances and hearses from the Parewabhir section in Gajuri Rural Municipality-2 between 6 am and 6 pm while the road damaged by the 26 August flood is repaired. The same closure was tried on 5 September but the work could not be finished. The section had been running one-way on a 100-metre temporary track opened on 2 September.",
+            "ne": "२६ अगस्टको बाढीले बिगारेको सडक मर्मत गर्न जिल्ला प्रशासन कार्यालय धादिङले गजुरी गाउँपालिका-२ को परेवाभीर खण्डमा बिहान ६ देखि बेलुका ६ बजेसम्म एम्बुलेन्स र शव बोक्ने सवारीबाहेक सबै सवारी रोकेको छ। ५ सेप्टेम्बरमा पनि यही बन्द गरिएको थियो तर काम सकिएन। यो खण्ड २ सेप्टेम्बरमा खोलिएको १०० मिटर अस्थायी ट्र्याकबाट एकतर्फी चल्दै आएको थियो।"
+          },
+          "eta": {
+            "en": "Reopens 6 pm today if the repair finishes",
+            "ne": "मर्मत सकिए आज बेलुका ६ बजे खुल्ने"
+          },
+          "detour": {
+            "en": "Emergency vehicles only during the window; use the Tribhuvan Highway or Kanti Lokpath",
+            "ne": "बन्दको समयमा आपत्कालीन सवारी मात्र; त्रिभुवन राजमार्ग वा कान्ति लोकपथ प्रयोग गर्नुहोस्"
+          },
+          "contact": "Dhading DAO · Traffic 103"
+        },
+        {
+          "name": "Naubise – Palung – Bhainse – Hetauda",
+          "highway": "Tribhuvan Highway (H02)",
+          "status": "oneway",
+          "since": {
+            "en": "Carrying diverted Prithvi Highway traffic since 30 Aug",
+            "ne": "१४ भदौदेखि पृथ्वी राजमार्गबाट मोडिएको आवागमन बोक्दै"
+          },
+          "reason": {
+            "en": "With the Prithvi Highway cut at Krishnabhir, all large passenger buses and freight vehicles entering Kathmandu have been routed onto this road, which runs under one-way restrictions on its hill sections. Fuel tankers reach the valley through Hetauda, Bhainse, Palung and Naubise. Expect heavy congestion and long holds.",
+            "ne": "कृष्णभीरमा पृथ्वी राजमार्ग अवरुद्ध भएपछि काठमाडौं छिर्ने सबै ठूला यात्रुवाहक बस र मालवाहक सवारी यसै मार्गमा मोडिएका छन्; पहाडी खण्डमा एकतर्फी नियम लागू छ। इन्धन ट्यांकरहरू हेटौंडा, भैंसे, पालुङ र नौबिसे हुँदै उपत्यका पुग्दै छन्। ठूलो जाम र लामो रोकावटको सम्भावना छ।"
+          },
+          "eta": {
+            "en": "Open with one-way restrictions and delays",
+            "ne": "एकतर्फी नियम र ढिलाइसहित खुला"
+          },
+          "detour": {
+            "en": "Vehicles under 14 seats: Bhimphedi, Kulekhani, Sisneri, Dakshinkali",
+            "ne": "१४ सिटभन्दा कम सवारी: भीमफेदी, कुलेखानी, सिस्नेरी, दक्षिणकाली"
+          },
+          "contact": "Traffic 103"
         },
         {
           "name": "Narayanghat – Mugling",
@@ -40,7 +84,7 @@
           "status": "oneway",
           "since": {
             "en": "One-way + night ban since 30 Aug",
-            "ne": "३० भदौदेखि एकतर्फी + राति रोक"
+            "ne": "१४ भदौदेखि एकतर्फी + राति रोक"
           },
           "reason": {
             "en": "A landslide blocked the Mugling–Narayanghat section; after debris clearance it runs one-way only, and vehicles are barred after 10 pm because of landslide risk. Movement is also halted outright whenever the upstream Trishuli rises.",
@@ -62,11 +106,11 @@
           "status": "closed",
           "since": {
             "en": "Destroyed 26 Aug",
-            "ne": "२६ भदौमा ध्वस्त"
+            "ne": "१० भदौमा ध्वस्त"
           },
           "reason": {
             "en": "The 26 August Bhote Koshi glacial flash flood destroyed the road at multiple points — the Dept. of Roads confirms the entire 42 km Betrawati–Rasuwagadhi stretch, plus 16 km toward the border, was swept away.",
-            "ne": "२६ भदौको भोटेकोशी हिमनदी बाढीले सडक कैयौं ठाउँमा ध्वस्त — सडक विभागका अनुसार बेत्रावती–रसुवागढीको पूरै ४२ कि.मि. र सिमानातर्फको १६ कि.मि. खण्ड बगायो।"
+            "ne": "१० भदौको भोटेकोशी हिमनदी बाढीले सडक कैयौं ठाउँमा ध्वस्त — सडक विभागका अनुसार बेत्रावती–रसुवागढीको पूरै ४२ कि.मि. र सिमानातर्फको १६ कि.मि. खण्ड बगायो।"
           },
           "eta": {
             "en": "Long-term closure — reconstruction needed",
@@ -84,7 +128,7 @@
           "status": "closed",
           "since": {
             "en": "Blocked since 26 Aug",
-            "ne": "२६ भदौदेखि अवरुद्ध"
+            "ne": "१० भदौदेखि अवरुद्ध"
           },
           "reason": {
             "en": "River erosion and debris cut the road at Khalte, Rasuwa, and the corridor to Syaphrubesi is impassable. Authorities are also halting traffic on the Galchhi–Syaphrubesi stretch of the Prithvi Highway whenever the Trishuli rises.",
@@ -127,12 +171,12 @@
           "highway": "Kanti Rajmarg",
           "status": "oneway",
           "since": {
-            "en": "Night ban in force",
-            "ne": "राति रोक लागू"
+            "en": "Night ban in force — now the designated Hetauda-bound route",
+            "ne": "राति रोक लागू — अहिले हेटौंडातर्फको तोकिएको मार्ग"
           },
           "reason": {
-            "en": "Landslide risk on the Makwanpur hill section. Closed to all vehicles 5:00 pm – 5:00 am.",
-            "ne": "मकवानपुरको पहाडी खण्डमा पहिरो जोखिम। बेलुका ५ – बिहान ५ बजेसम्म सबै सवारी बन्द।"
+            "en": "Landslide risk on the Makwanpur hill section: closed to all vehicles 5:00 pm – 5:00 am. Since the Prithvi Highway was cut, every Hetauda-bound vehicle has been directed onto this road, which is also carrying 300–400 tonnes of vegetables a day into Kathmandu from Thaha Municipality.",
+            "ne": "मकवानपुरको पहाडी खण्डमा पहिरो जोखिम: बेलुका ५ – बिहान ५ बजेसम्म सबै सवारी बन्द। पृथ्वी राजमार्ग अवरुद्ध भएपछि हेटौंडातर्फका सबै सवारी यसै मार्गमा पठाइएका छन्; थाहा नगरपालिकाबाट दैनिक ३००–४०० टन तरकारी पनि यही बाटो काठमाडौं आउँदै छ।"
           },
           "eta": {
             "en": "Daytime only",
@@ -180,7 +224,7 @@
           "status": "caution",
           "since": {
             "en": "Intermittent since 27 Aug",
-            "ne": "२७ भदौदेखि रुकिरुकी"
+            "ne": "११ भदौदेखि रुकिरुकी"
           },
           "reason": {
             "en": "Small slips near Aabukhaireni and Dumre are cleared but recur after rain.",
@@ -254,7 +298,7 @@
           "status": "closed",
           "since": {
             "en": "Blocked since 28 Aug",
-            "ne": "२८ भदौदेखि अवरुद्ध"
+            "ne": "१२ भदौदेखि अवरुद्ध"
           },
           "reason": {
             "en": "Mud and debris blocked the road at Rajduwali, Ilam; a local diversion is in use.",
@@ -380,7 +424,7 @@
           "status": "closed",
           "since": {
             "en": "Blocked since 28 Aug",
-            "ne": "२८ भदौदेखि अवरुद्ध"
+            "ne": "१२ भदौदेखि अवरुद्ध"
           },
           "reason": {
             "en": "A landslide blocked the road at Kungri, Rolpa; clearing is under way.",
@@ -454,7 +498,7 @@
           "status": "closed",
           "since": {
             "en": "Blocked since 28 Aug",
-            "ne": "२८ भदौदेखि अवरुद्ध"
+            "ne": "१२ भदौदेखि अवरुद्ध"
           },
           "reason": {
             "en": "Rocks, soil and mud blocked the corridor at Rijegad Khola, Rukum West.",
