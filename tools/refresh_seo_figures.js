@@ -22,18 +22,22 @@
    one hop (last published → current), so leaving old rows in place would make
    a second run rewrite numbers that have already moved on.
 
-   Current hop: NDRRMA's 3 September update (1,259 dead / 5,083 missing /
-   5,000+ injured / 590 foreign) → its 5 September update (1,344 dead / 4,886
-   missing / 5,300 injured / 589 foreign / 13,013 rescued including 324 foreign
-   nationals), plus Nepal's first official damage estimate of Rs 387.54 billion
-   published on 4 September.
+   Current hop: 5 September 2026 -> 6 September 2026.
 
-   NOTE ON DATES: the rescued total moved this time — it is no longer the PM's
-   2 September statement but the officials' 5 September figure — so the "2
-   September" wording that dated it is retired along with the number. The
-   missing count FELL, from 5,083 to 4,886, as names were matched against the
-   rescue registry and the recovered dead; that is a real revision, not a
-   lagging report, and the crawler copy has to follow it down as well as up.
+   NOTE: the casualty figures did NOT move. No new national toll was published
+   on 6 September — NDRRMA's 1,344 and Nepal Police's 08:00 count of 1,342 on
+   5 September are still the latest official numbers, and the crawler copy must
+   keep saying "as of 5 September 2026" rather than being re-dated to today.
+   Re-dating figures that have not been re-published is exactly how a site
+   starts lying quietly.
+
+   What moved: the road situation (a 252 m temporary track opened at
+   Krishnabhir, the Parewabhir section closed for the working day, and the
+   Tribhuvan Highway / Kanti Lokpath now carrying diverted traffic), the damage
+   assessment (the Rapid Damage and Needs Assessment puts loss and damage near
+   Rs 400 billion against NDRRMA's Rs 387.54 billion, with a PDNA panel due to
+   report in six weeks), and dateModified/datePosted.
+
    ========================================================================= */
 "use strict";
 const fs = require("fs");
@@ -45,93 +49,30 @@ const DRY = process.argv.includes("--dry");
 /* Longer prose swaps for the JSON-LD answer text and meta descriptions, applied
    before the numeric table so their wording stays coherent. */
 const PROSE = [
+  /* The homepage SpecialAnnouncement one-liner about the road. */
   [
-    "1,259 dead, 5,083 missing, 11,993 rescued (3 Sept)",
-    "1,344 dead, 4,886 missing, 13,013 rescued (5 Sept)"
+    "The Prithvi Highway is cut at Krishnabhir in Dhading.",
+    "The Prithvi Highway is closed at Parewabhir (Gajuri-2, Dhading) from 6am to 6pm on 6 September; at Krishnabhir a 252-metre temporary track opened but carries construction plant only."
   ],
+  /* The FAQ answer people actually search for. */
   [
-    "NDRRMA confirms 1,259 dead and 5,083 missing in the Bhotekoshi–Trishuli flood as of 3 September 2026.",
-    "NDRRMA confirms 1,344 dead and 4,886 missing in the Bhotekoshi–Trishuli flood as of 5 September 2026."
+    "The Prithvi Highway\u2019s Mugling\u2013Kathmandu section is cut at Krishnabhir in Benighat Rorang, Dhading, where the road subsided after the Trishuli eroded its base. The Betrawati\u2013Rasuwagadhi road was destroyed by the flood. Night bans apply on the BP Highway (6pm\u20134am) and Kanti Lokpath (5pm\u20135am). See the Highway Updates page for the live list.",
+    "The Prithvi Highway\u2019s Mugling\u2013Kathmandu section is still cut at Krishnabhir in Benighat Rorang, Dhading. A 252-metre temporary track opened there on 6 September but carries construction plant only, and the Department of Roads puts normal traffic about a week away. The Parewabhir section in Gajuri-2 is closed to all but ambulances and hearses from 6am to 6pm on 6 September for repairs. Large buses and freight entering Kathmandu must use the Tribhuvan Highway and Hetauda-bound vehicles the Kanti Lokpath; vehicles under 14 seats may enter via Bhimphedi, Kulekhani, Sisneri or Dakshinkali. The Betrawati\u2013Rasuwagadhi road was destroyed by the flood. Night bans apply on the BP Highway (6pm\u20134am) and Kanti Lokpath (5pm\u20135am). See the Highway Updates page for the live list."
   ],
+  /* Damage: NDRRMA's estimate stands, the RDNA total is added beside it. */
   [
-    "NDRRMA put the death toll at 1,259 as of 3 September 2026. Around 900 bodies have been recovered",
-    "NDRRMA put the death toll at 1,344 as of 5 September 2026. 1,030 bodies have been temporarily buried after procedure"
-  ],
-  [
-    "5,083 people remain missing as of 3 September 2026.",
-    "4,886 people remain missing as of 5 September 2026."
-  ],
-  [
-    "590 foreign nationals from 39 countries",
-    "589 foreign nationals from 39 countries"
-  ],
-  [
-    "1,259 confirmed (NDRRMA, 3 Sept, Nepal side)",
-    "1,344 confirmed (NDRRMA, 5 Sept, Nepal side)"
-  ],
-  [
-    "5,083 reported missing or out of contact (Nepal side)",
-    "4,886 reported missing or out of contact (Nepal side)"
-  ],
-  [
-    "5,083 reported missing including 590 foreign nationals",
-    "4,886 reported missing including 589 foreign nationals"
-  ],
-  [
-    "1,259 dead, 5,083 missing, 11,993 rescued, 5,000+ injured / 2,740 treated",
-    "1,344 dead, 4,886 missing, 13,013 rescued, 5,300 injured / 2,740 treated"
-  ],
-  [
-    "killing 1,250+ people and leaving more than 5,000 missing",
-    "killing 1,340+ people and leaving nearly 4,900 missing"
-  ],
-  [
-    "11,993 rescued by joint security forces (NDRRMA, 2 Sept)",
-    "13,013 rescued by joint security forces (Nepali officials, 5 Sept)"
-  ],
-  [
-    "11,993 rescued by security forces; 4,248 individually named in the official NDRRMA registry",
-    "13,013 rescued by security forces; 5,006 individually named in the official NDRRMA registry"
-  ],
-  [
-    "total preliminary damages estimated near Rs 200 billion ($4–$5B)",
-    "Nepal's first official damage estimate at Rs 387.54 billion ($2.56B, NDRRMA, 4 Sept)"
-  ],
-  [
-    "4,248 individually named in the public family tracing registry",
-    "5,006 individually named in the public family tracing registry"
-  ],
-  [
-    "as of 5 September 2026. 11,993 people have been rescued and 21,000+ security personnel are deployed.",
-    "as of 5 September 2026. 13,013 people have been rescued and 21,400+ security personnel are deployed."
-  ],
-  /* The PM statement is dated and still true as history, but it is answering
-     the question "how many have been rescued", so it has to carry the current
-     figure and cite the authority that published it. */
-  [
-    "Prime Minister Balen Shah told Parliament on 2 September 2026 that 11,993 people had been rescued, including 279 airlifted from a hydropower tunnel over two days and 252 foreign nationals flown out by helicopter. 21,000+ security personnel are deployed — 8,722 Nepali Army, 7,894 Nepal Police and 4,203 Armed Police Force.",
-    "Nepali officials put the total rescued at 13,013 as of 5 September 2026, including 324 foreign nationals; 5,006 of them are individually named in the public NDRRMA tracing registry. The Prime Minister had given Parliament a figure of 11,993 on 2 September. 21,400+ security personnel are deployed — 9,300 Nepali Army, 7,912 Nepal Police and 4,203 Armed Police Force."
-  ],
-  [
-    "21,000+ active personnel (Nepali Army 8,722, Nepal Police 7,894, Armed Police Force 4,203)",
-    "21,400+ active personnel (Nepali Army 9,300, Nepal Police 7,912, Armed Police Force 4,203)"
-  ],
-  [
-    "and 21,000+ security personnel deployed",
-    "and 21,400+ security personnel deployed"
+    "387.54 billion ($2.56B, NDRRMA, 4 Sept)",
+    "387.54 billion ($2.56B, NDRRMA, 4 Sept); the Rapid Damage and Needs Assessment puts total loss and damage near Rs 400 billion"
   ],
 ];
 
-/* Previous value → current value. Order matters: longer/more specific strings
+/* Previous value \u2192 current value. Order matters: longer/more specific strings
    must come before shorter ones that they contain. */
 const FIGURES = [
-  ["1,259 dead, 5,083 missing, 11,993 rescued", "1,344 dead, 4,886 missing, 13,013 rescued"],
-  ["1,259 dead and 5,083 missing", "1,344 dead and 4,886 missing"],
-  ["590 foreign nationals", "589 foreign nationals"],
-  ["5,000+ injured", "5,300 injured"],
-  ["1,259", "1,344"],
-  ["5,083", "4,886"],
+  ['"dateModified":"2026-09-05"', '"dateModified":"2026-09-06"'],
+  ['"datePosted":"2026-09-05T13:20:00+05:45"', '"datePosted":"2026-09-06T10:30:00+05:45"'],
 ];
+
 
 function run() {
   const files = fs.readdirSync(ROOT).filter(f => f.endsWith(".html"));
