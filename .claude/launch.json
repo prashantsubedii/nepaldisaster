@@ -3,8 +3,8 @@
   "configurations": [
     {
       "name": "static",
-      "runtimeExecutable": "npx",
-      "runtimeArgs": ["--yes", "serve", "-l", "4321", "."],
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "4321"],
       "port": 4321
     }
   ]

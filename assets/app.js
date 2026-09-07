@@ -173,8 +173,12 @@ const EVENT = {
   since:"2026-08-26T08:37:00+05:45",
   title:{en:"2026 Nepal Floods", ne:"२०२६ नेपाल बाढी"},
   region:{en:"Rasuwa · Nuwakot · Dhading · Trishuli corridor · Chitwan · Nawalparasi", ne:"रसुवा · नुवाकोट · धादिङ · त्रिशूली कोरिडोर · चितवन · नवलपरासी"},
-  eas:{en:"Trishuli / Bhote Koshi glacier-collapse flood. Chinese worker Lu Haitao was pulled ALIVE from the Upper Trishuli-1 tunnel at 1:20pm on 5 Sept, ten days in — the third survivor found underground in two days. NDRRMA's 5 Sept figures: 1,344 dead, 4,886 missing, 5,300 injured; 13,013 rescued including 324 foreign nationals. First official damage estimate: Rs 387.54 billion. Prithvi Highway still cut at Krishnabhir.",
-       ne:"त्रिशूली / भोटेकोशी हिमनदी भत्किएर आएको बाढी। ५ सेप्टेम्बर दिउँसो १:२० बजे माथिल्लो त्रिशूली-१ को सुरुङबाट चिनियाँ कामदार लु हाइताओलाई जीवितै निकालियो — दस दिनपछि, र दुई दिनमा सुरुङभित्र भेटिएका तेस्रो जीवित व्यक्ति। NDRRMA को ५ सेप्टेम्बरको तथ्यांक: १,३४४ मृत्यु, ४,८८६ बेपत्ता, ५,३०० घाइते; ३२४ विदेशी नागरिकसहित १३,०१३ उद्धार। पहिलो आधिकारिक क्षति अनुमान: रु. ३८७.५४ अर्ब। कृष्णभीरमा पृथ्वी राजमार्ग अझै अवरुद्ध।"}
+  // This is the FIRST-PAINT copy, shown for the second or two before
+  // assets/live_data.json answers. Keep it word-for-word in step with that
+  // file's event.eas — if it drifts, the banner briefly contradicts the hero
+  // stats underneath it, and offline readers see only this version.
+  eas:{en:"Trishuli / Bhote Koshi glacier-collapse flood. ROAD: the Prithvi Highway's Parewabhir section (Gajuri-2, Dhading) is closed to everything but ambulances and hearses from 6 am to 6 pm today; at Krishnabhir a 252-metre temporary track opened on 6 Sept but carries construction plant only, with normal traffic about a week away. Large buses and freight into Kathmandu must use the Tribhuvan Highway, Hetauda-bound vehicles the Kanti Lokpath. Latest official toll (NDRRMA, 5 Sept): 1,344 dead, 4,886 missing, 5,300 injured; 13,013 rescued including 324 foreign nationals. The Rapid Damage and Needs Assessment puts loss and damage near Rs 400 billion.",
+       ne:"त्रिशूली / भोटेकोशी हिमनदी भत्किएर आएको बाढी। सडक: पृथ्वी राजमार्गको परेवाभीर खण्ड (गजुरी-२, धादिङ) आज बिहान ६ देखि बेलुका ६ बजेसम्म एम्बुलेन्स र शव बोक्ने सवारीबाहेक बन्द; कृष्णभीरमा ६ सेप्टेम्बरमा २५२ मिटर अस्थायी ट्र्याक खुले पनि त्यसबाट निर्माण उपकरण मात्र गुड्छ, नियमित आवागमन करिब एक सातापछि। काठमाडौं छिर्ने ठूला बस र मालवाहकले त्रिभुवन राजमार्ग, हेटौंडातर्फकाले कान्ति लोकपथ प्रयोग गर्नुपर्नेछ। पछिल्लो आधिकारिक तथ्यांक (NDRRMA, ५ सेप्टेम्बर): १,३४४ मृत्यु, ४,८८६ बेपत्ता, ५,३०० घाइते; ३२४ विदेशी नागरिकसहित १३,०१३ उद्धार। द्रुत क्षति तथा आवश्यकता आकलनले क्षति करिब रु. ४०० अर्ब पुग्ने देखाएको छ।"}
 };
 /* Nepal-side figures only. Live-refreshed every 10 minutes: local feed (baseline)
    → Wikipedia PROSE (deaths/missing/injured + foreign nationals among the missing,
@@ -190,36 +194,40 @@ let STATS = [
 
 /* -------------------- TICKER -------------------- */
 const TICKER = [
-  {src:"TUNNEL", en:"Chinese worker Lu Haitao, 49, pulled out ALIVE from the Upper Trishuli-1 tunnel at 1:20pm on 5 Sept — found 225 m inside by the Nepali Army and a South Korean rescue team, ten days after the flood",
-   ne:"५ सेप्टेम्बर दिउँसो १:२० बजे माथिल्लो त्रिशूली-१ सुरुङबाट ४९ वर्षीय चिनियाँ कामदार लु हाइताओ जीवितै निकालिए — बाढी गएको दस दिनपछि नेपाली सेना र दक्षिण कोरियाली टोलीले सुरुङभित्र २२५ मिटरमा भेटे"},
-  {src:"NDRRMA", en:"NDRRMA update (5 Sept): 1,344 dead, 4,886 missing or out of contact and 5,300 injured on the Nepal side; 13,013 rescued including 324 foreign nationals",
-   ne:"NDRRMA अद्यावधिक (५ सेप्टेम्बर): नेपालतर्फ १,३४४ मृत्यु, ४,८८६ बेपत्ता वा सम्पर्कविहीन र ५,३०० घाइते; ३२४ विदेशी नागरिकसहित १३,०१३ उद्धार"},
-  {src:"RELIEF", en:"Rs 1 crore released to each of Rasuwa and Nuwakot from the PM Disaster Relief Fund; 10 truckloads of relief material despatched and all ministers pledge one month's salary",
-   ne:"प्रधानमन्त्री विपद् राहत कोषबाट रसुवा र नुवाकोट प्रत्येकलाई रु. १ करोड निकासा; १० ट्रक राहत सामग्री पठाइयो र सबै मन्त्रीले एक महिनाको तलब दिने घोषणा"},
-  {src:"RESCUE", en:"900 hydropower workers missing across 12 projects and around 500 still believed inside the tunnels — 557 missing at Trishuli 3A alone (IPPAN) and 576 at Upper Trishuli-1",
-   ne:"१२ आयोजनाका ९०० जलविद्युत् कामदार बेपत्ता, सुरुङभित्र अझै करिब ५०० जना रहेको अनुमान — त्रिशूली ३ए मै ५५७ (IPPAN) र माथिल्लो त्रिशूली-१ मा ५७६ जना बेपत्ता"},
-  {src:"TRAFFIC", en:"Prithvi Highway CLOSED at Parewabhir (Gajuri-2, Dhading) 6am–6pm today for repairs — ambulances and hearses only",
-   ne:"पृथ्वी राजमार्गको परेवाभीर (गजुरी-२, धादिङ) खण्ड आज बिहान ६ – बेलुका ६ बजेसम्म मर्मतका लागि बन्द — एम्बुलेन्स र शव बोक्ने सवारी मात्र"},
+  {src:"TUNNEL", en:"Australian tunnel expert Arnold Dix, who led the 2023 Silkyara rescue, arrived on 6 Sept and says 41 people are still trapped inside the Chilime hydropower tunnel",
+   ne:"२०२३ को सिल्क्यारा उद्धार नेतृत्व गरेका अष्ट्रेलियाली सुरुङ विज्ञ आर्नल्ड डिक्स ६ सेप्टेम्बरमा नेपाल आए — चिलिमे सुरुङभित्र अहिले पनि ४१ जना फसेको उनले बताए"},
+  {src:"FOOD", en:"NDRRMA (7 Sept): 1,806 hectares of farmland washed away, cutting food production in the affected districts by an estimated 7,686 tonnes",
+   ne:"NDRRMA (७ सेप्टेम्बर): १,८०६ हेक्टर खेतीयोग्य जमिन बग्यो, प्रभावित जिल्लामा खाद्य उत्पादन करिब ७,६८६ टन घट्ने अनुमान"},
+  {src:"RASUWA", en:"Aamachhodingmo Rural Municipality (Rasuwa) has been cut off since 26 Aug — food, salt and cooking oil have run out for more than 7,000 people, with helicopters the only way in",
+   ne:"आमाछोदिङमो गाउँपालिका (रसुवा) ४९ भादौदेखि सम्पर्कविहीन — ७,००० भन्दा बढीका लागि खाद्य, नुन र तेल सकियो, पुग्ने बाटो हेलिकप्टर मात्र"},
   {src:"ROADS", en:"Krishnabhir: a 252-metre temporary track opened on 6 Sept, seven days after the washout — construction plant only, with normal traffic about a week away (Dept. of Roads)",
    ne:"कृष्णभीर: सडक बगेको सात दिनपछि ६ सेप्टेम्बरमा २५२ मिटर अस्थायी ट्र्याक खुल्यो — निर्माण उपकरण मात्र गुड्न सक्ने, नियमित आवागमन करिब एक सातापछि (सडक विभाग)"},
   {src:"SUPPLY", en:"Kathmandu supply lines rerouted: large buses and freight enter via the Tribhuvan Highway, Hetauda-bound traffic via Kanti Lokpath, fuel tankers via Hetauda–Bhainse–Palung–Naubise",
    ne:"काठमाडौंको आपूर्ति मार्ग परिवर्तन: ठूला बस र मालवाहक त्रिभुवन राजमार्ग हुँदै, हेटौंडातर्फका सवारी कान्ति लोकपथ हुँदै, इन्धन ट्यांकर हेटौंडा–भैंसे–पालुङ–नौबिसे हुँदै"},
+  {src:"NDRRMA", en:"NDRRMA update (5 Sept): 1,344 dead, 4,886 missing or out of contact and 5,300 injured on the Nepal side; 13,013 rescued including 324 foreign nationals",
+   ne:"NDRRMA अद्यावधिक (५ सेप्टेम्बर): नेपालतर्फ १,३४४ मृत्यु, ४,८८६ बेपत्ता वा सम्पर्कविहीन र ५,३०० घाइते; ३२४ विदेशी नागरिकसहित १३,०१३ उद्धार"},
+  {src:"TUNNEL", en:"Chinese worker Lu Haitao, 49, pulled out ALIVE from the Upper Trishuli-1 tunnel at 1:20pm on 5 Sept — found 225 m inside by the Nepali Army and a South Korean rescue team, ten days after the flood",
+   ne:"५ सेप्टेम्बर दिउँसो १:२० बजे माथिल्लो त्रिशूली-१ सुरुङबाट ४९ वर्षीय चिनियाँ कामदार लु हाइताओ जीवितै निकालिए — बाढी गएको दस दिनपछि नेपाली सेना र दक्षिण कोरियाली टोलीले सुरुङभित्र २२५ मिटरमा भेटे"},
+  {src:"RESCUE", en:"900 hydropower workers missing across 12 projects and around 500 still believed inside the tunnels — 557 missing at Trishuli 3A alone (IPPAN) and 576 at Upper Trishuli-1",
+   ne:"१२ आयोजनाका ९०० जलविद्युत् कामदार बेपत्ता, सुरुङभित्र अझै करिब ५०० जना रहेको अनुमान — त्रिशूली ३ए मै ५५७ (IPPAN) र माथिल्लो त्रिशूली-१ मा ५७६ जना बेपत्ता"},
   {src:"HEALTH", en:"1,030 bodies temporarily buried after procedure and only 96 identified and handed to families — 2,272 DNA samples collected and 1,270 unidentified bodies posted online for relatives to check",
    ne:"प्रक्रिया पूरा गरी १,०३० शव अस्थायी रूपमा गाडिए, तर ९६ को मात्र पहिचान भई परिवारलाई सुम्पिइयो — २,२७२ डीएनए नमुना संकलन र १,२७० अपरिचित शवको विवरण अनलाइनमा राखियो"},
-  {src:"ARMY", en:"Nepali Army has airlifted 3,344 Nepalis and 252 foreign nationals across 411 rescue and relief flights",
-   ne:"नेपाली सेनाले ४११ उद्धार तथा राहत उडानमा ३,३४४ नेपाली र २५२ विदेशी नागरिक हवाईमार्ग उद्धार गर्‍यो"},
-  {src:"PMO", en:"PM Disaster Relief Fund passes Rs 5.44 billion; Rs 675 million released to 15 local units for immediate relief",
-   ne:"प्रधानमन्त्री विपद् राहत कोष रु. ५.४४ अर्ब नाघ्यो; १५ स्थानीय तहलाई तत्काल राहतका लागि रु. ६७.५ करोड निकासा"},
-  {src:"USGS", en:"Glacier collapse near Langtang Lirung confirmed as cause of catastrophic debris surge down Bhote Koshi",
-   ne:"लाङटाङ लिरुङ नजिक हिमनदी भत्किएर भोटेकोशीमा विनाशकारी लेदो बाढी आएको पुष्टि"},
+  {src:"WATER", en:"55 drinking water projects damaged across Rasuwa, Nuwakot, Dhading and Gorkha — about Rs 640 million of damage; roughly 500,000 litres a day being trucked in",
+   ne:"रसुवा, नुवाकोट, धादिङ र गोरखामा ५५ खानेपानी आयोजना क्षतिग्रस्त — करिब रु. ६४ करोडको क्षति; दैनिक करिब पाँच लाख लिटर पानी ट्यांकरबाट वितरण"},
   {src:"GOVT", en:"NDRRMA's first official damage estimate (4 Sept): Rs 387.54 billion ($2.56B). The Rapid Damage and Needs Assessment puts it nearer Rs 400 billion, with Rs 8 billion needed over six months just to restore services",
    ne:"NDRRMA को पहिलो आधिकारिक क्षति अनुमान (४ सेप्टेम्बर): रु. ३८७.५४ अर्ब (२.५६ अर्ब डलर)। द्रुत क्षति तथा आवश्यकता आकलनले यो करिब रु. ४०० अर्ब देखाएको छ, सेवा पुनःस्थापनाका लागि मात्रै छ महिनामा रु. ८ अर्ब आवश्यक"},
   {src:"PDNA", en:"A Post Disaster Needs Assessment panel under NPC vice-president Gunakhar Bhatta has six weeks from 5 Sept to produce Nepal's definitive loss and damage figure",
    ne:"राष्ट्रिय योजना आयोगका उपाध्यक्ष गुणाकर भट्टको नेतृत्वमा गठित विपद्पछिको आवश्यकता आकलन समितिले ५ सेप्टेम्बरदेखि छ हप्ताभित्र नेपालको निश्चित क्षति विवरण बुझाउनुपर्नेछ"},
-  {src:"WATER", en:"55 drinking water projects damaged across Rasuwa, Nuwakot, Dhading and Gorkha — about Rs 640 million of damage; roughly 500,000 litres a day being trucked in",
-   ne:"रसुवा, नुवाकोट, धादिङ र गोरखामा ५५ खानेपानी आयोजना क्षतिग्रस्त — करिब रु. ६४ करोडको क्षति; दैनिक करिब पाँच लाख लिटर पानी ट्यांकरबाट वितरण"},
   {src:"WARNING", en:"DHM & NDRRMA alert: Riverside warning active for Rasuwa, Nuwakot, Dhading, Chitwan & Nawalparasi — Lhende Khola dammed lake monitored",
    ne:"जल तथा मौसम विज्ञान विभाग र NDRRMA चेतावनी: रसुवा, नुवाकोट, धादिङ, चितवन र नवलपरासीमा नदी किनार चेतावनी कायमै — ल्हेन्डे खोला ताल निगरानीमा"},
+  {src:"RELIEF", en:"Rs 1 crore released to each of Rasuwa and Nuwakot from the PM Disaster Relief Fund; 10 truckloads of relief material despatched and all ministers pledge one month's salary",
+   ne:"प्रधानमन्त्री विपद् राहत कोषबाट रसुवा र नुवाकोट प्रत्येकलाई रु. १ करोड निकासा; १० ट्रक राहत सामग्री पठाइयो र सबै मन्त्रीले एक महिनाको तलब दिने घोषणा"},
+  {src:"ARMY", en:"Nepali Army has airlifted 3,344 Nepalis and 252 foreign nationals across 411 rescue and relief flights",
+   ne:"नेपाली सेनाले ४११ उद्धार तथा राहत उडानमा ३,३४४ नेपाली र २५२ विदेशी नागरिक हवाईमार्ग उद्धार गर्‍यो"},
+  {src:"PMO", en:"PM Disaster Relief Fund passes Rs 10 billion on its 11th day (6 Sept) — 889,145 Fonepay and 246,614 NCHL transactions, most of them small personal donations; Rs 675 million released to 15 local units",
+   ne:"प्रधानमन्त्री विपद् राहत कोष घटनाको ११औँ दिन (६ सेप्टेम्बर) रु. १० अर्ब नाघ्यो — ८,८९,१४५ फोनपे र २,४६,६१४ NCHL कारोबार, धेरैजसो साना व्यक्तिगत सहयोग; १५ स्थानीय तहलाई रु. ६७.५ करोड निकासा"},
+  {src:"USGS", en:"Glacier collapse near Langtang Lirung confirmed as cause of catastrophic debris surge down Bhote Koshi",
+   ne:"लाङटाङ लिरुङ नजिक हिमनदी भत्किएर भोटेकोशीमा विनाशकारी लेदो बाढी आएको पुष्टि"},
   {src:"AID", en:"International assistance mobilised: IFRC CHF 25m appeal, ADB $5m, EU €2m, UN CERF $2m, China 50t supplies",
    ne:"अन्तर्राष्ट्रिय सहायता परिचालित: IFRC २.५ करोड CHF अपिल, एडीबी ५० लाख डलर, EU २० लाख युरो, CERF २० लाख डलर, चीन ५० टन सामग्री"}
 ];
@@ -227,6 +235,42 @@ const TICKER = [
 /* -------------------- NEWS / BULLETINS (20, sourced; full articles) -------------------- */
 const WK="https://en.wikipedia.org/wiki/2026_Nepal_floods";
 const NEWS = [
+  {sev:"danger", tag:{en:"Relief",ne:"राहत"}, time:"7 Sept 2026", src:"The Kathmandu Post / Aamachhodingmo Rural Municipality",
+   url:"https://kathmandupost.com/province-no-3/2026/09/07/people-in-flood-hit-rasuwa-villages-call-for-help-after-supplies-run-out",
+   title:{en:"Cut off since the flood, Rasuwa villages say the food, salt and oil have run out",
+          ne:"बाढीपछि सम्पर्कविहीन रसुवाका गाउँमा खाद्य, नुन र तेल सकियो"},
+   body:{en:"Aamachhodingmo Rural Municipality in Rasuwa, home to more than 7,000 people, has had no road since 26 August. Helicopters are the only way in and they come rarely.",
+         ne:"७,००० भन्दा बढी जनसंख्या रहेको रसुवाको आमाछोदिङमो गाउँपालिकामा १० भदौदेखि सडक छैन। हेलिकप्टर मात्र पुग्छ, त्यो पनि कहिलेकाहीँ।"},
+   long:{en:"Eleven days after the Bhote Koshi flood, Aamachhodingmo Rural Municipality in Rasuwa — a population of more than 7,000 — remains without a road, its highway link washed away. Rural municipality chair Buchung Tamang says he takes hundreds of calls a day from residents asking for food: \u2018I receive hundreds of calls every day from people in the rural municipality pleading for food aid.\u2019 Namsi, a resident, told the Kathmandu Post the staples are simply gone: \u2018Food supplies have run out. There is hardly anything left to eat. Even the salt has run out.\u2019 What the Army helicopters delivered earlier has been eaten; cooking oil is unavailable and only a few potatoes remain. Helicopters are the sole route in, and their visits are sporadic — several aid organisations have said the charter cost is beyond them. At least 203 people from this rural municipality alone are confirmed missing, part of roughly 5,000 missing across Rasuwa, Nuwakot and Dhading. Donations routed through the Prime Minister Disaster Relief Fund are the government\u2019s one-door channel for reaching places like this; the accounts and QR codes are on this site\u2019s Relief Fund page.",
+         ne:"भोटेकोशी बाढी गएको ११ दिनपछि पनि रसुवाको आमाछोदिङमो गाउँपालिका — जहाँ ७,००० भन्दा बढी जनसंख्या छ — सडकविहीन छ। अध्यक्ष बुछुङ तामाङले दैनिक सयौं फोन खाद्य माग्ने आउने बताए। स्थानीय नाम्सीका अनुसार खाद्य सकियो, नुनसमेत छैन। सेनाले पहिले पुर्‍याएको राहत सकिसक्यो; तेल छैन, थोरै आलु बाँकी छ। हेलिकप्टर मात्र पुग्ने बाटो हो, तर चार्टर खर्च धेरै संस्थालाई थेग्न सक्ने छैन। यसै गाउँपालिकाबाट मात्र कम्तिमा २०३ जना बेपत्ता छन्।"}},
+
+  {sev:"warn", tag:{en:"Tunnel",ne:"सुरुङ"}, time:"7 Sept 2026", src:"The Kathmandu Post / Arnold Dix",
+   url:"https://kathmandupost.com/national/2026/09/07/arnold-dix-says-nepal-rescue-teams-face-challenge-unlike-any-before",
+   title:{en:"Silkyara tunnel expert Arnold Dix joins the search: 41 still trapped at Chilime",
+          ne:"सिल्क्यारा उद्धारका विज्ञ आर्नल्ड डिक्स खोजीमा सहभागी: चिलिमेमा ४१ जना फसेका"},
+   body:{en:"The Australian tunnel engineer who led the 2023 Silkyara rescue in India arrived in Nepal on 6 September and says this is not one rescue but several running at once, each with its own dangers.",
+         ne:"२०२३ मा भारतको सिल्क्यारा उद्धार नेतृत्व गरेका अष्ट्रेलियाली इन्जिनियर ६ सेप्टेम्बरमा नेपाल आए; यो एउटा होइन, एकैपटक चलिरहेका धेरै उद्धार हुन् भने।"},
+   long:{en:"Arnold Dix, the Australian tunnelling professor who led the successful 2023 Silkyara tunnel rescue in Uttarakhand, arrived in Nepal on Saturday 6 September and set out his reading of the operation in public posts on Monday. \u2018This is not one rescue — but multiple potential rescues unfolding at the same time, in different places, each with its own dangers, uncertainties and lives that may still be saved,\u2019 he wrote, adding that hope must become discipline and compassion must become action. By his assessment 41 people remain trapped inside the Chilime hydropower tunnel. He is working alongside Indian Army and NDRF teams, including Colonel Parikshit Mehra, who led the Silkyara operation. Nepal\u2019s tunnel search has already produced three people alive in two days — two from Trishuli 3A on 4 September and the Chinese worker Lu Haitao from Upper Trishuli-1 on 5 September — out of roughly 900 hydropower workers missing across 12 projects, about 500 of them believed to be underground.",
+         ne:"२०२३ मा भारतको सिल्क्यारा सुरुङ उद्धार सफल पार्ने अष्ट्रेलियाली प्राध्यापक आर्नल्ड डिक्स शनिबार ६ सेप्टेम्बरमा नेपाल आए। उनका अनुसार चिलिमे जलविद्युत् सुरुङभित्र ४१ जना अहिले पनि फसेका छन्। उनी भारतीय सेना र NDRF का टोलीसँग काम गरिरहेका छन्। १२ आयोजनामा करिब ९०० कामदार बेपत्ता छन्, तीमध्ये करिब ५०० जना सुरुङभित्रै रहेको अनुमान छ।"}},
+
+  {sev:"warn", tag:{en:"Food security",ne:"खाद्य सुरक्षा"}, time:"7 Sept 2026", src:"The Kathmandu Post / NDRRMA",
+   url:"https://kathmandupost.com/national/2026/09/07/floods-wash-away-1-806-hectares-of-farmland-threaten-food-supplies",
+   title:{en:"1,806 hectares of farmland gone — NDRRMA expects food production to fall by 7,686 tonnes",
+          ne:"१,८०६ हेक्टर खेत बग्यो — खाद्य उत्पादन ७,६८६ टन घट्ने NDRRMA अनुमान"},
+   body:{en:"A preliminary NDRRMA assessment puts the farmland lost along the Bhote Koshi–Trishuli corridor at 1,806 hectares, with the harvest shortfall to follow.",
+         ne:"NDRRMA को प्रारम्भिक आकलनअनुसार भोटेकोशी–त्रिशूली कोरिडोरमा १,८०६ हेक्टर खेतीयोग्य जमिन नोक्सान भयो।"},
+   long:{en:"The National Disaster Risk Reduction and Management Authority\u2019s preliminary damage assessment finds that 1,806 hectares of farmland were washed away or buried in silt along the flood corridor. NDRRMA spokesperson Shanti Mahar said the loss is expected to cut food production in the affected areas by about 7,686 tonnes. Standing crops were taken at the point in the season when they were closest to harvest, and much of the land is now river gravel rather than soil, so the shortfall will not be made up in one cycle. The figure is provisional: the full assessment is still being compiled, and the Post-Disaster Needs Assessment panel under National Planning Commission vice-president Gunakhar Bhatta has until roughly mid-October to publish Nepal\u2019s definitive loss and damage numbers. It sits alongside the 55 damaged drinking water projects (about Rs 640 million) and the wider Rs 387.54 billion preliminary damage estimate.",
+         ne:"राष्ट्रिय विपद् जोखिम न्यूनीकरण तथा व्यवस्थापन प्राधिकरणको प्रारम्भिक आकलनले बाढी कोरिडोरमा १,८०६ हेक्टर खेतीयोग्य जमिन बगेको वा पुरिएको देखाएको छ। प्रवक्ता शान्ति महरका अनुसार यसले प्रभावित क्षेत्रको खाद्य उत्पादन करिब ७,६८६ टन घटाउने छ। यो अंक प्रारम्भिक हो; पूर्ण आकलन बाँकी छ।"}},
+
+  {sev:"relief", tag:{en:"Fund",ne:"कोष"}, time:"7 Sept 2026", src:"The Kathmandu Post / Fonepay / NCHL / OPMCM",
+   url:"https://kathmandupost.com/national/2026/09/06/scan-tap-done-how-digital-payments-are-changing-disaster-relief-in-nepal",
+   title:{en:"Relief fund passes Rs 10 billion — raised mostly by QR code, in donations under Rs 100",
+          ne:"राहत कोष रु. १० अर्ब नाघ्यो — धेरै रकम QR बाट, रु. १०० भन्दा कमका सहयोगबाट"},
+   body:{en:"By the flood\u2019s eleventh day the Prime Minister Disaster Relief Fund had passed Rs 10 billion, with 889,145 Fonepay and 246,614 NCHL transactions behind it.",
+         ne:"बाढीको ११औं दिनसम्म प्रधानमन्त्री विपद् राहत कोष रु. १० अर्ब नाघ्यो।"},
+   long:{en:"On Saturday 6 September, the eleventh day after the Bhote Koshi flood, the Prime Minister Disaster Relief Fund passed Rs 10 billion — and the payment rails show where it came from. Fonepay recorded 889,145 transactions into the fund: 815,219 by domestic QR worth Rs 2.095 billion, and about 175,000 through eSewa worth Rs 110 million. NCHL logged 246,614 transactions, including 112,932 domestic QR payments worth Rs 390.5 million. From abroad, 93,850 Visa and Mastercard 3D-Secure payments brought in Rs 1.4 billion, with a further Rs 48.54 million over UPI and Rs 17.97 million through Alipay. Fonepay\u2019s chief executive said the convenience of QR was what made a sum this large possible so quickly. A large share of the total arrived in donations of under Rs 100 from ordinary people. Donate only through the official bank accounts, Fonepay QR codes or the NCHL-operated portal listed on this site\u2019s Relief Fund page, and check the web address before paying.",
+         ne:"भोटेकोशी बाढीको ११औं दिन, ६ सेप्टेम्बरमा प्रधानमन्त्री विपद् राहत कोष रु. १० अर्ब नाघ्यो। फोनपेबाट ८,८९,१४५ कारोबार (८,१५,२१९ QR — रु. २.०९५ अर्ब) र NCHL बाट २,४६,६१४ कारोबार भए। विदेशबाट ९३,८५० भिसा/मास्टरकार्ड भुक्तानीबाट रु. १.४ अर्ब भित्रियो। आधिकारिक खाता, QR वा NCHL पोर्टलबाट मात्र सहयोग गर्नुहोस्।"}},
+
   {sev:"danger", tag:{en:"Roads",ne:"सडक"}, time:"6 Sept 2026", src:"Onlinekhabar / Kathmandu Post / Dept. of Roads",
    url:"https://kathmandupost.com/money/2026/09/06/kathmandu-supply-lines-rerouted-after-floods-block-main-highway",
    img:"https://assets-cdn.kathmandupost.com/uploads/source/news/2026/money/Supply-1788656656.jpg",
@@ -564,7 +608,7 @@ const ALERTS = [
   {sev:"watch", lat:27.6900, lng:84.0900, place:{en:"Nawalparasi (Narayani corridor)",ne:"नवलपरासी (नारायणी कोरिडोर)"}, desc:{en:"Riverside alert; recovery operations continuing along the Narayani",ne:"नदी किनार चेतावनी; नारायणी किनारमा शव खोजी जारी"}},
   {sev:"relief", lat:27.9280, lng:84.6270, place:{en:"Gorkha",ne:"गोरखा"}, desc:{en:"Riverside alert and relief distribution; local units funded from the PM relief release",ne:"नदी किनार चेतावनी र राहत वितरण; प्रधानमन्त्री राहत निकासाबाट स्थानीय तह सञ्चालन"}},
   {sev:"watch", lat:27.7172, lng:85.3240, place:{en:"Kathmandu Valley",ne:"काठमाडौं उपत्यका"}, desc:{en:"Bagmati, Bishnumati, Hanumante & Dhobi Khola rising; riverside settlements on active flood advisory",ne:"बागमती, बिष्णुमती, हनुमन्ते र ढोबीखोलाको जलसतह वृद्धि; तटीय क्षेत्र सतर्कतामा"}},
-  {sev:"danger", lat:28.3700, lng:85.3000, place:{en:"Gyirong Port (Tibet, China)",ne:"ग्यिरोङ बन्दरगाह (तिब्बत, चीन)"}, desc:{en:"Port destroyed; the Tibet side now counts 31 dead and 531 missing, among them 261 foreign nationals from 23 countries",ne:"बन्दरगाह ध्वस्त; तिब्बततर्फ अहिले ३१ मृत्यु र ५३१ बेपत्ता, जसमध्ये २३ देशका २६१ विदेशी नागरिक"}}
+  {sev:"danger", lat:28.3700, lng:85.3000, place:{en:"Gyirong Port (Tibet, China)",ne:"ग्यिरोङ बन्दरगाह (तिब्बत, चीन)"}, desc:{en:"Port destroyed; the Tibet side now counts 43 dead and 519 missing, among them 261 foreign nationals from 23 countries",ne:"बन्दरगाह ध्वस्त; तिब्बततर्फ अहिले ४३ मृत्यु र ५१९ बेपत्ता, जसमध्ये २३ देशका २६१ विदेशी नागरिक"}}
 ];
 
 /* -------------------- HELPLINES (from official NDRRMA poster) -------------------- */
@@ -1516,13 +1560,24 @@ const GLOF={
        ne:"तिब्बततर्फबाट हिमताल विस्फोट बाढी (GLOF) को आशंका। रसुवा, नुवाकोट, धादिङ, गोरखा र चितवनका बासिन्दालाई सतर्क रही अग्लो सुरक्षित स्थानमा जान NDRRMA को आग्रह।"}
 };
 const NOTIFS=[
+  {id:"relief-2026-0907-rasuwa-food", sev:"danger", tag:{en:"Relief gap",ne:"राहत अभाव"}, time:"7 Sept", src:"Kathmandu Post / Aamachhodingmo RM",
+   url:"https://kathmandupost.com/province-no-3/2026/09/07/people-in-flood-hit-rasuwa-villages-call-for-help-after-supplies-run-out",
+   msg:{en:"Aamachhodingmo Rural Municipality in Rasuwa — over 7,000 people — has been road-cut since 26 August and says food, salt and cooking oil have run out. Helicopters are the only way in and come rarely; several aid groups say the charter cost is beyond them. At least 203 people from this rural municipality alone are missing.",
+        ne:"रसुवाको आमाछोदिङमो गाउँपालिका — ७,००० भन्दा बढी जनसंख्या — १० भदौदेखि सडकविहीन छ र खाद्य, नुन तथा तेल सकिएको बताएको छ। हेलिकप्टर मात्र पुग्ने बाटो हो, त्यो पनि कहिलेकाहीँ। यसै गाउँपालिकाबाट कम्तिमा २०३ जना बेपत्ता छन्।"}},
+  {id:"tunnel-2026-0907-chilime-dix", sev:"watch", tag:{en:"Tunnel rescue",ne:"सुरुङ उद्धार"}, time:"7 Sept", src:"Kathmandu Post / Arnold Dix",
+   url:"https://kathmandupost.com/national/2026/09/07/arnold-dix-says-nepal-rescue-teams-face-challenge-unlike-any-before",
+   msg:{en:"Arnold Dix, the Australian tunnel expert who led the 2023 Silkyara rescue, arrived on 6 September and puts 41 people still trapped inside the Chilime hydropower tunnel. He describes not one rescue but several running at once, working with Indian Army and NDRF teams including Colonel Parikshit Mehra.",
+        ne:"२०२३ को सिल्क्यारा उद्धार नेतृत्व गरेका अष्ट्रेलियाली सुरुङ विज्ञ आर्नल्ड डिक्स ६ सेप्टेम्बरमा आइपुगे; चिलिमे जलविद्युत् सुरुङभित्र ४१ जना अझै फसेको उनको आकलन छ। उनी भारतीय सेना र NDRF का टोलीसँग काम गर्दै छन्।"}},
+  {id:"relief-2026-0907-fund-10bn", sev:"relief", tag:{en:"Relief fund",ne:"राहत कोष"}, time:"7 Sept", src:"Kathmandu Post / Fonepay / NCHL", url:"relief.html",
+   msg:{en:"The PM Disaster Relief Fund passed Rs 10 billion on 6 September, the flood's eleventh day — 889,145 Fonepay and 246,614 NCHL transactions, and 93,850 Visa/Mastercard payments from abroad worth Rs 1.4 billion. A large share arrived in donations under Rs 100. Donate only through the official accounts, QR codes or the NCHL portal.",
+        ne:"बाढीको ११औं दिन ६ सेप्टेम्बरमा प्रधानमन्त्री विपद् राहत कोष रु. १० अर्ब नाघ्यो — फोनपेबाट ८,८९,१४५ र NCHL बाट २,४६,६१४ कारोबार, विदेशबाट ९३,८५० भिसा/मास्टरकार्ड भुक्तानीबाट रु. १.४ अर्ब। धेरै रकम रु. १०० भन्दा कमका सहयोगबाट। आधिकारिक माध्यमबाट मात्र दान गर्नुहोस्।"}},
   {id:"tunnel-2026-0904-t3a-alive", sev:"relief", tag:{en:"Rescued alive",ne:"जीवित उद्धार"}, time:"4 Sept", src:"Nepali Army / AP",
    url:"https://www.wsls.com/news/world/2026/09/04/one-trapped-worker-rescued-alive-from-a-tunnel-in-nepal-official-says/",
    msg:{en:"Two workers — a mechanical foreman and a mechanical supervisor — were pulled alive from the Trishuli 3A tunnel on Friday, nine days after the flood. Rescuers heard voices from inside that morning and located them; both are in stable condition and were flown to Kathmandu. One survivor told rescuers more people are alive inside. About 115 of the 557 workers missing from Trishuli 3A are believed to be in the main tunnel.",
         ne:"बाढी गएको नवौं दिन शुक्रबार त्रिशूली ३ए सुरुङबाट दुई कामदार — एक मेकानिकल फोरमेन र एक मेकानिकल सुपरभाइजर — जीवितै निकालिए। बिहान भित्रबाट आवाज सुनिएपछि उनीहरूको स्थान पत्ता लाग्यो; दुवैको अवस्था स्थिर छ र काठमाडौं ल्याइएको छ। एक जनाले भित्र अरू पनि जीवित रहेको बताए। त्रिशूली ३ए बाट बेपत्ता ५५७ मध्ये करिब ११५ जना मुख्य सुरुङभित्रै रहेको अनुमान छ।"}},
-  {id:"toll-2026-0903-ndrrma", sev:"danger", tag:{en:"Toll update",ne:"मृत्यु अद्यावधिक"}, time:"3 Sept", src:"NDRRMA",
-   msg:{en:"NDRRMA's 3 September update: 1,259 confirmed dead, 5,083 missing or out of contact and more than 5,000 injured on the Nepal side. China reports 21 dead and 541 missing on the Tibet side. 590 foreign nationals from 39 countries are among the missing.",
-        ne:"NDRRMA को ३ सेप्टेम्बरको अद्यावधिक: नेपालतर्फ १,२५९ मृत्यु पुष्टि, ५,०८३ बेपत्ता वा सम्पर्कविहीन र ५,००० भन्दा बढी घाइते। चीनका अनुसार तिब्बततर्फ २१ मृत्यु र ५४१ बेपत्ता। बेपत्तामध्ये ३९ देशका ५९० विदेशी नागरिक।"}},
+  {id:"toll-2026-0905-ndrrma", sev:"danger", tag:{en:"Toll update",ne:"मृत्यु अद्यावधिक"}, time:"5 Sept", src:"NDRRMA / Nepal Police",
+   msg:{en:"The latest official toll, published 5 September: NDRRMA counts 1,344 confirmed dead, 4,886 missing or out of contact and 5,300 injured on the Nepal side; Nepal Police counted 1,342 at 08:00 the same morning. 13,013 people have been rescued, 324 of them foreign nationals. 589 foreign nationals from 39 countries are among the missing. No newer national figure has been published since.",
+        ne:"पछिल्लो आधिकारिक तथ्यांक, ५ सेप्टेम्बर: NDRRMA का अनुसार नेपालतर्फ १,३४४ मृत्यु पुष्टि, ४,८८६ बेपत्ता वा सम्पर्कविहीन र ५,३०० घाइते; सोही बिहान ८ बजे नेपाल प्रहरीले १,३४२ गणना गरेको थियो। १३,०१३ जनाको उद्धार, तीमध्ये ३२४ विदेशी नागरिक। बेपत्तामध्ये ३९ देशका ५८९ विदेशी नागरिक। त्यसपछि नयाँ राष्ट्रिय तथ्यांक प्रकाशित भएको छैन।"}},
   {id:"brief-2026-0902-pm-parliament", sev:"watch", tag:{en:"PM briefing",ne:"प्रधानमन्त्रीको सम्बोधन"}, time:"2 Sept", src:"Office of the PM · ANI / Kathmandu Post",
    url:"https://www.aninews.in/news/world/asia/have-to-fight-with-courage-and-determination-nepal-pm-balen-shah-details-govt-response-to-flood-crisis20260902140138/",
    msg:{en:"PM Balen Shah briefed Parliament on the flood response: 11,993 rescued and 3,916 still missing. Rs 1 crore each released to Rasuwa and Nuwakot, 10 truckloads of relief material sent, and all ministers pledged one month's salary. 'We have no alternative but to fight with determination and courage.'",
@@ -1546,8 +1601,8 @@ const NOTIFS=[
    msg:{en:"A controlled explosion was set off inside the Upper Trishuli 3A tunnel and the Army has dug about 10 m down with excavators to clear water, mud and debris. 900 hydropower workers are missing across 12 projects and around 500 are believed still inside the tunnels.",
         ne:"माथिल्लो त्रिशूली ३A सुरुङभित्र नियन्त्रित विस्फोट गरिएको छ र सेनाले एक्साभेटरले करिब १० मिटर गहिरो खनेर पानी, हिलो र लेदो हटाउँदै छ। १२ आयोजनाका ९०० जलविद्युत् कामदार बेपत्ता छन् र करिब ५०० अझै सुरुङभित्रै रहेको अनुमान छ।"}},
   {id:"relief-2026-0902-fund", sev:"relief", tag:{en:"Relief fund",ne:"राहत कोष"}, time:"2 Sept", src:"OPMCM / Radio Nepal", url:"relief.html",
-   msg:{en:"PM Disaster Relief Fund holds Rs 7.885 billion plus USD 6,141,702 in its foreign-currency account. Rs 1 billion has been released through NDRRMA and Rs 675 million to 15 local units in Rasuwa, Nuwakot, Dhading, Gorkha and Tanahun. Donate only via official channels.",
-        ne:"प्रधानमन्त्री विपद् राहत कोषमा रु. ७.८८५ अर्ब र विदेशी मुद्रा खातामा ६१,४१,७०२ अमेरिकी डलर। NDRRMA मार्फत रु. १ अर्ब र १५ स्थानीय तहलाई रु. ६७.५ करोड निकासा। आधिकारिक माध्यमबाट मात्र दान गर्नुहोस्।"}}
+   msg:{en:"Last itemised on 3 September, the PM Disaster Relief Fund held Rs 7.885 billion across nine commercial banks plus USD 6,141,702 in its foreign-currency account. Rs 1 billion has been released through NDRRMA and Rs 675 million to 15 local units in Rasuwa, Nuwakot, Dhading, Gorkha and Tanahun. Donate only via official channels.",
+        ne:"३ सेप्टेम्बरमा अन्तिम पटक विवरण सार्वजनिक हुँदा प्रधानमन्त्री विपद् राहत कोषमा नौ वाणिज्य बैंकमा रु. ७.८८५ अर्ब र विदेशी मुद्रा खातामा ६१,४१,७०२ अमेरिकी डलर थियो। NDRRMA मार्फत रु. १ अर्ब र १५ स्थानीय तहलाई रु. ६७.५ करोड निकासा। आधिकारिक माध्यमबाट मात्र दान गर्नुहोस्।"}}
 ];
 
 
@@ -1734,24 +1789,21 @@ let _newsPopTimer=null, _newsPopOpenFor=null;
    before they set out. Change the id whenever the story changes — NEWSPOP_SEEN
    is keyed on it, and a reused id would silently suppress the new card. */
 const PINNED_NEWS={
-  id:"brief-2026-0906-prithvi-parewabhir-closed",
-  until:"2026-09-07T12:00:00+05:45",
-  url:"https://kathmandupost.com/money/2026/09/06/kathmandu-supply-lines-rerouted-after-floods-block-main-highway",
-  img:"https://assets-cdn.kathmandupost.com/uploads/source/news/2026/money/Supply-1788656656.jpg",
-  imgAlt:{en:"Supply vehicles on a diverted route into Kathmandu after the Prithvi Highway was cut, 6 September 2026",ne:"पृथ्वी राजमार्ग अवरुद्ध भएपछि काठमाडौं छिर्ने वैकल्पिक मार्गमा आपूर्ति सवारी, ६ सेप्टेम्बर २०२६"},
-  imgCredit:"via Kathmandu Post",
-  source:"District Administration Dhading · Dept. of Roads · Kathmandu Post",
-  time:{en:"6 Sept 2026",ne:"२१ भदौ २०८३"},
-  badge:{en:"ROAD CLOSED",ne:"सडक बन्द"},
-  title:{en:"Prithvi Highway closed at Parewabhir until 6pm today — take the Tribhuvan Highway or Kanti Lokpath",
-         ne:"पृथ्वी राजमार्ग परेवाभीरमा आज बेलुका ६ बजेसम्म बन्द — त्रिभुवन राजमार्ग वा कान्ति लोकपथ प्रयोग गर्नुहोस्"},
-  hl:{en:"closed at Parewabhir",ne:"परेवाभीरमा बन्द"},
-  body:{en:"Ambulances and hearses only through Gajuri-2 from 6am to 6pm while the road is repaired. Upstream at Krishnabhir a 252 m temporary track opened today, but it carries construction plant only — normal traffic is about a week away.",
-        ne:"सडक मर्मत गर्दा गजुरी-२ हुँदै बिहान ६ देखि बेलुका ६ बजेसम्म एम्बुलेन्स र शव बोक्ने सवारी मात्र। माथि कृष्णभीरमा आज २५२ मिटर अस्थायी ट्र्याक खुल्यो, तर त्यसबाट निर्माण उपकरण मात्र गुड्छ — नियमित आवागमन करिब एक सातापछि।"},
+  id:"brief-2026-0907-rasuwa-supplies",
+  until:"2026-09-09T09:00:00+05:45",
+  url:"https://kathmandupost.com/province-no-3/2026/09/07/people-in-flood-hit-rasuwa-villages-call-for-help-after-supplies-run-out",
+  source:"Aamachhodingmo Rural Municipality · The Kathmandu Post",
+  time:{en:"7 Sept 2026",ne:"२२ भदौ २०८३"},
+  badge:{en:"RELIEF GAP",ne:"राहत अभाव"},
+  title:{en:"Rasuwa villages cut off since the flood say the food, salt and oil have run out",
+         ne:"बाढीयता सम्पर्कविहीन रसुवाका गाउँमा खाद्य, नुन र तेल सकियो"},
+  hl:{en:"the food, salt and oil have run out",ne:"खाद्य, नुन र तेल सकियो"},
+  body:{en:"Aamachhodingmo Rural Municipality has had no road since 26 August. Helicopters are the only way in and they come rarely. Give through the official Prime Minister Disaster Relief Fund — the accounts and QR codes are on our Relief Fund page.",
+        ne:"आमाछोदिङमो गाउँपालिकामा १० भदौदेखि सडक छैन। हेलिकप्टर मात्र पुग्छ, त्यो पनि कहिलेकाहीँ। आधिकारिक प्रधानमन्त्री विपद् राहत कोषमार्फत सहयोग गर्नुहोस् — खाता र QR हाम्रो राहत कोष पृष्ठमा छन्।"},
   figs:[
-    {n:"6pm", l:{en:"Parewabhir reopens",ne:"परेवाभीर खुल्ने"}},
-    {n:"252",l:{en:"m track at Krishnabhir",ne:"मि. ट्र्याक कृष्णभीरमा"}},
-    {n:"103",l:{en:"traffic office",ne:"ट्राफिक कार्यालय"}}
+    {n:"7,000",l:{en:"people cut off",ne:"जना सम्पर्कविहीन"}},
+    {n:"203",  l:{en:"missing from this RM",ne:"यसै गाउँपालिकाबाट बेपत्ता"}},
+    {n:"12",   l:{en:"days without a road",ne:"दिन सडकविहीन"}}
   ]
 };
 function _pinnedLive(){
@@ -2206,7 +2258,14 @@ function fetchEventImages(){
    all; making the one photograph we actually chose wait behind that would have
    left it as a placeholder for exactly the readers whose connection is worst. */
 function _putThumb(cell, src, alt, onfail){
-  const el=new Image(); el.alt=alt||""; el.loading="lazy"; el.decoding="async";
+  // NOT loading="lazy". This <img> is DETACHED — it is only appended once it has
+  // loaded — and a detached lazy image is never in a viewport, so the browser
+  // defers its fetch forever: onload never fires, the cell keeps its placeholder
+  // and every bulletin photograph silently disappears. (Measured: the same URL
+  // times out at 6s lazy and loads in 2.5s without it.) Lazy buys nothing here
+  // anyway, since nothing is in the document until the bytes have arrived. This
+  // is the same trap already documented for the popup card's thumbnail.
+  const el=new Image(); el.alt=alt||""; el.decoding="async";
   // Publisher CDNs routinely refuse a hotlink that arrives with a Referer, and
   // a bulletin picture is hotlinked by definition. The popup card already sends
   // no referrer, which is why the SAME photograph loaded there and fell back to
@@ -2594,7 +2653,7 @@ const STATS_DETAIL=[
   rows:[["Preliminary damage estimate (Rs billion)","387.54"],["— the same figure in US dollars (billion)","2.56"],["Rapid Damage and Needs Assessment total (Rs billion)","400"],["— variation the final PDNA may find (per cent)","20–30"],["Early recovery needs over six months (RDNA, Rs billion)","8"],["Rebuilding cost projection, Finance Minister (Rs billion)","762"],["Roads and bridges (Rs billion)","15"],["Bridges damaged","41"],["Road damaged (km)","42"],["Hydropower projects damaged (NEA)","13"],["Generation knocked off the grid (MW)","431"],["Under-construction capacity damaged (MW)","470"],["Schools damaged or destroyed","38"],["Drinking water projects damaged (4 districts)","55"],["— Nuwakot / Dhading / Rasuwa / Gorkha","22 / 20 / 8 / 5"],["— damage to water supply systems (Rs million)","640"],["People affected (IFRC estimate)","93,000"],["Need emergency water & sanitation (UN)","65,000"],["Pregnant & breastfeeding women needing nutrition aid (UN)","10,500"],["Children under 5 needing treatment for severe wasting (UN)","2,600"]],
   note:{en:"NDRRMA published Nepal's first official damage estimate on 4 September: Rs {n} billion, about USD 2.56 billion in property, housing and infrastructure — and its chief cautioned that a detailed assessment is still to come. The Rapid Damage and Needs Assessment completed a day later puts total loss and damage nearer Rs 400 billion, and a Post Disaster Needs Assessment panel led by National Planning Commission vice-president Gunakhar Bhatta has six weeks from 5 September to produce the definitive figure — its author expects the final number to vary from the RDNA by 20 to 30 percent. About Rs 8 billion is needed over six months simply to restore buildings, communications, energy, transport, health, education, agriculture and livestock; the Finance Minister has put eventual rebuilding at around Rs 762 billion. Road and bridge losses stand at Rs 15 billion with 41 bridges destroyed or severely damaged, and 431 MW of generation knocked off the national grid; the Nepal Electricity Authority counts 13 hydropower projects damaged. The Department of Water Supply and Sewerage Management counted 55 damaged drinking water projects across Rasuwa, Nuwakot, Dhading and Gorkha on 6 September, about Rs 640 million of damage, and is trucking some 500,000 litres a day while they are rebuilt. The IFRC estimates 93,000 people affected, and the UN puts 65,000 in need of emergency water, sanitation and hygiene supplies.",ne:"NDRRMA ले ४ सेप्टेम्बरमा नेपालको पहिलो आधिकारिक क्षति अनुमान सार्वजनिक गर्‍यो: सम्पत्ति, आवास र पूर्वाधारमा रु. {n} अर्ब, करिब २.५६ अर्ब अमेरिकी डलर — तर विस्तृत आकलन अझै बाँकी रहेको संस्थाका प्रमुखले बताएका छन्। एक दिनपछि सम्पन्न द्रुत क्षति तथा आवश्यकता आकलन (RDNA) ले कुल क्षति करिब रु. ४०० अर्ब देखाएको छ, र राष्ट्रिय योजना आयोगका उपाध्यक्ष गुणाकर भट्टको नेतृत्वमा गठित विपद्पछिको आवश्यकता आकलन (PDNA) समितिले ५ सेप्टेम्बरदेखि छ हप्ताभित्र निश्चित तथ्यांक बुझाउनुपर्नेछ — RDNA तयार पार्ने अधिकारीका अनुसार अन्तिम अंकमा २० देखि ३० प्रतिशत फरक पर्न सक्छ। भवन, सञ्चार, ऊर्जा, यातायात, स्वास्थ्य, शिक्षा, कृषि तथा पशुपन्छी सेवा पुनःस्थापनाका लागि मात्रै छ महिनामा करिब रु. ८ अर्ब आवश्यक छ; अर्थमन्त्रीका अनुसार पुनर्निर्माण खर्च करिब रु. ७६२ अर्ब पुग्न सक्छ। सडक तथा पुलमा रु. १५ अर्बको क्षति भएको छ, ४१ पुल र ४२ कि.मि. सडक क्षतिग्रस्त छन् भने ४३१ मेगावाट उत्पादन राष्ट्रिय ग्रिडबाट विच्छेद भएको छ; नेपाल विद्युत् प्राधिकरणका अनुसार १३ जलविद्युत् आयोजना क्षतिग्रस्त छन्। खानेपानी तथा ढल व्यवस्थापन विभागका अनुसार ६ सेप्टेम्बरसम्म रसुवा, नुवाकोट, धादिङ र गोरखामा ५५ खानेपानी आयोजना क्षतिग्रस्त भई करिब रु. ६४ करोडको क्षति भएको छ; पुनर्निर्माण नसकिँदासम्म दैनिक करिब पाँच लाख लिटर पानी ट्यांकरबाट पुर्‍याइँदै छ। IFRC का अनुसार ९३,००० जना प्रभावित छन् भने संयुक्त राष्ट्रसंघका अनुसार ६५,००० जनालाई आकस्मिक खानेपानी तथा सरसफाइ सामग्री आवश्यक छ।"}},
  {id:"materials", sev:"relief", big:"", title:{en:"Relief Materials & International Aid",ne:"राहत सामग्री र अन्तर्राष्ट्रिय सहायता"}, src:"AP / BBC / Reuters / IFRC",
-  rows:[["PM Disaster Relief Fund — total collected (Rs billion)","8.82"],["— of which, in nine commercial banks (Rs billion)","7.89"],["— of which, in the fund's dollar accounts (USD)","6,141,702"],["Released from the fund on 1 Sept (Rs billion)","1"],["Balance remaining in the fund (Rs billion)","7.82"],["Released to 15 local units, Disaster Management Fund (Rs million)","675"],["Released to Rasuwa (Rs crore)","1"],["Released to Nuwakot (Rs crore)","1"],["Truckloads of relief material despatched","10"],["Ministers' salary pledge","One month, all ministers"],["India — DNA testing & body management","Lab support provided"],["Red Cross Society of China — to the relief fund (USD)","200,000"],["China — emergency supplies","50 tonnes / 13,200 items"],["India — supplies","~50 tonnes"],["IFRC emergency appeal","CHF 25 million"],["Asian Development Bank","USD 5 million"],["European Union","EUR 2 million"],["Welthungerhilfe","EUR 2 million"],["UN CERF","USD 2 million"],["South Korea","USD 1 million"],["Red Cross / IFRC DREF","CHF 1 million"],["World Health Organization","USD 150,000"]],
+  rows:[["PM Disaster Relief Fund — total collected (Rs billion, 6 Sept)","10"],["— last itemised split, 3 Sept: nine commercial banks (Rs billion)","7.89"],["— last itemised split, 3 Sept: dollar accounts (USD)","6,141,702"],["Fonepay transactions into the fund","889,145"],["NCHL transactions into the fund","246,614"],["Visa / Mastercard payments from abroad (Rs billion)","1.4"],["Released from the fund on 1 Sept (Rs billion)","1"],["Balance remaining in the fund (Rs billion)","7.82"],["Released to 15 local units, Disaster Management Fund (Rs million)","675"],["Released to Rasuwa (Rs crore)","1"],["Released to Nuwakot (Rs crore)","1"],["Truckloads of relief material despatched","10"],["Ministers' salary pledge","One month, all ministers"],["India — DNA testing & body management","Lab support provided"],["Red Cross Society of China — to the relief fund (USD)","200,000"],["China — emergency supplies","50 tonnes / 13,200 items"],["India — supplies","~50 tonnes"],["IFRC emergency appeal","CHF 25 million"],["Asian Development Bank","USD 5 million"],["European Union","EUR 2 million"],["Welthungerhilfe","EUR 2 million"],["UN CERF","USD 2 million"],["South Korea","USD 1 million"],["Red Cross / IFRC DREF","CHF 1 million"],["World Health Organization","USD 150,000"]],
   note:{en:"International assistance packages continue arriving, including 50 tonnes of emergency shelter and medical supplies from China and India, alongside UN CERF and multilateral funding allocations.",ne:"चीन र भारतबाट ५०–५० टन आपत्कालीन राहत तथा औषधीय सामग्री, राष्ट्रसंघीय CERF कोष तथा बहुपक्षीय सहायता परिचालन जारी छ।"}},
  {id:"heli", sev:"relief", big:"", title:{en:"Helicopter and Ground Operations",ne:"हेलिकप्टर र स्थलगत उद्धार"}, unit:{en:"Timure · Dhunche · Mailung · Syafrubesi · Trishuli",ne:"तिमुरे · धुन्चे · माइलुङ · स्याफ्रुबेसी · त्रिशूली"}, src:"Nepal Army / NDRRMA",
   note:{en:"Nepali Army helicopters and joint security squads have flown over 411 rescue sorties, evacuating cut-off residents, transporting critical medical patients, and deploying bailey bridge materials.",ne:"नेपाली सेनाका हेलिकप्टर र संयुक्त टोलीहरूले ४११ भन्दा बढी उडान गरी प्रभावित क्षेत्रबाट नागरिक उद्धार तथा राहत सामग्री ढुवानी गरेका छन्।"}}
@@ -2975,16 +3034,16 @@ async function renderRescuePage(){
 Object.assign(I18N.en,{
   "rfund.eye":"PM Disaster Relief Fund","rfund.h":"Collected & Released",
   "rfund.total":"Total Collected","rfund.released":"Released to Districts","rfund.balance":"Balance in Fund",
-  "rfund.split":"{npr} sits across {banks} commercial banks; a further USD {usd} (about {fx}) is held in the fund's dollar accounts at Himalayan Bank and Laxmi Bank.",
+  "rfund.split":"Last itemised on 3 September: {npr} across {banks} commercial banks and a further USD {usd} (about {fx}) in the fund's dollar accounts at Himalayan Bank and Laxmi Bank. The total above is the fund's own count on 6 September and is larger than that breakdown.",
   "rfund.top":"Named Contributors","rfund.top.share":"about {p}% of the total — a sample, not a breakdown","rfund.updated":"Updated",
-  "rfund.note":"Rs 6.36 billion has been deposited into the fund and Rs 1 billion was released on 1 September through the District Disaster Management Committees, for rescue and relief, immediate infrastructure repairs and temporary housing — leaving the balance shown. Districts apply through their own disaster management committees; the Fund Management Committee is chaired by the Home Secretary. The contributors below are only those whose donations were announced publicly, so they are a sample of the total, not a breakdown of it — thousands of individual donations are never itemised. The total rises daily and syncs automatically. Source: OPMCM, via NepalNews / The Rising Nepal / myRepublica — verify before relying on any amount."
+  "rfund.note":"The fund passed Rs 10 billion on 6 September, its eleventh day — most of it raised by QR code, a large share in donations of under Rs 100 (889,145 Fonepay and 246,614 NCHL transactions; 93,850 Visa/Mastercard payments from abroad worth Rs 1.4 billion). Rs 1 billion was released on 1 September through the District Disaster Management Committees, for rescue and relief, immediate infrastructure repairs and temporary housing — leaving the balance shown. Districts apply through their own disaster management committees; the Fund Management Committee is chaired by the Home Secretary. The contributors below are only those whose donations were announced publicly, so they are a sample of the total, not a breakdown of it — thousands of individual donations are never itemised. The total rises daily and syncs automatically. Source: OPMCM, via NepalNews / The Rising Nepal / myRepublica — verify before relying on any amount."
 });
 Object.assign(I18N.ne,{
   "rfund.eye":"प्रधानमन्त्री विपद् राहत कोष","rfund.h":"संकलन र निकासा",
   "rfund.total":"कुल संकलन","rfund.released":"जिल्लामा निकासा","rfund.balance":"कोषमा बाँकी",
-  "rfund.split":"{npr} रकम {banks} वाणिज्य बैंकका खातामा छ; थप अमेरिकी डलर {usd} (करिब {fx}) हिमालयन बैंक र लक्ष्मी बैंकका डलर खातामा छ।",
+  "rfund.split":"३ सेप्टेम्बरको अन्तिम विवरण: {banks} वाणिज्य बैंकमा {npr} र हिमालयन तथा लक्ष्मी बैंकका डलर खातामा थप अमेरिकी डलर {usd} (करिब {fx})। माथिको कुल रकम ६ सेप्टेम्बरको हो, त्यसैले यो विवरणभन्दा ठूलो छ।",
   "rfund.top":"नाम सार्वजनिक भएका दाता","rfund.top.share":"कुलको करिब {p}% — नमुना मात्र, पूर्ण विवरण होइन","rfund.updated":"अद्यावधिक",
-  "rfund.note":"कोषमा रु. ६.३६ अर्ब जम्मा भएको छ भने १ सेप्टेम्बरमा रु. १ अर्ब जिल्ला विपद् व्यवस्थापन समितिमार्फत उद्धार तथा राहत, तत्काल पूर्वाधार मर्मत र अस्थायी आवासका लागि निकासा भएको छ — बाँकी रकम माथि देखाइएको छ। जिल्लाहरूले आ-आफ्नो विपद् व्यवस्थापन समितिमार्फत माग गर्नुपर्छ; कोष व्यवस्थापन समितिको नेतृत्व गृह सचिवले गर्छन्। तल उल्लेखित दाता सार्वजनिक रूपमा घोषणा भएका मात्र हुन् — यो कुल रकमको नमुना हो, पूर्ण विवरण होइन; हजारौं व्यक्तिगत दान छुट्टै सार्वजनिक हुँदैन। कुल रकम दैनिक बढ्छ र स्वतः अद्यावधिक हुन्छ। स्रोत: OPMCM, नेपालन्यूज / गोरखापत्र (द राइजिङ नेपाल) / रिपब्लिका — कुनै रकममा भर पर्नुअघि रुजु गर्नुहोस्।"
+  "rfund.note":"६ सेप्टेम्बर, विपद्को ११औं दिनमा कोष रु. १० अर्ब नाघ्यो — धेरैजसो QR बाट, ठूलो हिस्सा रु. १०० भन्दा कमका सहयोगबाट (फोनपेबाट ८,८९,१४५ र NCHL बाट २,४६,६१४ कारोबार; विदेशबाट ९३,८५० भिसा/मास्टरकार्ड भुक्तानीबाट रु. १.४ अर्ब)। १ सेप्टेम्बरमा रु. १ अर्ब जिल्ला विपद् व्यवस्थापन समितिमार्फत उद्धार तथा राहत, तत्काल पूर्वाधार मर्मत र अस्थायी आवासका लागि निकासा भएको छ — बाँकी रकम माथि देखाइएको छ। जिल्लाहरूले आ-आफ्नो विपद् व्यवस्थापन समितिमार्फत माग गर्नुपर्छ; कोष व्यवस्थापन समितिको नेतृत्व गृह सचिवले गर्छन्। तल उल्लेखित दाता सार्वजनिक रूपमा घोषणा भएका मात्र हुन् — यो कुल रकमको नमुना हो, पूर्ण विवरण होइन; हजारौं व्यक्तिगत दान छुट्टै सार्वजनिक हुँदैन। कुल रकम दैनिक बढ्छ र स्वतः अद्यावधिक हुन्छ। स्रोत: OPMCM, नेपालन्यूज / गोरखापत्र (द राइजिङ नेपाल) / रिपब्लिका — कुनै रकममा भर पर्नुअघि रुजु गर्नुहोस्।"
 });
 const RELIEF_COLLECTED = {
   updated:"2 Sept 2026",   // OPMCM position read to Parliament and carried by Radio Nepal the same day
@@ -3001,10 +3060,12 @@ const RELIEF_COLLECTED = {
 
      `balance` is derived rather than stored, so the three figures cannot drift
      apart. `npr` + `fx` is the currency split of `collected`. */
-  collected:8820,   // million NPR — total deposited into the fund (7,885 NPR + the dollar account at NRB's rate)
+  collected:10000,  // million NPR — "over Rs 10 billion" by 6 Sept, the flood's 11th day (Kathmandu Post, from the Fonepay/NCHL settlement figures). The 7,885 + 935 split below is the last ITEMISED breakdown, published 3 Sept — the two are deliberately not forced to add up, and rfund.split says so.
   npr:7885,         // million NPR — Rs 7,885,007,217 across nine commercial banks
   fx:935,           // million NPR — USD 6,141,702 in the Himalayan / Laxmi Bank dollar accounts, at NRB's rate
   fxUsd:"6,141,702",
+  splitAsOf:{en:"3 September",ne:"३ सेप्टेम्बर"},
+  asOf:{en:"6 September 2026",ne:"२१ भदौ २०८३"},
   released:1000,    // million NPR — released 1 Sept via the District Disaster Management Committees
   banks:9,
   /* Named contributors only. Thousands of individual donations are not
