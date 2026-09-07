@@ -275,7 +275,7 @@ const NEWS = [
    url:"https://kathmandupost.com/money/2026/09/06/kathmandu-supply-lines-rerouted-after-floods-block-main-highway",
    img:"https://assets-cdn.kathmandupost.com/uploads/source/news/2026/money/Supply-1788656656.jpg",
    imgAlt:{en:"Freight and supply vehicles queue on a diverted route into Kathmandu after the Prithvi Highway was cut, 6 September 2026",ne:"पृथ्वी राजमार्ग अवरुद्ध भएपछि काठमाडौं छिर्ने वैकल्पिक मार्गमा मालवाहक तथा आपूर्ति सवारीको लाइन, ६ सेप्टेम्बर २०२६"},
-   title:{en:"Prithvi Highway shut at Parewabhir today as a 252-metre track reopens Krishnabhir to machines only",
+   title:{en:"Prithvi Highway shut at Parewabhir on 6 Sept as a 252-metre track reopens Krishnabhir to machines only",
           ne:"कृष्णभीरमा २५२ मिटर ट्र्याक खुल्दै गर्दा आज परेवाभीरमा पृथ्वी राजमार्ग बन्द"},
    body:{en:"Dhading's District Administration Office has barred every vehicle except ambulances and hearses from the Parewabhir section between 6 am and 6 pm on 6 September. Upstream at Krishnabhir a temporary track opened seven days after the washout, but the Department of Roads says it carries construction plant only.",
          ne:"जिल्ला प्रशासन कार्यालय धादिङले आज बिहान ६ देखि बेलुका ६ बजेसम्म परेवाभीर खण्डमा एम्बुलेन्स र शव बोक्ने सवारीबाहेक सबै सवारी रोकेको छ। माथि कृष्णभीरमा सडक बगेको सात दिनपछि अस्थायी ट्र्याक खुले पनि सडक विभागका अनुसार त्यसबाट निर्माण उपकरण मात्र गुड्न सक्छ।"},
@@ -2462,9 +2462,19 @@ function injectChrome(){
       if(!min && y>ON){ min=true; hdEl.classList.add("hd--min"); }
       else if(min && y<OFF){ min=false; hdEl.classList.remove("hd--min"); }
     };
-    const onScroll=()=>{ if(!ticking){ ticking=true; requestAnimationFrame(apply); } };
+    // rAF does NOT fire in a hidden tab — the same trap the news popup hit. A
+    // reader who opens this page in a background tab, scrolls after switching
+    // to it, and never triggers a rAF would be left with a stale header, so
+    // fall through to a direct call while hidden and re-check on wake.
+    const onScroll=()=>{
+      if(ticking) return;
+      ticking=true;
+      if(document.visibilityState==="hidden") apply();
+      else requestAnimationFrame(apply);
+    };
     window.addEventListener("scroll", onScroll, {passive:true});
     window.addEventListener("resize", onScroll, {passive:true});
+    document.addEventListener("visibilitychange", onScroll);
     apply();
   }
 

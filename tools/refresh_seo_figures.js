@@ -22,21 +22,19 @@
    one hop (last published → current), so leaving old rows in place would make
    a second run rewrite numbers that have already moved on.
 
-   Current hop: 5 September 2026 -> 6 September 2026.
+   Current hop: 6 September 2026 -> 7 September 2026.
 
-   NOTE: the casualty figures did NOT move. No new national toll was published
-   on 6 September — NDRRMA's 1,344 and Nepal Police's 08:00 count of 1,342 on
-   5 September are still the latest official numbers, and the crawler copy must
-   keep saying "as of 5 September 2026" rather than being re-dated to today.
+   NOTE: the casualty figures STILL did not move. No new national toll has been
+   published since 5 September — NDRRMA's 1,344 and Nepal Police's 08:00 count
+   of 1,342 remain the latest official numbers, and the crawler copy must keep
+   saying "as of 5 September 2026" rather than being re-dated to today.
    Re-dating figures that have not been re-published is exactly how a site
    starts lying quietly.
 
-   What moved: the road situation (a 252 m temporary track opened at
-   Krishnabhir, the Parewabhir section closed for the working day, and the
-   Tribhuvan Highway / Kanti Lokpath now carrying diverted traffic), the damage
-   assessment (the Rapid Damage and Needs Assessment puts loss and damage near
-   Rs 400 billion against NDRRMA's Rs 387.54 billion, with a PDNA panel due to
-   report in six weeks), and dateModified/datePosted.
+   What moved on 7 September: the daytime closure at Parewabhir was a per-day
+   order (5 and 6 Sept) and there is no published order for today, so the copy
+   no longer asserts one; the PM Disaster Relief Fund passed Rs 10 billion on
+   6 September; and dateModified/datePosted.
 
    ========================================================================= */
 "use strict";
@@ -51,26 +49,26 @@ const DRY = process.argv.includes("--dry");
 const PROSE = [
   /* The homepage SpecialAnnouncement one-liner about the road. */
   [
-    "The Prithvi Highway is cut at Krishnabhir in Dhading.",
-    "The Prithvi Highway is closed at Parewabhir (Gajuri-2, Dhading) from 6am to 6pm on 6 September; at Krishnabhir a 252-metre temporary track opened but carries construction plant only."
+    "The Prithvi Highway is closed at Parewabhir (Gajuri-2, Dhading) from 6am to 6pm on 6 September; at Krishnabhir a 252-metre temporary track opened but carries construction plant only.",
+    "The Prithvi Highway is still cut at Krishnabhir in Dhading, where a 252-metre temporary track opened on 6 September but carries construction plant only; daytime repair closures at Parewabhir (Gajuri-2) are ordered day by day."
   ],
   /* The FAQ answer people actually search for. */
   [
-    "The Prithvi Highway\u2019s Mugling\u2013Kathmandu section is cut at Krishnabhir in Benighat Rorang, Dhading, where the road subsided after the Trishuli eroded its base. The Betrawati\u2013Rasuwagadhi road was destroyed by the flood. Night bans apply on the BP Highway (6pm\u20134am) and Kanti Lokpath (5pm\u20135am). See the Highway Updates page for the live list.",
-    "The Prithvi Highway\u2019s Mugling\u2013Kathmandu section is still cut at Krishnabhir in Benighat Rorang, Dhading. A 252-metre temporary track opened there on 6 September but carries construction plant only, and the Department of Roads puts normal traffic about a week away. The Parewabhir section in Gajuri-2 is closed to all but ambulances and hearses from 6am to 6pm on 6 September for repairs. Large buses and freight entering Kathmandu must use the Tribhuvan Highway and Hetauda-bound vehicles the Kanti Lokpath; vehicles under 14 seats may enter via Bhimphedi, Kulekhani, Sisneri or Dakshinkali. The Betrawati\u2013Rasuwagadhi road was destroyed by the flood. Night bans apply on the BP Highway (6pm\u20134am) and Kanti Lokpath (5pm\u20135am). See the Highway Updates page for the live list."
+    "The Parewabhir section in Gajuri-2 is closed to all but ambulances and hearses from 6am to 6pm on 6 September for repairs.",
+    "The Parewabhir section in Gajuri-2 is shut to all but ambulances and hearses from 6am to 6pm on repair days — ordered on 5 and again on 6 September — so check whether one is in force before setting out."
   ],
-  /* Damage: NDRRMA's estimate stands, the RDNA total is added beside it. */
+  /* The donation FAQ now carries the running total. */
   [
-    "387.54 billion ($2.56B, NDRRMA, 4 Sept)",
-    "387.54 billion ($2.56B, NDRRMA, 4 Sept); the Rapid Damage and Needs Assessment puts total loss and damage near Rs 400 billion"
+    "Donate through the official Prime Minister Disaster Relief Fund using its published bank accounts, Fonepay QR codes, or the Government of Nepal online portal operated via NCHL. Details are on the Relief Fund page.",
+    "Donate through the official Prime Minister Disaster Relief Fund using its published bank accounts, Fonepay QR codes, or the Government of Nepal online portal operated via NCHL. The fund passed Rs 10 billion on 6 September 2026, most of it raised by QR code in donations of under Rs 100. Details are on the Relief Fund page."
   ],
 ];
 
 /* Previous value \u2192 current value. Order matters: longer/more specific strings
    must come before shorter ones that they contain. */
 const FIGURES = [
-  ['"dateModified":"2026-09-05"', '"dateModified":"2026-09-06"'],
-  ['"datePosted":"2026-09-05T13:20:00+05:45"', '"datePosted":"2026-09-06T10:30:00+05:45"'],
+  ['"dateModified":"2026-09-06"', '"dateModified":"2026-09-07"'],
+  ['"datePosted":"2026-09-06T10:30:00+05:45"', '"datePosted":"2026-09-07T12:30:00+05:45"'],
 ];
 
 
