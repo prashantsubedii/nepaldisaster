@@ -3811,7 +3811,7 @@ html[lang="ne"] .hhc__btn{ font-family: var(--f-np); }
    the three figures the briefing moved. Slightly wider, because a 384px card
    with a 16:9 image above three stat columns starts to feel cramped. */
 .npop--brief{ width: min(430px, calc(100vw - 24px)); }
-.npop--brief .npop__card{ padding-top: 0; }
+.npop--brief .npop__card:has(.npop__thumb){ padding-top: 0; }
 .npop__thumb{
   margin: 0 -20px 14px; position: relative; background: var(--paper-3);
   aspect-ratio: 16 / 9; overflow: hidden;
@@ -3824,10 +3824,10 @@ html[lang="ne"] .hhc__btn{ font-family: var(--f-np); }
   pointer-events: none;
 }
 .npop--brief .npop__top{ margin-bottom: 9px; }
-.npop--brief .npop__x{
+.npop--brief .npop__card:has(.npop__thumb) .npop__x{
   background: rgba(12,16,22,.55); color: #fff; backdrop-filter: blur(4px);
 }
-.npop--brief .npop__x:hover{ background: rgba(12,16,22,.78); color: #fff; }
+.npop--brief .npop__card:has(.npop__thumb) .npop__x:hover{ background: rgba(12,16,22,.78); color: #fff; }
 .npop__mark{
   background: none; color: var(--accent); font-weight: 800;
   box-shadow: inset 0 -.32em 0 var(--accent-wash);
@@ -3909,11 +3909,11 @@ html[lang="ne"] .rfund__ttlnote{ font-family: var(--f-np); }
 }
 .npop__x:hover{ border-color: var(--line); }
 .npop__x .ico-x{ width: 16px; height: 16px; }
-.npop--brief .npop__x{
+.npop--brief .npop__card:has(.npop__thumb) .npop__x{
   border-color: rgba(255,255,255,.28);
   box-shadow: 0 2px 10px rgba(6,9,13,.35);
 }
-.npop--brief .npop__x:hover{ border-color: rgba(255,255,255,.5); }
+.npop--brief .npop__card:has(.npop__thumb) .npop__x:hover{ border-color: rgba(255,255,255,.5); }
 /* Credit line for a hotlinked press photograph, sat on the thumbnail scrim. */
 .npop__credit{
   position: absolute; left: 0; right: 0; bottom: 0; z-index: 1;
@@ -3944,3 +3944,61 @@ html[lang="ne"] .rfund__ttlnote{ font-family: var(--f-np); }
 }
 .syncstamp:empty{ display: none; }
 .syncstamp.is-stale{ color: var(--danger); border-color: color-mix(in srgb, var(--danger) 45%, var(--rule)); }
+
+
+/* ---------- 25. A quieter top of the page -------------------------------
+   The masthead used to hold 125px of the viewport permanently: a 69px brand
+   row (logo, sub-label, clock, language, theme, bell) stacked on a 56px nav
+   rail, both sticky, with a 38px ticker and a 45px event strip above them. On
+   a laptop that is a third of the screen gone before the reader has seen a
+   single figure, and on a phone it is worse.
+
+   So the brand row now COLLAPSES once the reader starts scrolling. Only the
+   nav rail stays pinned — which is the part that is actually navigation — and
+   the mark shrinks into it so the site never loses its identity. `.hd--min` is
+   toggled from assets/app.js. Everything animates on max-height/opacity rather
+   than display, so nothing jumps and the sticky offset stays stable.
+   ------------------------------------------------------------------------ */
+.hd{ transition: box-shadow .25s var(--ease); }
+.hd__row{
+  transition: padding .22s var(--ease), max-height .28s var(--ease), opacity .18s var(--ease);
+  max-height: 96px;
+  overflow: hidden;
+}
+/* Only above the nav breakpoint. Below 821px .nav__inner is display:none and
+   the burger is the ONLY navigation on the page — folding the brand row there
+   would take the menu away with it. */
+@media (min-width: 821px){
+  .hd--min .hd__row{
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .hd--min .nav__mark{ display: grid; }
+  .hd--min{ box-shadow: 0 6px 22px -18px rgba(15,20,27,.75); }
+}
+/* The mark, folded into the nav rail while the brand row is away. */
+.nav__mark{
+  display: none;
+  width: 26px; height: 26px; flex: 0 0 26px;
+  border-radius: var(--r, 4px);
+  background: linear-gradient(145deg, #E22945, var(--accent-2, #C8102E));
+  place-items: center;
+  margin-right: 4px;
+  align-self: center;
+}
+.nav__mark svg{ width: 15px; height: 15px; }
+@media (prefers-reduced-motion: reduce){
+  .hd__row, .hd{ transition: none; }
+}
+
+/* The ticker is a marquee: it belongs at the top of the page, not glued to
+   the reader for the whole visit. It scrolls away with the page and only the
+   nav rail follows. (It was already static — this states the intent, and
+   trims it on small screens where 38px is a bigger share of the fold.) */
+@media (max-width: 640px){
+  .ticker, .ticker__track{ height: 32px; }
+  .eas__inner{ padding-top: 7px; padding-bottom: 7px; }
+}

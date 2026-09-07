@@ -1,6 +1,6 @@
 {
   "_comment": "Curated official baseline (rank 2). Rows written directly by a rank-1 API — the NDRRMA named rescue registry and its Nepali/foreign split, the rescue-system log, the comms-tower status — are deliberately NOT listed here. They used to be, and because this feed carries no source rank it silently overwrote the live API values on every refresh cycle. See _API_OWNED_ROWS in assets/app.js. Keep updated_at honest: once it is more than 36 hours old this feed demotes itself below Wikipedia so the site keeps advancing on its own.",
-  "updated_at": "2026-09-06T10:30:00+05:45",
+  "updated_at": "2026-09-07T12:30:00+05:45",
   "event": {
     "code": "FL-2026-0826",
     "since": "2026-08-26T08:37:00+05:45",
@@ -13,8 +13,8 @@
       "ne": "रसुवा · नुवाकोट · धादिङ · त्रिशूली कोरिडोर · चितवन · नवलपरासी"
     },
     "eas": {
-      "en": "Trishuli / Bhote Koshi glacier-collapse flood. ROAD: the Prithvi Highway's Parewabhir section (Gajuri-2, Dhading) is closed to everything but ambulances and hearses from 6 am to 6 pm today; at Krishnabhir a 252-metre temporary track opened on 6 Sept but carries construction plant only, with normal traffic about a week away. Large buses and freight into Kathmandu must use the Tribhuvan Highway, Hetauda-bound vehicles the Kanti Lokpath. Latest official toll (NDRRMA, 5 Sept): 1,344 dead, 4,886 missing, 5,300 injured; 13,013 rescued including 324 foreign nationals. The Rapid Damage and Needs Assessment puts loss and damage near Rs 400 billion.",
-      "ne": "त्रिशूली / भोटेकोशी हिमनदी भत्किएर आएको बाढी। सडक: पृथ्वी राजमार्गको परेवाभीर खण्ड (गजुरी-२, धादिङ) आज बिहान ६ देखि बेलुका ६ बजेसम्म एम्बुलेन्स र शव बोक्ने सवारीबाहेक बन्द; कृष्णभीरमा ६ सेप्टेम्बरमा २५२ मिटर अस्थायी ट्र्याक खुले पनि त्यसबाट निर्माण उपकरण मात्र गुड्छ, नियमित आवागमन करिब एक सातापछि। काठमाडौं छिर्ने ठूला बस र मालवाहकले त्रिभुवन राजमार्ग, हेटौंडातर्फकाले कान्ति लोकपथ प्रयोग गर्नुपर्नेछ। पछिल्लो आधिकारिक तथ्यांक (NDRRMA, ५ सेप्टेम्बर): १,३४४ मृत्यु, ४,८८६ बेपत्ता, ५,३०० घाइते; ३२४ विदेशी नागरिकसहित १३,०१३ उद्धार। द्रुत क्षति तथा आवश्यकता आकलनले क्षति करिब रु. ४०० अर्ब पुग्ने देखाएको छ।"
+      "en": "Trishuli / Bhote Koshi glacier-collapse flood. ROAD: the Prithvi Highway is still cut at Krishnabhir — a 252-metre temporary track opened on 6 Sept but carries construction plant only, with normal traffic about a week away; large buses and freight into Kathmandu must use the Tribhuvan Highway and Hetauda-bound vehicles the Kanti Lokpath. Confirm with the traffic office (103) before travelling. RELIEF: Aamachhodingmo Rural Municipality in Rasuwa, over 7,000 people, has been road-cut since 26 Aug and reports food, salt and cooking oil exhausted. The PM Disaster Relief Fund passed Rs 10 billion on 6 Sept. Latest official toll (NDRRMA, 5 Sept): 1,344 dead, 4,886 missing, 5,300 injured; 13,013 rescued including 324 foreign nationals.",
+      "ne": "त्रिशूली / भोटेकोशी हिमनदी भत्किएर आएको बाढी। सडक: पृथ्वी राजमार्ग कृष्णभीरमा अवरुद्धै छ — ६ सेप्टेम्बरमा २५२ मिटर अस्थायी ट्र्याक खुले पनि निर्माण उपकरण मात्र गुड्छ, नियमित आवागमन करिब एक सातापछि। काठमाडौं छिर्ने ठूला बस र मालवाहकले त्रिभुवन राजमार्ग, हेटौंडातर्फकाले कान्ति लोकपथ प्रयोग गर्नुहोस्; यात्रा अघि ट्राफिक (१०३) मा पुष्टि गर्नुहोस्। राहत: रसुवाको आमाछोदिङमो गाउँपालिका (७,०००+ जनसंख्या) १० भादौदेखि सडकविहीन छ र खाद्य, नुन र तेल सकिएको जनाएको छ। ६ सेप्टेम्बरमा प्रधानमन्त्री विपद् राहत कोष रु. १० अर्ब नाघ्यो। पछिल्लो आधिकारिक तथ्याङ्क (NDRRMA, ५ सेप्टेम्बर): १,३४४ मृत्यु, ४,८८६ बेपत्ता, ५,३०० घाइते; ३२४ विदेशी नागरिकसहित १३,०१३ उद्धार।"
     }
   },
   "stats": [
@@ -329,6 +329,10 @@
           "1"
         ],
         [
+          "Chilime — believed trapped inside the tunnel (Arnold Dix, 7 Sept)",
+          "41"
+        ],
+        [
           "Trishuli 3A — workers missing (IPPAN, 4 Sept)",
           "557"
         ],
@@ -404,6 +408,14 @@
         [
           "Under-construction capacity damaged (MW)",
           "470"
+        ],
+        [
+          "Farmland washed away or buried (hectares)",
+          "1,806"
+        ],
+        [
+          "Expected fall in food production (tonnes)",
+          "7,686"
         ],
         [
           "Schools damaged or destroyed",
