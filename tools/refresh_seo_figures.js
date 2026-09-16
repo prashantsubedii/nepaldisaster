@@ -22,19 +22,20 @@
    one hop (last published → current), so leaving old rows in place would make
    a second run rewrite numbers that have already moved on.
 
-   Current hop: 6 September 2026 -> 7 September 2026.
+   Current hop: 7 September 2026 -> 16 September 2026.
 
-   NOTE: the casualty figures STILL did not move. No new national toll has been
-   published since 5 September — NDRRMA's 1,344 and Nepal Police's 08:00 count
-   of 1,342 remain the latest official numbers, and the crawler copy must keep
-   saying "as of 5 September 2026" rather than being re-dated to today.
-   Re-dating figures that have not been re-published is exactly how a site
-   starts lying quietly.
+   The casualty figures moved this time. The latest official Nepal-side toll
+   (Wikipedia's 2026 Nepal–Tibet floods article, as of 12 September, matching
+   the MoFA daily situation updates of 10 September) is 1,386 dead, 5,130
+   missing, 6,827 injured and 13,728 rescued — so the crawler copy is re-dated
+   to "12 September 2026". Missing rose (revised up as more people were reported
+   out of contact); deaths, injured and rescued rose too.
 
-   What moved on 7 September: the daytime closure at Parewabhir was a per-day
-   order (5 and 6 Sept) and there is no published order for today, so the copy
-   no longer asserts one; the PM Disaster Relief Fund passed Rs 10 billion on
-   6 September; and dateModified/datePosted.
+   What else moved: the Prithvi Highway at Krishnabhir is REOPENING — the Dept.
+   of Roads says the 252-metre track returns to full two-way public traffic on
+   17 September, so the road one-liner and the highway FAQ are rewritten from
+   "still cut" to "reopening". The PM Disaster Relief Fund passed Rs 13.23
+   billion (US$86.69 million) by 11 September. dateModified/datePosted bumped.
 
    ========================================================================= */
 "use strict";
@@ -49,26 +50,35 @@ const DRY = process.argv.includes("--dry");
 const PROSE = [
   /* The homepage SpecialAnnouncement one-liner about the road. */
   [
-    "The Prithvi Highway is closed at Parewabhir (Gajuri-2, Dhading) from 6am to 6pm on 6 September; at Krishnabhir a 252-metre temporary track opened but carries construction plant only.",
-    "The Prithvi Highway is still cut at Krishnabhir in Dhading, where a 252-metre temporary track opened on 6 September but carries construction plant only; daytime repair closures at Parewabhir (Gajuri-2) are ordered day by day."
+    "The Prithvi Highway is still cut at Krishnabhir in Dhading, where a 252-metre temporary track opened on 6 September but carries construction plant only; daytime repair closures at Parewabhir (Gajuri-2) are ordered day by day.",
+    "The Prithvi Highway at Krishnabhir in Dhading reopens to full two-way public traffic on 17 September; gas tankers and heavy vehicles have crossed the 252-metre temporary track one-way since mid-September, with drainage work continuing beside live traffic."
   ],
-  /* The FAQ answer people actually search for. */
+  /* The FAQ answer people actually search for — first sentence only. */
   [
-    "The Parewabhir section in Gajuri-2 is closed to all but ambulances and hearses from 6am to 6pm on 6 September for repairs.",
-    "The Parewabhir section in Gajuri-2 is shut to all but ambulances and hearses from 6am to 6pm on repair days — ordered on 5 and again on 6 September — so check whether one is in force before setting out."
+    "The Parewabhir section in Gajuri-2 is shut to all but ambulances and hearses from 6am to 6pm on repair days — ordered on 5 and again on 6 September — so check whether one is in force before setting out.",
+    "The Prithvi Highway at Krishnabhir reopens to full two-way public traffic on 17 September; gas tankers and heavy vehicles have crossed the 252-metre track one-way since mid-September, with drainage work continuing beside live traffic. The Parewabhir section in Gajuri-2 ran one-way over a temporary track, with daytime repair closures ordered only on 5–6 September; check before setting out."
   ],
-  /* The donation FAQ now carries the running total. */
+  /* The donation FAQ carries the running total. */
   [
-    "Donate through the official Prime Minister Disaster Relief Fund using its published bank accounts, Fonepay QR codes, or the Government of Nepal online portal operated via NCHL. Details are on the Relief Fund page.",
-    "Donate through the official Prime Minister Disaster Relief Fund using its published bank accounts, Fonepay QR codes, or the Government of Nepal online portal operated via NCHL. The fund passed Rs 10 billion on 6 September 2026, most of it raised by QR code in donations of under Rs 100. Details are on the Relief Fund page."
+    "The fund passed Rs 10 billion on 6 September 2026, most of it raised by QR code in donations of under Rs 100. Details are on the Relief Fund page.",
+    "The fund passed Rs 13.23 billion (about US$86.69 million) by 11 September 2026, most of it raised by QR code in donations of under Rs 100. Details are on the Relief Fund page."
   ],
 ];
 
 /* Previous value \u2192 current value. Order matters: longer/more specific strings
    must come before shorter ones that they contain. */
 const FIGURES = [
-  ['"dateModified":"2026-09-06"', '"dateModified":"2026-09-07"'],
-  ['"datePosted":"2026-09-06T10:30:00+05:45"', '"datePosted":"2026-09-07T12:30:00+05:45"'],
+  ['1,344', '1,386'],
+  ['4,886', '5,130'],
+  ['13,013', '13,728'],
+  ['5,300', '6,827'],
+  ['589 foreign', '587 foreign'],
+  ['as of 5 September 2026', 'as of 12 September 2026'],
+  ['NDRRMA, 5 Sept, Nepal side', 'NDRRMA, 12 Sept, Nepal side'],
+  ['(Nepali officials, 5 Sept)', '(Nepali officials, 12 Sept)'],
+  ['(5 Sept)', '(12 Sept)'],
+  ['"dateModified":"2026-09-07"', '"dateModified":"2026-09-16"'],
+  ['"datePosted":"2026-09-07T12:30:00+05:45"', '"datePosted":"2026-09-16T12:00:00+05:45"'],
 ];
 
 

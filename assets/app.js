@@ -186,10 +186,10 @@ const EVENT = {
    Nepal registry). The Wikipedia INFOBOX is NOT used — it reports Nepal+Tibet
    COMBINED, which is what previously inflated the toll. */
 let STATS = [
-  {key:"deaths",  n:"1,344", cls:"hstat--death"},
-  {key:"missing", n:"4,886", cls:"hstat--missing"},
-  {key:"foreign", n:"589"},
-  {key:"rescued", n:"13,013", cls:"hstat--rescue"}   // hero = TOTAL rescued (Nepali officials, 5 Sept); the NAMED registry (5,006) is a separate, smaller figure shown on the Rescued page
+  {key:"deaths",  n:"1,386", cls:"hstat--death"},
+  {key:"missing", n:"5,130", cls:"hstat--missing"},
+  {key:"foreign", n:"587"},
+  {key:"rescued", n:"13,728", cls:"hstat--rescue"}   // hero = TOTAL rescued (Nepali officials, 12 Sept); the NAMED registry (5,006) is a separate, smaller figure shown on the Rescued page
 ];
 
 /* -------------------- TICKER -------------------- */
@@ -200,12 +200,12 @@ const TICKER = [
    ne:"NDRRMA (७ सेप्टेम्बर): १,८०६ हेक्टर खेतीयोग्य जमिन बग्यो, प्रभावित जिल्लामा खाद्य उत्पादन करिब ७,६८६ टन घट्ने अनुमान"},
   {src:"RASUWA", en:"Aamachhodingmo Rural Municipality (Rasuwa) has been cut off since 26 Aug — food, salt and cooking oil have run out for more than 7,000 people, with helicopters the only way in",
    ne:"आमाछोदिङमो गाउँपालिका (रसुवा) ४९ भादौदेखि सम्पर्कविहीन — ७,००० भन्दा बढीका लागि खाद्य, नुन र तेल सकियो, पुग्ने बाटो हेलिकप्टर मात्र"},
-  {src:"ROADS", en:"Krishnabhir: a 252-metre temporary track opened on 6 Sept, seven days after the washout — construction plant only, with normal traffic about a week away (Dept. of Roads)",
-   ne:"कृष्णभीर: सडक बगेको सात दिनपछि ६ सेप्टेम्बरमा २५२ मिटर अस्थायी ट्र्याक खुल्यो — निर्माण उपकरण मात्र गुड्न सक्ने, नियमित आवागमन करिब एक सातापछि (सडक विभाग)"},
-  {src:"SUPPLY", en:"Kathmandu supply lines rerouted: large buses and freight enter via the Tribhuvan Highway, Hetauda-bound traffic via Kanti Lokpath, fuel tankers via Hetauda–Bhainse–Palung–Naubise",
-   ne:"काठमाडौंको आपूर्ति मार्ग परिवर्तन: ठूला बस र मालवाहक त्रिभुवन राजमार्ग हुँदै, हेटौंडातर्फका सवारी कान्ति लोकपथ हुँदै, इन्धन ट्यांकर हेटौंडा–भैंसे–पालुङ–नौबिसे हुँदै"},
-  {src:"NDRRMA", en:"NDRRMA update (5 Sept): 1,344 dead, 4,886 missing or out of contact and 5,300 injured on the Nepal side; 13,013 rescued including 324 foreign nationals",
-   ne:"NDRRMA अद्यावधिक (५ सेप्टेम्बर): नेपालतर्फ १,३४४ मृत्यु, ४,८८६ बेपत्ता वा सम्पर्कविहीन र ५,३०० घाइते; ३२४ विदेशी नागरिकसहित १३,०१३ उद्धार"},
+  {src:"ROADS", en:"Prithvi Highway reopening: the Krishnabhir section returns to full two-way public traffic on 17 September — gas tankers and heavy vehicles have crossed the 252-metre track one-way since mid-September (Dept. of Roads)",
+   ne:"पृथ्वी राजमार्ग पुनः खुल्दै: कृष्णभीर खण्ड १७ सेप्टेम्बरदेखि पूर्ण दोहोरो सार्वजनिक सञ्चालनमा — भदौ अन्त्यदेखि ग्यास ट्यांकर र भारी सवारी २५२ मिटर ट्र्याकबाट एकतर्फी गुड्दै (सडक विभाग)"},
+  {src:"SUPPLY", en:"Supply routes easing as the Prithvi Highway reopens; a temporary Acrow bridge at Devighat over the Tadi reopened on 10 September, restoring a road link toward Nuwakot",
+   ne:"पृथ्वी राजमार्ग खुल्दै गर्दा आपूर्ति मार्ग सहज हुँदै; १० सेप्टेम्बरमा देवीघाटमा ताडीमाथि अस्थायी एक्रो पुल खुलेपछि नुवाकोटतर्फको सडक पहुँच पुनःस्थापित"},
+  {src:"NDRRMA", en:"Latest official toll (12 Sept): 1,386 dead, 5,130 missing or out of contact and 6,827 injured on the Nepal side; 13,728 rescued including over 300 foreign nationals",
+   ne:"पछिल्लो आधिकारिक तथ्याङ्क (१२ सेप्टेम्बर): नेपालतर्फ १,३८६ मृत्यु, ५,१३० बेपत्ता वा सम्पर्कविहीन र ६,८२७ घाइते; ३०० भन्दा बढी विदेशी नागरिकसहित १३,७२८ उद्धार"},
   {src:"TUNNEL", en:"Chinese worker Lu Haitao, 49, pulled out ALIVE from the Upper Trishuli-1 tunnel at 1:20pm on 5 Sept — found 225 m inside by the Nepali Army and a South Korean rescue team, ten days after the flood",
    ne:"५ सेप्टेम्बर दिउँसो १:२० बजे माथिल्लो त्रिशूली-१ सुरुङबाट ४९ वर्षीय चिनियाँ कामदार लु हाइताओ जीवितै निकालिए — बाढी गएको दस दिनपछि नेपाली सेना र दक्षिण कोरियाली टोलीले सुरुङभित्र २२५ मिटरमा भेटे"},
   {src:"RESCUE", en:"900 hydropower workers missing across 12 projects and around 500 still believed inside the tunnels — 557 missing at Trishuli 3A alone (IPPAN) and 576 at Upper Trishuli-1",
@@ -224,8 +224,8 @@ const TICKER = [
    ne:"प्रधानमन्त्री विपद् राहत कोषबाट रसुवा र नुवाकोट प्रत्येकलाई रु. १ करोड निकासा; १० ट्रक राहत सामग्री पठाइयो र सबै मन्त्रीले एक महिनाको तलब दिने घोषणा"},
   {src:"ARMY", en:"Nepali Army has airlifted 3,344 Nepalis and 252 foreign nationals across 411 rescue and relief flights",
    ne:"नेपाली सेनाले ४११ उद्धार तथा राहत उडानमा ३,३४४ नेपाली र २५२ विदेशी नागरिक हवाईमार्ग उद्धार गर्‍यो"},
-  {src:"PMO", en:"PM Disaster Relief Fund passes Rs 10 billion on its 11th day (6 Sept) — 889,145 Fonepay and 246,614 NCHL transactions, most of them small personal donations; Rs 675 million released to 15 local units",
-   ne:"प्रधानमन्त्री विपद् राहत कोष घटनाको ११औँ दिन (६ सेप्टेम्बर) रु. १० अर्ब नाघ्यो — ८,८९,१४५ फोनपे र २,४६,६१४ NCHL कारोबार, धेरैजसो साना व्यक्तिगत सहयोग; १५ स्थानीय तहलाई रु. ६७.५ करोड निकासा"},
+  {src:"PMO", en:"PM Disaster Relief Fund passes Rs 13.23 billion (about US$86.69 million) by 11 September — roughly Rs 9.68 billion in rupee accounts and US$23.28 million in foreign currency, most of it raised by QR code in small personal donations",
+   ne:"प्रधानमन्त्री विपद् राहत कोष ११ सेप्टेम्बरसम्म रु. १३.२३ अर्ब (करिब ८.६७ करोड अमेरिकी डलर) नाघ्यो — रुपैयाँ खातामा करिब रु. ९.६८ अर्ब र विदेशी मुद्रामा २.३३ करोड डलर, धेरैजसो QR मार्फत साना व्यक्तिगत सहयोगबाट"},
   {src:"USGS", en:"Glacier collapse near Langtang Lirung confirmed as cause of catastrophic debris surge down Bhote Koshi",
    ne:"लाङटाङ लिरुङ नजिक हिमनदी भत्किएर भोटेकोशीमा विनाशकारी लेदो बाढी आएको पुष्टि"},
   {src:"AID", en:"International assistance mobilised: IFRC CHF 25m appeal, ADB $5m, EU €2m, UN CERF $2m, China 50t supplies",
@@ -235,6 +235,15 @@ const TICKER = [
 /* -------------------- NEWS / BULLETINS (20, sourced; full articles) -------------------- */
 const WK="https://en.wikipedia.org/wiki/2026_Nepal_floods";
 const NEWS = [
+  {sev:"relief", tag:{en:"Roads",ne:"सडक"}, time:"16 Sept 2026", src:"People's Review / Onlinekhabar / Dept. of Roads",
+   url:"https://peoplesreview.com.np/2026/09/14/krishnabheer-section-of-prithivi-highway-to-come-into-full-operation-from-september-17/",
+   title:{en:"Prithvi Highway reopens: Krishnabhir returns to full two-way traffic on 17 September",
+          ne:"पृथ्वी राजमार्ग पुनः खुल्यो: कृष्णभीर १७ सेप्टेम्बरदेखि पूर्ण दोहोरो सञ्चालनमा"},
+   body:{en:"Eighteen days after the flood washed away the carriageway at Krishnabhir, the Department of Roads says the section reopens to the general public on 17 September, with construction continuing beside live traffic.",
+         ne:"कृष्णभीरमा बाढीले सडक बगाएको १८ दिनपछि सडक विभागले यो खण्ड १७ सेप्टेम्बरदेखि सर्वसाधारणका लागि खुल्ने बताएको छ; निर्माण भने सवारीसँगै जारी रहनेछ।"},
+   long:{en:"Kathmandu's main road link to the west is coming back. At Krishnabhir in Benighat Rorang, Dhading — where the Prithvi Highway carriageway sank on 30 August after the swollen Trishuli ate its base — engineers cut a 252-metre track, ten metres wide, into the hillside above the slide to keep it clear of the river. After trial runs with passenger vehicles proved safe, the Department of Roads first allowed stranded gas tankers and heavy equipment through one-way; Director General Dr Bijay Jaisi said drainage-channel work along the roadside was the last piece remaining. Sajana Adhikari, senior divisional engineer and chief of the western section of the Naubise–Muglin project, said the section returns to full two-way public operation on Thursday, 17 September, with around 40 to 50 workers and five or six machines still on site. Drivers should still expect short holds while gravelling, slope-cutting and drainage work continues beside live traffic, and should confirm conditions with the traffic office on 103 before setting out. Elsewhere the picture is mixed: the Betrawati–Rasuwagadhi road to the China border, destroyed on 26 August, still needs full reconstruction, though a temporary Acrow bridge at Devighat over the Tadi reopened on 10 September to restore a link toward Nuwakot.",
+         ne:"काठमाडौंलाई पश्चिमसँग जोड्ने मुख्य सडक फर्किँदै छ। त्रिशूलीले जग खियाएपछि ३० अगस्टमा पृथ्वी राजमार्गको सडक भासिएको धादिङको बेनीघाट रोराङस्थित कृष्णभीरमा, इन्जिनियरहरूले नदीबाट टाढा राख्न पहिरोमाथि पहाड काटेर १० मिटर चौडा २५२ मिटर ट्र्याक बनाए। यात्रुवाहक सवारीको परीक्षण सफल भएपछि सडक विभागले पहिले अलपत्र ग्यास ट्यांकर र भारी उपकरणलाई एकतर्फी गुडाउन दियो; महानिर्देशक डा. विजय जैसीका अनुसार सडक किनारको नाली निर्माण मात्र बाँकी थियो। नौबिसे–मुग्लिन आयोजनाको पश्चिम खण्ड प्रमुख, वरिष्ठ डिभिजनल इन्जिनियर सजना अधिकारीका अनुसार यो खण्ड बिहीबार १७ सेप्टेम्बरदेखि पूर्ण दोहोरो सार्वजनिक सञ्चालनमा फर्किन्छ, स्थलमा अझै करिब ४०–५० कामदार र ५–६ मेसिन छन्। ग्राभेल, भिर काट्ने र नाली निर्माण सवारीसँगै चल्ने भएकाले चालकहरूले छोटो रोकावटको अपेक्षा गर्नुपर्छ, र हिँड्नुअघि ट्राफिक (१०३) मा अवस्था बुझ्नुपर्छ। अन्यत्र अवस्था मिश्रित छ: २६ अगस्टमा ध्वस्त भएको बेत्रावती–रसुवागढी सडकलाई अझै पूर्ण पुनर्निर्माण चाहिन्छ, तर १० सेप्टेम्बरमा देवीघाटमा ताडीमाथि अस्थायी एक्रो पुल खुलेपछि नुवाकोटतर्फको पहुँच पुनःस्थापित भएको छ।"}},
+
   {sev:"danger", tag:{en:"Relief",ne:"राहत"}, time:"7 Sept 2026", src:"The Kathmandu Post / Aamachhodingmo Rural Municipality",
    url:"https://kathmandupost.com/province-no-3/2026/09/07/people-in-flood-hit-rasuwa-villages-call-for-help-after-supplies-run-out",
    title:{en:"Cut off since the flood, Rasuwa villages say the food, salt and oil have run out",
@@ -1797,21 +1806,21 @@ let _newsPopTimer=null, _newsPopOpenFor=null;
    before they set out. Change the id whenever the story changes — NEWSPOP_SEEN
    is keyed on it, and a reused id would silently suppress the new card. */
 const PINNED_NEWS={
-  id:"brief-2026-0907-rasuwa-supplies",
-  until:"2026-09-09T09:00:00+05:45",
-  url:"https://kathmandupost.com/province-no-3/2026/09/07/people-in-flood-hit-rasuwa-villages-call-for-help-after-supplies-run-out",
-  source:"Aamachhodingmo Rural Municipality · The Kathmandu Post",
-  time:{en:"7 Sept 2026",ne:"२२ भदौ २०८३"},
-  badge:{en:"RELIEF GAP",ne:"राहत अभाव"},
-  title:{en:"Rasuwa villages cut off since the flood say the food, salt and oil have run out",
-         ne:"बाढीयता सम्पर्कविहीन रसुवाका गाउँमा खाद्य, नुन र तेल सकियो"},
-  hl:{en:"the food, salt and oil have run out",ne:"खाद्य, नुन र तेल सकियो"},
-  body:{en:"Aamachhodingmo Rural Municipality has had no road since 26 August. Helicopters are the only way in and they come rarely. Give through the official Prime Minister Disaster Relief Fund — the accounts and QR codes are on our Relief Fund page.",
-        ne:"आमाछोदिङमो गाउँपालिकामा १० भदौदेखि सडक छैन। हेलिकप्टर मात्र पुग्छ, त्यो पनि कहिलेकाहीँ। आधिकारिक प्रधानमन्त्री विपद् राहत कोषमार्फत सहयोग गर्नुहोस् — खाता र QR हाम्रो राहत कोष पृष्ठमा छन्।"},
+  id:"brief-2026-0916-prithvi-reopen",
+  until:"2026-09-19T09:00:00+05:45",
+  url:"https://peoplesreview.com.np/2026/09/14/krishnabheer-section-of-prithivi-highway-to-come-into-full-operation-from-september-17/",
+  source:"Dept. of Roads · People's Review · The Kathmandu Post",
+  time:{en:"16 Sept 2026",ne:"३१ भदौ २०८३"},
+  badge:{en:"ROAD REOPENING",ne:"सडक पुनः सञ्चालन"},
+  title:{en:"Prithvi Highway at Krishnabhir reopens to full two-way traffic on 17 September",
+         ne:"कृष्णभीरमा पृथ्वी राजमार्ग १७ सेप्टेम्बरदेखि पूर्ण दोहोरो सञ्चालनमा"},
+  hl:{en:"full two-way traffic on 17 September",ne:"१७ सेप्टेम्बरदेखि पूर्ण दोहोरो सञ्चालन"},
+  body:{en:"Kathmandu's main road link to the west is being restored. Gas tankers and heavy vehicles have crossed the 252-metre track one-way since mid-September; the Department of Roads says full public operation begins on 17 September, with drainage work continuing beside live traffic — so expect holds and confirm with the traffic office (103) before travelling.",
+        ne:"काठमाडौंलाई पश्चिमसँग जोड्ने मुख्य सडक पुनःस्थापित हुँदै छ। भदौ अन्त्यदेखि ग्यास ट्यांकर र भारी सवारी २५२ मिटर ट्र्याकबाट एकतर्फी गुड्दै छन्; सडक विभागका अनुसार १७ सेप्टेम्बरदेखि पूर्ण सार्वजनिक सञ्चालन सुरु हुन्छ, सवारीसँगै नाली निर्माण जारी रहन्छ — त्यसैले रोकावट सम्भव, यात्रा अघि ट्राफिक (१०३) मा पुष्टि गर्नुहोस्।"},
   figs:[
-    {n:"7,000",l:{en:"people cut off",ne:"जना सम्पर्कविहीन"}},
-    {n:"203",  l:{en:"missing from this RM",ne:"यसै गाउँपालिकाबाट बेपत्ता"}},
-    {n:"12",   l:{en:"days without a road",ne:"दिन सडकविहीन"}}
+    {n:"252 m",  l:{en:"temporary track",ne:"अस्थायी ट्र्याक"}},
+    {n:"17 Sept",l:{en:"full two-way reopening",ne:"पूर्ण दोहोरो सञ्चालन"}},
+    {n:"18",     l:{en:"days after the washout",ne:"सडक बगेको दिन"}}
   ]
 };
 function _pinnedLive(){
@@ -3098,19 +3107,19 @@ async function renderRescuePage(){
 Object.assign(I18N.en,{
   "rfund.eye":"PM Disaster Relief Fund","rfund.h":"Collected & Released",
   "rfund.total":"Total Collected","rfund.released":"Released to Districts","rfund.balance":"Balance in Fund",
-  "rfund.split":"Last itemised on 3 September: {npr} across {banks} commercial banks and a further USD {usd} (about {fx}) in the fund's dollar accounts at Himalayan Bank and Laxmi Bank. The total above is the fund's own count on 6 September and is larger than that breakdown.",
+  "rfund.split":"As of 11 September the fund holds {npr} in its rupee accounts and a further USD {usd} (about {fx}) in its dollar accounts, for a combined total of about Rs 13.23 billion (US$86.69 million).",
   "rfund.top":"Named Contributors","rfund.top.share":"about {p}% of the total — a sample, not a breakdown","rfund.updated":"Updated",
-  "rfund.note":"The fund passed Rs 10 billion on 6 September, its eleventh day — most of it raised by QR code, a large share in donations of under Rs 100 (889,145 Fonepay and 246,614 NCHL transactions; 93,850 Visa/Mastercard payments from abroad worth Rs 1.4 billion). Rs 1 billion was released on 1 September through the District Disaster Management Committees, for rescue and relief, immediate infrastructure repairs and temporary housing — leaving the balance shown. Districts apply through their own disaster management committees; the Fund Management Committee is chaired by the Home Secretary. The contributors below are only those whose donations were announced publicly, so they are a sample of the total, not a breakdown of it — thousands of individual donations are never itemised. The total rises daily and syncs automatically. Source: OPMCM, via NepalNews / The Rising Nepal / myRepublica — verify before relying on any amount."
+  "rfund.note":"The fund passed Rs 13.23 billion (about US$86.69 million) by 11 September — most of it raised by QR code, a large share in donations of under Rs 100. It holds roughly Rs 9.68 billion in rupee accounts and US$23.28 million in foreign-currency accounts. Rs 1 billion was released on 1 September through the District Disaster Management Committees, for rescue and relief, immediate infrastructure repairs and temporary housing — leaving the balance shown. Districts apply through their own disaster management committees; the Fund Management Committee is chaired by the Home Secretary. The contributors below are only those whose donations were announced publicly, so they are a sample of the total, not a breakdown of it — thousands of individual donations are never itemised. The total rises daily and syncs automatically. Source: OPMCM / Wikipedia, via NepalNews / The Rising Nepal / myRepublica — verify before relying on any amount."
 });
 Object.assign(I18N.ne,{
   "rfund.eye":"प्रधानमन्त्री विपद् राहत कोष","rfund.h":"संकलन र निकासा",
   "rfund.total":"कुल संकलन","rfund.released":"जिल्लामा निकासा","rfund.balance":"कोषमा बाँकी",
-  "rfund.split":"३ सेप्टेम्बरको अन्तिम विवरण: {banks} वाणिज्य बैंकमा {npr} र हिमालयन तथा लक्ष्मी बैंकका डलर खातामा थप अमेरिकी डलर {usd} (करिब {fx})। माथिको कुल रकम ६ सेप्टेम्बरको हो, त्यसैले यो विवरणभन्दा ठूलो छ।",
+  "rfund.split":"११ सेप्टेम्बरसम्म कोषका रुपैयाँ खातामा {npr} र डलर खातामा थप अमेरिकी डलर {usd} (करिब {fx}) छ — कुल करिब रु. १३.२३ अर्ब (८.६७ करोड अमेरिकी डलर)।",
   "rfund.top":"नाम सार्वजनिक भएका दाता","rfund.top.share":"कुलको करिब {p}% — नमुना मात्र, पूर्ण विवरण होइन","rfund.updated":"अद्यावधिक",
-  "rfund.note":"६ सेप्टेम्बर, विपद्को ११औं दिनमा कोष रु. १० अर्ब नाघ्यो — धेरैजसो QR बाट, ठूलो हिस्सा रु. १०० भन्दा कमका सहयोगबाट (फोनपेबाट ८,८९,१४५ र NCHL बाट २,४६,६१४ कारोबार; विदेशबाट ९३,८५० भिसा/मास्टरकार्ड भुक्तानीबाट रु. १.४ अर्ब)। १ सेप्टेम्बरमा रु. १ अर्ब जिल्ला विपद् व्यवस्थापन समितिमार्फत उद्धार तथा राहत, तत्काल पूर्वाधार मर्मत र अस्थायी आवासका लागि निकासा भएको छ — बाँकी रकम माथि देखाइएको छ। जिल्लाहरूले आ-आफ्नो विपद् व्यवस्थापन समितिमार्फत माग गर्नुपर्छ; कोष व्यवस्थापन समितिको नेतृत्व गृह सचिवले गर्छन्। तल उल्लेखित दाता सार्वजनिक रूपमा घोषणा भएका मात्र हुन् — यो कुल रकमको नमुना हो, पूर्ण विवरण होइन; हजारौं व्यक्तिगत दान छुट्टै सार्वजनिक हुँदैन। कुल रकम दैनिक बढ्छ र स्वतः अद्यावधिक हुन्छ। स्रोत: OPMCM, नेपालन्यूज / गोरखापत्र (द राइजिङ नेपाल) / रिपब्लिका — कुनै रकममा भर पर्नुअघि रुजु गर्नुहोस्।"
+  "rfund.note":"११ सेप्टेम्बरसम्म कोष रु. १३.२३ अर्ब (करिब ८.६७ करोड अमेरिकी डलर) नाघ्यो — धेरैजसो QR बाट, ठूलो हिस्सा रु. १०० भन्दा कमका सहयोगबाट। रुपैयाँ खातामा करिब रु. ९.६८ अर्ब र विदेशी मुद्रा खातामा २.३३ करोड अमेरिकी डलर छ। १ सेप्टेम्बरमा रु. १ अर्ब जिल्ला विपद् व्यवस्थापन समितिमार्फत उद्धार तथा राहत, तत्काल पूर्वाधार मर्मत र अस्थायी आवासका लागि निकासा भएको छ — बाँकी रकम माथि देखाइएको छ। जिल्लाहरूले आ-आफ्नो विपद् व्यवस्थापन समितिमार्फत माग गर्नुपर्छ; कोष व्यवस्थापन समितिको नेतृत्व गृह सचिवले गर्छन्। तल उल्लेखित दाता सार्वजनिक रूपमा घोषणा भएका मात्र हुन् — यो कुल रकमको नमुना हो, पूर्ण विवरण होइन; हजारौं व्यक्तिगत दान छुट्टै सार्वजनिक हुँदैन। कुल रकम दैनिक बढ्छ र स्वतः अद्यावधिक हुन्छ। स्रोत: OPMCM / विकिपिडिया, नेपालन्यूज / गोरखापत्र (द राइजिङ नेपाल) / रिपब्लिका — कुनै रकममा भर पर्नुअघि रुजु गर्नुहोस्।"
 });
 const RELIEF_COLLECTED = {
-  updated:"6 Sept 2026",   // the fund's own count on its 11th day, carried by the Kathmandu Post from the Fonepay/NCHL settlement figures
+  updated:"11 Sept 2026",   // Rs 13.23 billion (US$86.69 million) across all accounts by 11 Sept, per Wikipedia's 2026 Nepal–Tibet floods article citing OPMCM settlement figures
   /* OPMCM's published position, carried identically by NepalNews (31 Aug),
      The Rising Nepal (1 Sept) and myRepublica (2 Sept).
 
@@ -3124,12 +3133,12 @@ const RELIEF_COLLECTED = {
 
      `balance` is derived rather than stored, so the three figures cannot drift
      apart. `npr` + `fx` is the currency split of `collected`. */
-  collected:10000,  // million NPR — "over Rs 10 billion" by 6 Sept, the flood's 11th day (Kathmandu Post, from the Fonepay/NCHL settlement figures). The 7,885 + 935 split below is the last ITEMISED breakdown, published 3 Sept — the two are deliberately not forced to add up, and rfund.split says so.
-  npr:7885,         // million NPR — Rs 7,885,007,217 across nine commercial banks
-  fx:935,           // million NPR — USD 6,141,702 in the Himalayan / Laxmi Bank dollar accounts, at NRB's rate
-  fxUsd:"6,141,702",
-  splitAsOf:{en:"3 September",ne:"३ सेप्टेम्बर"},
-  asOf:{en:"6 September 2026",ne:"२१ भदौ २०८३"},
+  collected:13230,  // million NPR — Rs 13.23 billion across all accounts by 11 Sept (Wikipedia, citing OPMCM). npr + fx below now equal this total, so the split adds up.
+  npr:9680,         // million NPR — roughly Rs 9.68 billion in the fund's rupee accounts
+  fx:3550,          // million NPR — the US$23.28 million foreign-currency balance converted at ~152.5 NPR/USD (9,680 + 3,550 = 13,230)
+  fxUsd:"23.28 million",
+  splitAsOf:{en:"11 September",ne:"२६ भदौ"},
+  asOf:{en:"11 September 2026",ne:"२६ भदौ २०८३"},
   released:1000,    // million NPR — released 1 Sept via the District Disaster Management Committees
   banks:9,
   /* Named contributors only. Thousands of individual donations are not
@@ -3621,9 +3630,9 @@ async function _srcSummary(){
   const fund=txt.match(/Relief Fund[^.]*?(?:रू|रु|₹|Rs\.?|NPR)\s*([\d,]{7,15})/i);
   if(fund && typeof RELIEF_COLLECTED==="object"){
     // Cumulative deposits only ever rise, so a smaller figure is an older
-    // snapshot rather than a correction — the article still says 5.44bn while
-    // OPMCM is publishing 6.36bn. `balance` stays derived from collected minus
-    // released; nothing here touches it.
+    // snapshot rather than a correction. The baseline is Rs 13.23bn (11 Sept);
+    // this only lifts it if the article publishes a larger raw figure. `balance`
+    // stays derived from collected minus released; nothing here touches it.
     const collectedM=_int(fund[1])/1e6;                // rupees → millions
     if(collectedM>(RELIEF_COLLECTED.collected||0)){
       RELIEF_COLLECTED.collected=collectedM;
