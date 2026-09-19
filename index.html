@@ -58,12 +58,6 @@
 <body data-news-limit="6">
 <a href="#main" class="skip">Skip to content</a>
 
-<!-- ticker -->
-<div class="ticker" aria-label="News ticker">
-  <div class="ticker__tag"><span class="sq"></span>LIVE</div>
-  <div class="ticker__view"><div class="ticker__track" id="tickerTrack"></div></div>
-</div>
-
 <!-- header -->
 <header class="hd">
   <div class="wrap hd__row">
@@ -118,7 +112,7 @@
       <p class="hero__note" data-i18n="hero.note"></p>
       <div class="hero__cta">
         <a class="btn btn--primary" href="#helplines" data-i18n="hero.help">Emergency Helplines</a>
-        <a class="btn btn--light" href="#report" data-i18n="hero.report">Report an Incident</a>
+        <a class="btn btn--light" href="stats.html" data-i18n="nav.stats">Situation</a>
       </div>
     </div>
   </section>
@@ -130,10 +124,7 @@
         <div><span class="eyebrow" data-i18n="sec.hl.eye">Call for Help</span><h2 id="hl-h" data-i18n="sec.hl.h">Emergency Helplines</h2></div>
         <a class="more" href="missing.html" style="visibility:hidden">.</a>
       </div>
-      <p class="hl-band" data-i18n="hl.national">National</p>
       <div class="grid-hl" id="hlNational"></div>
-      <p class="hl-band" style="margin-top:22px" data-i18n="hl.district">Affected Districts</p>
-      <div class="grid-hl" id="hlDistrict"></div>
       <p class="verify" style="margin-top:16px" data-i18n="hl.note"></p>
     </div>
   </section>
@@ -155,23 +146,13 @@
       <div class="sec-head">
         <div><span class="eyebrow" data-i18n="sec.rep.eye">Community Channel</span><h2 id="rep-h" data-i18n="sec.rep.h">Report &amp; Share</h2></div>
       </div>
-      <div class="grid-2">
-        <div class="pcard crit">
-          <h3 data-i18n="rep.inc.h">Report an Incident</h3>
-          <p data-i18n="rep.inc.p">Seen a landslide, blocked road, or people in danger? Call the district emergency line.</p>
-          <div class="row-wrap">
-            <button class="btn btn--primary" id="reportBtn" data-i18n="rep.inc.btn">Call DEOC 1234</button>
-            <a class="btn btn--ghost" href="tel:1234">1234</a>
-          </div>
-        </div>
-        <div class="pcard">
-          <h3 data-i18n="rep.sh.h">Share This Page</h3>
-          <p data-i18n="rep.sh.p">Forward verified helplines and alerts to people in affected areas.</p>
-          <div class="row-wrap">
-            <button class="btn" data-share="whatsapp" data-i18n="share.wa">WhatsApp</button>
-            <button class="btn" data-share="copy" data-i18n="share.copy">Copy Link</button>
-            <button class="btn" data-share="print" data-i18n="share.print">Print</button>
-          </div>
+      <div class="pcard">
+        <h3 data-i18n="rep.sh.h">Share This Page</h3>
+        <p data-i18n="rep.sh.p">Forward verified helplines and alerts to people in affected areas.</p>
+        <div class="row-wrap">
+          <button class="btn" data-share="whatsapp" data-i18n="share.wa">WhatsApp</button>
+          <button class="btn" data-share="copy" data-i18n="share.copy">Copy Link</button>
+          <button class="btn" data-share="print" data-i18n="share.print">Print</button>
         </div>
       </div>
     </div>

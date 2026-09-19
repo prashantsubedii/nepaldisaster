@@ -621,24 +621,18 @@ const ALERTS = [
 ];
 
 /* -------------------- HELPLINES (from official NDRRMA poster) -------------------- */
+/* Trimmed to the core national toll-free lines (owner request, 2026-09-19):
+   the four numbers a reader under time pressure actually needs. The eight
+   district CDO/police mobiles and the DEOC line were removed for a cleaner,
+   minimal page — district contacts still reach the same responders via 100. */
 const HELPLINES = {
   national:[
-    {crit:true,  tel:"1114", name:{en:"Armed Police Force",ne:"सशस्त्र प्रहरी बल"}, desc:{en:"Disaster response",ne:"विपद् प्रतिकार्य"}},
     {crit:true,  tel:"100",  name:{en:"Nepal Police",ne:"नेपाल प्रहरी"}, desc:{en:"Emergency",ne:"आपत्काल"}},
     {crit:true,  tel:"102",  name:{en:"Ambulance",ne:"एम्बुलेन्स"}, desc:{en:"Medical transport",ne:"चिकित्सा यातायात"}},
-    {crit:true,  tel:"1234", name:{en:"DEOC",ne:"जिल्ला आपत्कालीन कार्य केन्द्र"}, desc:{en:"District emergency ops",ne:"जिल्ला आपत्कालीन कार्य सञ्चालन"}},
+    {crit:true,  tel:"1114", name:{en:"Armed Police Force",ne:"सशस्त्र प्रहरी बल"}, desc:{en:"Disaster response",ne:"विपद् प्रतिकार्य"}},
     {crit:true,  tel:"1115", name:{en:"Health Helpline",ne:"स्वास्थ्य हेल्पलाइन"}, desc:{en:"Health emergency & info",ne:"स्वास्थ्य आपत्काल र जानकारी"}}
   ],
-  district:[
-    {tel:"9851164422", name:{en:"Asst. CDO — Rasuwa",ne:"सहायक प्रमुख जिल्ला अधिकारी, रसुवा"}},
-    {tel:"9851254060", name:{en:"Rasuwa Police",ne:"रसुवा प्रहरी"}},
-    {tel:"9851248777", name:{en:"Asst. CDO — Nuwakot",ne:"सहायक प्रमुख जिल्ला अधिकारी, नुवाकोट"}},
-    {tel:"9851062360", name:{en:"Nuwakot Police",ne:"नुवाकोट प्रहरी"}},
-    {tel:"9851247777", name:{en:"CDO — Dhading",ne:"प्रमुख जिल्ला अधिकारी, धादिङ"}},
-    {tel:"9851298460", name:{en:"Dhading Police",ne:"धादिङ प्रहरी"}},
-    {tel:"9855088881", name:{en:"Asst. CDO — Chitwan",ne:"सहायक प्रमुख जिल्ला अधिकारी, चितवन"}},
-    {tel:"9855013288", name:{en:"Chitwan Police",ne:"चितवन प्रहरी"}}
-  ]
+  district:[]
 };
 
 /* -------------------- RELIEF FUND (from official PMO poster) -------------------- */
@@ -661,13 +655,19 @@ const RELIEF = [
 ];
 
 /* -------------------- HISTORY -------------------- */
+/* Each entry names its own Wikipedia article (`wiki`) and a stable id. The
+   History page reads `wiki` directly, so two events in the same year no longer
+   collide on a year key. `kind` drives the small type label in the picker. */
 const HISTORY = [
-  {year:"2015", stat:"~8,970", title:{en:"Gorkha Earthquake",ne:"गोरखा भूकम्प"}, desc:{en:"M7.8 quake devastated the Kathmandu Valley and 14 districts.",ne:"७.८ म्याग्निच्युडको भूकम्पले काठमाडौं उपत्यका र १४ जिल्ला ध्वस्त।"}},
-  {year:"2017", stat:"160+", title:{en:"Terai Floods",ne:"तराई बाढी"}, desc:{en:"Monsoon floods across the southern plains displaced hundreds of thousands.",ne:"मनसुनी बाढीले दक्षिणी तराईमा लाखौं विस्थापित।"}},
-  {year:"2014", stat:"156", title:{en:"Jure Landslide",ne:"जुरे पहिरो"}, desc:{en:"A landslide in Sindhupalchok dammed the Sunkoshi river.",ne:"सिन्धुपाल्चोकको पहिरोले सुनकोशी नदी थुनियो।"}},
-  {year:"1993", stat:"1,336", title:{en:"Southern Nepal Floods",ne:"दक्षिणी नेपाल बाढी"}, desc:{en:"Catastrophic monsoon flooding across central and southern Nepal.",ne:"मध्य र दक्षिणी नेपालमा विनाशकारी मनसुनी बाढी।"}},
-  {year:"1988", stat:"721", title:{en:"Udayapur Earthquake",ne:"उदयपुर भूकम्प"}, desc:{en:"M6.9 quake damaged tens of thousands of homes in eastern Nepal.",ne:"६.९ म्याग्निच्युडको भूकम्पले पूर्वी नेपालमा हजारौं घर क्षति।"}},
-  {year:"1934", stat:"~10,700", title:{en:"Nepal–Bihar Earthquake",ne:"नेपाल–बिहार भूकम्प"}, desc:{en:"M8.0 quake flattened much of the Kathmandu Valley.",ne:"८.० म्याग्निच्युडको भूकम्पले काठमाडौं उपत्यकाको ठूलो भाग ध्वस्त।"}}
+  {id:"fl2024", year:"2024", kind:{en:"Flood",ne:"बाढी"}, stat:"244+", title:{en:"Kathmandu Valley Floods",ne:"काठमाडौं उपत्यका बाढी"}, desc:{en:"Record September rain flooded the Kathmandu Valley and central hills.",ne:"असोजको रेकर्ड वर्षाले काठमाडौं उपत्यका र मध्यपहाड डुबायो।"}, wiki:"2024 Nepal floods"},
+  {id:"eq2023", year:"2023", kind:{en:"Earthquake",ne:"भूकम्प"}, stat:"157", title:{en:"Jajarkot Earthquake",ne:"जाजरकोट भूकम्प"}, desc:{en:"An M5.7 night-time quake destroyed thousands of homes in Karnali.",ne:"राति गएको ५.७ म्याग्निच्युडको भूकम्पले कर्णालीमा हजारौं घर ध्वस्त।"}, wiki:"2023 Nepal earthquake"},
+  {id:"eq2015", year:"2015", kind:{en:"Earthquake",ne:"भूकम्प"}, stat:"~8,970", title:{en:"Gorkha Earthquake",ne:"गोरखा भूकम्प"}, desc:{en:"M7.8 quake devastated the Kathmandu Valley and 14 districts.",ne:"७.८ म्याग्निच्युडको भूकम्पले काठमाडौं उपत्यका र १४ जिल्ला ध्वस्त।"}, wiki:"April 2015 Nepal earthquake"},
+  {id:"sn2014", year:"2014", kind:{en:"Blizzard",ne:"हिमपात"}, stat:"43+", title:{en:"Annapurna Snowstorm",ne:"अन्नपूर्ण हिमपात विपद्"}, desc:{en:"A sudden blizzard on the Annapurna Circuit killed trekkers and guides.",ne:"अन्नपूर्ण पदमार्गमा अचानक आएको हिमपातले पदयात्री र गाइडको ज्यान लियो।"}, wiki:"2014 Nepal snowstorm disaster"},
+  {id:"ls2014", year:"2014", kind:{en:"Landslide",ne:"पहिरो"}, stat:"156", title:{en:"Jure Landslide",ne:"जुरे पहिरो"}, desc:{en:"A landslide in Sindhupalchok dammed the Sunkoshi river.",ne:"सिन्धुपाल्चोकको पहिरोले सुनकोशी नदी थुनियो।"}, wiki:"2014 Sunkoshi landslide"},
+  {id:"fl2017", year:"2017", kind:{en:"Flood",ne:"बाढी"}, stat:"160+", title:{en:"Terai Floods",ne:"तराई बाढी"}, desc:{en:"Monsoon floods across the southern plains displaced hundreds of thousands.",ne:"मनसुनी बाढीले दक्षिणी तराईमा लाखौं विस्थापित।"}, wiki:"2017 Nepal floods"},
+  {id:"fl1993", year:"1993", kind:{en:"Flood",ne:"बाढी"}, stat:"1,336", title:{en:"Southern Nepal Floods",ne:"दक्षिणी नेपाल बाढी"}, desc:{en:"Catastrophic monsoon flooding across central and southern Nepal.",ne:"मध्य र दक्षिणी नेपालमा विनाशकारी मनसुनी बाढी।"}, wiki:"1993 Nepal floods"},
+  {id:"eq1988", year:"1988", kind:{en:"Earthquake",ne:"भूकम्प"}, stat:"721", title:{en:"Udayapur Earthquake",ne:"उदयपुर भूकम्प"}, desc:{en:"M6.9 quake damaged tens of thousands of homes in eastern Nepal.",ne:"६.९ म्याग्निच्युडको भूकम्पले पूर्वी नेपालमा हजारौं घर क्षति।"}, wiki:"1988 Nepal earthquake"},
+  {id:"eq1934", year:"1934", kind:{en:"Earthquake",ne:"भूकम्प"}, stat:"~10,700", title:{en:"Nepal–Bihar Earthquake",ne:"नेपाल–बिहार भूकम्प"}, desc:{en:"M8.0 quake flattened much of the Kathmandu Valley.",ne:"८.० म्याग्निच्युडको भूकम्पले काठमाडौं उपत्यकाको ठूलो भाग ध्वस्त।"}, wiki:"1934 Nepal–India earthquake"}
 ];
 
 /* -------------------- I18N (UI chrome) -------------------- */
@@ -685,7 +685,7 @@ const I18N = {
   "hl.national":"National","hl.district":"Affected Districts","hl.more":"All helplines →",
   "hl.note":"Source: NDRRMA emergency helpline notice. If a line is busy, dial 100 (Police) or 102 (Ambulance).",
   "sec.news.eye":"From Published Reporting · Verify Independently","sec.news.h":"Latest Bulletins","news.more":"All bulletins →","nav.news":"Live News",
-  "sec.rep.eye":"Community Channel","sec.rep.h":"Report & Share",
+  "sec.rep.eye":"Community Channel","sec.rep.h":"Share This Page",
   "rep.inc.h":"Report an Incident","rep.inc.p":"Seen a landslide, blocked road, or people in danger? Call the district emergency line — it helps responders act faster.","rep.inc.btn":"Call DEOC 1234",
   "rep.sh.h":"Share This Page","rep.sh.p":"Forward verified helplines and alerts to people in affected areas. Do not forward rumours.",
   "share.wa":"WhatsApp","share.copy":"Copy Link","share.print":"Print",
@@ -695,7 +695,7 @@ const I18N = {
   "page.alerts.h":"Alert Map","page.alerts.p":"Impact zones and active warnings along the Bhote Koshi–Trishuli corridor, updated {date}. Coordinates are approximate. Live GDACS flood alerts (UN/EC) arrive separately every few minutes — open the bell in the header to read them.",
   "page.missing.h":"Missing Persons","page.missing.p":"Report a missing person and use the official channels to trace people. This site does not maintain its own verified list.",
   "page.relief.h":"Relief Fund","page.relief.p":"Official Prime Minister's relief fund account details, transcribed from the PMO notice. Verify every detail before transferring.",
-  "page.history.h":"Disaster History","page.history.p":"Selected major disasters in Nepal — for record and preparedness.",
+  "page.history.h":"Disaster History","page.history.p":"Choose any major disaster in Nepal to read a detailed, section-by-section account drawn live from Wikipedia — for record and preparedness.",
   "hist.lives":"Lives lost",
   "mf.h":"Report a Missing Person","mf.name":"Full name","mf.age":"Age","mf.gender":"Gender","mf.seen":"Last seen location","mf.date":"Last seen (date)","mf.contact":"Contact number","mf.desc":"Identifying details","mf.photo":"Photo","mf.drop":"Click to attach a recent photo","mf.submit":"Add Unverified Report",
   "mf.note":"This form does not transmit to authorities. It saves an unverified note in your browser so you can relay details to Nepal Police / ICRC Restoring Family Links. For a life-threatening emergency dial 100.",
@@ -718,7 +718,7 @@ const I18N = {
   "hl.national":"राष्ट्रिय","hl.district":"प्रभावित जिल्लाहरू","hl.more":"सबै हेल्पलाइन →",
   "hl.note":"स्रोत: NDRRMA आपत्कालीन हेल्पलाइन सूचना। व्यस्त भए १०० (प्रहरी) वा १०२ (एम्बुलेन्स) मा फोन गर्नुहोस्।",
   "sec.news.eye":"प्रकाशित समाचारबाट · स्वतन्त्र रुजु गर्नुहोस्","sec.news.h":"पछिल्ला बुलेटिन","news.more":"सबै बुलेटिन →","nav.news":"प्रत्यक्ष समाचार",
-  "sec.rep.eye":"सामुदायिक च्यानल","sec.rep.h":"जानकारी दिनुहोस् र साझा गर्नुहोस्",
+  "sec.rep.eye":"सामुदायिक च्यानल","sec.rep.h":"यो पृष्ठ साझा गर्नुहोस्",
   "rep.inc.h":"घटना जानकारी दिनुहोस्","rep.inc.p":"पहिरो, अवरुद्ध सडक वा जोखिममा परेका मानिस देख्नुभयो? जिल्ला आपत्कालीन नम्बरमा फोन गर्नुहोस्।","rep.inc.btn":"DEOC १२३४ मा फोन",
   "rep.sh.h":"यो पृष्ठ साझा गर्नुहोस्","rep.sh.p":"प्रभावित क्षेत्रका मानिसलाई रुजु भएका हेल्पलाइन र चेतावनी पठाउनुहोस्। हल्ला नफैलाउनुहोस्।",
   "share.wa":"ह्वाट्सएप","share.copy":"लिङ्क कपी","share.print":"प्रिन्ट",
@@ -728,7 +728,7 @@ const I18N = {
   "page.alerts.h":"चेतावनी नक्सा","page.alerts.p":"भोटेकोशी–त्रिशूली कोरिडोरका प्रभावित क्षेत्र र सक्रिय चेतावनी, {date} मा अद्यावधिक। निर्देशांक अनुमानित। GDACS (संयुक्त राष्ट्र/EC) का प्रत्यक्ष बाढी अलर्ट हरेक केही मिनेटमा छुट्टै आउँछन् — हेडरको घण्टी खोलेर हेर्नुहोस्।",
   "page.missing.h":"बेपत्ता व्यक्ति","page.missing.p":"बेपत्ता व्यक्तिको जानकारी दिनुहोस् र खोजीका लागि आधिकारिक च्यानल प्रयोग गर्नुहोस्। यो साइटले आफ्नै रुजु सूची राख्दैन।",
   "page.relief.h":"राहत कोष","page.relief.p":"प्रधानमन्त्री कार्यालयको सूचनाबाट सारिएको आधिकारिक राहत कोष खाता विवरण। रकम पठाउनुअघि हरेक विवरण रुजु गर्नुहोस्।",
-  "page.history.h":"विपद् इतिहास","page.history.p":"नेपालका छानिएका प्रमुख विपद् — अभिलेख र पूर्वतयारीका लागि।",
+  "page.history.h":"विपद् इतिहास","page.history.p":"नेपालको कुनै पनि प्रमुख विपद् छानेर विकिपिडियाबाट प्रत्यक्ष रूपमा खण्ड-खण्डको विस्तृत विवरण पढ्नुहोस् — अभिलेख र पूर्वतयारीका लागि।",
   "hist.lives":"ज्यान गुम्यो",
   "mf.h":"बेपत्ता व्यक्तिको जानकारी","mf.name":"पूरा नाम","mf.age":"उमेर","mf.gender":"लिङ्ग","mf.seen":"अन्तिम देखिएको स्थान","mf.date":"अन्तिम देखिएको मिति","mf.contact":"सम्पर्क नम्बर","mf.desc":"चिनारीका विवरण","mf.photo":"फोटो","mf.drop":"पछिल्लो फोटो संलग्न गर्न क्लिक गर्नुहोस्","mf.submit":"रुजु नभएको जानकारी थप्नुहोस्",
   "mf.note":"यो फारमले अधिकारीलाई पठाउँदैन। तपाईंको ब्राउजरमा रुजु नभएको नोट सुरक्षित गर्छ, ताकि तपाईं नेपाल प्रहरी / ICRC लाई विवरण पठाउन सक्नुहोस्। जीवनको जोखिम भए १०० मा फोन गर्नुहोस्।",
@@ -944,13 +944,42 @@ function renderNews(limit){
 }
 function renderHistory(){
   const g=$("#histList"); if(!g) return;
-  g.innerHTML=HISTORY.map(h=>`
-    <article class="hist" data-year="${esc(h.year)}" tabindex="0" role="button" aria-expanded="false">
-      <div class="hist__y mono">${esc(h.year)}</div>
-      <div><div class="hist__t">${esc(TL(h.title))}</div><div class="hist__d">${esc(TL(h.desc))}</div><div class="hist__more" style="margin-top:6px">${esc(t("hist.tap"))}</div></div>
-      <div class="hist__s"><div class="n">${esc(h.stat)}</div><div class="l">${esc(t("hist.lives"))}</div></div>
-      <div class="hist__detail"></div>
-    </article>`).join("");
+  const picked = g.dataset.picked || HISTORY[0].id;
+  g.dataset.picked = picked;
+  const chips = HISTORY.map(h=>`
+    <button class="histpick__b${h.id===picked?" is-on":""}" data-hist="${esc(h.id)}" aria-pressed="${h.id===picked}">
+      <span class="histpick__y mono">${esc(toNepDigits(h.year))}</span>
+      <span class="histpick__t">${esc(TL(h.title))}</span>
+      <span class="histpick__k">${esc(TL(h.kind))}</span>
+    </button>`).join("");
+  g.innerHTML=`
+    <div class="histwrap">
+      <nav class="histpick" aria-label="${esc(t("hist.choose"))}">
+        <div class="histpick__lbl eyebrow">${esc(t("hist.choose"))}</div>
+        ${chips}
+      </nav>
+      <section class="histview" id="histView" aria-live="polite"></section>
+    </div>`;
+  renderHistView(picked);
+}
+function renderHistView(id){
+  const view=$("#histView"); if(!view) return;
+  const h=HISTORY.find(x=>x.id===id)||HISTORY[0];
+  view.innerHTML=`
+    <div class="histview__head">
+      <span class="histview__kind">${esc(TL(h.kind))} · ${esc(toNepDigits(h.year))}</span>
+      <h2 class="histview__t">${esc(TL(h.title))}</h2>
+      <p class="histview__lede">${esc(TL(h.desc))}</p>
+      <div class="histview__facts">
+        <div class="hfact"><div class="hfact__n mono">${esc(h.stat)}</div><div class="hfact__l">${esc(t("hist.lives"))}</div></div>
+        <div class="hfact"><div class="hfact__n mono">${esc(toNepDigits(h.year))}</div><div class="hfact__l">${esc(t("hist.year"))}</div></div>
+        <div class="hfact"><div class="hfact__n">${esc(TL(h.kind))}</div><div class="hfact__l">${esc(t("hist.kind"))}</div></div>
+      </div>
+    </div>
+    <div class="histview__body" id="histBody">
+      <p class="mono histview__load">${esc(t("hist.loading"))}</p>
+    </div>`;
+  loadHistBody(h);
 }
 function renderRelief(){
   const g=$("#reliefList"); if(!g) return;
@@ -1446,7 +1475,8 @@ Object.assign(I18N.en,{
   "gallery.eye":"From the Affected Areas","gallery.h":"Ground Gallery","gallery.load":"Loading photos…","gallery.none":"Photos could not be loaded right now. See the official article.","gallery.loadall":"View all photos →","page.gallery.h":"Photo Gallery","page.gallery.p":"Photographs from the affected areas, from published news sources and Wikimedia. Verify context independently.",
   "page.news.h":"Live Bulletins","page.news.p":"Detailed reporting on the current disaster, compiled from published and official sources. Verify independently.",
   "news.back":"← All bulletins","news.source":"Read at original source ↗","news.overview":"Situation overview","news.overview.src":"Live from Wikipedia · 2026 China–Nepal floods",
-  "hist.readmore":"Read full article ↗","hist.loading":"Loading details…","hist.tap":"Tap for details",
+  "hist.readmore":"Read full article on Wikipedia ↗","hist.loading":"Loading details from Wikipedia…","hist.tap":"Tap for details",
+  "hist.choose":"Choose a disaster","hist.year":"Year","hist.kind":"Type","hist.err":"Full details are unavailable right now — open the Wikipedia article below.",
   "relief.scan":"Scan to donate","relief.fonepay":"Fonepay — PM Disaster Relief Fund","relief.fonepay.p":"Scan this Fonepay QR with any Nepali banking or wallet app to donate to the Prime Minister's relief fund.",
   "nav.highway":"Highway Updates",
   "nav.help":"Helping Hand",
@@ -1567,7 +1597,8 @@ Object.assign(I18N.ne,{
   "gallery.eye":"प्रभावित क्षेत्रबाट","gallery.h":"स्थलगत ग्यालरी","gallery.load":"तस्बिर लोड हुँदै…","gallery.none":"अहिले तस्बिर लोड हुन सकेन। आधिकारिक लेख हेर्नुहोस्।","gallery.loadall":"सबै तस्बिर हेर्नुहोस् →","page.gallery.h":"तस्बिर ग्यालरी","page.gallery.p":"प्रभावित क्षेत्रका तस्बिरहरू, प्रकाशित समाचार र विकिमिडियाबाट। सन्दर्भ स्वतन्त्र रुजु गर्नुहोस्।",
   "page.news.h":"प्रत्यक्ष बुलेटिन","page.news.p":"हालको विपद्बारे प्रकाशित र आधिकारिक स्रोतबाट संकलित विस्तृत समाचार। स्वतन्त्र रुजु गर्नुहोस्।",
   "news.back":"← सबै बुलेटिन","news.source":"मूल स्रोतमा पढ्नुहोस् ↗","news.overview":"अवस्था सारांश","news.overview.src":"विकिपिडियाबाट प्रत्यक्ष · २०२६ चीन–नेपाल बाढी",
-  "hist.readmore":"पूरा लेख पढ्नुहोस् ↗","hist.loading":"विवरण लोड हुँदै…","hist.tap":"विवरणका लागि थिच्नुहोस्",
+  "hist.readmore":"विकिपिडियामा पूरा लेख पढ्नुहोस् ↗","hist.loading":"विकिपिडियाबाट विवरण लोड हुँदै…","hist.tap":"विवरणका लागि थिच्नुहोस्",
+  "hist.choose":"विपद् छान्नुहोस्","hist.year":"साल","hist.kind":"प्रकार","hist.err":"अहिले पूरा विवरण उपलब्ध छैन — तल विकिपिडिया लेख खोल्नुहोस्।",
   "relief.scan":"स्क्यान गरी दान गर्नुहोस्","relief.fonepay":"फोनपे — प्रधानमन्त्री विपद् राहत कोष","relief.fonepay.p":"कुनै पनि नेपाली बैंकिङ वा वालेट एपबाट यो फोनपे QR स्क्यान गरी प्रधानमन्त्री राहत कोषमा दान गर्नुहोस्।"
 });
 
@@ -2581,28 +2612,70 @@ function renderNotifs(){
 }
 
 /* ---------- history detail (lazy Wikipedia) ---------- */
+/* Full plain-text article (explaintext) → parsed into {heading, level, text}
+   sections so the History page can show the lead plus a few real sections
+   ("Background", "Casualties", "Response"…) without any HTML sanitising. */
+async function fetchWikiSections(title){
+  const u="https://en.wikipedia.org/w/api.php?action=query&prop=extracts&explaintext=1&redirects=1&format=json&origin=*&titles="+encodeURIComponent(title);
+  const r=await fetch(u,{headers:{accept:"application/json"},signal:AbortSignal.timeout(7000)}); if(!r.ok) throw 0;
+  const j=await r.json();
+  const pages=(j.query&&j.query.pages)||{};
+  const page=Object.values(pages)[0];
+  const txt=(page&&page.extract)||"";
+  if(!txt) throw 0;
+  const secs=[]; let cur={heading:null,level:0,text:""};
+  txt.split(/\n/).forEach(line=>{
+    const m=line.match(/^(={2,})\s*(.+?)\s*\1\s*$/);
+    if(m){ if(cur.text.trim()||cur.heading) secs.push(cur); cur={heading:m[2],level:m[1].length,text:""}; }
+    else cur.text+=line+"\n";
+  });
+  if(cur.text.trim()||cur.heading) secs.push(cur);
+  return secs;
+}
+/* headings that are references/appendix, never worth showing inline */
+const HIST_SKIP=/^(references|see also|external links|notes|further reading|bibliography|citations|sources|footnotes|gallery)$/i;
+function _paras(text,max){
+  return text.split(/\n{1,}/).map(s=>s.trim()).filter(s=>s.length>40).slice(0,max||3);
+}
+async function loadHistBody(h){
+  const body=$("#histBody"); if(!body) return;
+  const link="https://en.wikipedia.org/wiki/"+encodeURIComponent(h.wiki);
+  try{
+    const [summary, secs] = await Promise.all([
+      fetchWiki(h.wiki).catch(()=>null),
+      fetchWikiSections(h.wiki).catch(()=>[])
+    ]);
+    const thumb = summary&&summary.thumbnail&&summary.thumbnail.source
+      ? `<figure class="histview__fig"><img alt="" src="${esc(summary.thumbnail.source)}" data-fallback="npopthumb"><figcaption>${esc(TL(h.title))} · Wikipedia</figcaption></figure>` : "";
+    const lead = (summary&&summary.extract) || (secs[0]&&secs[0].text) || TL(h.desc);
+    // pick the first few substantive sections (skip references/appendix + empty)
+    const shown = secs.filter(s=>s.heading && s.level<=3 && !HIST_SKIP.test(s.heading) && s.text.trim().length>60).slice(0,4);
+    const sectionHtml = shown.map(s=>`
+      <div class="histsec">
+        <h3 class="histsec__h">${esc(s.heading)}</h3>
+        ${_paras(s.text,3).map(p=>`<p>${esc(p)}</p>`).join("")||`<p>${esc(s.text.trim().slice(0,400))}</p>`}
+      </div>`).join("");
+    body.innerHTML=`
+      ${thumb}
+      <p class="histview__lead">${esc(lead)}</p>
+      ${sectionHtml}
+      <a class="btn btn--primary btn--sm histview__more" href="${esc(link)}" target="_blank" rel="noopener">${esc(t("hist.readmore"))}</a>`;
+  }catch(err){
+    body.innerHTML=`
+      <p>${esc(TL(h.desc))}</p>
+      <p class="histview__load">${esc(t("hist.err"))}</p>
+      <a class="btn btn--primary btn--sm histview__more" href="${esc(link)}" target="_blank" rel="noopener">${esc(t("hist.readmore"))}</a>`;
+  }
+}
 function initHistoryDetail(){
   const g=$("#histList"); if(!g) return;
-  g.addEventListener("keydown",e=>{ if((e.key==="Enter"||e.key===" ")&&e.target.classList.contains("hist")){e.preventDefault();e.target.click();} });
-  g.addEventListener("click",async e=>{
-    const card=e.target.closest(".hist"); if(!card) return;
-    if(e.target.closest("a")) return;
-    const open=card.classList.toggle("open");
-    const box=card.querySelector(".hist__detail");
-    if(open && box && !box.dataset.loaded){
-      box.dataset.loaded="1";
-      box.innerHTML=`<p class="mono" style="grid-column:1/-1;color:var(--muted)">${esc(t("hist.loading"))}</p>`;
-      const title=HISTORY_WIKI[card.dataset.year];
-      try{
-        const w=await fetchWiki(title);
-        const img=w.thumbnail&&w.thumbnail.source?`<img alt="" src="${esc(w.thumbnail.source)}">`:"";
-        const link=(w.content_urls&&w.content_urls.desktop&&w.content_urls.desktop.page)||("https://en.wikipedia.org/wiki/"+encodeURIComponent(title));
-        box.innerHTML=`<div>${img||""}</div><div><p>${esc(w.extract||"")}</p><a class="hist__more" href="${esc(link)}" target="_blank" rel="noopener">${esc(t("hist.readmore"))}</a></div>`;
-      }catch(err){
-        const link="https://en.wikipedia.org/wiki/"+encodeURIComponent(title||"");
-        box.innerHTML=`<div></div><div><p>${esc(TL(HISTORY.find(h=>h.year===card.dataset.year).desc))}</p><a class="hist__more" href="${esc(link)}" target="_blank" rel="noopener">${esc(t("hist.readmore"))}</a></div>`;
-      }
-    }
+  g.addEventListener("click",e=>{
+    const b=e.target.closest(".histpick__b"); if(!b) return;
+    const id=b.dataset.hist; if(!id || id===g.dataset.picked) return;
+    g.dataset.picked=id;
+    $$(".histpick__b",g).forEach(x=>{ const on=x.dataset.hist===id; x.classList.toggle("is-on",on); x.setAttribute("aria-pressed",String(on)); });
+    renderHistView(id);
+    const view=$("#histView"); if(view) view.scrollIntoView({behavior:"smooth",block:"nearest"});
   });
 }
 
