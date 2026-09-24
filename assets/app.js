@@ -35,9 +35,11 @@
    again under [data-theme="dark"] — so the toggle wins in both directions and
    "system" still tracks the OS. */
 const THEME_KEY = "nd_theme";
+/* Default is LIGHT (owner, 2026-09-24). "system" is still reachable from the
+   toggle, and is then stored explicitly so it survives the next visit. */
 function storedTheme(){
-  try{ const v = localStorage.getItem(THEME_KEY); return (v==="light"||v==="dark") ? v : "system"; }
-  catch(e){ return "system"; }
+  try{ const v = localStorage.getItem(THEME_KEY); return (v==="light"||v==="dark"||v==="system") ? v : "light"; }
+  catch(e){ return "light"; }
 }
 function systemPrefersDark(){
   return !!(window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches);
@@ -54,7 +56,7 @@ function applyTheme(){
   // Keep the browser UI (address bar, form controls) in step.
   const dark = effectiveTheme() === "dark";
   const meta = document.querySelector('meta[name="theme-color"]');
-  if(meta) meta.setAttribute("content", dark ? "#0F1113" : "#B3122B");
+  if(meta) meta.setAttribute("content", dark ? "#081624" : "#0B1F33");
   updateThemeBtn();
 }
 /* Cycle light → dark → system, so a viewer can always get back to "follow my OS"
@@ -186,10 +188,66 @@ const EVENT = {
    Nepal registry). The Wikipedia INFOBOX is NOT used — it reports Nepal+Tibet
    COMBINED, which is what previously inflated the toll. */
 let STATS = [
-  {key:"deaths",  n:"1,386", cls:"hstat--death"},
-  {key:"missing", n:"5,130", cls:"hstat--missing"},
-  {key:"foreign", n:"587"},
-  {key:"rescued", n:"13,728", cls:"hstat--rescue"}   // hero = TOTAL rescued (Nepali officials, 12 Sept); the NAMED registry (5,006) is a separate, smaller figure shown on the Rescued page
+  {key:"deaths",  n:"1,451", cls:"hstat--death"},
+  {key:"missing", n:"5,786", cls:"hstat--missing"},
+  {key:"foreign", n:"636"},
+  {key:"rescued", n:"13,784", cls:"hstat--rescue"}   // hero = TOTAL rescued (NDRRMA, 20 Sept); the NAMED registry (5,006) is a separate, smaller figure shown on the Rescued page
+];
+
+/* -------------------- RAINFALL WARNING (DHM heavy-rain alert, live event #2) --------------------
+   A second, currently-active hazard that runs alongside the August flood recovery:
+   the Department of Hydrology & Meteorology (DHM) heavy-rain warning for 23–28 Sept
+   2026, driven by a Bay-of-Bengal depression tracking west-northwest into Nepal.
+   Static, sourced copy — no live API on the homepage. The Weather tab layers the
+   Open-Meteo forecast on top of this. Update `active:false` once DHM stands it down. */
+const RAINWARN = {
+  active:true,
+  level:"orange",                 // orange = "be prepared"; escalate to "red" if DHM does
+  window:"23–28 Sept 2026",
+  updated:"2026-09-24T12:00:00+05:45",
+  source:"DHM Weather Forecasting Division · Radio Nepal · The Himalayan Times · Nepal Press",
+  url:"https://english.nepalpress.com/2026/09/24/heavy-rainfall-likely-in-five-provinces-today-2/",
+  badge:{en:"ACTIVE EMERGENCY · RAIN WARNING", ne:"सक्रिय आपत्कालीन · वर्षा चेतावनी"},
+  title:{en:"Heavy-rainfall warning — 23–28 September",
+         ne:"भारी वर्षा चेतावनी — २३–२८ सेप्टेम्बर"},
+  lead:{en:"A deep depression over the Bay of Bengal is strengthening and moving west-northwest. It began affecting Nepal on Wednesday 23 September, and the heaviest rain is forecast for Friday to Sunday, 25–27 September, with the 26th seen as the riskiest day. Several models show more than 400 mm over the period (one outlier 741 mm), falling on slopes already loosened by the August flood. DHM counts anything above 200 mm in 24 hours as extremely heavy.",
+        ne:"बंगालको खाडीमा रहेको गहिरो न्यून चाप बलियो बन्दै पश्चिम-उत्तरपश्चिमतर्फ सर्दैछ। बुधबार २३ सेप्टेम्बरदेखि नेपालमा आंशिक असर सुरु भएको छ र सबैभन्दा भारी वर्षा शुक्रबारदेखि आइतबार (२५–२७ सेप्टेम्बर) हुने, २६ तारिख सबैभन्दा जोखिमपूर्ण हुने अनुमान छ। केही मोडेलले यस अवधिमा ४०० मिमिभन्दा बढी (एउटाले ७४१ मिमि) देखाएका छन् — भदौको बाढीले पहिल्यै कमजोर बनेका भिरमाथि। DHM ले २४ घण्टामा २०० मिमिभन्दा बढीलाई अति भारी वर्षा मान्छ।"},
+  today:{en:"DHM outlook for Thursday 24 Sept: heavy rain in a few places in Koshi, Bagmati and Gandaki, and in one or two places in Madhesh and Lumbini; very heavy rain possible in the hills of Koshi and Bagmati; windstorms likely in Madhesh and the Koshi Tarai.",
+         ne:"बिहीबार २४ सेप्टेम्बरका लागि DHM को पूर्वानुमान: कोशी, बागमती र गण्डकीका केही स्थान तथा मधेश र लुम्बिनीका एक-दुई स्थानमा भारी वर्षा; कोशी र बागमतीका पहाडी भागमा अति भारी वर्षाको सम्भावना; मधेश र कोशीको तराईमा हावाहुरी।"},
+  provinces:{en:"25–27 Sept: heavy to very heavy rain across Gandaki and Lumbini, extremely heavy in one or two places; heavy rain with thunder and gusty winds in parts of Koshi, Madhesh, Bagmati, Karnali and Sudurpashchim. Heavy snow is possible in the high Himalaya. Rasuwa and Nuwakot are flagged for special focus.",
+             ne:"२५–२७ सेप्टेम्बर: गण्डकी र लुम्बिनीमा भारीदेखि अति भारी, एक-दुई स्थानमा अत्यधिक भारी वर्षा; कोशी, मधेश, बागमती, कर्णाली र सुदूरपश्चिमका केही भागमा चट्याङ र हावाहुरीसहित भारी वर्षा। उच्च हिमाली क्षेत्रमा भारी हिमपातको सम्भावना। रसुवा र नुवाकोट विशेष निगरानीमा।"},
+  precautions:[
+    {en:"Move away from riverbanks, streams and low-lying land — flash floods and debris flows can arrive with little warning, especially along the Bhote Koshi–Trishuli corridor.",
+     ne:"नदी किनार, खोला र होचो जमिनबाट टाढा रहनुहोस् — भोटेकोशी–त्रिशूली कोरिडोरमा विशेषतः आकस्मिक बाढी र पहिरो थोरै सूचनामै आउन सक्छ।"},
+    {en:"Watch slopes above and below homes for cracks, seepage or tilting trees; leave early if the ground shows signs of moving. Do not wait for an official order to evacuate.",
+     ne:"घरमाथि र तलका भिरमा चिरा, पानी चुहावट वा ढल्किएका रूख हेर्नुहोस्; जमिन चल्ने लक्षण देखिए तुरुन्तै सुरक्षित ठाउँमा जानुहोस्। आदेश नकुरी सर्नुहोस्।"},
+    {en:"Avoid non-essential travel on hill highways during 25–27 September. Landslides and rockfall close roads fastest at the peak of the rain — check 103 before setting out.",
+     ne:"२५–२७ सेप्टेम्बरमा पहाडी राजमार्गमा अनावश्यक यात्रा नगर्नुहोस्। वर्षा चरममा पहिरो र ढुंगा खस्दा सडक छिट्टै बन्द हुन्छ — हिँड्नुअघि १०३ मा बुझ्नुहोस्।"},
+    {en:"Keep phones charged, a torch, drinking water, dry food and documents in one grab-bag. Note the nearest higher ground and share a family meeting point.",
+     ne:"फोन चार्ज, टर्च, पिउने पानी, सुक्खा खाना र कागजात एउटै झोलामा तयार राख्नुहोस्। नजिकको अग्लो ठाउँ र परिवार भेट्ने स्थान तय गर्नुहोस्।"},
+    {en:"Do not cross flooded roads or bridges on foot or by vehicle — 30 cm of moving water can sweep away a car. Turn around, don't drown.",
+     ne:"बाढी आएको सडक वा पुल पैदल वा सवारीमा नतर्नुहोस् — ३० सेमी बग्दो पानीले कार बगाउँछ। फर्किनुहोस्, नडुब्नुहोस्।"},
+    {en:"Meteorologists advise postponing long-distance travel on 24–26 September. Climbers and trekkers should expect heavy snow in the high Himalaya and delay crossings.",
+     ne:"मौसमविद्ले २४–२६ सेप्टेम्बरमा लामो दूरीको यात्रा स्थगित गर्न सुझाव दिएका छन्। उच्च हिमालमा भारी हिमपात हुन सक्ने भएकाले आरोही र पदयात्री सावधान रहनुहोस्, पास पार गर्न ढिलाइ गर्नुहोस्।"},
+    {en:"Rescue and relief flights over Rasuwa & Nuwakot may pause during the heaviest spells; follow DHM, NDRRMA and local authority instructions and keep this page open for updates.",
+     ne:"चरम वर्षाका बेला रसुवा र नुवाकोटमा उद्धार तथा राहत उडान रोकिन सक्छन्; DHM, NDRRMA र स्थानीय निकायको निर्देशन पालना गर्नुहोस् र अद्यावधिकका लागि यो पृष्ठ खुला राख्नुहोस्।"}
+  ],
+  highway:{en:"Highway note: from 23 September the Makwanpur District Administration Office has banned night traffic on the Kanti Lokpath and the Bhainse–Bhimphedi–Deurali–Kulekhani road. Vehicles may set off only between 5 am and 5 pm, and the roads close completely after 7 pm until further notice. The Prithvi Highway's Krishnabhir and Parewabhir sections in Dhading run on temporary tracks cut into flood-damaged hillside, the most exposed to fresh landslides. Expect holds or closures on the Prithvi, BP and Betrawati–Rasuwagadhi routes; the Tribhuvan Highway is the fallback into Kathmandu.",
+           ne:"राजमार्ग सूचना: २३ सेप्टेम्बरदेखि जिल्ला प्रशासन कार्यालय मकवानपुरले कान्ति लोकपथ र भैंसे–भीमफेदी–देउराली–कुलेखानी सडकमा रात्रिकालीन सवारी रोकेको छ। बिहान ५ देखि बेलुका ५ बजेसम्म मात्र सवारी छुट्न पाउँछन् र अर्को सूचना नआएसम्म बेलुका ७ बजेपछि पूर्ण रूपमा बन्द हुन्छ। धादिङको पृथ्वी राजमार्गको कृष्णभीर र परेवाभीर खण्ड बाढीले बिगारेको भिरमा बनेको अस्थायी ट्र्याकमा चल्दै छन् — नयाँ पहिरोको सबैभन्दा बढी जोखिममा। पृथ्वी, बीपी र बेत्रावती–रसुवागढी मार्गमा रोकावट वा बन्द सम्भव; काठमाडौं छिर्न त्रिभुवन राजमार्ग विकल्प।"}
+};
+
+/* Weather-tab locations: the flood-hit districts plus the provinces named in the
+   current DHM warning. lat/lng feed Open-Meteo (free, no API key, no attribution
+   token required). `risk` tags a location the warning singles out. */
+const WEATHER_LOCS = [
+  {id:"kathmandu", name:{en:"Kathmandu", ne:"काठमाडौं"}, sub:{en:"Bagmati · capital", ne:"बागमती · राजधानी"}, lat:27.7172, lng:85.3240},
+  {id:"rasuwa",    name:{en:"Rasuwa (Dhunche)", ne:"रसुवा (धुन्चे)"}, sub:{en:"Flood epicentre · high risk", ne:"बाढी केन्द्र · उच्च जोखिम"}, lat:28.1122, lng:85.2960, risk:true},
+  {id:"nuwakot",   name:{en:"Nuwakot (Bidur)", ne:"नुवाकोट (बिदुर)"}, sub:{en:"Trishuli corridor · high risk", ne:"त्रिशूली कोरिडोर · उच्च जोखिम"}, lat:27.9170, lng:85.1590, risk:true},
+  {id:"dhading",   name:{en:"Dhading (Dhadingbesi)", ne:"धादिङ (धादिङबेसी)"}, sub:{en:"Prithvi Highway · high risk", ne:"पृथ्वी राजमार्ग · उच्च जोखिम"}, lat:27.8690, lng:84.8980, risk:true},
+  {id:"chitwan",   name:{en:"Chitwan (Bharatpur)", ne:"चितवन (भरतपुर)"}, sub:{en:"Downstream Narayani", ne:"तल्लो नारायणी"}, lat:27.6833, lng:84.4333},
+  {id:"pokhara",   name:{en:"Pokhara", ne:"पोखरा"}, sub:{en:"Gandaki · heaviest-rain zone", ne:"गण्डकी · अत्यधिक वर्षा क्षेत्र"}, lat:28.2096, lng:83.9856, risk:true},
+  {id:"butwal",    name:{en:"Butwal", ne:"बुटवल"}, sub:{en:"Lumbini · heaviest-rain zone", ne:"लुम्बिनी · अत्यधिक वर्षा क्षेत्र"}, lat:27.7000, lng:83.4500, risk:true},
+  {id:"biratnagar",name:{en:"Biratnagar", ne:"विराटनगर"}, sub:{en:"Koshi · Terai watch", ne:"कोशी · तराई निगरानी"}, lat:26.4525, lng:87.2718}
 ];
 
 /* -------------------- TICKER -------------------- */
@@ -204,8 +262,8 @@ const TICKER = [
    ne:"पृथ्वी राजमार्ग पुनः खुल्दै: कृष्णभीर खण्ड १७ सेप्टेम्बरदेखि पूर्ण दोहोरो सार्वजनिक सञ्चालनमा — भदौ अन्त्यदेखि ग्यास ट्यांकर र भारी सवारी २५२ मिटर ट्र्याकबाट एकतर्फी गुड्दै (सडक विभाग)"},
   {src:"SUPPLY", en:"Supply routes easing as the Prithvi Highway reopens; a temporary Acrow bridge at Devighat over the Tadi reopened on 10 September, restoring a road link toward Nuwakot",
    ne:"पृथ्वी राजमार्ग खुल्दै गर्दा आपूर्ति मार्ग सहज हुँदै; १० सेप्टेम्बरमा देवीघाटमा ताडीमाथि अस्थायी एक्रो पुल खुलेपछि नुवाकोटतर्फको सडक पहुँच पुनःस्थापित"},
-  {src:"NDRRMA", en:"Latest official toll (12 Sept): 1,386 dead, 5,130 missing or out of contact and 6,827 injured on the Nepal side; 13,728 rescued including over 300 foreign nationals",
-   ne:"पछिल्लो आधिकारिक तथ्याङ्क (१२ सेप्टेम्बर): नेपालतर्फ १,३८६ मृत्यु, ५,१३० बेपत्ता वा सम्पर्कविहीन र ६,८२७ घाइते; ३०० भन्दा बढी विदेशी नागरिकसहित १३,७२८ उद्धार"},
+  {src:"NDRRMA", en:"Latest official toll (NDRRMA, 20 Sept): 1,451 dead and 5,786 missing or out of contact on the Nepal side, including 636 foreign nationals; 13,784 rescued",
+   ne:"पछिल्लो आधिकारिक तथ्याङ्क (NDRRMA, २० सेप्टेम्बर): नेपालतर्फ १,४५१ मृत्यु, ६३६ विदेशी नागरिकसहित ५,७८६ बेपत्ता वा सम्पर्कविहीन; १३,७८४ उद्धार"},
   {src:"TUNNEL", en:"Chinese worker Lu Haitao, 49, pulled out ALIVE from the Upper Trishuli-1 tunnel at 1:20pm on 5 Sept — found 225 m inside by the Nepali Army and a South Korean rescue team, ten days after the flood",
    ne:"५ सेप्टेम्बर दिउँसो १:२० बजे माथिल्लो त्रिशूली-१ सुरुङबाट ४९ वर्षीय चिनियाँ कामदार लु हाइताओ जीवितै निकालिए — बाढी गएको दस दिनपछि नेपाली सेना र दक्षिण कोरियाली टोलीले सुरुङभित्र २२५ मिटरमा भेटे"},
   {src:"RESCUE", en:"900 hydropower workers missing across 12 projects and around 500 still believed inside the tunnels — 557 missing at Trishuli 3A alone (IPPAN) and 576 at Upper Trishuli-1",
@@ -218,6 +276,8 @@ const TICKER = [
    ne:"NDRRMA को पहिलो आधिकारिक क्षति अनुमान (४ सेप्टेम्बर): रु. ३८७.५४ अर्ब (२.५६ अर्ब डलर)। द्रुत क्षति तथा आवश्यकता आकलनले यो करिब रु. ४०० अर्ब देखाएको छ, सेवा पुनःस्थापनाका लागि मात्रै छ महिनामा रु. ८ अर्ब आवश्यक"},
   {src:"PDNA", en:"A Post Disaster Needs Assessment panel under NPC vice-president Gunakhar Bhatta has six weeks from 5 Sept to produce Nepal's definitive loss and damage figure",
    ne:"राष्ट्रिय योजना आयोगका उपाध्यक्ष गुणाकर भट्टको नेतृत्वमा गठित विपद्पछिको आवश्यकता आकलन समितिले ५ सेप्टेम्बरदेखि छ हप्ताभित्र नेपालको निश्चित क्षति विवरण बुझाउनुपर्नेछ"},
+  {src:"WEATHER", en:"DHM heavy-rain warning 23–28 Sept: a Bay-of-Bengal depression brings heavy to extremely heavy rain nationwide, peaking 25–27 Sept — 400 mm+ in several models, worst in Gandaki & Lumbini; night traffic banned on the Kanti Lokpath from 23 Sept; landslide & flash-flood risk high on flood-loosened slopes",
+   ne:"DHM भारी वर्षा चेतावनी २३–२८ सेप्टेम्बर: बंगालको खाडीको न्यून चापले देशभर भारीदेखि अति भारी वर्षा, २५–२७ सेप्टेम्बरमा चरम — केही मोडेलमा ४०० मिमिभन्दा बढी, गण्डकी र लुम्बिनीमा सबैभन्दा बढी; २३ सेप्टेम्बरदेखि कान्ति लोकपथमा रात्रिकालीन सवारी बन्द; बाढीले कमजोर भिरमा पहिरो र आकस्मिक बाढी जोखिम उच्च"},
   {src:"WARNING", en:"DHM & NDRRMA alert: Riverside warning active for Rasuwa, Nuwakot, Dhading, Chitwan & Nawalparasi — Lhende Khola dammed lake monitored",
    ne:"जल तथा मौसम विज्ञान विभाग र NDRRMA चेतावनी: रसुवा, नुवाकोट, धादिङ, चितवन र नवलपरासीमा नदी किनार चेतावनी कायमै — ल्हेन्डे खोला ताल निगरानीमा"},
   {src:"RELIEF", en:"Rs 1 crore released to each of Rasuwa and Nuwakot from the PM Disaster Relief Fund; 10 truckloads of relief material despatched and all ministers pledge one month's salary",
@@ -282,8 +342,6 @@ const NEWS = [
 
   {sev:"danger", tag:{en:"Roads",ne:"सडक"}, time:"6 Sept 2026", src:"Onlinekhabar / Kathmandu Post / Dept. of Roads",
    url:"https://kathmandupost.com/money/2026/09/06/kathmandu-supply-lines-rerouted-after-floods-block-main-highway",
-   img:"https://assets-cdn.kathmandupost.com/uploads/source/news/2026/money/Supply-1788656656.jpg",
-   imgAlt:{en:"Freight and supply vehicles queue on a diverted route into Kathmandu after the Prithvi Highway was cut, 6 September 2026",ne:"पृथ्वी राजमार्ग अवरुद्ध भएपछि काठमाडौं छिर्ने वैकल्पिक मार्गमा मालवाहक तथा आपूर्ति सवारीको लाइन, ६ सेप्टेम्बर २०२६"},
    title:{en:"Prithvi Highway shut at Parewabhir on 6 Sept as a 252-metre track reopens Krishnabhir to machines only",
           ne:"कृष्णभीरमा २५२ मिटर ट्र्याक खुल्दै गर्दा आज परेवाभीरमा पृथ्वी राजमार्ग बन्द"},
    body:{en:"Dhading's District Administration Office has barred every vehicle except ambulances and hearses from the Parewabhir section between 6 am and 6 pm on 6 September. Upstream at Krishnabhir a temporary track opened seven days after the washout, but the Department of Roads says it carries construction plant only.",
@@ -300,8 +358,6 @@ const NEWS = [
          ne:"पृथ्वी राजमार्ग अवरुद्ध भएपछि काठमाडौं धान्ने आपूर्ति शृंखला पहाड घुमेर पुनःसंरचित भएको छ। इन्धन ट्यांकरहरू हेटौंडाबाट भैंसे, पालुङ र नौबिसे हुँदै उपत्यका छिर्दै छन् भने ग्यास सिलिन्डर दक्षिणी जिल्लाका प्लान्टमा भरेर साना ट्रकबाट माथि ल्याइँदै छ। नेपाल आयल निगमका कार्यकारी निर्देशक नगेन्द्र शाहका अनुसार निगमले ग्यासको 'हाल करिब ६० देखि ७० प्रतिशत माग' मात्र पूर्ति गर्न सकेको छ: बिहीबार २४,५०० र शुक्रबार ३४,१३४ सिलिन्डर उपत्यका पुगे। तरकारी आपूर्ति भने चलिरहेको छ — नेपाल फलफूल तथा तरकारी व्यवसायी संघका राजेन्द्र बिडारीका अनुसार थाहा नगरपालिकाबाट कान्ति लोकपथ हुँदै दैनिक ३०० देखि ४०० टन, र कालिमाटी फलफूल तथा तरकारी बजार विकास बोर्डका रमेश डंगोलका अनुसार वैकल्पिक मार्गबाट आपूर्ति अवरुद्ध भएको छैन। खुद्रा व्यापारी संघका महासचिव अमुलकाजी तुलाधरले स्पष्ट भने: 'सामानको अभाव छैन। सजिलै पाइन्छ, तर मूल्य बढेको देखिन्छ।' धादिङका प्रमुख जिल्ला अधिकारी लक्ष्मी पाण्डे (गौतम) वैकल्पिक मार्गबाट आपूर्ति सहजीकरण गर्दै छन्। उपभोक्ता अधिकारकर्मी माधव तिमिल्सिनाले आपूर्ति शृंखलाको तथ्यांक खुला नगरेकोमा सरकारको आलोचना गरे, जसले घरपरिवारलाई हल्लाकै भरमा अभाव आँक्न बाध्य पारेको छ।"}},
   {sev:"watch", tag:{en:"Glacial lakes",ne:"हिमताल"}, time:"6 Sept 2026", src:"Kathmandu Post / DHM / UNDP",
    url:"https://kathmandupost.com/climate-environment/2026/09/06/nepal-is-draining-four-glacial-lakes-scientists-say-it-is-not-enough",
-   img:"https://assets-cdn.kathmandupost.com/uploads/source/news/2026/third-party/lake-1788656164.jpg",
-   imgAlt:{en:"A glacial lake in Nepal's high Himalaya, one of the sites under the GLOF Sanjeevani drainage project",ne:"नेपालको उच्च हिमालमा रहेको एक हिमताल, GLOF सञ्जीवनी निकास परियोजनाअन्तर्गतको एक स्थल"},
    title:{en:"Nepal is draining four glacial lakes. Scientists say lowering them 3 metres is not enough",
           ne:"नेपालले चार हिमताल घटाउँदै। वैज्ञानिक भन्छन्: ३ मिटर घटाउनु पर्याप्त होइन"},
    body:{en:"The $50m GLOF Sanjeevani project will lower Lumding Tsho, Hongu-2, Lower Barun and Thulagi by about 3–3.4 metres. Researchers say the drop needs to be 10–20 metres to cut downstream risk meaningfully.",
@@ -914,6 +970,7 @@ function renderNews(limit){
     const live = limit?LIVE_NEWS.slice(0,limit):LIVE_NEWS;
     g.innerHTML=live.map(n=>`
       <a class="news news--watch news--live" href="${esc(n.url)}" target="_blank" rel="noopener" aria-label="${esc(n.title)}">
+        <div class="news__cover" aria-hidden="true"><span class="news__cover-k">${esc(t("news.live"))}</span><span class="news__cover-t">${esc(n.source||"")}</span><span class="news__cover-d">${esc(newsDate(n))}</span></div>
         <div class="news__body">
           <div class="news__meta"><span class="tagsq tagsq--watch">${esc(t("news.live"))}</span><span class="news__time mono">${esc(newsDate(n))}</span></div>
           <h3>${esc(n.title)}</h3>
@@ -925,8 +982,8 @@ function renderNews(limit){
   }
   const list = limit?NEWS.slice(0,limit):NEWS;
   g.innerHTML=list.map(n=>{const id=NEWS.indexOf(n);return `
-    <article class="news news--${n.sev}" data-news="${id}" tabindex="0" role="link" aria-label="${esc(TL(n.title))}">
-      <div class="news__thumb" data-thumb="${id}">${THUMB_PH}</div>
+    <article class="news news--${n.sev}${n.img?"":" news--noimg"}" data-news="${id}" tabindex="0" role="link" aria-label="${esc(TL(n.title))}">
+      ${n.img?`<div class="news__thumb" data-thumb="${id}">${THUMB_PH}</div>`:_newsCover(n)}
       <div class="news__body">
         <div class="news__meta"><span class="tagsq tagsq--${n.sev}">${esc(TL(n.tag))}</span><span class="news__time mono">${esc(n.time)}</span></div>
         <h3>${esc(TL(n.title))}</h3>
@@ -995,28 +1052,9 @@ function renderRelief(){
 }
 
 /* ---- map (alerts page) ---- */
-let _map, _markers={};
-const SEVCOL={danger:"#D93025",watch:"#E8A317",relief:"#1E8E5A"};
+const SEVCOL={danger:"#D92D20",watch:"#F79009",relief:"#15803D"};
 function renderAlerts(){
-  const listEl=$("#alertList");
-  if(listEl){
-    listEl.innerHTML=ALERTS.map((a,i)=>`
-      <div class="arow arow--${a.sev}" data-alert="${i}" tabindex="0" role="button">
-        <div class="arow__t"><span class="arow__p">${esc(TL(a.place))}</span><span class="arow__sev">${esc(a.sev)}</span></div>
-        <div class="arow__d">${esc(TL(a.desc))}</div>
-        <div class="arow__c mono">${a.lat.toFixed(4)}, ${a.lng.toFixed(4)}</div>
-      </div>`).join("");
-    $$("#alertList .arow").forEach(row=>{
-      const i=+row.dataset.alert;
-      const go=()=>{ if(_map){_map.setView([ALERTS[i].lat,ALERTS[i].lng],10);_markers[i]&&_markers[i].openPopup();} };
-      row.addEventListener("click",go);
-      row.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();go();}});
-    });
-  }
-  if(_map){ // refresh popups language
-    ALERTS.forEach((a,i)=>{ if(_markers[i]) _markers[i].setPopupContent(popup(a)); });
-  }
-  const c=$("#alertCount"); if(c) c.textContent=ALERTS.length;
+  renderWarnMap();   // #alertList / #alertCount come from the live feed now
   renderTodayWarningsSection();
 }
 
@@ -1036,16 +1074,31 @@ function renderAlerts(){
    ========================================================================= */
 let LIVE_WARN=null, LIVE_WARN_TRIED=false;
 
+/* BIPAD is CORS-open, so if our own endpoint is down (or still serving a
+   payload without coordinates) the browser reads the portal directly through
+   the SAME normaliser the endpoint uses (assets/warn-normalize.js). */
+let _bipadDistIdx=null;
+async function _warnDirect(){
+  if(!window.NDWarn) return null;
+  const get=u=>fetch(u,{signal:AbortSignal.timeout(12000)}).then(r=>{ if(!r.ok) throw 0; return r.json(); });
+  if(!_bipadDistIdx){ try{ _bipadDistIdx=NDWarn.indexDistricts(await get(NDWarn.BIPAD_DISTRICTS)); }catch(_){ _bipadDistIdx={}; } }
+  const a=await get(NDWarn.BIPAD_ALERTS);
+  return NDWarn.normalize((a&&a.results)||[], _bipadDistIdx, Date.now());
+}
 async function fetchDistrictWarnings(){
+  let j=null;
   try{
     const r=await fetch("/api/warnings",{signal:AbortSignal.timeout(9000)});
-    if(r.ok){
-      const j=await r.json();
-      if(j && Array.isArray(j.districts) && j.districts.length) LIVE_WARN=j;
-    }
-  }catch(_){ /* offline or endpoint unavailable — the fallback below covers it */ }
+    if(r.ok) j=await r.json();
+  }catch(_){ /* offline or endpoint unavailable */ }
+  const usable=x=>x && Array.isArray(x.districts) && x.districts.length;
+  if(!usable(j) || j.districts[0].lat==null){
+    try{ const d=await _warnDirect(); if(usable(d)) j=d; }catch(_){}
+  }
+  if(usable(j)) LIVE_WARN=j;
   LIVE_WARN_TRIED=true;
-  renderTodayWarningsSection();
+  renderTodayWarningsSection(); renderSituation(); renderLatestAlerts(); renderWarnMap();
+  setTimeout(()=>$$(".sit__n").forEach(countUp),30);
   return !!LIVE_WARN;
 }
 
@@ -1194,21 +1247,124 @@ function renderTodayWarningsSection(){
 }
 
 function popup(a){return `<div style="font-family:var(--f-mono);font-size:12px"><strong>${esc(TL(a.place))}</strong><br>${esc(a.sev.toUpperCase())} · ${esc(TL(a.desc))}<br>${a.lat.toFixed(4)}, ${a.lng.toFixed(4)}</div>`;}
+/* =========================================================================
+   LIVE ALERT MAP — every district BIPAD (DHM river + rainfall stations, Dept.
+   of Roads) has warned in the current window, plotted automatically.
+
+   Replaced the August-flood map, which pinned ~28 hand-placed impact sites
+   from the Bhotekoshi event and never changed. Now:
+   - each warned district gets an intensity disc at its BIPAD centroid, sized
+     by how many alerts it carries and coloured by its worst level
+       CRITICAL  river above DANGER level      red, pulsing
+       WARNING   river above WARNING level     amber
+       ADVISORY  rainfall / road alerts only   blue
+   - each reporting station is a small dot at its real coordinates, with the
+     reading against its published warning/danger marks in the popup.
+   Used by alerts.html (full map + district list) and the homepage (#map.homemap).
+   ========================================================================= */
+let _map=null, _warnLayer=null, _tiles=null, _markers={};
+const WSEV={crit:"#D92D20", warn:"#F79009", adv:"#2563EB"};
+function _warnLevel(d){ return d.crit?"crit":(d.sev==="danger"?"warn":"adv"); }
+function _isDark(){
+  const a=document.documentElement.getAttribute("data-theme");
+  return a==="dark" || (!a && window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches);
+}
+// Esri gray canvas: muted, keyless (CARTO's basemaps now answer "API key required").
+const _ESRI="https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/";
+function _tileUrl(){ return _ESRI+(_isDark()?"World_Dark_Gray_Base":"World_Light_Gray_Base")+"/MapServer/tile/{z}/{y}/{x}"; }
+function _labelUrl(){ return _ESRI+(_isDark()?"World_Dark_Gray_Reference":"World_Light_Gray_Reference")+"/MapServer/tile/{z}/{y}/{x}"; }
+let _labels=null;
 function initMap(){
   const el=$("#map"); if(!el || !window.L) return;
-  el.classList.add("dark");
-  _map=window.L.map("map",{scrollWheelZoom:false,zoomControl:true}).setView([28.05,85.25],10);
-  // Esri satellite imagery — no API key, disaster-operations look
-  window.L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,attribution:"Tiles &copy; Esri — Maxar, Earthstar Geographics"}).addTo(_map);
-  // place/boundary labels on top for readability
-  window.L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,opacity:.85}).addTo(_map);
-  ALERTS.forEach((a,i)=>{
-    const col=SEVCOL[a.sev];
-    // faint impact halo + solid core, white edge for contrast on dark
-    window.L.circleMarker([a.lat,a.lng],{radius:a.sev==="danger"?20:15,color:col,weight:0,fillColor:col,fillOpacity:.16}).addTo(_map);
-    const m=window.L.circleMarker([a.lat,a.lng],{radius:a.sev==="danger"?8:6,color:"#fff",weight:1.5,fillColor:col,fillOpacity:1}).addTo(_map);
-    m.bindPopup(popup(a)); _markers[i]=m;
+  _map=window.L.map("map",{scrollWheelZoom:false,zoomControl:true,minZoom:6}).setView([28.25,84.1],7);
+  // Restrained gray basemap so the alert discs are the loudest thing on screen.
+  _tiles=window.L.tileLayer(_tileUrl(),{maxZoom:16,attribution:"Tiles &copy; Esri — Esri, HERE, Garmin, &copy; OpenStreetMap contributors · Alerts: BIPAD (NDRRMA)"}).addTo(_map);
+  // Place names float above the discs but never catch clicks meant for them.
+  const lp=_map.createPane("labels"); lp.style.zIndex=450; lp.style.pointerEvents="none";
+  _labels=window.L.tileLayer(_labelUrl(),{maxZoom:16,pane:"labels",opacity:.9}).addTo(_map);
+  _warnLayer=window.L.layerGroup().addTo(_map);
+  // Follow the site's light/dark toggle.
+  new MutationObserver(()=>{ if(_tiles) _tiles.setUrl(_tileUrl()); if(_labels) _labels.setUrl(_labelUrl()); }).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+  renderWarnMap();
+}
+function _stationPopup(r,kind){
+  const lv=r.crit?"crit":(kind==="river"?"warn":"adv");
+  const read = r.level!=null ? `<div class="mpop__read"><b>${esc(toNepDigits(String(r.level)))} m</b>${r.warning!=null?` · ${esc(t("warn.lvl.warn"))} ${esc(toNepDigits(String(r.warning)))}`:""}${r.danger!=null?` · ${esc(t("warn.lvl.dngr"))} ${esc(toNepDigits(String(r.danger)))}`:""}</div>`:"";
+  return `<div class="mpop mpop--${lv}"><span class="mpop__sev">${esc(t("sev."+lv))} · ${esc(t("la."+kind))}</span>
+    <strong>${esc(r.station||r.place)}</strong><span class="mpop__w">${esc([r.place!==r.station?r.place:"",r.district].filter(Boolean).join(" · "))}</span>
+    ${read}${r.status?`<div class="mpop__st">${esc(r.status)}${r.steady?` · ${esc(_warnTrend(r.steady))}`:""}</div>`:""}
+    ${kind==="road"&&r.reason?`<div class="mpop__st">${esc(r.reason)}</div>`:""}
+    <div class="mpop__t">${esc(_warnAgo(r.ts))}</div></div>`;
+}
+function _districtPopup(d){
+  const lv=_warnLevel(d), n=d.river+d.rain+d.road;
+  const parts=[d.river?`${toNepDigits(String(d.river))} ${t("la.river")}`:"", d.rain?`${toNepDigits(String(d.rain))} ${t("la.rain")}`:"", d.road?`${toNepDigits(String(d.road))} ${t("la.road")}`:""].filter(Boolean).join(" · ");
+  return `<div class="mpop mpop--${lv}"><span class="mpop__sev">${esc(t("sev."+lv))}</span>
+    <strong>${esc(LANG==="ne"&&d.ne?d.ne:d.name)}</strong>
+    <span class="mpop__w">${esc(toNepDigits(String(n)))} ${esc(t(n===1?"map.alert":"map.alerts"))} — ${esc(parts)}</span>
+    <div class="mpop__t">${esc(_warnAgo(d.ts))}</div></div>`;
+}
+function renderWarnMap(){
+  const list=$("#alertList"), cnt=$("#alertCount"), sum=$("#mapSummary");
+  if(!_map || !_warnLayer){
+    if(list && !LIVE_WARN) list.innerHTML=`<p class="arow__msg">${esc(LIVE_WARN_TRIED?t("sit.off"):t("sit.load"))}</p>`;
+    return;
+  }
+  _warnLayer.clearLayers(); _markers={};
+  const el=$("#map");
+  let msg=el.querySelector(".map__msg");
+  if(!LIVE_WARN){
+    if(!msg){ msg=document.createElement("div"); msg.className="map__msg"; el.appendChild(msg); }
+    msg.textContent=LIVE_WARN_TRIED?t("sit.off"):t("sit.load");
+    if(list) list.innerHTML=`<p class="arow__msg">${esc(msg.textContent)}</p>`;
+    if(cnt) cnt.textContent="—";
+    return;
+  }
+  if(msg) msg.remove();
+  const L=window.L, pts=[];
+  const ds=(LIVE_WARN.districts||[]).filter(d=>d.lat!=null);
+  // biggest discs first so smaller ones stay clickable on top
+  ds.slice().sort((a,b)=>(b.river+b.rain+b.road)-(a.river+a.rain+a.road)).forEach(d=>{
+    const lv=_warnLevel(d), n=d.river+d.rain+d.road, col=WSEV[lv];
+    const disc=L.circle([d.lat,d.lng],{radius:9000+7000*Math.sqrt(n),color:col,weight:1.5,opacity:.9,fillColor:col,fillOpacity:lv==="crit"?.30:.18,className:"wdisc wdisc--"+lv}).addTo(_warnLayer);
+    disc.bindPopup(_districtPopup(d)); _markers[d.name]=disc; pts.push([d.lat,d.lng]);
+    if(lv==="crit"){
+      L.marker([d.lat,d.lng],{interactive:false,keyboard:false,icon:L.divIcon({className:"wpulse",html:"<i></i><i></i>",iconSize:[18,18]})}).addTo(_warnLayer);
+    }
   });
+  [["river",LIVE_WARN.rivers],["rain",LIVE_WARN.rain],["road",LIVE_WARN.roads]].forEach(([k,arr])=>{
+    (arr||[]).forEach(r=>{
+      if(r.lat==null) return;
+      const lv=r.crit?"crit":(k==="river"?"warn":"adv");
+      L.circleMarker([r.lat,r.lng],{radius:k==="river"?6:5,color:"#fff",weight:1.5,fillColor:WSEV[lv],fillOpacity:1}).addTo(_warnLayer).bindPopup(_stationPopup(r,k));
+      pts.push([r.lat,r.lng]);
+    });
+  });
+  if(pts.length && !el.dataset.fitted){
+    _map.fitBounds(L.latLngBounds(pts).pad(.35),{maxZoom:el.classList.contains("homemap")?8:9});
+    el.dataset.fitted="1";
+  }
+  if(cnt) cnt.textContent=toNepDigits(String(ds.length));
+  if(sum){
+    const c=_sitCounts();
+    sum.innerHTML=`<span class="msum2 msum2--crit"><b>${toNepDigits(String(c.crit))}</b> ${esc(t("sit.crit"))}</span>
+      <span class="msum2 msum2--warn"><b>${toNepDigits(String(c.warn))}</b> ${esc(t("sit.warn"))}</span>
+      <span class="msum2 msum2--adv"><b>${toNepDigits(String(c.adv))}</b> ${esc(t("sit.adv"))}</span>
+      <span class="msum2__src mono">${esc(t("sit.src").replace("{h}",toNepDigits(String(c.hours))))} · ${esc(_warnAgo(c.at))}</span>`;
+  }
+  if(list){
+    list.innerHTML=ds.map(d=>{
+      const lv=_warnLevel(d), n=d.river+d.rain+d.road;
+      return `<button type="button" class="arow arow--${lv}" data-d="${esc(d.name)}">
+        <span class="arow__sev">${esc(t("sev."+lv))}</span>
+        <span class="arow__n">${esc(LANG==="ne"&&d.ne?d.ne:d.name)}</span>
+        <span class="arow__m">${esc(toNepDigits(String(n)))} ${esc(t(n===1?"map.alert":"map.alerts"))} · ${esc(_warnAgo(d.ts))}</span></button>`;
+    }).join("") || `<p class="arow__msg">${esc(t("map.none"))}</p>`;
+    $$("#alertList .arow").forEach(b=>b.addEventListener("click",()=>{
+      const m=_markers[b.dataset.d]; if(!m) return;
+      _map.flyTo(m.getLatLng(),9,{duration:.8}); setTimeout(()=>m.openPopup(),850);
+    }));
+  }
 }
 
 /* ---- missing persons ---- */
@@ -1298,8 +1454,279 @@ function initMissingForm(){
 }
 
 /* ---- re-render everything that depends on language ---- */
+/* =========================================================================
+   RAINFALL WARNING (homepage banner) + WEATHER TAB (Open-Meteo forecast)
+   ========================================================================= */
+
+/* Homepage banner: a flat, dismissible warning card that sits ABOVE the flood
+   hero (both live events stacked). Static copy from RAINWARN — no network. */
+function renderRainWarn(){
+  const root=$("#rainWarnRoot"); if(!root) return;
+  if(!RAINWARN.active){ root.innerHTML=""; return; }
+  const W=RAINWARN;
+  const prec=W.precautions.slice(0,4).map(p=>`<li>${esc(TL(p))}</li>`).join("");
+  root.innerHTML=`
+    <div class="rwarn rwarn--${esc(W.level)}">
+      <div class="rwarn__bar" aria-hidden="true"></div>
+      <div class="rwarn__in">
+        <div class="rwarn__head">
+          <span class="rwarn__badge">${XTRI}<span>${esc(TL(W.badge))}</span></span>
+          <span class="rwarn__win mono">${esc(toNepDigits(W.window))}</span>
+          <span class="rwarn__ago mono">${esc(_warnAgo(Date.parse(W.updated)))}</span>
+        </div>
+        <h2 class="rwarn__title">${esc(TL(W.title))}</h2>
+        <p class="rwarn__lead">${esc(TL(W.lead))}</p>
+        ${W.today?`<p class="rwarn__today">${esc(TL(W.today))}</p>`:""}
+        <p class="rwarn__prov">${esc(TL(W.provinces))}</p>
+        <div class="rwarn__cols">
+          <div class="rwarn__prec">
+            <span class="eyebrow">${esc(t("rw.precautions"))}</span>
+            <ul>${prec}</ul>
+          </div>
+        </div>
+        <div class="rwarn__cta">
+          <a class="btn btn--primary btn--sm" href="weather.html">${esc(t("rw.view"))}</a>
+          <a class="btn btn--sm" href="alerts.html">${esc(t("rw.map"))}</a>
+          <a class="btn btn--sm" href="highway-updates.html">${esc(t("rw.highway"))}</a>
+          ${W.url?`<a class="btn btn--sm" href="${esc(W.url)}" target="_blank" rel="noopener">${esc(t("fpop.report"))}</a>`:""}
+        </div>
+        <p class="rwarn__src">${esc(t("fpop.source"))} · ${esc(W.source)}</p>
+      </div>
+    </div>`;
+}
+
+/* ---- Homepage: Current Situation counts + Latest Alerts ----
+   Both read ONLY the live BIPAD district feed (LIVE_WARN) plus the RAINWARN
+   object. When the feed is unreachable the tiles show "—" and say so; they
+   never fall back to the old hand-typed WARNINGS bulletin, because a count is
+   exactly the kind of figure that reads as current when it is not.
+   Critical = a river station above its DANGER level in that district.
+   Warning  = river above its warning level, none above danger.
+   Advisory = rainfall or road alerts only. */
+function _sitCounts(){
+  if(!LIVE_WARN) return null;
+  const d=LIVE_WARN.districts||[];
+  return { crit:d.filter(x=>x.crit).length,
+           warn:d.filter(x=>!x.crit && x.sev==="danger").length,
+           adv:d.filter(x=>x.sev!=="danger").length,
+           hours:LIVE_WARN.window_hours||24, at:LIVE_WARN.at };
+}
+function renderSituation(){
+  const g=$("#sitCounts"); if(!g) return;
+  const c=_sitCounts(), n=v=>c?toNepDigits(String(v)):"—";
+  const tile=(cls,v,k)=>`<a class="sit sit--${cls}" href="alerts.html">
+      <span class="sit__n">${v}</span><span class="sit__l">${esc(t("sit."+k))}</span><span class="sit__s">${esc(t("sit."+k+".s"))}</span></a>`;
+  g.innerHTML=tile("crit",n(c&&c.crit),"crit")+tile("warn",n(c&&c.warn),"warn")+tile("adv",n(c&&c.adv),"adv");
+  const src=$("#sitSrc");
+  if(src) src.textContent = c
+    ? t("sit.src").replace("{h}",toNepDigits(String(c.hours)))+" · "+_warnAgo(c.at)
+    : (LIVE_WARN_TRIED?t("sit.off"):t("sit.load"));
+}
+function renderLatestAlerts(){
+  const g=$("#latestAlerts"); if(!g) return;
+  const items=[];
+  if(RAINWARN.active) items.push({sev:RAINWARN.level==="red"?"crit":"warn", kind:t("la.rain"),
+    title:TL(RAINWARN.title), where:t("la.national"), note:TL(RAINWARN.today||RAINWARN.provinces),
+    ts:Date.parse(RAINWARN.updated), href:"weather.html"});
+  if(LIVE_WARN){
+    const rows=[...(LIVE_WARN.rivers||[]).map(r=>({...r,k:"river"})),
+                ...(LIVE_WARN.rain||[]).map(r=>({...r,k:"rain"})),
+                ...(LIVE_WARN.roads||[]).map(r=>({...r,k:"road"}))]
+      .sort((a,b)=>(b.crit?1:0)-(a.crit?1:0) || (b.ts||0)-(a.ts||0)).slice(0,5);
+    rows.forEach(r=>items.push({sev:r.crit?"crit":(r.k==="river"?"warn":"adv"), kind:t("la."+r.k),
+      title:r.station||r.place||r.district,
+      where:[r.place&&r.place!==r.station?r.place:"", r.district].filter(Boolean).join(" · "),
+      note:r.k==="road"?r.reason:(r.status||""), ts:r.ts, href:"alerts.html"}));
+  }
+  const card=a=>`<a class="acard acard--${a.sev}" href="${esc(a.href)}">
+      <div class="acard__top"><span class="acard__sev">${esc(t("sev."+a.sev))}</span><span class="acard__kind">${esc(a.kind)}</span>
+        ${a.ts?`<time class="acard__ago mono">${esc(_warnAgo(a.ts))}</time>`:""}</div>
+      <h3 class="acard__t">${esc(a.title)}</h3>
+      ${a.where?`<p class="acard__w">${esc(a.where)}</p>`:""}
+      ${a.note?`<p class="acard__d">${esc(a.note)}</p>`:""}
+      <span class="acard__go">${esc(t("la.details"))}</span></a>`;
+  // Critical first, then warnings, then advisories; newest first within each.
+  const rank={crit:0,warn:1,adv:2,safe:3};
+  items.sort((x,y)=>rank[x.sev]-rank[y.sev] || (y.ts||0)-(x.ts||0));
+  let html=items.map(card).join("");
+  if(!LIVE_WARN) html+=`<p class="lalist__note">${esc(LIVE_WARN_TRIED?t("la.off"):t("sit.load"))} <a href="alerts.html">${esc(t("map.more"))}</a></p>`;
+  g.innerHTML=html;
+}
+
+/* ---- Weather tab (weather.html) ---- */
+/* WMO weather-interpretation codes → {label, icon-key}. Kept small: the codes
+   that actually occur in a Nepal monsoon forecast, everything else → cloudy. */
+const WX_CODE={
+  0:{k:"sun",  en:"Clear",            ne:"सफा"},
+  1:{k:"sun",  en:"Mainly clear",     ne:"प्रायः सफा"},
+  2:{k:"part", en:"Partly cloudy",    ne:"आंशिक बादल"},
+  3:{k:"cloud",en:"Overcast",         ne:"बादल"},
+  45:{k:"fog", en:"Fog",              ne:"कुहिरो"},
+  48:{k:"fog", en:"Rime fog",         ne:"तुसारो कुहिरो"},
+  51:{k:"driz",en:"Light drizzle",    ne:"हल्का सिमसिम"},
+  53:{k:"driz",en:"Drizzle",          ne:"सिमसिम"},
+  55:{k:"driz",en:"Heavy drizzle",    ne:"बाक्लो सिमसिम"},
+  61:{k:"rain",en:"Light rain",       ne:"हल्का वर्षा"},
+  63:{k:"rain",en:"Rain",             ne:"वर्षा"},
+  65:{k:"heavy",en:"Heavy rain",      ne:"भारी वर्षा"},
+  66:{k:"rain",en:"Freezing rain",    ne:"हिमवर्षा"},
+  67:{k:"heavy",en:"Heavy freezing rain",ne:"भारी हिमवर्षा"},
+  80:{k:"rain",en:"Rain showers",     ne:"वर्षाका छिटा"},
+  81:{k:"rain",en:"Heavy showers",    ne:"भारी छिटा"},
+  82:{k:"heavy",en:"Violent showers", ne:"अति भारी छिटा"},
+  95:{k:"storm",en:"Thunderstorm",    ne:"चट्याङसहित वर्षा"},
+  96:{k:"storm",en:"Storm w/ hail",   ne:"असिनासहित आँधी"},
+  99:{k:"storm",en:"Severe storm",    ne:"भीषण आँधी"}
+};
+const WX_ICONS={
+  sun:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke-linecap="round"/></svg>',
+  part:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="8" cy="8" r="3"/><path d="M8 2v1.5M2 8h1.5M3.8 3.8l1 1" stroke-linecap="round"/><path d="M7 18h10a3 3 0 0 0 0-6 4.5 4.5 0 0 0-8.6-1A3.2 3.2 0 0 0 7 18Z"/></svg>',
+  cloud:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M7 18h10a3.5 3.5 0 0 0 0-7 5 5 0 0 0-9.6-1.3A3.5 3.5 0 0 0 7 18Z"/></svg>',
+  fog:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M7 14h10a3.2 3.2 0 0 0 0-6.4A4.6 4.6 0 0 0 8 6.5 3.2 3.2 0 0 0 7 14Z"/><path d="M4 18h16M6 21h12" stroke-linecap="round"/></svg>',
+  driz:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M7 14h10a3.2 3.2 0 0 0 0-6.4A4.6 4.6 0 0 0 8 6.5 3.2 3.2 0 0 0 7 14Z"/><path d="M9 17v2M13 17v2" stroke-linecap="round"/></svg>',
+  rain:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M7 13h10a3.2 3.2 0 0 0 0-6.4A4.6 4.6 0 0 0 8 5.5 3.2 3.2 0 0 0 7 13Z"/><path d="M8 16l-1 3M12 16l-1 3M16 16l-1 3" stroke-linecap="round"/></svg>',
+  heavy:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M7 12h10a3.2 3.2 0 0 0 0-6.4A4.6 4.6 0 0 0 8 4.5 3.2 3.2 0 0 0 7 12Z"/><path d="M7 15l-1.5 4M11 15l-1.5 4M15 15l-1.5 4M19 15l-1.5 4" stroke-linecap="round"/></svg>',
+  storm:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M7 12h10a3.2 3.2 0 0 0 0-6.4A4.6 4.6 0 0 0 8 4.5 3.2 3.2 0 0 0 7 12Z"/><path d="M13 13l-3 4h3l-1.5 4" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+};
+function wxInfo(code){ return WX_CODE[code]||{k:"cloud",en:"Cloudy",ne:"बादल"}; }
+function wxIcon(k){ return WX_ICONS[k]||WX_ICONS.cloud; }
+
+let WEATHER_DATA=null, WEATHER_TRIED=false;
+async function fetchWeather(){
+  if(!$("#weatherRoot")) return;
+  const lats=WEATHER_LOCS.map(l=>l.lat).join(",");
+  const lngs=WEATHER_LOCS.map(l=>l.lng).join(",");
+  const url="https://api.open-meteo.com/v1/forecast"
+    +"?latitude="+lats+"&longitude="+lngs
+    +"&current=temperature_2m,relative_humidity_2m,precipitation,weather_code,wind_speed_10m"
+    +"&hourly=precipitation,precipitation_probability"
+    +"&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max"
+    +"&timezone=Asia%2FKathmandu&forecast_days=5";
+  try{
+    const r=await fetch(url,{signal:AbortSignal.timeout(12000)});
+    WEATHER_TRIED=true;
+    if(!r.ok){ renderWeather(); return; }
+    const j=await r.json();
+    // Multi-location responses come back as an array; a single point as an object.
+    WEATHER_DATA=Array.isArray(j)?j:[j];
+    renderWeather();
+  }catch(_){ WEATHER_TRIED=true; renderWeather(); }
+}
+function _wxDayName(iso){
+  try{ return new Date(iso+"T00:00:00").toLocaleDateString(LANG==="ne"?"ne-NP":"en-GB",{weekday:"short"}); }
+  catch(_){ return iso; }
+}
+function _wxRainClass(mm){ return mm>=100?"is-extreme":mm>=50?"is-heavy":mm>=10?"is-moderate":mm>0?"is-light":"is-dry"; }
+function renderWeather(){
+  const root=$("#weatherRoot"); if(!root) return;
+  const W=RAINWARN;
+  const warnBlock = W.active ? `
+    <div class="wx-warn wx-warn--${esc(W.level)}" id="precautions">
+      <div class="wx-warn__head">
+        <span class="rwarn__badge">${XTRI}<span>${esc(TL(W.badge))}</span></span>
+        <span class="rwarn__win mono">${esc(toNepDigits(W.window))}</span>
+      </div>
+      <h2>${esc(TL(W.title))}</h2>
+      <p class="wx-warn__lead">${esc(TL(W.lead))}</p>
+      ${W.today?`<p class="rwarn__today">${esc(TL(W.today))}</p>`:""}
+      <p class="wx-warn__prov">${esc(TL(W.provinces))}</p>
+      <span class="eyebrow">${esc(t("rw.precautions"))}</span>
+      <ul class="wx-warn__prec">${W.precautions.map(p=>`<li>${esc(TL(p))}</li>`).join("")}</ul>
+      <p class="wx-warn__hwy">${esc(TL(W.highway))}</p>
+      <p class="rwarn__src">${esc(t("fpop.source"))} · ${esc(W.source)}${W.url?` · <a href="${esc(W.url)}" target="_blank" rel="noopener">${esc(t("fpop.report"))}</a>`:""}</p>
+    </div>` : "";
+
+  let cards;
+  if(WEATHER_DATA){
+    cards=WEATHER_LOCS.map((loc,i)=>{
+      const d=WEATHER_DATA[i]; if(!d||!d.current||!d.daily) return "";
+      const cur=d.current, day=d.daily;
+      const ci=wxInfo(cur.weather_code);
+      const days=(day.time||[]).map((iso,di)=>{
+        const wi=wxInfo(day.weather_code[di]);
+        const mm=Math.round(day.precipitation_sum[di]||0);
+        const pop=Math.round(day.precipitation_probability_max[di]||0);
+        return `<div class="wx-day ${_wxRainClass(mm)}">
+          <div class="wx-day__d">${esc(toNepDigits(_wxDayName(iso)))}</div>
+          <div class="wx-day__ic" aria-hidden="true">${wxIcon(wi.k)}</div>
+          <div class="wx-day__t mono"><b>${esc(toNepDigits(String(Math.round(day.temperature_2m_max[di]))))}°</b> ${esc(toNepDigits(String(Math.round(day.temperature_2m_min[di]))))}°</div>
+          <div class="wx-day__mm mono">${esc(toNepDigits(String(mm)))}mm</div>
+          <div class="wx-day__pop mono">${esc(toNepDigits(String(pop)))}%</div>
+        </div>`;
+      }).join("");
+      return `<article class="wx-card${loc.risk?" wx-card--risk":""}">
+        <header class="wx-card__h">
+          <div class="wx-card__id">
+            <h3>${esc(TL(loc.name))}</h3>
+            <span class="wx-card__sub">${esc(TL(loc.sub))}</span>
+          </div>
+          ${loc.risk?`<span class="wx-card__flag">${esc(t("rw.riskflag"))}</span>`:""}
+        </header>
+        <div class="wx-card__now">
+          <span class="wx-card__ic" aria-hidden="true">${wxIcon(ci.k)}</span>
+          <span class="wx-card__temp mono">${esc(toNepDigits(String(Math.round(cur.temperature_2m))))}°</span>
+          <span class="wx-card__cond">
+            <b>${esc(LANG==="ne"?ci.ne:ci.en)}</b>
+            <span class="mono">${esc(t("wx.now.rain"))} ${esc(toNepDigits(String(cur.precipitation||0)))}mm · ${esc(t("wx.now.hum"))} ${esc(toNepDigits(String(Math.round(cur.relative_humidity_2m))))}%</span>
+          </span>
+        </div>
+        <div class="wx-card__days">
+          <div class="wx-day wx-day--hd"><div class="wx-day__d"></div><div></div><div class="wx-day__t">${esc(t("wx.hi"))}/${esc(t("wx.lo"))}</div><div class="wx-day__mm">${esc(t("wx.rain"))}</div><div class="wx-day__pop">${esc(t("wx.pop"))}</div></div>
+          ${days}
+        </div>
+      </article>`;
+    }).join("");
+  } else if(WEATHER_TRIED){
+    cards=`<p class="wx-msg">${esc(t("wx.fail"))}</p>`;
+  } else {
+    cards=`<p class="wx-msg">${esc(t("wx.loading"))}</p>`;
+  }
+
+  root.innerHTML=`
+    ${warnBlock}
+    <div class="sec-head" style="margin-top:26px"><div><span class="eyebrow">${esc(t("wx.forecast.eye"))}</span><h2>${esc(t("wx.forecast.h"))}</h2></div></div>
+    <p class="wx-attrib">${esc(t("wx.attrib"))}</p>
+    <div class="wx-grid">${cards}</div>`;
+}
+
+/* Corner-card popup for the rainfall warning. Follows this site's popup policy:
+   a dismissible corner card, never a blocking modal, at most once per session,
+   and never again for the same warning window once the reader closes it. It
+   shares the one-per-session popup budget with the news card, and runs first so
+   the live weather alert wins that single slot. */
+const RAINPOP_KEY="nd_rainpop_seen";
+function _rainPopDismissed(){
+  try{ return localStorage.getItem(RAINPOP_KEY)===RAINWARN.window; }catch(_){ return false; }
+}
+function _rainPopDismiss(){
+  try{ localStorage.setItem(RAINPOP_KEY, RAINWARN.window); }catch(_){}
+  const el=$("#rpop"); if(el){ el.classList.add("is-out"); setTimeout(()=>el.remove(),260); }
+}
+function maybeRainPopup(){
+  if(!RAINWARN.active) return;
+  if(_rainPopDismissed()) return;
+  if(popupBudgetSpent()) return;
+  if($("#rpop")||$("#npop")) return;
+  const W=RAINWARN;
+  spendPopupBudget();
+  const el=document.createElement("aside");
+  el.className="rpop rpop--"+esc(W.level); el.id="rpop"; el.setAttribute("role","status");
+  el.innerHTML=`
+    <button class="rpop__x" id="rpopX" aria-label="${esc(t("fpop.dismiss"))}">${XICON}</button>
+    <div class="rpop__badge">${XTRI}<span>${esc(TL(W.badge))}</span></div>
+    <h3 class="rpop__title">${esc(TL(W.title))}</h3>
+    <p class="rpop__lead">${esc(TL(W.lead))}</p>
+    <div class="rpop__cta">
+      <a class="btn btn--primary btn--sm" href="weather.html">${esc(t("rw.forecast"))}</a>
+      <button class="btn btn--sm" id="rpopDismiss">${esc(t("fpop.dismiss"))}</button>
+    </div>`;
+  document.body.appendChild(el);   // visibility comes from CSS (animation), not a JS class toggle
+  $("#rpopX").addEventListener("click",_rainPopDismiss);
+  $("#rpopDismiss").addEventListener("click",_rainPopDismiss);
+}
+
 function renderAll(){
-  renderTicker(); renderEvent(); renderStats(); renderHelplines();
+  renderTicker(); renderEvent(); renderStats(); renderHelplines(); renderRainWarn(); renderWeather(); renderSituation(); renderLatestAlerts();
   renderNews(document.body.dataset.newsLimit?+document.body.dataset.newsLimit:0);
   renderHistory(); renderRelief(); renderAlerts(); renderMissing();
   renderNotifs(); renderGallery(); renderFullGallery(); renderNewsPage(); renderStatsPage(); renderMissingSummary(); renderRescuePage(); renderReliefCollected(); renderHighways(); setSync();
@@ -1329,6 +1756,108 @@ function setBurger(open){
 }
 
 /* ---- global wiring ---- */
+/* =========================================================================
+   NAV DROPDOWNS — "Weather" (forecast + live alert map) and "Bhotekoshi
+   Flood" (overview, situation, missing, rescued, relief). Hover opens them on
+   desktop pointers; click/tap toggles everywhere; Esc or an outside click
+   closes. Inside the mobile burger menu they expand in place.
+   ========================================================================= */
+Object.assign(I18N.en,{
+  "nav.flood":"Bhotekoshi Flood","nav.fl.stats":"Situation Details","nav.wx.fc":"Forecast & Rain Warning","nav.wx.fc.s":"5-day forecast · DHM warning · live wind",
+  "nav.alerts.s":"Every warned district, plotted automatically","nav.fl.ov":"Flood Overview","nav.fl.ov.s":"Cause, timeline & affected districts",
+  "nav.stats.s":"Deaths, missing, rescued — official figures","nav.missing.s":"Search the list or report someone",
+  "nav.rescue.s":"Named NDRRMA rescue registry","nav.relief.s":"Donate to the PM Disaster Relief Fund"
+});
+Object.assign(I18N.ne,{
+  "nav.flood":"भोटेकोशी बाढी","nav.fl.stats":"अवस्था विवरण","nav.wx.fc":"पूर्वानुमान र वर्षा चेतावनी","nav.wx.fc.s":"५ दिने पूर्वानुमान · DHM चेतावनी · प्रत्यक्ष हावा",
+  "nav.alerts.s":"चेतावनी भएका सबै जिल्ला, स्वतः नक्सामा","nav.fl.ov":"बाढीको सारांश","nav.fl.ov.s":"कारण, घटनाक्रम र प्रभावित जिल्ला",
+  "nav.stats.s":"मृत्यु, बेपत्ता, उद्धार — आधिकारिक तथ्यांक","nav.missing.s":"सूची खोज्नुहोस् वा बेपत्ता जानकारी दिनुहोस्",
+  "nav.rescue.s":"NDRRMA उद्धार अभिलेख","nav.relief.s":"प्रधानमन्त्री विपद् राहत कोषमा सहयोग"
+});
+function wireNavDropdowns(){
+  const dds=$$(".navdd"); if(!dds.length) return;
+  const desktopHover=()=>window.matchMedia && matchMedia("(hover: hover) and (min-width: 821px)").matches;
+  const set=(dd,open)=>{ dd.classList.toggle("open",open); const b=dd.querySelector(".navdd__t"); if(b) b.setAttribute("aria-expanded",String(open)); };
+  const closeAll=except=>dds.forEach(d=>{ if(d!==except) set(d,false); });
+  dds.forEach(dd=>{
+    const btn=dd.querySelector(".navdd__t"); if(!btn) return;
+    btn.addEventListener("click",e=>{ e.stopPropagation(); const o=!dd.classList.contains("open"); closeAll(dd); set(dd,o); });
+    let t=null;
+    dd.addEventListener("mouseenter",()=>{ if(!desktopHover()) return; clearTimeout(t); closeAll(dd); set(dd,true); });
+    dd.addEventListener("mouseleave",()=>{ if(!desktopHover()) return; t=setTimeout(()=>set(dd,false),160); });
+  });
+  document.addEventListener("click",e=>{ if(!e.target.closest(".navdd")) closeAll(); });
+  document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeAll(); });
+}
+
+/* =========================================================================
+   MOTION LAYER — the "live monitoring" feel, kept cheap and safe.
+   - Animated navy surfaces (.fx): a drifting topographic-contour field, a
+     slow radar sweep and falling rain on the masthead, hero and footer.
+     Transform/opacity only, on their own layers — never background-position,
+     which would repaint the whole header every frame on low-end phones.
+   - Scroll reveal: ONLY elements that start below the fold are ever hidden,
+     so nothing already on screen can get stuck invisible (the backgrounded-tab
+     trap that bit the popups). Re-rendered cards just appear.
+   - Count-up on headline figures, aborted the moment anything else (a live
+     refresh) writes the number, and skipped in hidden tabs.
+   All of it is off under prefers-reduced-motion.
+   ========================================================================= */
+const _RM=()=>window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+function injectFx(){
+  const add=(host,kind)=>{
+    if(!host || host.querySelector(":scope > .fx")) return;
+    const fx=document.createElement("div");
+    fx.className="fx fx--"+kind; fx.setAttribute("aria-hidden","true");
+    fx.innerHTML='<i class="fx__topo"></i><i class="fx__sweep"></i>'+(kind!=="foot"?'<i class="fx__rain"></i>':"")+(kind==="hd"?'<i class="fx__scan"></i>':"");
+    host.insertBefore(fx, host.firstChild);
+    host.classList.add("has-fx");
+  };
+  add($(".hd"),"hd"); add($(".hero"),"hero"); add($(".foot"),"foot"); add($(".pagehead"),"page");
+}
+const REVEAL_SEL=".sec-head,.hl,.news,.acard,.sit,.pcard,.sd,.wx-card,.qa-btn,.hwcard,.hwroute,.windbox,.mapwrap,.rwarn,.wx-warn,.histpick__b,.omrow,.mcard,.hist";
+let _revIO=null;
+function _revealScan(root){
+  if(!_revIO) return;
+  const vh=window.innerHeight||800;
+  (root||document).querySelectorAll(REVEAL_SEL).forEach(el=>{
+    if(el.dataset.rv) return; el.dataset.rv="1";
+    const r=el.getBoundingClientRect();
+    if(r.top<vh*0.92) return;                 // already on (or near) screen: never hide it
+    const sib=el.parentElement?[...el.parentElement.children].indexOf(el):0;
+    el.style.setProperty("--rv-d",(Math.min(sib,5)*70)+"ms");
+    el.classList.add("rv-wait"); _revIO.observe(el);
+  });
+}
+function initReveal(){
+  if(_RM() || !("IntersectionObserver" in window)) return;
+  _revIO=new IntersectionObserver(es=>es.forEach(e=>{
+    if(!e.isIntersecting) return;
+    e.target.classList.remove("rv-wait"); e.target.classList.add("rv-in"); _revIO.unobserve(e.target);
+  }),{rootMargin:"0px 0px -6% 0px",threshold:.08});
+  _revealScan();
+  let q=null;
+  new MutationObserver(()=>{ clearTimeout(q); q=setTimeout(()=>_revealScan(),120); })
+    .observe(document.querySelector("main")||document.body,{childList:true,subtree:true});
+}
+function countUp(el){
+  if(!el || el.dataset.cu || _RM() || document.hidden) return;
+  const txt=el.textContent.trim();
+  if(!/^[0-9][0-9,]*$/.test(txt)) return;     // ASCII integers only (skip Devanagari / "—")
+  el.dataset.cu="1";
+  const target=+txt.replace(/,/g,""); if(!target) return;
+  const fmt=n=>Math.round(n).toLocaleString("en-US"), t0=performance.now(), dur=1100;
+  let last=null;
+  const step=now=>{
+    if(last!==null && el.textContent!==last) return;          // someone else updated it: stop
+    const k=Math.min(1,(now-t0)/dur), e=1-Math.pow(1-k,3);
+    last=fmt(target*e); el.textContent=last;
+    if(k<1) requestAnimationFrame(step); else el.textContent=txt;
+  };
+  requestAnimationFrame(step);
+}
+function runCountUps(){ $$(".hstat .n, .sit__n, .sd__n").forEach(countUp); }
+
 function wire(){
   // lang toggle
   $$(".lang button").forEach(b=>b.addEventListener("click",()=>setLang(b.dataset.lang)));
@@ -1370,10 +1899,11 @@ function wire(){
   heroSlideshow();
   // year
   $$("[data-year]").forEach(e=>e.textContent=new Date().getFullYear());
-  injectChrome();
+  injectChrome(); injectFx(); wireNavDropdowns();
   initMap(); initMissingForm(); initHistoryDetail();
   setLang(LANG);
   tickClocks(); setInterval(tickClocks,1000);
+  initReveal(); setTimeout(runCountUps,60);
   // Render the stamp, but do NOT record a sync: nothing has been fetched yet,
   // and passing nptNow() here would have the page vouch for figures no source
   // had confirmed. The first liveRefresh() below sets it for real.
@@ -1391,6 +1921,7 @@ function wire(){
   // Every guard it needs is inside it: the session budget, the dismissed flag,
   // the seen-ids set and _newsPopScheduled, so this can never double-fire with
   // the call in fetchLiveNews().
+  maybeRainPopup();                                              // live weather alert corner card (takes the one-per-session slot first)
   maybeNewsPopup();
   fetchLiveAlerts();                                              // live flood alerts (GDACS)…
   setInterval(fetchLiveAlerts, 180000);                          // …refreshed every 3 minutes so risky alerts surface fast
@@ -1409,6 +1940,10 @@ function wire(){
   if($("#hwRoot")){                                              // Highway Updates page — curated table + live road bulletins
     fetchHighways(); fetchHighwayNews();
     setInterval(fetchHighways, 300000); setInterval(fetchHighwayNews, 300000);  // auto-refresh every 5 min
+  }
+  if($("#weatherRoot")){                                         // Weather tab — live Open-Meteo forecast (free, no key)
+    fetchWeather();
+    setInterval(fetchWeather, 900000);                           // refresh every 15 min
   }
   // re-render bulletins every 10 minutes (refreshes relative times / fallback content)
   setInterval(()=>{
@@ -1444,6 +1979,60 @@ function doShare(mode){
   else if(mode==="copy"){ if(navigator.clipboard) navigator.clipboard.writeText(url).then(()=>toast(t("toast.link"))); }
   else if(mode==="print") window.print();
 }
+/* -------------------- WEATHER + RAINFALL-WARNING i18n -------------------- */
+Object.assign(I18N.en,{
+  "map.alerts":"alerts","map.alert":"alert","map.none":"No district warnings in the current window.","map.list":"Districts warned",
+  "map.size":"Disc size = number of alerts · dots = reporting stations",
+  "wind.eye":"Live · ECMWF model via Windy.com","wind.h":"Bay of Bengal depression — live wind map","wind.open":"Open on Windy ↗",
+  "wind.p":"Animated surface wind and pressure for the Bay of Bengal and Nepal. Follow the circulation as the depression tracks west-northwest toward Nepal.",
+  "page.alerts.h":"Live Alert Map","page.alerts.p":"Every district with a live DHM river, rainfall or Department of Roads alert on the BIPAD portal, plotted automatically and refreshed every 15 minutes. Discs are coloured by the worst level in each district.",
+  "sit.h":"Current Situation","sit.crit":"Critical","sit.warn":"Warnings","sit.adv":"Advisories",
+  "sit.crit.s":"districts with a river above danger level","sit.warn.s":"districts with a river above warning level","sit.adv.s":"districts with rainfall or road alerts",
+  "sit.src":"District alerts · BIPAD portal (NDRRMA) · last {h} h","sit.off":"Live district feed unreachable — counts unavailable, see the Alert Map","sit.load":"Loading live district alerts…",
+  "sev.crit":"CRITICAL","sev.warn":"WARNING","sev.adv":"ADVISORY","sev.safe":"RESOLVED",
+  "la.h":"Latest Alerts","la.eye":"Warnings · Live","la.more":"All alerts →","la.details":"View details →",
+  "la.rain":"Heavy rain","la.river":"River level","la.road":"Road","la.national":"Nationwide · DHM",
+  "la.off":"The live district feed could not be reached, so only the national warning is shown.",
+  "ln.h":"Latest News","res.h":"Emergency Resources","res.roads":"Highway Updates",
+  "map.h":"Live Disaster Map","map.eye":"Flood-affected corridor · Rasuwa → Chitwan","map.more":"Full alert map →",
+  "rw.updated":"Updated","rw.view":"View alert","rw.map":"View map",
+  "nav.weather":"Weather",
+  "rw.precautions":"Precautions",
+  "rw.forecast":"Weather forecast →","rw.allprec":"All precautions","rw.highway":"Highway precautions","rw.riskflag":"HIGH RISK",
+  "wx.now.rain":"rain","wx.now.hum":"humidity","wx.hi":"Hi","wx.lo":"Lo","wx.rain":"Rain","wx.pop":"Chance",
+  "wx.loading":"Loading the live forecast…","wx.fail":"The live forecast could not be reached right now. Follow the DHM warning above and check dhm.gov.np.",
+  "wx.forecast.eye":"5-Day Forecast · Live","wx.forecast.h":"Forecast for flood-hit & at-risk districts",
+  "wx.attrib":"Live data from Open-Meteo, refreshed every 15 minutes. Rainfall totals are per day; \"Chance\" is the peak probability of precipitation. Treat as guidance and defer to DHM (dhm.gov.np) for official warnings.",
+  "page.weather.h":"Weather & Rainfall Warning","page.weather.p":"The live DHM heavy-rain warning and a 5-day forecast for the flood-hit corridor and the provinces named in today's alert.",
+  "qa.flood.k":"Flood Situation","qa.flood.t":"Flood Stats →","qa.wx.k":"Live Forecast","qa.wx.t":"Weather & Rain Warning →","qa.climate.k":"Cause & Context","qa.climate.t":"Nepal Climate Action →"
+});
+Object.assign(I18N.ne,{
+  "map.alerts":"सूचना","map.alert":"सूचना","map.none":"हालको अवधिमा कुनै जिल्ला चेतावनी छैन।","map.list":"चेतावनी भएका जिल्ला",
+  "map.size":"वृत्तको आकार = सूचनाको संख्या · थोप्ला = मापन केन्द्र",
+  "wind.eye":"प्रत्यक्ष · Windy.com मार्फत ECMWF मोडेल","wind.h":"बंगालको खाडीको न्यून चाप — प्रत्यक्ष हावा नक्सा","wind.open":"Windy मा खोल्नुहोस् ↗",
+  "wind.p":"बंगालको खाडी र नेपालको सतही हावा र वायुचापको एनिमेटेड नक्सा। न्यून चाप पश्चिम-उत्तरपश्चिम नेपालतर्फ सर्दै गर्दा यसको घुमाइ हेर्नुहोस्।",
+  "page.alerts.h":"प्रत्यक्ष अलर्ट नक्सा","page.alerts.p":"बिपद पोर्टलमा DHM नदी, वर्षा वा सडक विभागको प्रत्यक्ष सूचना भएका सबै जिल्ला स्वतः नक्सामा — हरेक १५ मिनेटमा अद्यावधिक। प्रत्येक जिल्लाको सबैभन्दा गम्भीर तहअनुसार रङ।",
+  "sit.h":"हालको अवस्था","sit.crit":"गम्भीर","sit.warn":"चेतावनी","sit.adv":"सूचना",
+  "sit.crit.s":"खतराको तहभन्दा माथि नदी भएका जिल्ला","sit.warn.s":"चेतावनी तहभन्दा माथि नदी भएका जिल्ला","sit.adv.s":"वर्षा वा सडक सूचना भएका जिल्ला",
+  "sit.src":"जिल्ला सूचना · बिपद पोर्टल (NDRRMA) · पछिल्लो {h} घण्टा","sit.off":"प्रत्यक्ष जिल्ला फिड उपलब्ध छैन — संख्या देखाउन सकिएन, अलर्ट नक्सा हेर्नुहोस्","sit.load":"प्रत्यक्ष जिल्ला सूचना लोड हुँदै…",
+  "sev.crit":"गम्भीर","sev.warn":"चेतावनी","sev.adv":"सूचना","sev.safe":"समाधान",
+  "la.h":"पछिल्ला सूचना","la.eye":"चेतावनी · प्रत्यक्ष","la.more":"सबै सूचना →","la.details":"विवरण हेर्नुहोस् →",
+  "la.rain":"भारी वर्षा","la.river":"नदीको सतह","la.road":"सडक","la.national":"देशव्यापी · DHM",
+  "la.off":"प्रत्यक्ष जिल्ला फिड उपलब्ध नभएकाले राष्ट्रिय चेतावनी मात्र देखाइएको छ।",
+  "ln.h":"पछिल्ला समाचार","res.h":"आपत्कालीन स्रोत","res.roads":"राजमार्ग अपडेट",
+  "map.h":"प्रत्यक्ष विपद् नक्सा","map.eye":"बाढी प्रभावित कोरिडोर · रसुवा → चितवन","map.more":"पूरा अलर्ट नक्सा →",
+  "rw.updated":"अद्यावधिक","rw.view":"चेतावनी हेर्नुहोस्","rw.map":"नक्सा हेर्नुहोस्",
+  "nav.weather":"मौसम",
+  "rw.precautions":"सावधानी",
+  "rw.forecast":"मौसम पूर्वानुमान →","rw.allprec":"सबै सावधानी","rw.highway":"राजमार्ग सावधानी","rw.riskflag":"उच्च जोखिम",
+  "wx.now.rain":"वर्षा","wx.now.hum":"आर्द्रता","wx.hi":"अधि","wx.lo":"न्यून","wx.rain":"वर्षा","wx.pop":"सम्भावना",
+  "wx.loading":"प्रत्यक्ष पूर्वानुमान लोड हुँदै…","wx.fail":"अहिले प्रत्यक्ष पूर्वानुमान प्राप्त हुन सकेन। माथिको DHM चेतावनी पालना गर्नुहोस् र dhm.gov.np हेर्नुहोस्।",
+  "wx.forecast.eye":"५ दिने पूर्वानुमान · प्रत्यक्ष","wx.forecast.h":"बाढी प्रभावित र जोखिमयुक्त जिल्लाको पूर्वानुमान",
+  "wx.attrib":"Open-Meteo बाट प्रत्यक्ष तथ्यांक, हरेक १५ मिनेटमा अद्यावधिक। वर्षा प्रतिदिनको हो; \"सम्भावना\" वर्षाको उच्चतम प्रतिशत हो। यसलाई मार्गदर्शन मान्नुहोस् र आधिकारिक चेतावनीका लागि DHM (dhm.gov.np) हेर्नुहोस्।",
+  "page.weather.h":"मौसम तथा वर्षा चेतावनी","page.weather.p":"DHM को प्रत्यक्ष भारी वर्षा चेतावनी र बाढी प्रभावित कोरिडोर तथा आजको चेतावनीमा उल्लिखित प्रदेशहरूको ५ दिने पूर्वानुमान।",
+  "qa.flood.k":"बाढी अवस्था","qa.flood.t":"बाढी तथ्यांक →","qa.wx.k":"प्रत्यक्ष पूर्वानुमान","qa.wx.t":"मौसम तथा वर्षा चेतावनी →","qa.climate.k":"कारण र सन्दर्भ","qa.climate.t":"नेपाल जलवायु कार्य →"
+});
+
 /* =========================================================================
    v3 ADDITIONS — notifications, GLOF alert, live images, gallery, news page
    ========================================================================= */
@@ -2297,14 +2886,11 @@ function fetchEventImages(){
   })();
   return _eventImgs;
 }
-/* A bulletin may name its OWN picture (img / imgAlt) — the photograph that
-   actually belongs to that story. Everything else falls back to the shared
-   Wikimedia pool, which is generic by nature.
-
-   The story's own picture is started BEFORE awaiting the pool. allImages()
-   goes out to Wikimedia and can be slow or, on a bad network, never resolve at
-   all; making the one photograph we actually chose wait behind that would have
-   left it as a placeholder for exactly the readers whose connection is worst. */
+/* A bulletin shows ONLY the photograph that belongs to its own story (img /
+   imgAlt). There is deliberately no fallback: a generic Wikimedia flood photo
+   under a headline reads as a picture OF that story, which it is not. A bulletin
+   without its own picture renders text-only (.news--noimg), and one whose
+   picture fails to load drops its thumbnail slot instead of borrowing one. */
 function _putThumb(cell, src, alt, onfail){
   // NOT loading="lazy". This <img> is DETACHED — it is only appended once it has
   // loaded — and a detached lazy image is never in a viewport, so the browser
@@ -2323,20 +2909,18 @@ function _putThumb(cell, src, alt, onfail){
   el.onerror=onfail||(()=>{});   // keep placeholder if this one fails
   el.src=src;
 }
-async function fillThumbs(){
-  const cells=$$("#newsGrid .news__thumb[data-thumb]"); if(!cells.length) return;
-  const own=new Map();
-  cells.forEach(c=>{
+/* Typographic cover for a bulletin with no photograph of its own: category,
+   a short kicker and the date on the navy contour surface. It keeps every
+   card the same shape without pretending an unrelated photo belongs to it. */
+function _newsCover(n){
+  return `<div class="news__cover" aria-hidden="true"><span class="news__cover-k">${esc(TL(n.tag))}</span>
+    <span class="news__cover-t">${esc(n.src||"")}</span><span class="news__cover-d">${esc(n.time||"")}</span></div>`;
+}
+function fillThumbs(){
+  $$("#newsGrid .news__thumb[data-thumb]").forEach(c=>{
     const n=NEWS[+c.dataset.thumb];
-    if(n && n.img){ own.set(c, n); _putThumb(c, n.img, TL(n.imgAlt)||TL(n.title)); }
-  });
-  let imgs=[]; try{imgs=await allImages();}catch(e){}
-  if(!imgs.length) return;
-  cells.forEach((c,i)=>{
-    const im=imgs[i%imgs.length]; if(!im) return;
-    // A story's own picture keeps the slot; the pool is only its fallback.
-    if(own.has(c)){ const n=own.get(c); _putThumb(c, n.img, TL(n.imgAlt)||TL(n.title), ()=>_putThumb(c, im.src, im.cap||"")); }
-    else _putThumb(c, im.src, im.cap||"");
+    const drop=()=>{ const card=c.closest(".news"); if(card) card.classList.add("news--noimg"); c.outerHTML=_newsCover(n||{}); };
+    if(n && n.img) _putThumb(c, n.img, TL(n.imgAlt)||TL(n.title), drop); else drop();
   });
 }
 function galleryMsg(g){ g.innerHTML=`<div class="gcell--msg">${esc(t("gallery.none"))} <a href="https://en.wikipedia.org/wiki/2026_China%E2%80%93Nepal_floods" target="_blank" rel="noopener" style="color:var(--crimson)">Wikipedia ↗</a></div>`; }
@@ -2532,6 +3116,19 @@ function injectChrome(){
     else if(after) navInner.appendChild(hw);
     else navInner.appendChild(hw);
   }
+  // Weather nav link — injected on every page that doesn't hardcode it (only
+  // weather.html marks itself current), placed right after Alert Map so the two
+  // live-hazard tabs sit together.
+  if(navInner && !navInner.querySelector('a[href="weather.html"]')){
+    const wx=document.createElement("a");
+    wx.href="weather.html";
+    wx.setAttribute("data-i18n","nav.weather");
+    wx.textContent="Weather";
+    const after=navInner.querySelector('a[href="alerts.html"]');
+    if(after && after.nextSibling) navInner.insertBefore(wx, after.nextSibling);
+    else if(after) navInner.appendChild(wx);
+    else navInner.appendChild(wx);
+  }
 
   // mobile alert item inside nav dropdown
   if(navInner && !$("#mobileNavAlert")){
@@ -2704,7 +3301,7 @@ async function newsDetail(root,id){
     </div>
     <article class="article">
       <div style="margin:0 0 12px"><span class="tagsq tagsq--${n.sev}">${esc(TL(n.tag))}</span></div>
-      <div id="artThumb"><div class="article__thumb" style="height:260px;display:grid;place-items:center">${THUMB_PH}</div></div>
+      ${n.img?`<div id="artThumb"><div class="article__thumb" style="height:260px;display:grid;place-items:center">${THUMB_PH}</div></div>`:""}
       <h1>${esc(TL(n.title))}</h1>
       <div class="article__meta"><span>${esc(n.time)}</span><span>SRC · ${esc(n.src)}</span></div>
       <p class="article__lead">${esc(TL(n.body))}</p>
@@ -2719,9 +3316,9 @@ async function newsDetail(root,id){
   const bb=$("#artBack"); if(bb) bb.addEventListener("click",goBack);
   const bb2=$("#artBack2"); if(bb2) bb2.addEventListener("click",goBack);
   if(!window.__artEsc){ window.__artEsc=true; document.addEventListener("keydown",e=>{ if(e.key==="Escape" && $("#newsRoot") && new URLSearchParams(location.search).get("id")!==null){ goBack(); } }); }
-  const setArt=(src,alt,onfail)=>{ const c=$("#artThumb"); if(!c) return; const el=new Image(); el.className="article__thumb"; el.alt=alt||""; el.onload=()=>{c.innerHTML="";c.appendChild(el);}; el.onerror=onfail||(()=>{}); el.src=src; };
-  const poolArt=async()=>{ try{const imgs=await allImages(); if(imgs.length){const im=imgs[id%imgs.length]; setArt(im.src, im.cap||"");}}catch(e){} };
-  if(n.img) setArt(n.img, TL(n.imgAlt)||TL(n.title), poolArt); else poolArt();
+  // The story's own photograph or nothing — never a stand-in from the image pool.
+  const c=$("#artThumb");
+  if(c && n.img){ const el=new Image(); el.className="article__thumb"; el.alt=TL(n.imgAlt)||TL(n.title); el.referrerPolicy="no-referrer"; el.onload=()=>{c.innerHTML="";c.appendChild(el);}; el.onerror=()=>c.remove(); el.src=n.img; }
   try{const w=await fetchWiki("2026 Nepal floods"); const ov=$("#wikiOv"); if(ov) ov.textContent=w.extract||"";}catch(e){ const ov=$("#wikiOv"); if(ov) ov.textContent=""; }
 }
 
@@ -4002,8 +4599,17 @@ function renderHighways(){
   const precau=`<div class="hwprecau"><h3 class="hwprecau__h">${esc(t("hw.precau"))}</h3><ul><li>${esc(t("hw.precau1"))}</li><li>${esc(t("hw.precau2"))}</li><li>${esc(t("hw.precau3"))}</li><li>${esc(t("hw.precau4"))}</li></ul></div>`;
   const legend=`<p class="hwlegendnote">${esc(t("hw.legend"))}</p>`;
 
+  // Rain advisory — surfaces the live DHM heavy-rain warning at the top of the
+  // road board, since fresh landslides on the temporary tracks are the biggest
+  // threat to these routes right now.
+  const rainAdv = RAINWARN.active ? `<div class="hwrain">
+      <span class="hwrain__badge">${XTRI}<span>${esc(TL(RAINWARN.badge))}</span> <span class="mono">${esc(toNepDigits(RAINWARN.window))}</span></span>
+      <p>${esc(TL(RAINWARN.highway))}</p>
+      <a class="btn btn--sm" href="weather.html">${esc(t("rw.forecast"))}</a>
+    </div>` : "";
+
   const body=(critical||sections)?(critical+sections):`<p class="hwloading">${esc(t("hw.nolive"))}</p>`;
-  root.innerHTML=hero+summary+chips+`<div class="hwboard">${body}</div>`+live+precau+legend;
+  root.innerHTML=hero+rainAdv+summary+chips+`<div class="hwboard">${body}</div>`+live+precau+legend;
 
   root.querySelectorAll("[data-hwf]").forEach(b=>b.addEventListener("click",()=>{ const f=b.getAttribute("data-hwf"); HW_FILTER=(HW_FILTER===f&&f!=="all")?"all":f; renderHighways(); }));
   const rf=$("#hwRefresh"); if(rf) rf.addEventListener("click",()=>{ rf.disabled=true; Promise.all([fetchHighways(),fetchHighwayNews()]).finally(()=>{ toast(LANG==="ne"?"राजमार्ग अवस्था अद्यावधिक भयो।":"Highway status refreshed.","crim"); }); });

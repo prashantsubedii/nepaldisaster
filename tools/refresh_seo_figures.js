@@ -22,20 +22,13 @@
    one hop (last published → current), so leaving old rows in place would make
    a second run rewrite numbers that have already moved on.
 
-   Current hop: 7 September 2026 -> 16 September 2026.
+   Current hop: 16 September 2026 -> 24 September 2026.
 
-   The casualty figures moved this time. The latest official Nepal-side toll
-   (Wikipedia's 2026 Nepal–Tibet floods article, as of 12 September, matching
-   the MoFA daily situation updates of 10 September) is 1,386 dead, 5,130
-   missing, 6,827 injured and 13,728 rescued — so the crawler copy is re-dated
-   to "12 September 2026". Missing rose (revised up as more people were reported
-   out of contact); deaths, injured and rescued rose too.
-
-   What else moved: the Prithvi Highway at Krishnabhir is REOPENING — the Dept.
-   of Roads says the 252-metre track returns to full two-way public traffic on
-   17 September, so the road one-liner and the highway FAQ are rewritten from
-   "still cut" to "reopening". The PM Disaster Relief Fund passed Rs 13.23
-   billion (US$86.69 million) by 11 September. dateModified/datePosted bumped.
+   NDRRMA's update of Sunday 20 September (reported by The Tribune, matching
+   Wikipedia's Nepal-side figure) is 1,451 dead, 5,786 missing including 636
+   foreign nationals, and 13,784 rescued. Missing ROSE again as more people were
+   reported out of contact. No newer injured figure was published, so 6,827
+   (12 Sept) is left alone. dateModified/datePosted bumped.
 
    ========================================================================= */
 "use strict";
@@ -48,37 +41,21 @@ const DRY = process.argv.includes("--dry");
 /* Longer prose swaps for the JSON-LD answer text and meta descriptions, applied
    before the numeric table so their wording stays coherent. */
 const PROSE = [
-  /* The homepage SpecialAnnouncement one-liner about the road. */
-  [
-    "The Prithvi Highway is still cut at Krishnabhir in Dhading, where a 252-metre temporary track opened on 6 September but carries construction plant only; daytime repair closures at Parewabhir (Gajuri-2) are ordered day by day.",
-    "The Prithvi Highway at Krishnabhir in Dhading reopens to full two-way public traffic on 17 September; gas tankers and heavy vehicles have crossed the 252-metre temporary track one-way since mid-September, with drainage work continuing beside live traffic."
-  ],
-  /* The FAQ answer people actually search for — first sentence only. */
-  [
-    "The Parewabhir section in Gajuri-2 is shut to all but ambulances and hearses from 6am to 6pm on repair days — ordered on 5 and again on 6 September — so check whether one is in force before setting out.",
-    "The Prithvi Highway at Krishnabhir reopens to full two-way public traffic on 17 September; gas tankers and heavy vehicles have crossed the 252-metre track one-way since mid-September, with drainage work continuing beside live traffic. The Parewabhir section in Gajuri-2 ran one-way over a temporary track, with daytime repair closures ordered only on 5–6 September; check before setting out."
-  ],
-  /* The donation FAQ carries the running total. */
-  [
-    "The fund passed Rs 10 billion on 6 September 2026, most of it raised by QR code in donations of under Rs 100. Details are on the Relief Fund page.",
-    "The fund passed Rs 13.23 billion (about US$86.69 million) by 11 September 2026, most of it raised by QR code in donations of under Rs 100. Details are on the Relief Fund page."
-  ],
 ];
 
 /* Previous value \u2192 current value. Order matters: longer/more specific strings
    must come before shorter ones that they contain. */
 const FIGURES = [
-  ['1,344', '1,386'],
-  ['4,886', '5,130'],
-  ['13,013', '13,728'],
-  ['5,300', '6,827'],
-  ['589 foreign', '587 foreign'],
-  ['as of 5 September 2026', 'as of 12 September 2026'],
-  ['NDRRMA, 5 Sept, Nepal side', 'NDRRMA, 12 Sept, Nepal side'],
-  ['(Nepali officials, 5 Sept)', '(Nepali officials, 12 Sept)'],
-  ['(5 Sept)', '(12 Sept)'],
-  ['"dateModified":"2026-09-07"', '"dateModified":"2026-09-16"'],
-  ['"datePosted":"2026-09-07T12:30:00+05:45"', '"datePosted":"2026-09-16T12:00:00+05:45"'],
+  ['1,386', '1,451'],
+  ['5,130', '5,786'],
+  ['13,728', '13,784'],
+  ['587 foreign', '636 foreign'],
+  ['as of 12 September 2026', 'as of 20 September 2026'],
+  ['NDRRMA, 12 Sept, Nepal side', 'NDRRMA, 20 Sept, Nepal side'],
+  ['(Nepali officials, 12 Sept)', '(NDRRMA, 20 Sept)'],
+  ['(12 Sept)', '(20 Sept)'],
+  ['"dateModified":"2026-09-16"', '"dateModified":"2026-09-24"'],
+  ['"datePosted":"2026-09-16T12:00:00+05:45"', '"datePosted":"2026-09-24T12:00:00+05:45"'],
 ];
 
 

@@ -19,124 +19,37 @@
    changes a few times an hour. */
 
 const { cmd } = require('../lib/kv');
+// One normaliser for server and browser — see assets/warn-normalize.js.
+const W = require('../assets/warn-normalize.js');
 
-const BIPAD = 'https://bipadportal.gov.np/api/v1/alert/?ordering=-created_on&limit=80';
-const CACHE_KEY = 'cache:warnings:v1';
+const CACHE_KEY = 'cache:warnings:v2';   // v2: stations + districts carry lat/lng
+const DIST_KEY = 'cache:bipad:districts:v1';
 const TTL = 900;            // serve cached for 15 minutes
 const STALE = 12 * 3600;    // keep a stale copy up to 12h for fallback
-const WINDOW_H = 24;        // "today" = the last 24 hours of alerts
-const WIDE_H = 72;          // …widened if the last 24h were quiet
 
-function clean(s) {
-  return String(s == null ? '' : s).replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
-}
+const UA = { 'User-Agent': 'nepaldisaster.com/1.0', Accept: 'application/json' };
 
-/* BIPAD titles read "Flood warning at Golanjor-7, Sindhuli" — the district is
-   the last comma-separated part, the settlement the part before it. */
-function splitPlace(title) {
-  const t = clean(title);
-  const body = t.replace(/^.*?\s+(?:at|in)\s+/i, '');
-  const i = body.lastIndexOf(',');
-  if (i < 0) return { place: body, district: '' };
-  return { place: body.slice(0, i).trim(), district: body.slice(i + 1).trim() };
-}
-
-/* The station reading lives in a serialised Django record on each alert. It is
-   the difference between "there is an alert here" and "the Sunkoshi at Khurkot
-   is at 7.56 m against a 7.5 m warning and an 8.6 m danger mark", so it is
-   worth unpacking — but never at the cost of the endpoint, hence the try. */
-function fields(a) {
+/* District centroids change never, so cache them for a day. They are what
+   place each warned district on the live alert map. */
+async function districtIndex() {
+  try { const c = await cmd(['GET', DIST_KEY]); if (c) return JSON.parse(c); } catch (_) {}
   try {
-    let rd = JSON.parse(a.referenceData || '{}');
-    if (Array.isArray(rd)) rd = rd[0] || {};
-    return (rd && rd.fields) || {};
+    const r = await fetch(W.BIPAD_DISTRICTS, { headers: UA, signal: AbortSignal.timeout(10000) });
+    if (!r.ok) return {};
+    const idx = W.indexDistricts(await r.json());
+    try { await cmd(['SET', DIST_KEY, JSON.stringify(idx), 'EX', String(86400)]); } catch (_) {}
+    return idx;
   } catch (_) { return {}; }
 }
 
-/* Two things are worth telling apart and the feed states both: a river that has
-   passed its WARNING mark, and one that has passed its DANGER mark. Both are
-   flood alerts, so both count as danger for colour, but only the second is
-   flagged critical so the panel can say which rivers are actually over the line. */
-function sevOf(kind) { return kind === 'river' ? 'danger' : 'watch'; }
-function isCrit(status) { return String(status || '').toUpperCase().indexOf('ABOVE DANGER') >= 0; }
-
 async function fresh() {
-  const r = await fetch(BIPAD, {
-    headers: { 'User-Agent': 'nepaldisaster.com/1.0', Accept: 'application/json' },
-    signal: AbortSignal.timeout(12000)
-  });
+  const [r, idx] = await Promise.all([
+    fetch(W.BIPAD_ALERTS, { headers: UA, signal: AbortSignal.timeout(12000) }),
+    districtIndex()
+  ]);
   if (!r.ok) throw new Error('bipad ' + r.status);
   const j = await r.json();
-  const rows = (j && j.results) || [];
-  const now = Date.now();
-
-  const within = h => rows.filter(a => {
-    const ts = Date.parse(a.createdOn || a.startedOn || '');
-    return ts && (now - ts) < h * 3600 * 1000;
-  });
-  // Quiet day? Widen the window rather than render an empty panel that reads
-  // as "no alerts" when it really means "nothing in the last 24 hours".
-  let windowH = WINDOW_H;
-  let live = within(WINDOW_H);
-  if (!live.length) { windowH = WIDE_H; live = within(WIDE_H); }
-
-  const rivers = new Map(), rain = new Map(), roads = new Map();
-  const districts = new Map();
-
-  live.forEach(a => {
-    const kind = a.referenceType || '';
-    if (kind !== 'river' && kind !== 'rain' && kind !== 'road') return;
-    const { place, district } = splitPlace(a.title);
-    if (!district) return;
-    const f = fields(a);
-    const ts = Date.parse(a.createdOn || a.startedOn || '') || 0;
-    const sev = sevOf(kind);
-    const crit = isCrit(f.status);
-
-    const d = districts.get(district) || { name: district, sev: 'watch', crit: 0, river: 0, rain: 0, road: 0, ts: 0 };
-    d[kind] += 1;
-    if (sev === 'danger') d.sev = 'danger';
-    if (crit) d.crit += 1;
-    if (ts > d.ts) d.ts = ts;
-    districts.set(district, d);
-
-    // The feed re-publishes the same station every reading cycle; keep only the
-    // newest row per station so the panel shows places, not repetitions.
-    const key = (f.title || place) + '|' + district;
-    const bucket = kind === 'river' ? rivers : (kind === 'rain' ? rain : roads);
-    const prev = bucket.get(key);
-    if (prev && prev.ts >= ts) return;
-    bucket.set(key, {
-      station: clean(f.title || place), place, district, basin: clean(f.basin || ''),
-      level: f.water_level != null ? Math.round(f.water_level * 100) / 100 : null,
-      warning: f.warning_level != null ? f.warning_level : null,
-      danger: f.danger_level != null ? f.danger_level : null,
-      status: clean(f.status || ''), steady: clean(f.steady || ''),
-      reason: clean(a.description || ''), sev, crit, ts
-    });
-  });
-
-  const bySev = (a, b) => (b.crit ? 1 : 0) - (a.crit ? 1 : 0) ||
-    (a.sev === 'danger' ? 0 : 1) - (b.sev === 'danger' ? 0 : 1) || b.ts - a.ts;
-  const list = m => [...m.values()].sort(bySev);
-
-  return {
-    at: now,
-    window_hours: windowH,
-    alerts: live.length,
-    count: districts.size,
-    critical: [...districts.values()].filter(d => d.crit).length,
-    districts: [...districts.values()].sort((a, b) =>
-      b.crit - a.crit ||
-      (a.sev === 'danger' ? 0 : 1) - (b.sev === 'danger' ? 0 : 1) ||
-      (b.river + b.rain + b.road) - (a.river + a.rain + a.road) ||
-      a.name.localeCompare(b.name)),
-    rivers: list(rivers).slice(0, 14),
-    rain: list(rain).slice(0, 14),
-    roads: list(roads).slice(0, 14),
-    source: 'BIPAD Portal (NDRRMA) · DHM hydrology & Department of Roads feeds',
-    url: 'https://bipadportal.gov.np'
-  };
+  return W.normalize((j && j.results) || [], idx, Date.now());
 }
 
 module.exports = async (req, res) => {

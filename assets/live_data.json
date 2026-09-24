@@ -1,6 +1,6 @@
 {
   "_comment": "Curated official baseline (rank 2). Rows written directly by a rank-1 API — the NDRRMA named rescue registry and its Nepali/foreign split, the rescue-system log, the comms-tower status — are deliberately NOT listed here. They used to be, and because this feed carries no source rank it silently overwrote the live API values on every refresh cycle. See _API_OWNED_ROWS in assets/app.js. Keep updated_at honest: once it is more than 36 hours old this feed demotes itself below Wikipedia so the site keeps advancing on its own.",
-  "updated_at": "2026-09-16T12:00:00+05:45",
+  "updated_at": "2026-09-24T12:00:00+05:45",
   "event": {
     "code": "FL-2026-0826",
     "since": "2026-08-26T08:37:00+05:45",
@@ -13,37 +13,41 @@
       "ne": "रसुवा · नुवाकोट · धादिङ · त्रिशूली कोरिडोर · चितवन · नवलपरासी"
     },
     "eas": {
-      "en": "Trishuli / Bhote Koshi glacier-collapse flood. ROAD: the Prithvi Highway at Krishnabhir reopens to full two-way public traffic on 17 September — gas tankers and heavy vehicles have been crossing one-way since mid-September; expect short holds for drainage work and confirm with the traffic office (103) before travelling. A temporary Acrow bridge at Devighat over the Tadi reopened on 10 Sept, easing access toward Nuwakot. RELIEF: the PM Disaster Relief Fund passed Rs 13.23 billion by 11 September. Latest official toll (12 Sept): 1,386 dead, 5,130 missing, 6,827 injured; 13,728 rescued including over 300 foreign nationals.",
-      "ne": "त्रिशूली / भोटेकोशी हिमनदी भत्किएर आएको बाढी। सडक: पृथ्वी राजमार्गको कृष्णभीर खण्ड १७ सेप्टेम्बरदेखि पूर्ण दोहोरो सार्वजनिक सञ्चालनमा खुल्दै — भदौ अन्त्यदेखि ग्यास ट्यांकर र भारी सवारी एकतर्फी गुड्दै छन्; नाली निर्माणका कारण छोटो रोकावट सम्भव, यात्रा अघि ट्राफिक (१०३) मा पुष्टि गर्नुहोस्। १० सेप्टेम्बरमा देवीघाटमा ताडीमाथि अस्थायी एक्रो पुल खुलेपछि नुवाकोटतर्फको पहुँच सहज। राहत: प्रधानमन्त्री विपद् राहत कोष ११ सेप्टेम्बरसम्म रु. १३.२३ अर्ब नाघ्यो। पछिल्लो आधिकारिक तथ्याङ्क (१२ सेप्टेम्बर): १,३८६ मृत्यु, ५,१३० बेपत्ता, ६,८२७ घाइते; ३०० भन्दा बढी विदेशी नागरिकसहित १३,७२८ उद्धार।"
+      "en": "Trishuli / Bhote Koshi glacier-collapse flood. ROAD: the Prithvi Highway at Krishnabhir reopens to full two-way public traffic on 17 September — gas tankers and heavy vehicles have been crossing one-way since mid-September; expect short holds for drainage work and confirm with the traffic office (103) before travelling. A temporary Acrow bridge at Devighat over the Tadi reopened on 10 Sept, easing access toward Nuwakot. RELIEF: the PM Disaster Relief Fund passed Rs 13.23 billion by 11 September. Latest official toll (NDRRMA, 20 Sept): 1,451 dead, 5,786 missing including 636 foreign nationals; 13,784 rescued. WEATHER: DHM heavy-rainfall warning 23–28 Sept — expect fresh landslides on flood-damaged slopes.",
+      "ne": "त्रिशूली / भोटेकोशी हिमनदी भत्किएर आएको बाढी। सडक: पृथ्वी राजमार्गको कृष्णभीर खण्ड १७ सेप्टेम्बरदेखि पूर्ण दोहोरो सार्वजनिक सञ्चालनमा खुल्दै — भदौ अन्त्यदेखि ग्यास ट्यांकर र भारी सवारी एकतर्फी गुड्दै छन्; नाली निर्माणका कारण छोटो रोकावट सम्भव, यात्रा अघि ट्राफिक (१०३) मा पुष्टि गर्नुहोस्। १० सेप्टेम्बरमा देवीघाटमा ताडीमाथि अस्थायी एक्रो पुल खुलेपछि नुवाकोटतर्फको पहुँच सहज। राहत: प्रधानमन्त्री विपद् राहत कोष ११ सेप्टेम्बरसम्म रु. १३.२३ अर्ब नाघ्यो। पछिल्लो आधिकारिक तथ्याङ्क (NDRRMA, २० सेप्टेम्बर): १,४५१ मृत्यु, ६३६ विदेशी नागरिकसहित ५,७८६ बेपत्ता; १३,७८४ उद्धार। मौसम: २३–२८ सेप्टेम्बर भारी वर्षा चेतावनी — बाढीले कमजोर भिरमा नयाँ पहिरोको जोखिम।"
     }
   },
   "stats": [
     {
       "key": "deaths",
-      "n": "1,386",
+      "n": "1,451",
       "cls": "hstat--death"
     },
     {
       "key": "missing",
-      "n": "5,130",
+      "n": "5,786",
       "cls": "hstat--missing"
     },
     {
       "key": "foreign",
-      "n": "587"
+      "n": "636"
     },
     {
       "key": "rescued",
-      "n": "13,728",
+      "n": "13,784",
       "cls": "hstat--rescue"
     }
   ],
   "stats_detail": {
     "deaths": {
-      "big": "1,386",
+      "big": "1,451",
       "rows": [
         [
-          "Nepal — confirmed dead (12 Sept)",
+          "Nepal — confirmed dead (NDRRMA, 20 Sept)",
+          "1,451"
+        ],
+        [
+          "Earlier count (12 Sept)",
           "1,386"
         ],
         [
@@ -125,11 +129,11 @@
       ]
     },
     "missing": {
-      "big": "5,130",
+      "big": "5,786",
       "rows": [
         [
-          "Nepal — missing / out of contact (12 Sept)",
-          "5,130"
+          "Nepal — missing / out of contact (NDRRMA, 20 Sept)",
+          "5,786"
         ],
         [
           "Linked to hydropower projects (12 projects)",
@@ -144,8 +148,8 @@
           "557"
         ],
         [
-          "Foreign nationals among the missing (39 countries)",
-          "587"
+          "Foreign nationals among the missing (NDRRMA, 20 Sept)",
+          "636"
         ],
         [
           "Trade and transport workers (est.)",
@@ -182,11 +186,11 @@
       ]
     },
     "rescued": {
-      "big": "13,728",
+      "big": "13,784",
       "rows": [
         [
-          "Total rescued (Nepali officials, 12 Sept)",
-          "13,728"
+          "Total rescued (NDRRMA, 20 Sept)",
+          "13,784"
         ],
         [
           "Rescued as of MoFA daily update, 10 Sept",
@@ -273,7 +277,7 @@
       ]
     },
     "foreign": {
-      "big": "587",
+      "big": "636",
       "rows": [
         [
           "India",
@@ -314,6 +318,10 @@
         [
           "South Korea",
           "9"
+        ],
+        [
+          "Total now (NDRRMA, 20 Sept) — country split above last published 12 Sept",
+          "636"
         ]
       ]
     },
