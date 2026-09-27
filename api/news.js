@@ -21,9 +21,15 @@ const FEEDS = [
     encodeURIComponent('Nepal floods when:21d') + '&hl=en-US&gl=US&ceid=US:en',
   'https://news.google.com/rss/search?q=' +
     encodeURIComponent('Nepal flood when:21d (' + NEPALI_SITES.map(s => 'site:' + s).join(' OR ') + ')') +
+    '&hl=en-US&gl=US&ceid=US:en',
+  // The two queries above only match "flood", so a new hazard (the late-Sept
+  // rain: landslides, avalanches, blocked highways) never reached the list.
+  // Short window: this feed is for what is happening now.
+  'https://news.google.com/rss/search?q=' +
+    encodeURIComponent('Nepal (landslide OR "heavy rain" OR rainfall OR avalanche OR "highway blocked") when:7d') +
     '&hl=en-US&gl=US&ceid=US:en'
 ];
-const CACHE_KEY = 'cache:news:v3';
+const CACHE_KEY = 'cache:news:v4';
 const TTL = 600;          // serve cached for 10 minutes
 const STALE = 6 * 3600;   // keep a stale copy up to 6h for fallback
 

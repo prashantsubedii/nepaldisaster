@@ -22,13 +22,17 @@
    one hop (last published → current), so leaving old rows in place would make
    a second run rewrite numbers that have already moved on.
 
-   Current hop: 16 September 2026 -> 24 September 2026.
+   Current hop: 24 September 2026 -> 27 September 2026.
 
-   NDRRMA's update of Sunday 20 September (reported by The Tribune, matching
-   Wikipedia's Nepal-side figure) is 1,451 dead, 5,786 missing including 636
-   foreign nationals, and 13,784 rescued. Missing ROSE again as more people were
-   reported out of contact. No newer injured figure was published, so 6,827
-   (12 Sept) is left alone. dateModified/datePosted bumped.
+   No new national flood toll has been published since NDRRMA's 20 September
+   update (1,451 dead / 5,786 missing / 13,784 rescued), so the casualty
+   figures are deliberately NOT swapped. Wikipedia's "9,287 injured" is the Army
+   personnel count miscited to a 15 Sept article; do not adopt it. The 21 Sept
+   "5,745 missing" there comes from a 23 Sept feature, not a dated NDRRMA figure.
+   What moved is the road copy: the 24–27 Sept rain blocked sections of 11
+   highways (Dept. of Roads, 27 Sept), so the stale "Krishnabhir reopens on
+   17 September" / "cut at Krishnabhir" sentences are replaced in PROSE.
+   dateModified/datePosted bumped.
 
    ========================================================================= */
 "use strict";
@@ -41,21 +45,19 @@ const DRY = process.argv.includes("--dry");
 /* Longer prose swaps for the JSON-LD answer text and meta descriptions, applied
    before the numeric table so their wording stays coherent. */
 const PROSE = [
+  ["The Prithvi Highway’s Mugling–Kathmandu section is still cut at Krishnabhir in Benighat Rorang, Dhading. A 252-metre temporary track opened there on 6 September but carries construction plant only, and the Department of Roads puts normal traffic about a week away. The Prithvi Highway at Krishnabhir reopens to full two-way public traffic on 17 September; gas tankers and heavy vehicles have crossed the 252-metre track one-way since mid-September, with drainage work continuing beside live traffic. The Parewabhir section in Gajuri-2 ran one-way over a temporary track, with daytime repair closures ordered only on 5–6 September; check before setting out.",
+   "Heavy rain on 24–27 September blocked sections of 11 major highways (Department of Roads, 27 September). The Prithvi Highway, which reopened to two-way traffic at Krishnabhir on 17 September, has fresh bottlenecks at Krishnabhir, Chauki Bhir, Jawang Khola and Fisling. The BP Highway is obstructed at Mamti, Piple, Daunne–Kalopul, Charsayabesi, Katunje and Chaukidanda. The Baglung–Beni road, the Kaligandaki Corridor, the Mid-Hill Highway in Baglung, the Tamor Corridor, the Siddhicharan, the Rapti Highway and the Nagma–Jumla road are also blocked."],
+  ["The Prithvi Highway at Krishnabhir in Dhading reopens to full two-way public traffic on 17 September; gas tankers and heavy vehicles have crossed the 252-metre temporary track one-way since mid-September, with drainage work continuing beside live traffic.",
+   "Heavy rain on 24–27 September killed at least 14 people in 72 hours (NDRRMA) and blocked sections of 11 highways, including the Prithvi at Krishnabhir (Department of Roads, 27 September)."],
+  ["Prithvi Highway cut at Krishnabhir, Betrawati–Rasuwagadhi destroyed, BP Highway night bans — with detours and traffic contacts.",
+   "Rain landslides block 11 highways including the Prithvi and BP (27 Sept); Betrawati–Rasuwagadhi destroyed — with detours and traffic contacts."],
 ];
 
 /* Previous value \u2192 current value. Order matters: longer/more specific strings
    must come before shorter ones that they contain. */
 const FIGURES = [
-  ['1,386', '1,451'],
-  ['5,130', '5,786'],
-  ['13,728', '13,784'],
-  ['587 foreign', '636 foreign'],
-  ['as of 12 September 2026', 'as of 20 September 2026'],
-  ['NDRRMA, 12 Sept, Nepal side', 'NDRRMA, 20 Sept, Nepal side'],
-  ['(Nepali officials, 12 Sept)', '(NDRRMA, 20 Sept)'],
-  ['(12 Sept)', '(20 Sept)'],
-  ['"dateModified":"2026-09-16"', '"dateModified":"2026-09-24"'],
-  ['"datePosted":"2026-09-16T12:00:00+05:45"', '"datePosted":"2026-09-24T12:00:00+05:45"'],
+  ['"dateModified":"2026-09-24"', '"dateModified":"2026-09-27"'],
+  ['"datePosted":"2026-09-24T12:00:00+05:45"', '"datePosted":"2026-09-27T14:00:00+05:45"'],
 ];
 
 
