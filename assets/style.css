@@ -4800,6 +4800,11 @@ html[lang="ne"] .acard__sev{ letter-spacing: 0; }
 .brand__mark, .nav__mark, .foot .brand__mark,
 :root[data-theme="dark"] .brand__mark{ background: #D92D20 !important; box-shadow: 0 0 0 1px rgba(255,255,255,.06); }
 .brand__name .dot, .foot__brand .brand__name .dot{ color: #F04438 !important; }
+/* The folded nav-rail mark is an <a> inside .nav, so it inherited the nav links'
+   14px padding: in a 26px border-box that left the shield 0px wide, an empty red square. */
+.nav .nav__mark{ padding: 0 !important; box-sizing: border-box; }
+.nav .nav__mark::after{ content: none; }
+.nav__mark svg{ flex: none; }
 
 /* ---------- nav: six items, two menus ---------- */
 .nav__inner{ overflow: visible !important; flex-wrap: nowrap; }
