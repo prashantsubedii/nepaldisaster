@@ -16,20 +16,28 @@ const NEPALI_SITES = [
   'myrepublica.nagariknetwork.com', 'setopati.com', 'ekantipur.com',
   'thehimalayantimes.com', 'nepalnews.com'
 ];
+// Topic scope: any Nepal natural-hazard / weather / emergency story — NOT pinned
+// to the 2026 flood, so the list stays current on its own every day. When a new
+// event happens it is already covered; in quiet periods it carries preparedness,
+// forecast and recovery reporting. Keep the terms broad but hazard-scoped so the
+// feed never drifts into unrelated Nepal politics/sport.
+const HAZARD =
+  '(flood OR flooding OR landslide OR earthquake OR "heavy rain" OR rainfall OR ' +
+  'monsoon OR avalanche OR disaster OR NDRRMA OR DHM OR "weather warning" OR ' +
+  '"weather forecast" OR "road blocked" OR "highway blocked" OR rescue OR relief)';
 const FEEDS = [
+  // 1) What is happening NOW — short window, broad hazard/weather terms.
   'https://news.google.com/rss/search?q=' +
-    encodeURIComponent('Nepal floods when:21d') + '&hl=en-US&gl=US&ceid=US:en',
+    encodeURIComponent('Nepal ' + HAZARD + ' when:3d') + '&hl=en-US&gl=US&ceid=US:en',
+  // 2) Fresh reporting from trusted Nepali outlets (7-day window).
   'https://news.google.com/rss/search?q=' +
-    encodeURIComponent('Nepal flood when:21d (' + NEPALI_SITES.map(s => 'site:' + s).join(' OR ') + ')') +
+    encodeURIComponent('Nepal ' + HAZARD + ' when:7d (' + NEPALI_SITES.map(s => 'site:' + s).join(' OR ') + ')') +
     '&hl=en-US&gl=US&ceid=US:en',
-  // The two queries above only match "flood", so a new hazard (the late-Sept
-  // rain: landslides, avalanches, blocked highways) never reached the list.
-  // Short window: this feed is for what is happening now.
+  // 3) Backfill so the list is never empty in a calm week (14-day window).
   'https://news.google.com/rss/search?q=' +
-    encodeURIComponent('Nepal (landslide OR "heavy rain" OR rainfall OR avalanche OR "highway blocked") when:7d') +
-    '&hl=en-US&gl=US&ceid=US:en'
+    encodeURIComponent('Nepal ' + HAZARD + ' when:14d') + '&hl=en-US&gl=US&ceid=US:en'
 ];
-const CACHE_KEY = 'cache:news:v4';
+const CACHE_KEY = 'cache:news:v5';   // bumped: general daily hazard scope (was flood-only v4)
 const TTL = 600;          // serve cached for 10 minutes
 const STALE = 6 * 3600;   // keep a stale copy up to 6h for fallback
 
