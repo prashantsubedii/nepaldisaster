@@ -183,8 +183,8 @@ const EVENT = {
   // first-paint line in step with assets/live_data.json → event.eas. The crisis
   // copy that used to live here is preserved in git history — restore it (and set
   // NATIONAL.normal=false, RAINWARN.active=true) the moment a new hazard begins.
-  eas:{en:"No active national emergency. The 2026 monsoon is withdrawing and DHM reports no heavy-rainfall warning in force. Rivers and major highways are near normal — travel with ordinary post-monsoon caution. Recovery from the 26 August Bhote Koshi–Trishuli flood continues in Rasuwa, Nuwakot and the Trishuli corridor. This service keeps monitoring official DHM, NDRRMA and Nepal Police feeds around the clock — see the Weather and Live Alert Map pages for current conditions.",
-       ne:"कुनै सक्रिय राष्ट्रिय विपद् छैन। २०२६ को मनसुन फर्कंदै छ र जल तथा मौसम विज्ञान विभाग (DHM) का अनुसार हाल कुनै भारी वर्षाको चेतावनी लागू छैन। नदी र प्रमुख राजमार्गहरू करिब सामान्य अवस्थामा छन् — मनसुनपछिको सामान्य सतर्कता अपनाई यात्रा गर्नुहोस्। २६ अगस्टको भोटेकोशी–त्रिशूली बाढीपछिको पुनर्लाभ रसुवा, नुवाकोट र त्रिशूली कोरिडोरमा जारी छ। यो सेवाले DHM, NDRRMA र नेपाल प्रहरीका आधिकारिक स्रोतलाई चौबीसै घण्टा निगरानी गरिरहन्छ — हालको अवस्थाका लागि मौसम र प्रत्यक्ष सतर्कता नक्सा पृष्ठ हेर्नुहोस्।"}
+  eas:{en:"No active national emergency. The 2026 monsoon is withdrawing and DHM reports no nationwide heavy-rainfall warning in force. Conditions are calmer, but hill highways and rivers still need care after the 26 August Bhote Koshi–Trishuli flood — confirm your route on 103 and check the Live Alert Map before travelling. Recovery continues in Rasuwa, Nuwakot and the Trishuli corridor. This service monitors official DHM, NDRRMA and Nepal Police feeds around the clock.",
+       ne:"कुनै सक्रिय राष्ट्रिय विपद् छैन। २०२६ को मनसुन फर्कंदै छ र जल तथा मौसम विज्ञान विभाग (DHM) का अनुसार हाल देशव्यापी भारी वर्षाको चेतावनी लागू छैन। अवस्था शान्त छ, तर २६ अगस्टको भोटेकोशी–त्रिशूली बाढीपछि पहाडी राजमार्ग र नदीमा अझै सावधानी चाहिन्छ — यात्रा अघि १०३ मा मार्ग पक्का गर्नुहोस् र प्रत्यक्ष सतर्कता नक्सा हेर्नुहोस्। रसुवा, नुवाकोट र त्रिशूली कोरिडोरमा पुनर्लाभ जारी छ। यो सेवाले DHM, NDRRMA र नेपाल प्रहरीका आधिकारिक स्रोतलाई चौबीसै घण्टा निगरानी गर्छ।"}
 };
 
 /* -------------------- NATIONAL STATUS (overall posture) --------------------
@@ -202,23 +202,26 @@ const NATIONAL = {
   source:"DHM · NDRRMA · Dept. of Roads · Nepal Police",
   headline:{en:"Nepal is calm — no active national emergency",
             ne:"नेपाल शान्त छ — कुनै सक्रिय राष्ट्रिय विपद् छैन"},
-  sub:{en:"The 2026 monsoon is withdrawing and no heavy-rainfall warning is in force. Rivers, highways and weather are near normal nationwide. We keep watching the official feeds so you don't have to.",
-       ne:"२०२६ को मनसुन फर्कंदै छ र हाल कुनै भारी वर्षाको चेतावनी लागू छैन। देशभर नदी, राजमार्ग र मौसम करिब सामान्य अवस्थामा छन्। आधिकारिक स्रोतहरूको निगरानी हामी गरिरहन्छौं।"},
-  // Hero reassurance tiles (replace the casualty grid in calm mode).
+  sub:{en:"The 2026 monsoon is withdrawing and no nationwide heavy-rainfall warning is in force. Conditions are calmer — but local hazards remain after the August flood, so travel with care and check the live pages before you rely on this one.",
+       ne:"२०२६ को मनसुन फर्कंदै छ र हाल देशव्यापी भारी वर्षाको चेतावनी लागू छैन। अवस्था शान्त छ — तर अगस्टको बाढीपछि स्थानीय जोखिम कायमै छ, त्यसैले सावधानीपूर्वक यात्रा गर्नुहोस् र भर पर्नुअघि प्रत्यक्ष पृष्ठहरू हेर्नुहोस्।"},
+  // Hero reassurance tiles (replace the casualty grid in calm mode). These assert
+  // only what we can actually stand behind: no warning is currently ISSUED, and
+  // the season. We do NOT claim verified live road/river states — that's what the
+  // Weather, Alert Map and Highway Updates pages are for.
   tiles:[
-    {lbl:{en:"No active warning", ne:"कुनै सक्रिय चेतावनी छैन"}, v:{en:"DHM · nationwide", ne:"DHM · देशव्यापी"}},
-    {lbl:{en:"Rivers normal",     ne:"नदी सामान्य"},            v:{en:"Within safe levels", ne:"सुरक्षित सतहभित्र"}},
-    {lbl:{en:"Highways open",     ne:"राजमार्ग खुला"},          v:{en:"Ordinary caution", ne:"सामान्य सतर्कता"}},
+    {lbl:{en:"No active warning", ne:"कुनै सक्रिय चेतावनी छैन"}, v:{en:"None issued by DHM", ne:"DHM ले जारी गरेको छैन"}},
+    {lbl:{en:"Monsoon withdrawing", ne:"मनसुन फर्कंदै"},        v:{en:"Post-monsoon season", ne:"मनसुनपछिको मौसम"}},
+    {lbl:{en:"Travel with care",  ne:"सावधानीपूर्वक यात्रा"},   v:{en:"Dial 103 before hill trips", ne:"पहाडी यात्रा अघि १०३"}},
     {lbl:{en:"24/7 monitoring",   ne:"२४/७ निगरानी"},          v:{en:"Feeds live", ne:"स्रोत प्रत्यक्ष"}}
   ],
   // Status-panel bullet points (replace the precautions list in calm mode).
   points:[
-    {en:"Monsoon 2026 is withdrawing — DHM forecasts mainly fair weather with only isolated afternoon showers over the hills and east.",
-     ne:"२०२६ को मनसुन फर्कंदै छ — DHM का अनुसार प्रायः सफा मौसम, पहाड र पूर्वमा कतै-कतै दिउँसो हल्का झरी मात्र।"},
-    {en:"No district is above river danger level on the live NDRRMA / BIPAD feed, and no DHM heavy-rain warning is in force.",
-     ne:"NDRRMA / BIPAD को प्रत्यक्ष स्रोतमा कुनै पनि जिल्ला नदीको खतरा तहभन्दा माथि छैन, र DHM को भारी वर्षा चेतावनी लागू छैन।"},
-    {en:"Major highways are open; the Prithvi Highway at Krishnabhir is carrying two-way traffic again. Check 103 before long hill journeys.",
-     ne:"प्रमुख राजमार्ग खुला छन्; पृथ्वी राजमार्गको कृष्णभीर खण्ड पुनः दुईतर्फी सञ्चालनमा छ। लामो पहाडी यात्रा अघि १०३ मा बुझ्नुहोस्।"},
+    {en:"The 2026 monsoon is withdrawing and no nationwide heavy-rainfall warning is currently in force — though isolated post-monsoon showers and local hazards remain possible.",
+     ne:"२०२६ को मनसुन फर्कंदै छ र हाल देशव्यापी भारी वर्षाको चेतावनी लागू छैन — तापनि मनसुनपछिका छिटपुट झरी र स्थानीय जोखिम कायम हुन सक्छन्।"},
+    {en:"No active nationwide river or weather warning has been issued. For district-level river and rainfall conditions right now, open the live Alert Map rather than relying on this page.",
+     ne:"देशव्यापी नदी वा मौसम चेतावनी जारी भएको छैन। अहिलेको जिल्लागत नदी र वर्षाको अवस्थाका लागि यो पृष्ठमा भर नपरी प्रत्यक्ष सतर्कता नक्सा खोल्नुहोस्।"},
+    {en:"Hill highways still need care after the August flood — some sections can face landslide clearance and intermittent closures. Always confirm your specific route with the local traffic office (dial 103) before setting out.",
+     ne:"अगस्टको बाढीपछि पहाडी राजमार्गमा अझै सावधानी चाहिन्छ — केही खण्डमा पहिरो सफाइ र बीचबीचमा अवरोध हुन सक्छ। हिँड्नुअघि आफ्नो मार्ग स्थानीय ट्राफिक कार्यालय (१०३) मा पक्का गर्नुहोस्।"},
     {en:"Recovery from the August Bhote Koshi–Trishuli flood continues in Rasuwa, Nuwakot and the Trishuli corridor — relief, search and reconstruction are ongoing.",
      ne:"अगस्टको भोटेकोशी–त्रिशूली बाढीपछिको पुनर्लाभ रसुवा, नुवाकोट र त्रिशूली कोरिडोरमा जारी छ — राहत, खोजी र पुनर्निर्माण सञ्चालनमा छन्।"}
   ]
@@ -829,7 +832,7 @@ const I18N = {
   "eas.label":"Active Event","eas.status":"National Status","clock.l":"NPT · Kathmandu",
   "nstat.badge":"All clear · Monitoring","nstat.updated":"Updated","nstat.whatwewatch":"What we are watching","nstat.recovery":"Flood recovery →",
   "hero.note.ok":"Status reflects official DHM, NDRRMA and Department of Roads feeds as of {date}. \"No active emergency\" means no nationwide warning is in force — localised hazards can still occur, so check the Weather and Live Alert Map pages before travelling, and always verify with official sources.",
-  "la.allclear":"No active warnings","la.allclear.s":"No district is above river danger level and no DHM heavy-rain warning is in force. Monitoring continues.",
+  "la.allclear":"No active warnings","la.allclear.s":"No nationwide warning is currently in force. Open the live Alert Map for district-level river and rainfall conditions. Monitoring continues.",
   "hero.eyebrow":"Active Disaster · Live Situation",
   "hero.note":"Provisional Nepal-side figures confirmed by Nepal Police and NDRRMA (as of {date}). Counts auto-update and are being revised as search operations continue — not final. Verify against official Nepal Police / NDRRMA bulletins.",
   "hero.help":"Emergency Helplines","hero.report":"Report an Incident",
@@ -865,7 +868,7 @@ const I18N = {
   "eas.label":"सक्रिय विपद्","eas.status":"राष्ट्रिय अवस्था","clock.l":"नेपाली समय · काठमाडौं",
   "nstat.badge":"सब ठीक · निगरानीमा","nstat.updated":"अद्यावधिक","nstat.whatwewatch":"हामी के निगरानी गर्दैछौं","nstat.recovery":"बाढी पुनर्लाभ →",
   "hero.note.ok":"यो अवस्था {date} सम्मको DHM, NDRRMA र सडक विभागका आधिकारिक स्रोतमा आधारित छ। \"कुनै सक्रिय विपद् छैन\" भन्नुको अर्थ देशव्यापी चेतावनी लागू छैन — स्थानीय जोखिम भने हुन सक्छ, त्यसैले यात्रा अघि मौसम र प्रत्यक्ष सतर्कता नक्सा पृष्ठ हेर्नुहोस् र आधिकारिक स्रोतसँग रुजु गर्नुहोस्।",
-  "la.allclear":"कुनै सक्रिय चेतावनी छैन","la.allclear.s":"कुनै जिल्ला नदीको खतरा तहभन्दा माथि छैन र DHM को भारी वर्षा चेतावनी लागू छैन। निगरानी जारी छ।",
+  "la.allclear":"कुनै सक्रिय चेतावनी छैन","la.allclear.s":"हाल देशव्यापी चेतावनी लागू छैन। जिल्लागत नदी र वर्षाको अवस्थाका लागि प्रत्यक्ष सतर्कता नक्सा खोल्नुहोस्। निगरानी जारी छ।",
   "hero.eyebrow":"सक्रिय विपद् · पछिल्लो अवस्था",
   "hero.note":"नेपाल प्रहरी र NDRRMA द्वारा पुष्टि गरिएको नेपालतर्फको प्रारम्भिक तथ्यांक ({date} सम्म)। तथ्यांक स्वतः अद्यावधिक हुन्छ र खोजी कार्य जारी रहेकाले संशोधन हुँदैछ — अन्तिम होइन। आधिकारिक नेपाल प्रहरी / NDRRMA विवरणसँग रुजु गर्नुहोस्।",
   "hero.help":"आपत्कालीन हेल्पलाइन","hero.report":"घटना जानकारी दिनुहोस्",
