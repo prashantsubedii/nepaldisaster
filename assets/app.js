@@ -179,8 +179,49 @@ const EVENT = {
   // assets/live_data.json answers. Keep it word-for-word in step with that
   // file's event.eas — if it drifts, the banner briefly contradicts the hero
   // stats underneath it, and offline readers see only this version.
-  eas:{en:"Trishuli / Bhote Koshi glacier-collapse flood. ROAD: the Prithvi Highway is still cut at Krishnabhir — a 252-metre temporary track opened on 6 Sept but carries construction plant only, with normal traffic about a week away; large buses and freight into Kathmandu must use the Tribhuvan Highway and Hetauda-bound vehicles the Kanti Lokpath. Confirm with the traffic office (103) before travelling. RELIEF: Aamachhodingmo Rural Municipality in Rasuwa, over 7,000 people, has been road-cut since 26 Aug and reports food, salt and cooking oil exhausted. The PM Disaster Relief Fund passed Rs 10 billion on 6 Sept. Latest official toll (NDRRMA, 5 Sept): 1,344 dead, 4,886 missing, 5,300 injured; 13,013 rescued including 324 foreign nationals.",
-       ne:"त्रिशूली / भोटेकोशी हिमनदी भत्किएर आएको बाढी। सडक: पृथ्वी राजमार्ग कृष्णभीरमा अवरुद्धै छ — ६ सेप्टेम्बरमा २५२ मिटर अस्थायी ट्र्याक खुले पनि निर्माण उपकरण मात्र गुड्छ, नियमित आवागमन करिब एक सातापछि। काठमाडौं छिर्ने ठूला बस र मालवाहकले त्रिभुवन राजमार्ग, हेटौंडातर्फकाले कान्ति लोकपथ प्रयोग गर्नुहोस्; यात्रा अघि ट्राफिक (१०३) मा पुष्टि गर्नुहोस्। राहत: रसुवाको आमाछोदिङमो गाउँपालिका (७,०००+ जनसंख्या) १० भादौदेखि सडकविहीन छ र खाद्य, नुन र तेल सकिएको जनाएको छ। ६ सेप्टेम्बरमा प्रधानमन्त्री विपद् राहत कोष रु. १० अर्ब नाघ्यो। पछिल्लो आधिकारिक तथ्याङ्क (NDRRMA, ५ सेप्टेम्बर): १,३४४ मृत्यु, ४,८८६ बेपत्ता, ५,३०० घाइते; ३२४ विदेशी नागरिकसहित १३,०१३ उद्धार।"}
+  // Calm-state copy. There is no active national emergency right now; keep this
+  // first-paint line in step with assets/live_data.json → event.eas. The crisis
+  // copy that used to live here is preserved in git history — restore it (and set
+  // NATIONAL.normal=false, RAINWARN.active=true) the moment a new hazard begins.
+  eas:{en:"No active national emergency. The 2026 monsoon is withdrawing and DHM reports no heavy-rainfall warning in force. Rivers and major highways are near normal — travel with ordinary post-monsoon caution. Recovery from the 26 August Bhote Koshi–Trishuli flood continues in Rasuwa, Nuwakot and the Trishuli corridor. This service keeps monitoring official DHM, NDRRMA and Nepal Police feeds around the clock — see the Weather and Live Alert Map pages for current conditions.",
+       ne:"कुनै सक्रिय राष्ट्रिय विपद् छैन। २०२६ को मनसुन फर्कंदै छ र जल तथा मौसम विज्ञान विभाग (DHM) का अनुसार हाल कुनै भारी वर्षाको चेतावनी लागू छैन। नदी र प्रमुख राजमार्गहरू करिब सामान्य अवस्थामा छन् — मनसुनपछिको सामान्य सतर्कता अपनाई यात्रा गर्नुहोस्। २६ अगस्टको भोटेकोशी–त्रिशूली बाढीपछिको पुनर्लाभ रसुवा, नुवाकोट र त्रिशूली कोरिडोरमा जारी छ। यो सेवाले DHM, NDRRMA र नेपाल प्रहरीका आधिकारिक स्रोतलाई चौबीसै घण्टा निगरानी गरिरहन्छ — हालको अवस्थाका लागि मौसम र प्रत्यक्ष सतर्कता नक्सा पृष्ठ हेर्नुहोस्।"}
+};
+
+/* -------------------- NATIONAL STATUS (overall posture) --------------------
+   When NATIONAL.normal is true the homepage shows a calm "all clear · monitoring"
+   state instead of the emergency hero: the top band turns green, the hero shows
+   reassurance tiles instead of the casualty count, and a status panel replaces the
+   active-warning card. The casualty figures and flood pages stay fully available
+   under the Bhotekoshi Flood menu — this only changes the front-door framing.
+   To return to emergency mode: set normal:false, RAINWARN.active:true, restore the
+   crisis EVENT.eas, and point live_data.json → event.eas at the live bulletin. */
+const NATIONAL = {
+  normal:true,
+  since:"2026-09-29",
+  updated:"2026-10-02T09:00:00+05:45",
+  source:"DHM · NDRRMA · Dept. of Roads · Nepal Police",
+  headline:{en:"Nepal is calm — no active national emergency",
+            ne:"नेपाल शान्त छ — कुनै सक्रिय राष्ट्रिय विपद् छैन"},
+  sub:{en:"The 2026 monsoon is withdrawing and no heavy-rainfall warning is in force. Rivers, highways and weather are near normal nationwide. We keep watching the official feeds so you don't have to.",
+       ne:"२०२६ को मनसुन फर्कंदै छ र हाल कुनै भारी वर्षाको चेतावनी लागू छैन। देशभर नदी, राजमार्ग र मौसम करिब सामान्य अवस्थामा छन्। आधिकारिक स्रोतहरूको निगरानी हामी गरिरहन्छौं।"},
+  // Hero reassurance tiles (replace the casualty grid in calm mode).
+  tiles:[
+    {lbl:{en:"No active warning", ne:"कुनै सक्रिय चेतावनी छैन"}, v:{en:"DHM · nationwide", ne:"DHM · देशव्यापी"}},
+    {lbl:{en:"Rivers normal",     ne:"नदी सामान्य"},            v:{en:"Within safe levels", ne:"सुरक्षित सतहभित्र"}},
+    {lbl:{en:"Highways open",     ne:"राजमार्ग खुला"},          v:{en:"Ordinary caution", ne:"सामान्य सतर्कता"}},
+    {lbl:{en:"24/7 monitoring",   ne:"२४/७ निगरानी"},          v:{en:"Feeds live", ne:"स्रोत प्रत्यक्ष"}}
+  ],
+  // Status-panel bullet points (replace the precautions list in calm mode).
+  points:[
+    {en:"Monsoon 2026 is withdrawing — DHM forecasts mainly fair weather with only isolated afternoon showers over the hills and east.",
+     ne:"२०२६ को मनसुन फर्कंदै छ — DHM का अनुसार प्रायः सफा मौसम, पहाड र पूर्वमा कतै-कतै दिउँसो हल्का झरी मात्र।"},
+    {en:"No district is above river danger level on the live NDRRMA / BIPAD feed, and no DHM heavy-rain warning is in force.",
+     ne:"NDRRMA / BIPAD को प्रत्यक्ष स्रोतमा कुनै पनि जिल्ला नदीको खतरा तहभन्दा माथि छैन, र DHM को भारी वर्षा चेतावनी लागू छैन।"},
+    {en:"Major highways are open; the Prithvi Highway at Krishnabhir is carrying two-way traffic again. Check 103 before long hill journeys.",
+     ne:"प्रमुख राजमार्ग खुला छन्; पृथ्वी राजमार्गको कृष्णभीर खण्ड पुनः दुईतर्फी सञ्चालनमा छ। लामो पहाडी यात्रा अघि १०३ मा बुझ्नुहोस्।"},
+    {en:"Recovery from the August Bhote Koshi–Trishuli flood continues in Rasuwa, Nuwakot and the Trishuli corridor — relief, search and reconstruction are ongoing.",
+     ne:"अगस्टको भोटेकोशी–त्रिशूली बाढीपछिको पुनर्लाभ रसुवा, नुवाकोट र त्रिशूली कोरिडोरमा जारी छ — राहत, खोजी र पुनर्निर्माण सञ्चालनमा छन्।"}
+  ]
 };
 /* Nepal-side figures only. Live-refreshed every 10 minutes: local feed (baseline)
    → Wikipedia PROSE (deaths/missing/injured + foreign nationals among the missing,
@@ -201,7 +242,7 @@ let STATS = [
    Static, sourced copy — no live API on the homepage. The Weather tab layers the
    Open-Meteo forecast on top of this. Update `active:false` once DHM stands it down. */
 const RAINWARN = {
-  active:true,
+  active:false,                   // stood down 29 Sept 2026 — the 23–28 Sept depression cleared; flip to true when DHM issues the next warning
   level:"orange",                 // orange = "be prepared"; escalate to "red" if DHM does
   window:"23–28 Sept 2026",
   updated:"2026-09-27T14:00:00+05:45",
@@ -785,7 +826,10 @@ const I18N = {
  en:{
   "brand.sub":"National Emergency Information Service",
   "nav.home":"Home","nav.alerts":"Alert Map","nav.missing":"Missing Persons","nav.relief":"Relief Fund","nav.history":"History",
-  "eas.label":"Active Event","clock.l":"NPT · Kathmandu",
+  "eas.label":"Active Event","eas.status":"National Status","clock.l":"NPT · Kathmandu",
+  "nstat.badge":"All clear · Monitoring","nstat.updated":"Updated","nstat.whatwewatch":"What we are watching","nstat.recovery":"Flood recovery →",
+  "hero.note.ok":"Status reflects official DHM, NDRRMA and Department of Roads feeds as of {date}. \"No active emergency\" means no nationwide warning is in force — localised hazards can still occur, so check the Weather and Live Alert Map pages before travelling, and always verify with official sources.",
+  "la.allclear":"No active warnings","la.allclear.s":"No district is above river danger level and no DHM heavy-rain warning is in force. Monitoring continues.",
   "hero.eyebrow":"Active Disaster · Live Situation",
   "hero.note":"Provisional Nepal-side figures confirmed by Nepal Police and NDRRMA (as of {date}). Counts auto-update and are being revised as search operations continue — not final. Verify against official Nepal Police / NDRRMA bulletins.",
   "hero.help":"Emergency Helplines","hero.report":"Report an Incident",
@@ -818,7 +862,10 @@ const I18N = {
  ne:{
   "brand.sub":"राष्ट्रिय आपत्कालीन सूचना सेवा",
   "nav.home":"गृह","nav.alerts":"चेतावनी नक्सा","nav.missing":"बेपत्ता व्यक्ति","nav.relief":"राहत कोष","nav.history":"इतिहास",
-  "eas.label":"सक्रिय विपद्","clock.l":"नेपाली समय · काठमाडौं",
+  "eas.label":"सक्रिय विपद्","eas.status":"राष्ट्रिय अवस्था","clock.l":"नेपाली समय · काठमाडौं",
+  "nstat.badge":"सब ठीक · निगरानीमा","nstat.updated":"अद्यावधिक","nstat.whatwewatch":"हामी के निगरानी गर्दैछौं","nstat.recovery":"बाढी पुनर्लाभ →",
+  "hero.note.ok":"यो अवस्था {date} सम्मको DHM, NDRRMA र सडक विभागका आधिकारिक स्रोतमा आधारित छ। \"कुनै सक्रिय विपद् छैन\" भन्नुको अर्थ देशव्यापी चेतावनी लागू छैन — स्थानीय जोखिम भने हुन सक्छ, त्यसैले यात्रा अघि मौसम र प्रत्यक्ष सतर्कता नक्सा पृष्ठ हेर्नुहोस् र आधिकारिक स्रोतसँग रुजु गर्नुहोस्।",
+  "la.allclear":"कुनै सक्रिय चेतावनी छैन","la.allclear.s":"कुनै जिल्ला नदीको खतरा तहभन्दा माथि छैन र DHM को भारी वर्षा चेतावनी लागू छैन। निगरानी जारी छ।",
   "hero.eyebrow":"सक्रिय विपद् · पछिल्लो अवस्था",
   "hero.note":"नेपाल प्रहरी र NDRRMA द्वारा पुष्टि गरिएको नेपालतर्फको प्रारम्भिक तथ्यांक ({date} सम्म)। तथ्यांक स्वतः अद्यावधिक हुन्छ र खोजी कार्य जारी रहेकाले संशोधन हुँदैछ — अन्तिम होइन। आधिकारिक नेपाल प्रहरी / NDRRMA विवरणसँग रुजु गर्नुहोस्।",
   "hero.help":"आपत्कालीन हेल्पलाइन","hero.report":"घटना जानकारी दिनुहोस्",
@@ -958,14 +1005,40 @@ function renderTicker(){
   }
   track.innerHTML=items+items;
 }
+const OKICON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
 function renderEvent(){
-  $$("[data-eas]").forEach(e=>e.textContent=TL(EVENT.eas));
-  $$("[data-event-title]").forEach(e=>e.textContent=TL(EVENT.title));
-  $$("[data-event-region]").forEach(e=>e.textContent=TL(EVENT.region));
+  const eas=$(".eas"), hero=$(".hero"), lab=$(".eas__label"), note=$(".hero__note");
+  if(NATIONAL.normal){
+    $$("[data-eas]").forEach(e=>e.textContent=TL(EVENT.eas));
+    $$("[data-event-title]").forEach(e=>e.textContent=TL(NATIONAL.headline));
+    $$("[data-event-region]").forEach(e=>e.textContent=TL(NATIONAL.sub));
+    if(lab) lab.textContent=t("eas.status");
+    if(note) note.textContent=applyTokens(t("hero.note.ok"));
+    if(eas) eas.classList.add("eas--ok");
+    if(hero) hero.classList.add("hero--ok");
+  }else{
+    $$("[data-eas]").forEach(e=>e.textContent=TL(EVENT.eas));
+    $$("[data-event-title]").forEach(e=>e.textContent=TL(EVENT.title));
+    $$("[data-event-region]").forEach(e=>e.textContent=TL(EVENT.region));
+    if(lab) lab.textContent=t("eas.label");
+    if(eas) eas.classList.remove("eas--ok");
+    if(hero) hero.classList.remove("hero--ok");
+  }
   $$("[data-event-date]").forEach(e=>{e.textContent=nptNow().toLocaleDateString(LANG==="ne"?"ne-NP":"en-GB",{weekday:"short",day:"2-digit",month:"short",year:"numeric"});});
 }
 function renderStats(){
   const wrap=$("#heroStats"); if(!wrap) return;
+  if(NATIONAL.normal){
+    wrap.classList.add("hero__stats--ok");
+    wrap.innerHTML=NATIONAL.tiles.map(ti=>`
+      <div class="hstat hstat--ok">
+        <span class="hstat__ok" aria-hidden="true">${OKICON}</span>
+        <div class="lbl">${esc(TL(ti.lbl))}</div>
+        <div class="hstat__v">${esc(TL(ti.v))}</div>
+      </div>`).join("");
+    return;
+  }
+  wrap.classList.remove("hero__stats--ok");
   wrap.innerHTML=STATS.map(s=>`
     <a class="hstat ${s.cls||''}" href="stats.html#${s.key}" aria-label="${esc(t("stat."+s.key))}">
       <div class="n mono">${esc(toNepDigits(s.n))}</div>
@@ -1516,7 +1589,38 @@ function initMissingForm(){
    hero (both live events stacked). Static copy from RAINWARN — no network. */
 function renderRainWarn(){
   const root=$("#rainWarnRoot"); if(!root) return;
-  if(!RAINWARN.active){ root.innerHTML=""; return; }
+  if(!RAINWARN.active){
+    if(NATIONAL.normal){
+      const pts=NATIONAL.points.map(p=>`<li>${esc(TL(p))}</li>`).join("");
+      root.innerHTML=`
+        <div class="rwarn rwarn--ok">
+          <div class="rwarn__bar" aria-hidden="true"></div>
+          <div class="rwarn__in">
+            <div class="rwarn__head">
+              <span class="rwarn__badge">${OKICON}<span>${esc(t("nstat.badge"))}</span></span>
+              <span class="rwarn__ago mono">${esc(_warnAgo(Date.parse(NATIONAL.updated)))}</span>
+            </div>
+            <h2 class="rwarn__title">${esc(TL(NATIONAL.headline))}</h2>
+            <p class="rwarn__lead">${esc(TL(NATIONAL.sub))}</p>
+            <div class="rwarn__cols">
+              <div class="rwarn__prec">
+                <span class="eyebrow">${esc(t("nstat.whatwewatch"))}</span>
+                <ul>${pts}</ul>
+              </div>
+            </div>
+            <div class="rwarn__cta">
+              <a class="btn btn--primary btn--sm" href="weather.html">${esc(t("rw.view"))}</a>
+              <a class="btn btn--sm" href="alerts.html">${esc(t("rw.map"))}</a>
+              <a class="btn btn--sm" href="highway-updates.html">${esc(t("rw.highway"))}</a>
+              <a class="btn btn--sm" href="nepal-floods.html">${esc(t("nstat.recovery"))}</a>
+            </div>
+            <p class="rwarn__src">${esc(t("fpop.source"))} · ${esc(NATIONAL.source)}</p>
+          </div>
+        </div>`;
+      return;
+    }
+    root.innerHTML=""; return;
+  }
   const W=RAINWARN;
   const prec=W.precautions.slice(0,4).map(p=>`<li>${esc(TL(p))}</li>`).join("");
   root.innerHTML=`
@@ -1599,6 +1703,12 @@ function renderLatestAlerts(){
       ${a.where?`<p class="acard__w">${esc(a.where)}</p>`:""}
       ${a.note?`<p class="acard__d">${esc(a.note)}</p>`:""}
       <span class="acard__go">${esc(t("la.details"))}</span></a>`;
+  // In calm mode, if nothing on the live feed is critical or a warning, lead with
+  // an explicit "all clear" card so an empty list never reads as "data missing".
+  if(NATIONAL.normal && !items.some(i=>i.sev==="crit"||i.sev==="warn")){
+    items.unshift({sev:"safe", kind:t("la.national"), title:t("la.allclear"),
+      where:"", note:t("la.allclear.s"), ts:Date.parse(NATIONAL.updated), href:"alerts.html"});
+  }
   // Critical first, then warnings, then advisories; newest first within each.
   const rank={crit:0,warn:1,adv:2,safe:3};
   items.sort((x,y)=>rank[x.sev]-rank[y.sev] || (y.ts||0)-(x.ts||0));

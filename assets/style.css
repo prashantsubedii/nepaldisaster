@@ -5044,3 +5044,46 @@ html[lang="ne"] .news__cover-k, html[lang="ne"] .news__cover-t{ font-family: var
 .newsindex{ grid-auto-rows: 1fr; align-items: stretch; }
 @media (max-width: 599px){ .grid-news:not(.grid-news--stack), .newsindex{ grid-auto-rows: auto; } }
 .news__cover-t{ display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+
+/* =========================================================================
+   CALM STATE — shown when NATIONAL.normal is true (no active emergency).
+   Turns the red emergency band green, gives the hero reassurance tiles, and
+   styles the "all clear · monitoring" status panel. Nothing here loads unless
+   app.js adds the --ok classes, so emergency mode is unaffected.
+   ========================================================================= */
+:root{ --ok:#0E7A52; --ok-ink:#0B6344; --ok-soft:#ECFDF5; --ok-band:#0C5A3C; }
+:root[data-theme="dark"]{ --ok:#43C793; --ok-ink:#34D399; --ok-soft:rgba(16,122,82,.14); --ok-band:#0B3D2A; }
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --ok:#43C793; --ok-ink:#34D399; --ok-soft:rgba(16,122,82,.14); --ok-band:#0B3D2A; }
+}
+
+/* top band → calm green */
+.eas.eas--ok{ background: var(--ok-band); }
+:root[data-theme="dark"] .eas.eas--ok, .eas.eas--ok{ background: var(--ok-band); }
+.eas--ok .eas__label{ border-right-color: rgba(255,255,255,.3); }
+.eas--ok .eas__time{ display: none; }           /* no running crisis timer in calm mode */
+
+/* hero reassurance tiles */
+.hero__stats--ok{ grid-template-columns: repeat(4, 1fr); }
+.hstat--ok{
+  border: 1px solid rgba(255,255,255,.10) !important;
+  border-left: 3px solid var(--ok-ink) !important;
+  background: rgba(16,185,129,.07);
+  padding: 20px 18px 18px;
+}
+.hstat--ok::before{ background: linear-gradient(90deg, rgba(52,211,153,.22), transparent 60%); }
+.hstat--ok:hover{ background: rgba(16,185,129,.12); box-shadow: 0 12px 32px rgba(0,0,0,.22); }
+.hstat__ok{ display: inline-flex; width: 30px; height: 30px; align-items: center; justify-content: center;
+  border-radius: 50%; background: rgba(52,211,153,.16); color: #6EE7B7; margin-bottom: 12px; }
+.hstat__ok svg{ width: 17px; height: 17px; }
+.hstat--ok .lbl{ font-size: .96rem; letter-spacing: -.01em; text-transform: none; font-family: var(--f-display, inherit); font-weight: 700; color: #fff; margin: 0; }
+.hstat--ok .hstat__v{ margin-top: 5px; font-size: .74rem; letter-spacing: .04em; color: rgba(255,255,255,.55); font-family: var(--f-mono, monospace); }
+@media (max-width: 620px){ .hero__stats--ok{ grid-template-columns: repeat(2, 1fr); } }
+
+/* status panel (reuses .rwarn) */
+.rwarn--ok{ border-left: 0; }
+.rwarn--ok .rwarn__bar{ background: var(--ok); }
+.rwarn--ok .rwarn__badge{ background: var(--ok-soft); color: var(--ok); border-color: var(--ok); }
+.rwarn--ok .rwarn__prec li::before{ background: var(--ok); border-radius: 50%; }
+.rwarn--ok .rwarn__ago{ color: var(--muted); font-size: .8rem; }
+.rwarn--ok .rwarn__src a{ color: var(--ok-ink); }
