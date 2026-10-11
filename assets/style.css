@@ -22,10 +22,10 @@
   --sh-crim:0 1px 3px rgba(225, 29, 72, 0.14);
   --ring:0 0 0 3px rgba(225, 29, 72, 0.16);
 
-  --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
-  --f-cond:"Archivo Narrow","Archivo",system-ui,sans-serif;
-  --f-body:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
-  --f-mono:"IBM Plex Mono",ui-monospace,monospace;
+  --f-display:"Poppins",system-ui,-apple-system,sans-serif;
+  --f-cond:"Poppins",system-ui,sans-serif;
+  --f-body:"Inter",system-ui,-apple-system,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,monospace;
   --f-np:"Noto Sans Devanagari",system-ui,sans-serif;
   --maxw:1180px;
   --ease:cubic-bezier(.22,.61,.36,1);
@@ -4638,8 +4638,9 @@ html[lang="ne"] .eas__msg{ font-family: var(--f-np); }
    ========================================================================= */
 :root{
   --font-ui:"Inter","Noto Sans Devanagari",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --font-editorial:"Source Serif 4","Noto Serif Devanagari",Georgia,serif;
-  --f-body:var(--font-ui); --f-display:var(--font-ui); --f-cond:var(--font-ui);
+  --font-display:"Poppins","Noto Sans Devanagari",system-ui,sans-serif;
+  --font-editorial:"Inter","Noto Sans Devanagari",system-ui,sans-serif;
+  --f-body:var(--font-ui); --f-display:var(--font-display); --f-cond:var(--font-display);
   --f-np:"Noto Sans Devanagari","Inter",sans-serif;
   --r-pill:8px;            /* retire pill shapes everywhere they were tokenised */
   --sev-crit:#D92D20; --sev-warn:#F79009; --sev-adv:#2563EB; --sev-safe:#15803D;
@@ -5087,3 +5088,39 @@ html[lang="ne"] .news__cover-k, html[lang="ne"] .news__cover-t{ font-family: var
 .rwarn--ok .rwarn__prec li::before{ background: var(--ok); border-radius: 50%; }
 .rwarn--ok .rwarn__ago{ color: var(--muted); font-size: .8rem; }
 .rwarn--ok .rwarn__src a{ color: var(--ok-ink); }
+
+/* =========================================================================
+   2026-10-11 — Budhi Gandaki rebuild: Poppins headings, tighter rhythm,
+   homepage Highway & Travel band (Dashain).
+   ========================================================================= */
+/* Poppins wants a touch more tracking control at display sizes */
+h1, h2, h3, .hero h1, .rwarn__title, .sec-head h2{ font-family: var(--f-display); }
+.hero h1{ letter-spacing: -.02em; }
+
+/* Close the oversized gaps the owner flagged — calmer vertical rhythm */
+main > section{ padding: clamp(26px, 4vw, 46px) 0; }
+.latest-sec{ padding-top: clamp(22px, 3.5vw, 38px); }
+#livemap{ padding-top: clamp(22px, 3.5vw, 38px); }
+
+/* Quick-action: Highway & Travel (navy/advisory accent) */
+.qa-btn--road, .qa-btn--road:hover{ border-left-color: var(--sev-adv); border-top-color: var(--rule); }
+
+/* ---------- Homepage Highway & Travel band ---------- */
+.hwhome{ background: var(--paper-2); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.hwhome__note{
+  margin: 0 0 14px; max-width: 70ch; font-size: .92rem; line-height: 1.55; color: var(--ink-2);
+  font-family: var(--font-editorial);
+}
+html[lang="ne"] .hwhome__note{ font-family: var(--f-np); }
+.hwhome__list{ display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media (max-width: 760px){ .hwhome__list{ grid-template-columns: 1fr; } }
+.hwhome__row{
+  display: grid; grid-template-columns: auto 1fr; align-items: baseline; gap: 10px;
+  padding: 12px 14px; text-decoration: none; color: var(--ink);
+  background: var(--paper); border: 1px solid var(--rule); border-left: 4px solid var(--sev-warn);
+  border-radius: var(--r-lg);
+}
+.hwhome__row:hover{ border-color: var(--rule-2); text-decoration: none; background: var(--paper-2); }
+.hwhome__src{ font-size: .66rem; font-weight: 700; letter-spacing: .08em; color: var(--muted); white-space: nowrap; }
+.hwhome__t{ font-size: .92rem; line-height: 1.4; font-weight: 600; }
+.hwhome__load{ grid-column: 1 / -1; margin: 0; padding: 12px 2px; font-size: .84rem; color: var(--muted); }

@@ -1,20 +1,20 @@
 {
   "_comment": "Curated official baseline (rank 2). Rows written directly by a rank-1 API — the NDRRMA named rescue registry and its Nepali/foreign split, the rescue-system log, the comms-tower status — are deliberately NOT listed here. They used to be, and because this feed carries no source rank it silently overwrote the live API values on every refresh cycle. See _API_OWNED_ROWS in assets/app.js. Keep updated_at honest: once it is more than 36 hours old this feed demotes itself below Wikipedia so the site keeps advancing on its own.",
-  "updated_at": "2026-10-02T09:00:00+05:45",
+  "updated_at": "2026-10-11T09:30:00+05:45",
   "event": {
-    "code": "FL-2026-0826",
-    "since": "2026-08-26T08:37:00+05:45",
+    "code": "FL-2026-1011",
+    "since": "2026-10-11T06:15:00+05:45",
     "title": {
-      "en": "2026 Nepal Floods",
-      "ne": "२०२६ नेपाल बाढी"
+      "en": "2026 Budhi Gandaki Flood",
+      "ne": "२०२६ बुढीगण्डकी बाढी"
     },
     "region": {
-      "en": "Rasuwa · Nuwakot · Dhading · Trishuli corridor · Chitwan · Nawalparasi",
-      "ne": "रसुवा · नुवाकोट · धादिङ · त्रिशूली कोरिडोर · चितवन · नवलपरासी"
+      "en": "Gorkha · Chumanubri · Budhi Gandaki corridor · downstream to the Trishuli at Dobhan",
+      "ne": "गोरखा · चुमनुव्री · बुढीगण्डकी कोरिडोर · तल त्रिशूली (डोभान) सम्म"
     },
     "eas": {
-      "en": "No active national emergency. The 2026 monsoon is withdrawing and DHM reports no nationwide heavy-rainfall warning in force. Conditions are calmer, but hill highways and rivers still need care after the 26 August Bhote Koshi–Trishuli flood — confirm your route on 103 and check the Live Alert Map before travelling. Recovery continues in Rasuwa, Nuwakot and the Trishuli corridor. This service monitors official DHM, NDRRMA and Nepal Police feeds around the clock.",
-      "ne": "कुनै सक्रिय राष्ट्रिय विपद् छैन। २०२६ को मनसुन फर्कंदै छ र जल तथा मौसम विज्ञान विभाग (DHM) का अनुसार हाल देशव्यापी भारी वर्षाको चेतावनी लागू छैन। अवस्था शान्त छ, तर २६ अगस्टको भोटेकोशी–त्रिशूली बाढीपछि पहाडी राजमार्ग र नदीमा अझै सावधानी चाहिन्छ — यात्रा अघि १०३ मा मार्ग पक्का गर्नुहोस् र प्रत्यक्ष सतर्कता नक्सा हेर्नुहोस्। रसुवा, नुवाकोट र त्रिशूली कोरिडोरमा पुनर्लाभ जारी छ। यो सेवाले DHM, NDRRMA र नेपाल प्रहरीका आधिकारिक स्रोतलाई चौबीसै घण्टा निगरानी गर्छ।"
+      "en": "Budhi Gandaki flash flood (11 Oct 2026). A landslide dammed the Budhi Gandaki above Chhekampar overnight and released around 06:15, sending a surge down through Chumanubri, Gorkha. Salleri bazaar and dozens of houses at Jagat, Paiyu and Bagar were swept away; the Kerauja suspension bridge and bridges at Machhakhola, Soti and Dobhan were destroyed. No deaths have been reported so far — surveys continue and helicopters are flying rescue. Police warn everyone to stay off the riverbanks all the way down to the Trishuli confluence at Dobhan.",
+      "ne": "बुढीगण्डकी आकस्मिक बाढी (११ अक्टोबर २०२६)। चेकम्पारमाथि रातभरि पहिरोले थुनिएको बुढीगण्डकी करिब ६:१५ बजे फुट्दा गोरखाको चुमनुव्री हुँदै बाढी आयो। सल्लेरी बजार र जगत, पैयु तथा बगरका दर्जनौं घर बगे; केराउजाको झोलुङ्गे पुल र माछाखोला, सोती र डोभानका पुल भत्किए। अहिलेसम्म कुनै मृत्यु भएको खबर छैन — क्षति आकलन जारी छ र हेलिकप्टरबाट उद्धार भइरहेको छ। प्रहरीले त्रिशूली मिल्ने डोभानसम्मै नदी किनारबाट टाढा रहन आग्रह गरेको छ।"
     }
   },
   "stats": [

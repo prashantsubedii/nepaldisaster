@@ -171,20 +171,16 @@ try{
 
 /* -------------------- EVENT + STATS (provisional, sourced) -------------------- */
 const EVENT = {
-  code:"FL-2026-0826",
-  since:"2026-08-26T08:37:00+05:45",
-  title:{en:"2026 Nepal Floods", ne:"२०२६ नेपाल बाढी"},
-  region:{en:"Rasuwa · Nuwakot · Dhading · Trishuli corridor · Chitwan · Nawalparasi", ne:"रसुवा · नुवाकोट · धादिङ · त्रिशूली कोरिडोर · चितवन · नवलपरासी"},
-  // This is the FIRST-PAINT copy, shown for the second or two before
-  // assets/live_data.json answers. Keep it word-for-word in step with that
-  // file's event.eas — if it drifts, the banner briefly contradicts the hero
-  // stats underneath it, and offline readers see only this version.
-  // Calm-state copy. There is no active national emergency right now; keep this
-  // first-paint line in step with assets/live_data.json → event.eas. The crisis
-  // copy that used to live here is preserved in git history — restore it (and set
-  // NATIONAL.normal=false, RAINWARN.active=true) the moment a new hazard begins.
-  eas:{en:"No active national emergency. The 2026 monsoon is withdrawing and DHM reports no nationwide heavy-rainfall warning in force. Conditions are calmer, but hill highways and rivers still need care after the 26 August Bhote Koshi–Trishuli flood — confirm your route on 103 and check the Live Alert Map before travelling. Recovery continues in Rasuwa, Nuwakot and the Trishuli corridor. This service monitors official DHM, NDRRMA and Nepal Police feeds around the clock.",
-       ne:"कुनै सक्रिय राष्ट्रिय विपद् छैन। २०२६ को मनसुन फर्कंदै छ र जल तथा मौसम विज्ञान विभाग (DHM) का अनुसार हाल देशव्यापी भारी वर्षाको चेतावनी लागू छैन। अवस्था शान्त छ, तर २६ अगस्टको भोटेकोशी–त्रिशूली बाढीपछि पहाडी राजमार्ग र नदीमा अझै सावधानी चाहिन्छ — यात्रा अघि १०३ मा मार्ग पक्का गर्नुहोस् र प्रत्यक्ष सतर्कता नक्सा हेर्नुहोस्। रसुवा, नुवाकोट र त्रिशूली कोरिडोरमा पुनर्लाभ जारी छ। यो सेवाले DHM, NDRRMA र नेपाल प्रहरीका आधिकारिक स्रोतलाई चौबीसै घण्टा निगरानी गर्छ।"}
+  code:"FL-2026-1011",
+  since:"2026-10-11T06:15:00+05:45",   // landslide dam above Chhekampar released around 06:15 NPT, 11 Oct 2026
+  title:{en:"2026 Budhi Gandaki Flood", ne:"२०२६ बुढीगण्डकी बाढी"},
+  region:{en:"Gorkha · Chumanubri · Budhi Gandaki corridor · downstream to the Trishuli at Dobhan", ne:"गोरखा · चुमनुव्री · बुढीगण्डकी कोरिडोर · तल त्रिशूली (डोभान) सम्म"},
+  // FIRST-PAINT copy, shown for the second or two before assets/live_data.json
+  // answers. Keep it word-for-word in step with that file's event.eas — if it
+  // drifts, the banner briefly contradicts the hero underneath it, and offline
+  // readers see only this version. This is the ACTIVE 11 Oct Budhi Gandaki event.
+  eas:{en:"Budhi Gandaki flash flood (11 Oct 2026). A landslide dammed the Budhi Gandaki above Chhekampar overnight and released around 06:15, sending a surge down through Chumanubri, Gorkha. Salleri bazaar and dozens of houses at Jagat, Paiyu and Bagar were swept away; the Kerauja suspension bridge and bridges at Machhakhola, Soti and Dobhan were destroyed. No deaths have been reported so far — surveys continue and helicopters are flying rescue. Police warn everyone to stay off the riverbanks all the way down to the Trishuli confluence at Dobhan.",
+       ne:"बुढीगण्डकी आकस्मिक बाढी (११ अक्टोबर २०२६)। चेकम्पारमाथि रातभरि पहिरोले थुनिएको बुढीगण्डकी करिब ६:१५ बजे फुट्दा गोरखाको चुमनुव्री हुँदै बाढी आयो। सल्लेरी बजार र जगत, पैयु तथा बगरका दर्जनौं घर बगे; केराउजाको झोलुङ्गे पुल र माछाखोला, सोती र डोभानका पुल भत्किए। अहिलेसम्म कुनै मृत्यु भएको खबर छैन — क्षति आकलन जारी छ र हेलिकप्टरबाट उद्धार भइरहेको छ। प्रहरीले त्रिशूली मिल्ने डोभानसम्मै नदी किनारबाट टाढा रहन आग्रह गरेको छ।"}
 };
 
 /* -------------------- NATIONAL STATUS (overall posture) --------------------
@@ -196,9 +192,9 @@ const EVENT = {
    To return to emergency mode: set normal:false, RAINWARN.active:true, restore the
    crisis EVENT.eas, and point live_data.json → event.eas at the live bulletin. */
 const NATIONAL = {
-  normal:true,
+  normal:false,   // 11 Oct 2026 — ACTIVE emergency: Budhi Gandaki flash flood in Gorkha
   since:"2026-09-29",
-  updated:"2026-10-02T09:00:00+05:45",
+  updated:"2026-10-11T09:30:00+05:45",
   source:"DHM · NDRRMA · Dept. of Roads · Nepal Police",
   headline:{en:"Nepal is calm — no active national emergency",
             ne:"नेपाल शान्त छ — कुनै सक्रिय राष्ट्रिय विपद् छैन"},
@@ -231,11 +227,18 @@ const NATIONAL = {
    which states Nepal figures separately from Tibet) → NDRRMA API (rescued, live
    Nepal registry). The Wikipedia INFOBOX is NOT used — it reports Nepal+Tibet
    COMBINED, which is what previously inflated the toll. */
+/* Hero figures for the 11 Oct Budhi Gandaki flood. These are the EARLY, verified
+   facts from Nepali reporting — not casualty counts, because none have been
+   reported. Keys are deliberately NOT deaths/missing/rescued, so the live feeds
+   (Wikipedia + live_data.json, which still carry the August flood figures) can
+   never overwrite this grid with the wrong event's numbers. Labels live in I18N
+   under stat.<key>. Each tile links to the live news page, where the reporting
+   it summarises keeps updating on its own. */
 let STATS = [
-  {key:"deaths",  n:"1,451", cls:"hstat--death"},
-  {key:"missing", n:"5,786", cls:"hstat--missing"},
-  {key:"foreign", n:"636"},
-  {key:"rescued", n:"13,784", cls:"hstat--rescue"}   // hero = TOTAL rescued (NDRRMA, 20 Sept); the NAMED registry (5,006) is a separate, smaller figure shown on the Rescued page
+  {key:"bgHomes",   n:"35+", cls:"hstat--missing", href:"news.html"},
+  {key:"bgBridges", n:"4+",  cls:"hstat--death",   href:"news.html"},
+  {key:"bgMarkets", n:"4",                           href:"news.html"},
+  {key:"bgDeaths",  n:"0",   cls:"hstat--rescue",  href:"news.html"}
 ];
 
 /* -------------------- RAINFALL WARNING (DHM heavy-rain alert, live event #2) --------------------
@@ -245,39 +248,33 @@ let STATS = [
    Static, sourced copy — no live API on the homepage. The Weather tab layers the
    Open-Meteo forecast on top of this. Update `active:false` once DHM stands it down. */
 const RAINWARN = {
-  active:false,                   // stood down 29 Sept 2026 — the 23–28 Sept depression cleared; flip to true when DHM issues the next warning
-  level:"orange",                 // orange = "be prepared"; escalate to "red" if DHM does
-  window:"23–28 Sept 2026",
-  updated:"2026-09-27T14:00:00+05:45",
-  source:"DHM Weather Forecasting Division · NDRRMA · Dept. of Roads · Onlinekhabar · The Kathmandu Post · Nepal News",
-  url:"https://english.onlinekhabar.com/weather-set-to-improve-tonight.html",
-  badge:{en:"ACTIVE EMERGENCY · RAIN WARNING", ne:"सक्रिय आपत्कालीन · वर्षा चेतावनी"},
-  title:{en:"Heavy-rainfall warning — 23–28 September",
-         ne:"भारी वर्षा चेतावनी — २३–२८ सेप्टेम्बर"},
-  lead:{en:"A deep depression over the Bay of Bengal is strengthening and moving west-northwest. It began affecting Nepal on Wednesday 23 September, and the heaviest rain is forecast for Friday to Sunday, 25–27 September, with the 26th seen as the riskiest day. Several models show more than 400 mm over the period (one outlier 741 mm), falling on slopes already loosened by the August flood. DHM counts anything above 200 mm in 24 hours as extremely heavy. Impact so far: NDRRMA counts at least 14 dead in 72 hours, including four in a landslide in Myagdi's Annapurna Rural Municipality and four in Nisi Khola, Baglung. The Narayani rose to nearly 8 m at Devghat (warning level 7.3 m), and 200+ houses flooded in Susta, Nawalparasi West. An avalanche at Himlung Himal base camp (Manang) on 27 Sept left 10 climbers and crew missing. The Dept. of Roads reports sections of 11 highways blocked (27 Sept).",
-        ne:"बंगालको खाडीमा रहेको गहिरो न्यून चाप बलियो बन्दै पश्चिम-उत्तरपश्चिमतर्फ सर्दैछ। बुधबार २३ सेप्टेम्बरदेखि नेपालमा आंशिक असर सुरु भएको छ र सबैभन्दा भारी वर्षा शुक्रबारदेखि आइतबार (२५–२७ सेप्टेम्बर) हुने, २६ तारिख सबैभन्दा जोखिमपूर्ण हुने अनुमान छ। केही मोडेलले यस अवधिमा ४०० मिमिभन्दा बढी (एउटाले ७४१ मिमि) देखाएका छन् — भदौको बाढीले पहिल्यै कमजोर बनेका भिरमाथि। DHM ले २४ घण्टामा २०० मिमिभन्दा बढीलाई अति भारी वर्षा मान्छ। अहिलेसम्मको असर: NDRRMA का अनुसार ७२ घण्टामा कम्तीमा १४ जनाको मृत्यु, जसमा म्याग्दीको अन्नपूर्ण गाउँपालिकामा पहिरोमा चार र बागलुङको निसीखोलामा चार जना छन्। देवघाटमा नारायणी करिब ८ मिटर पुग्यो (चेतावनी तह ७.३ मि) र नवलपरासी पश्चिमको सुस्तामा २०० भन्दा बढी घर डुबे। ११ असोजमा मनाङको हिमलुङ हिमाल आधार शिविरमा हिमपहिरो खस्दा १० आरोही र सहयोगी बेपत्ता छन्। सडक विभागका अनुसार ११ राजमार्गका खण्ड अवरुद्ध (११ असोज)।"},
-  today:{en:"DHM outlook for Sunday 27 Sept (meteorologist Sanjib Adhikari): the low-pressure area over Uttar Pradesh is weakening and rain is easing. Heavy rain is still possible this afternoon in one or two places in Madhesh, lower Bagmati and around Chitwan, but heavy rain is unlikely tonight and conditions should improve markedly. Rivers and saturated slopes stay dangerous for a few days after the rain stops.",
-         ne:"आइतबार २७ सेप्टेम्बर (११ असोज) का लागि DHM को पूर्वानुमान (मौसमविद् सञ्जीव अधिकारी): उत्तर प्रदेशमाथिको न्यून चाप कमजोर हुँदै छ र वर्षा घट्दै छ। आज दिउँसो मधेश, तल्लो बागमती र चितवन वरपरका एक-दुई स्थानमा भारी वर्षा सम्भव, तर आज राति भारी वर्षाको सम्भावना कम र मौसम उल्लेख्य सुधार हुने। वर्षा रोकिएपछि पनि केही दिन नदी र भिजेका भिर खतरनाक रहन्छन्।"},
-  provinces:{en:"25–27 Sept: heavy to very heavy rain across Gandaki and Lumbini, extremely heavy in one or two places; heavy rain with thunder and gusty winds in parts of Koshi, Madhesh, Bagmati, Karnali and Sudurpashchim. Heavy snow is possible in the high Himalaya. Rasuwa and Nuwakot are flagged for special focus.",
-             ne:"२५–२७ सेप्टेम्बर: गण्डकी र लुम्बिनीमा भारीदेखि अति भारी, एक-दुई स्थानमा अत्यधिक भारी वर्षा; कोशी, मधेश, बागमती, कर्णाली र सुदूरपश्चिमका केही भागमा चट्याङ र हावाहुरीसहित भारी वर्षा। उच्च हिमाली क्षेत्रमा भारी हिमपातको सम्भावना। रसुवा र नुवाकोट विशेष निगरानीमा।"},
+  active:true,                    // 11 Oct 2026 — ACTIVE: Budhi Gandaki flash flood in Gorkha
+  level:"red",                    // red = take action now
+  window:"11 Oct 2026",
+  updated:"2026-10-11T09:30:00+05:45",
+  source:"Nepal Police · Gorkha District Administration · The Kathmandu Post · Ratopati · Khabarhub · Himal Press",
+  url:"https://kathmandupost.com/national/2026/10/11/flood-sweeps-away-seven-houses-in-gorkha",
+  badge:{en:"ACTIVE EMERGENCY · FLOOD WARNING", ne:"सक्रिय आपत्कालीन · बाढी चेतावनी"},
+  title:{en:"Budhi Gandaki flash flood — Gorkha",
+         ne:"बुढीगण्डकी आकस्मिक बाढी — गोरखा"},
+  lead:{en:"A landslide dammed the Budhi Gandaki above Chhekampar overnight. Water broke through at around 06:15 on Sunday 11 October and surged down through Chumanubri Rural Municipality in northern Gorkha. Salleri bazaar was washed away and houses were swept off at Jagat, Paiyu and Bagar — early counts range from seven to about 35 homes. The Kerauja suspension bridge, the Machhakhola market bridge, a bridge at Soti bazaar and the Bailey bridge at Dobhan have all been destroyed. No human casualties have been reported so far and damage surveys are still under way; helicopters have been mobilised for rescue. The river briefly blocked and reopened again, so further surges are possible downstream.",
+        ne:"चेकम्पारमाथि रातभरि पहिरोले बुढीगण्डकी थुनेको थियो। आइतबार ११ अक्टोबर करिब ६:१५ बजे पानी फुटेर उत्तरी गोरखाको चुमनुव्री गाउँपालिका हुँदै बाढी आयो। सल्लेरी बजार बग्यो र जगत, पैयु तथा बगरका घर बगे — प्रारम्भिक विवरणमा सात देखि करिब ३५ घर। केराउजाको झोलुङ्गे पुल, माछाखोला बजारको पुल, सोती बजारको पुल र डोभानको बेली पुल सबै भत्किए। अहिलेसम्म कुनै मानवीय क्षति भएको खबर छैन र क्षति आकलन जारी छ; उद्धारका लागि हेलिकप्टर परिचालन गरिएको छ। नदी केहीबेर थुनिएर फेरि खुलेकाले तल थप बाढीको सम्भावना छ।"},
+  today:{en:"Police have asked everyone to stay off the banks of the Budhi Gandaki all the way down to the Trishuli confluence at Dobhan, and to move to higher ground. The surge is linked to the landslide dam releasing and to a sudden rise in the Ugylung and Syar streams that feed the river. Detailed damage figures are still awaited from the district administration.",
+         ne:"प्रहरीले बुढीगण्डकीको किनारबाट त्रिशूली मिल्ने डोभानसम्मै टाढा रहन र अग्लो ठाउँमा सर्न आग्रह गरेको छ। यो बाढी पहिरोले थुनेको ताल फुट्नु र नदीमा मिसिने उग्लुङ तथा स्यार खोलाको अचानक बढेको बहावसँग जोडिएको छ। जिल्ला प्रशासनबाट विस्तृत क्षति विवरण अझै आउन बाँकी छ।"},
+  provinces:{en:"Downstream watch: the Budhi Gandaki joins the Trishuli–Narayani system, so settlements, foot-trails and suspension bridges along the lower river and the Manaslu trekking route should treat the water as dangerous and stay clear of the banks until authorities confirm it is safe.",
+             ne:"तल निगरानी: बुढीगण्डकी त्रिशूली–नारायणी प्रणालीमा मिसिने भएकाले तल्लो नदी किनार र मनास्लु पदमार्गका बस्ती, गोरेटो र झोलुङ्गे पुल प्रयोग गर्नेहरू सतर्क रहनुहोस् र अधिकारीले सुरक्षित घोषणा नगरेसम्म किनारबाट टाढा रहनुहोस्।"},
   precautions:[
-    {en:"Move away from riverbanks, streams and low-lying land — flash floods and debris flows can arrive with little warning, especially along the Bhote Koshi–Trishuli corridor.",
-     ne:"नदी किनार, खोला र होचो जमिनबाट टाढा रहनुहोस् — भोटेकोशी–त्रिशूली कोरिडोरमा विशेषतः आकस्मिक बाढी र पहिरो थोरै सूचनामै आउन सक्छ।"},
-    {en:"Watch slopes above and below homes for cracks, seepage or tilting trees; leave early if the ground shows signs of moving. Do not wait for an official order to evacuate.",
-     ne:"घरमाथि र तलका भिरमा चिरा, पानी चुहावट वा ढल्किएका रूख हेर्नुहोस्; जमिन चल्ने लक्षण देखिए तुरुन्तै सुरक्षित ठाउँमा जानुहोस्। आदेश नकुरी सर्नुहोस्।"},
-    {en:"Avoid non-essential travel on hill highways during 25–27 September. Landslides and rockfall close roads fastest at the peak of the rain — check 103 before setting out.",
-     ne:"२५–२७ सेप्टेम्बरमा पहाडी राजमार्गमा अनावश्यक यात्रा नगर्नुहोस्। वर्षा चरममा पहिरो र ढुंगा खस्दा सडक छिट्टै बन्द हुन्छ — हिँड्नुअघि १०३ मा बुझ्नुहोस्।"},
-    {en:"Keep phones charged, a torch, drinking water, dry food and documents in one grab-bag. Note the nearest higher ground and share a family meeting point.",
-     ne:"फोन चार्ज, टर्च, पिउने पानी, सुक्खा खाना र कागजात एउटै झोलामा तयार राख्नुहोस्। नजिकको अग्लो ठाउँ र परिवार भेट्ने स्थान तय गर्नुहोस्।"},
-    {en:"Do not cross flooded roads or bridges on foot or by vehicle — 30 cm of moving water can sweep away a car. Turn around, don't drown.",
-     ne:"बाढी आएको सडक वा पुल पैदल वा सवारीमा नतर्नुहोस् — ३० सेमी बग्दो पानीले कार बगाउँछ। फर्किनुहोस्, नडुब्नुहोस्।"},
-    {en:"Meteorologists advise postponing long-distance travel on 24–26 September. Climbers and trekkers should expect heavy snow in the high Himalaya and delay crossings.",
-     ne:"मौसमविद्ले २४–२६ सेप्टेम्बरमा लामो दूरीको यात्रा स्थगित गर्न सुझाव दिएका छन्। उच्च हिमालमा भारी हिमपात हुन सक्ने भएकाले आरोही र पदयात्री सावधान रहनुहोस्, पास पार गर्न ढिलाइ गर्नुहोस्।"},
-    {en:"Rescue and relief flights over Rasuwa & Nuwakot may pause during the heaviest spells; follow DHM, NDRRMA and local authority instructions and keep this page open for updates.",
-     ne:"चरम वर्षाका बेला रसुवा र नुवाकोटमा उद्धार तथा राहत उडान रोकिन सक्छन्; DHM, NDRRMA र स्थानीय निकायको निर्देशन पालना गर्नुहोस् र अद्यावधिकका लागि यो पृष्ठ खुला राख्नुहोस्।"}
+    {en:"Stay well away from the Budhi Gandaki, its tributaries and low-lying banks — a landslide-dam flood can surge again with little warning, all the way down to Dobhan.",
+     ne:"बुढीगण्डकी, यसका सहायक खोला र होचो किनारबाट टाढा रहनुहोस् — पहिरोले थुनेको बाढी डोभानसम्मै थोरै सूचनामै फेरि आउन सक्छ।"},
+    {en:"Move to higher ground and do not return to riverside homes, fields or bridges to recover belongings until police confirm the water has settled.",
+     ne:"अग्लो ठाउँमा सर्नुहोस् र प्रहरीले पानी शान्त भएको पुष्टि नगरेसम्म सामान झिक्न नदी किनारका घर, खेत वा पुलमा नफर्कनुहोस्।"},
+    {en:"Do not cross damaged or temporary bridges on the Manaslu route — the Kerauja, Machhakhola, Soti and Dobhan crossings are gone or unsafe. Wait for an official detour.",
+     ne:"मनास्लु मार्गका क्षतिग्रस्त वा अस्थायी पुल नतर्नुहोस् — केराउजा, माछाखोला, सोती र डोभानका पुल भत्किएका वा असुरक्षित छन्। आधिकारिक वैकल्पिक बाटो कुर्नुहोस्।"},
+    {en:"Trekkers and guides on the Manaslu Circuit should pause movement, follow the local administration and check with the ward office before continuing.",
+     ne:"मनास्लु पदमार्गका पदयात्री र गाइडले हिँडाइ रोक्नुहोस्, स्थानीय प्रशासनको निर्देशन पालना गर्नुहोस् र अघि बढ्नुअघि वडा कार्यालयमा बुझ्नुहोस्।"}
   ],
-  highway:{en:"Highway note: from 23 September the Makwanpur District Administration Office has banned night traffic on the Kanti Lokpath and the Bhainse–Bhimphedi–Deurali–Kulekhani road. Vehicles may set off only between 5 am and 5 pm, and the roads close completely after 7 pm until further notice. On 27 September the Dept. of Roads reported sections of 11 major highways blocked or disrupted. The Prithvi Highway has bottlenecks at Krishnabhir, Chauki Bhir, Jawang Khola and Fisling. The BP Highway is obstructed at Mamti, Piple, Daunne–Kalopul, Charsayabesi, Katunje and Chaukidanda. Baglung–Beni, the Kaligandaki Corridor and the Mid-Hill Highway in Baglung are blocked. The Tribhuvan Highway is the fallback into Kathmandu. See Highway Updates for the full list.",
-           ne:"राजमार्ग सूचना: २३ सेप्टेम्बरदेखि जिल्ला प्रशासन कार्यालय मकवानपुरले कान्ति लोकपथ र भैंसे–भीमफेदी–देउराली–कुलेखानी सडकमा रात्रिकालीन सवारी रोकेको छ। बिहान ५ देखि बेलुका ५ बजेसम्म मात्र सवारी छुट्न पाउँछन् र अर्को सूचना नआएसम्म बेलुका ७ बजेपछि पूर्ण रूपमा बन्द हुन्छ। सडक विभागले २७ सेप्टेम्बर (११ असोज) मा ११ प्रमुख राजमार्गका खण्ड अवरुद्ध वा प्रभावित भएको जनाएको छ। पृथ्वी राजमार्गमा कृष्णभीर, चौकीभीर, जवाङ खोला र फिस्लिङमा अवरोध छ। बीपी राजमार्ग मामती, पिपले, डाउन्ने–कालोपुल, चर्साबेसी, कटुञ्जे र चौकीडाँडामा अवरुद्ध छ। बागलुङ–बेनी, कालीगण्डकी करिडोर र बागलुङको मध्यपहाडी लोकमार्ग बन्द छन्। काठमाडौं छिर्न त्रिभुवन राजमार्ग विकल्प हो। पूरा सूची राजमार्ग अद्यावधिकमा हेर्नुहोस्।"}
+  highway:{en:"Travel note (Dashain): the flood is on the Budhi Gandaki in northern Gorkha, not on the Prithvi Highway, but Dashain traffic is heavy right across the mid-hills this week and rivers and slopes stay dangerous. If you are travelling, confirm your route with the local traffic police (dial 103) before you set off, keep clear of swollen rivers, and watch the live highway notices below, which update on their own.",
+           ne:"यात्रा सूचना (दशैं): बाढी उत्तरी गोरखाको बुढीगण्डकीमा हो, पृथ्वी राजमार्गमा होइन, तर यस साता दशैंको भीड मध्यपहाडभर उच्च छ र नदी तथा भिर जोखिमपूर्ण छन्। यात्रा गर्दै हुनुहुन्छ भने हिँड्नुअघि स्थानीय ट्राफिक प्रहरी (१०३) सँग मार्ग पक्का गर्नुहोस्, बढेका नदीबाट टाढा रहनुहोस्, र तल आफैं अद्यावधिक हुने राजमार्ग सूचना हेर्नुहोस्।"}
 };
 
 /* Weather-tab locations: the flood-hit districts plus the provinces named in the
@@ -296,49 +293,61 @@ const WEATHER_LOCS = [
 
 /* -------------------- TICKER -------------------- */
 const TICKER = [
-  {src:"TUNNEL", en:"Australian tunnel expert Arnold Dix, who led the 2023 Silkyara rescue, arrived on 6 Sept and says 41 people are still trapped inside the Chilime hydropower tunnel",
-   ne:"२०२३ को सिल्क्यारा उद्धार नेतृत्व गरेका अष्ट्रेलियाली सुरुङ विज्ञ आर्नल्ड डिक्स ६ सेप्टेम्बरमा नेपाल आए — चिलिमे सुरुङभित्र अहिले पनि ४१ जना फसेको उनले बताए"},
-  {src:"FOOD", en:"NDRRMA (7 Sept): 1,806 hectares of farmland washed away, cutting food production in the affected districts by an estimated 7,686 tonnes",
-   ne:"NDRRMA (७ सेप्टेम्बर): १,८०६ हेक्टर खेतीयोग्य जमिन बग्यो, प्रभावित जिल्लामा खाद्य उत्पादन करिब ७,६८६ टन घट्ने अनुमान"},
-  {src:"RASUWA", en:"Aamachhodingmo Rural Municipality (Rasuwa) has been cut off since 26 Aug — food, salt and cooking oil have run out for more than 7,000 people, with helicopters the only way in",
-   ne:"आमाछोदिङमो गाउँपालिका (रसुवा) ४९ भादौदेखि सम्पर्कविहीन — ७,००० भन्दा बढीका लागि खाद्य, नुन र तेल सकियो, पुग्ने बाटो हेलिकप्टर मात्र"},
-  {src:"ROADS", en:"Prithvi Highway reopening: the Krishnabhir section returns to full two-way public traffic on 17 September — gas tankers and heavy vehicles have crossed the 252-metre track one-way since mid-September (Dept. of Roads)",
-   ne:"पृथ्वी राजमार्ग पुनः खुल्दै: कृष्णभीर खण्ड १७ सेप्टेम्बरदेखि पूर्ण दोहोरो सार्वजनिक सञ्चालनमा — भदौ अन्त्यदेखि ग्यास ट्यांकर र भारी सवारी २५२ मिटर ट्र्याकबाट एकतर्फी गुड्दै (सडक विभाग)"},
-  {src:"SUPPLY", en:"Supply routes easing as the Prithvi Highway reopens; a temporary Acrow bridge at Devighat over the Tadi reopened on 10 September, restoring a road link toward Nuwakot",
-   ne:"पृथ्वी राजमार्ग खुल्दै गर्दा आपूर्ति मार्ग सहज हुँदै; १० सेप्टेम्बरमा देवीघाटमा ताडीमाथि अस्थायी एक्रो पुल खुलेपछि नुवाकोटतर्फको सडक पहुँच पुनःस्थापित"},
-  {src:"NDRRMA", en:"Latest official toll (NDRRMA, 20 Sept): 1,451 dead and 5,786 missing or out of contact on the Nepal side, including 636 foreign nationals; 13,784 rescued",
-   ne:"पछिल्लो आधिकारिक तथ्याङ्क (NDRRMA, २० सेप्टेम्बर): नेपालतर्फ १,४५१ मृत्यु, ६३६ विदेशी नागरिकसहित ५,७८६ बेपत्ता वा सम्पर्कविहीन; १३,७८४ उद्धार"},
-  {src:"TUNNEL", en:"Chinese worker Lu Haitao, 49, pulled out ALIVE from the Upper Trishuli-1 tunnel at 1:20pm on 5 Sept — found 225 m inside by the Nepali Army and a South Korean rescue team, ten days after the flood",
-   ne:"५ सेप्टेम्बर दिउँसो १:२० बजे माथिल्लो त्रिशूली-१ सुरुङबाट ४९ वर्षीय चिनियाँ कामदार लु हाइताओ जीवितै निकालिए — बाढी गएको दस दिनपछि नेपाली सेना र दक्षिण कोरियाली टोलीले सुरुङभित्र २२५ मिटरमा भेटे"},
-  {src:"RESCUE", en:"900 hydropower workers missing across 12 projects and around 500 still believed inside the tunnels — 557 missing at Trishuli 3A alone (IPPAN) and 576 at Upper Trishuli-1",
-   ne:"१२ आयोजनाका ९०० जलविद्युत् कामदार बेपत्ता, सुरुङभित्र अझै करिब ५०० जना रहेको अनुमान — त्रिशूली ३ए मै ५५७ (IPPAN) र माथिल्लो त्रिशूली-१ मा ५७६ जना बेपत्ता"},
-  {src:"HEALTH", en:"1,030 bodies temporarily buried after procedure and only 96 identified and handed to families — 2,272 DNA samples collected and 1,270 unidentified bodies posted online for relatives to check",
-   ne:"प्रक्रिया पूरा गरी १,०३० शव अस्थायी रूपमा गाडिए, तर ९६ को मात्र पहिचान भई परिवारलाई सुम्पिइयो — २,२७२ डीएनए नमुना संकलन र १,२७० अपरिचित शवको विवरण अनलाइनमा राखियो"},
-  {src:"WATER", en:"55 drinking water projects damaged across Rasuwa, Nuwakot, Dhading and Gorkha — about Rs 640 million of damage; roughly 500,000 litres a day being trucked in",
-   ne:"रसुवा, नुवाकोट, धादिङ र गोरखामा ५५ खानेपानी आयोजना क्षतिग्रस्त — करिब रु. ६४ करोडको क्षति; दैनिक करिब पाँच लाख लिटर पानी ट्यांकरबाट वितरण"},
-  {src:"GOVT", en:"NDRRMA's first official damage estimate (4 Sept): Rs 387.54 billion ($2.56B). The Rapid Damage and Needs Assessment puts it nearer Rs 400 billion, with Rs 8 billion needed over six months just to restore services",
-   ne:"NDRRMA को पहिलो आधिकारिक क्षति अनुमान (४ सेप्टेम्बर): रु. ३८७.५४ अर्ब (२.५६ अर्ब डलर)। द्रुत क्षति तथा आवश्यकता आकलनले यो करिब रु. ४०० अर्ब देखाएको छ, सेवा पुनःस्थापनाका लागि मात्रै छ महिनामा रु. ८ अर्ब आवश्यक"},
-  {src:"PDNA", en:"A Post Disaster Needs Assessment panel under NPC vice-president Gunakhar Bhatta has six weeks from 5 Sept to produce Nepal's definitive loss and damage figure",
-   ne:"राष्ट्रिय योजना आयोगका उपाध्यक्ष गुणाकर भट्टको नेतृत्वमा गठित विपद्पछिको आवश्यकता आकलन समितिले ५ सेप्टेम्बरदेखि छ हप्ताभित्र नेपालको निश्चित क्षति विवरण बुझाउनुपर्नेछ"},
-  {src:"WEATHER", en:"DHM heavy-rain warning 23–28 Sept: a Bay-of-Bengal depression brings heavy to extremely heavy rain nationwide, peaking 25–27 Sept — 400 mm+ in several models, worst in Gandaki & Lumbini; night traffic banned on the Kanti Lokpath from 23 Sept; landslide & flash-flood risk high on flood-loosened slopes",
-   ne:"DHM भारी वर्षा चेतावनी २३–२८ सेप्टेम्बर: बंगालको खाडीको न्यून चापले देशभर भारीदेखि अति भारी वर्षा, २५–२७ सेप्टेम्बरमा चरम — केही मोडेलमा ४०० मिमिभन्दा बढी, गण्डकी र लुम्बिनीमा सबैभन्दा बढी; २३ सेप्टेम्बरदेखि कान्ति लोकपथमा रात्रिकालीन सवारी बन्द; बाढीले कमजोर भिरमा पहिरो र आकस्मिक बाढी जोखिम उच्च"},
-  {src:"WARNING", en:"DHM & NDRRMA alert: Riverside warning active for Rasuwa, Nuwakot, Dhading, Chitwan & Nawalparasi — Lhende Khola dammed lake monitored",
-   ne:"जल तथा मौसम विज्ञान विभाग र NDRRMA चेतावनी: रसुवा, नुवाकोट, धादिङ, चितवन र नवलपरासीमा नदी किनार चेतावनी कायमै — ल्हेन्डे खोला ताल निगरानीमा"},
-  {src:"RELIEF", en:"Rs 1 crore released to each of Rasuwa and Nuwakot from the PM Disaster Relief Fund; 10 truckloads of relief material despatched and all ministers pledge one month's salary",
-   ne:"प्रधानमन्त्री विपद् राहत कोषबाट रसुवा र नुवाकोट प्रत्येकलाई रु. १ करोड निकासा; १० ट्रक राहत सामग्री पठाइयो र सबै मन्त्रीले एक महिनाको तलब दिने घोषणा"},
-  {src:"ARMY", en:"Nepali Army has airlifted 3,344 Nepalis and 252 foreign nationals across 411 rescue and relief flights",
-   ne:"नेपाली सेनाले ४११ उद्धार तथा राहत उडानमा ३,३४४ नेपाली र २५२ विदेशी नागरिक हवाईमार्ग उद्धार गर्‍यो"},
-  {src:"PMO", en:"PM Disaster Relief Fund passes Rs 13.23 billion (about US$86.69 million) by 11 September — roughly Rs 9.68 billion in rupee accounts and US$23.28 million in foreign currency, most of it raised by QR code in small personal donations",
-   ne:"प्रधानमन्त्री विपद् राहत कोष ११ सेप्टेम्बरसम्म रु. १३.२३ अर्ब (करिब ८.६७ करोड अमेरिकी डलर) नाघ्यो — रुपैयाँ खातामा करिब रु. ९.६८ अर्ब र विदेशी मुद्रामा २.३३ करोड डलर, धेरैजसो QR मार्फत साना व्यक्तिगत सहयोगबाट"},
-  {src:"USGS", en:"Glacier collapse near Langtang Lirung confirmed as cause of catastrophic debris surge down Bhote Koshi",
-   ne:"लाङटाङ लिरुङ नजिक हिमनदी भत्किएर भोटेकोशीमा विनाशकारी लेदो बाढी आएको पुष्टि"},
-  {src:"AID", en:"International assistance mobilised: IFRC CHF 25m appeal, ADB $5m, EU €2m, UN CERF $2m, China 50t supplies",
-   ne:"अन्तर्राष्ट्रिय सहायता परिचालित: IFRC २.५ करोड CHF अपिल, एडीबी ५० लाख डलर, EU २० लाख युरो, CERF २० लाख डलर, चीन ५० टन सामग्री"}
+  {src:"GORKHA", en:"A sudden surge on the Budhi Gandaki swept through northern Gorkha on the morning of 11 October after a landslide dam above Chhekampar released around 06:15",
+   ne:"चेकम्पारमाथिको पहिरो-ताल करिब ६:१५ बजे फुटेपछि ११ अक्टोबर बिहान उत्तरी गोरखामा बुढीगण्डकीको आकस्मिक बाढी आयो"},
+  {src:"SALLERI", en:"Salleri bazaar in Chumanubri was washed away and houses were swept off at Jagat, Paiyu and Bagar — early counts range from seven to about 35 homes",
+   ne:"चुमनुव्रीको सल्लेरी बजार बग्यो र जगत, पैयु तथा बगरका घर बगे — प्रारम्भिक विवरणमा सात देखि करिब ३५ घर"},
+  {src:"BRIDGES", en:"The Kerauja suspension bridge, the Machhakhola market bridge, a bridge at Soti bazaar and the Bailey bridge at Dobhan were all destroyed, cutting the Manaslu route",
+   ne:"केराउजाको झोलुङ्गे पुल, माछाखोला बजारको पुल, सोती बजारको पुल र डोभानको बेली पुल भत्किए, मनास्लु मार्ग अवरुद्ध"},
+  {src:"POLICE", en:"Police urge people to stay off the banks of the Budhi Gandaki all the way down to the Trishuli confluence at Dobhan and to move to higher ground",
+   ne:"प्रहरीले बुढीगण्डकीको किनारबाट त्रिशूली मिल्ने डोभानसम्मै टाढा रहन र अग्लो ठाउँमा सर्न आग्रह गर्‍यो"},
+  {src:"CASUALTIES", en:"No human casualties had been reported as of the latest update; damage surveys are continuing and helicopters have been mobilised for rescue in the affected area",
+   ne:"पछिल्लो अद्यावधिकसम्म कुनै मानवीय क्षति भएको खबर छैन; क्षति आकलन जारी छ र प्रभावित क्षेत्रमा उद्धारका लागि हेलिकप्टर परिचालन गरिएको छ"},
+  {src:"CAUSE", en:"Police link the flood to the landslide dam releasing and to a sudden rise in the Ugylung and Syar streams that feed the Budhi Gandaki",
+   ne:"प्रहरीले यो बाढीलाई पहिरोले थुनेको ताल फुट्नु र बुढीगण्डकीमा मिसिने उग्लुङ तथा स्यार खोलाको अचानक बढेको बहावसँग जोडेका छन्"},
+  {src:"DASHAIN", en:"Rivers and hill slopes stay dangerous during the Dashain travel week — if you are on the road, confirm your route with the traffic police on 103 and keep clear of swollen rivers",
+   ne:"दशैंको यात्रा साता नदी र पहाडी भिर जोखिमपूर्ण छन् — बाटोमा हुनुहुन्छ भने १०३ मा ट्राफिक प्रहरीसँग मार्ग पक्का गर्नुहोस् र बढेका नदीबाट टाढा रहनुहोस्"}
 ];
 
 /* -------------------- NEWS / BULLETINS (20, sourced; full articles) -------------------- */
 const WK="https://en.wikipedia.org/wiki/2026_Nepal_floods";
 const NEWS = [
+  {sev:"danger", tag:{en:"Flood",ne:"बाढी"}, time:"11 Oct 2026", src:"The Kathmandu Post",
+   url:"https://kathmandupost.com/national/2026/10/11/flood-sweeps-away-seven-houses-in-gorkha",
+   title:{en:"Flood sweeps away seven houses in Gorkha",
+          ne:"गोरखामा बाढीले सात घर बगायो"},
+   body:{en:"A sudden surge on the Budhi Gandaki swept away seven houses at Jagat in northern Gorkha on the morning of 11 October, police said. There were no reports of human casualties.",
+         ne:"११ अक्टोबर बिहान उत्तरी गोरखाको जगतमा बुढीगण्डकीको आकस्मिक बाढीले सात घर बगाएको प्रहरीले जनायो। मानवीय क्षतिको खबर छैन।"},
+   long:{en:"A sudden surge on the Budhi Gandaki river swept away seven houses in Jagat, in Chumanubri Rural Municipality of northern Gorkha, on the morning of Sunday 11 October, according to police. The water rose after a landslide dammed the river upstream near Chhekampar overnight and then broke through at around 06:15. Officials also linked the surge to a sudden rise in the Ugylung and Syar streams that feed the Budhi Gandaki. The flood damaged the markets at Salleri and Jagat. No human casualties had been reported and a detailed assessment of the damage was still awaited. Police asked people to keep away from the riverbanks and move to higher ground.",
+         ne:"प्रहरीका अनुसार आइतबार ११ अक्टोबर बिहान उत्तरी गोरखाको चुमनुव्री गाउँपालिका जगतमा बुढीगण्डकी नदीको आकस्मिक बाढीले सात घर बगायो। रातभरि चेकम्पार नजिक माथिल्लो भेगमा पहिरोले नदी थुनेपछि करिब ६:१५ बजे फुटेर पानी बढेको हो। अधिकारीहरूले यो बाढीलाई बुढीगण्डकीमा मिसिने उग्लुङ र स्यार खोलाको अचानक बढेको बहावसँग पनि जोडेका छन्। बाढीले सल्लेरी र जगतका बजारमा क्षति पुर्‍यायो। कुनै मानवीय क्षतिको खबर नभए पनि विस्तृत क्षति आकलन बाँकी छ। प्रहरीले नदी किनारबाट टाढा रहन र अग्लो ठाउँमा सर्न आग्रह गरेको छ।"}},
+
+  {sev:"danger", tag:{en:"Flood",ne:"बाढी"}, time:"11 Oct 2026", src:"Ratopati",
+   url:"https://english.ratopati.com/story/83255/budhi-gandaki-flood-major-damage-also-occurred-in-machikhola-bazaar-suspension-bridge-leading-to-kerauja-washed-away",
+   title:{en:"Budhi Gandaki flood causes major damage in Gorkha; Kerauja bridge washed away",
+          ne:"बुढीगण्डकी बाढीले गोरखामा ठूलो क्षति; केराउजाको पुल बग्यो"},
+   body:{en:"The Budhi Gandaki flood caused considerable damage in Machhakhola bazaar and washed away the suspension bridge leading to Kerauja, Ratopati reported.",
+         ne:"बुढीगण्डकी बाढीले माछाखोला बजारमा उल्लेख्य क्षति पुर्‍यायो र केराउजा जाने झोलुङ्गे पुल बगायो।"},
+   long:{en:"The flash flood on the Budhi Gandaki caused major damage in the Machhakhola bazaar area of northern Gorkha and washed away the suspension bridge that links to Kerauja, Ratopati reported. The flood followed a landslide that dammed and then released the river. Salleri bazaar was reported washed away and houses were swept off along the river. Police urged residents and trekkers on the Manaslu route to stay clear of the banks down to the Trishuli confluence at Dobhan while the situation was still changing.",
+         ne:"बुढीगण्डकीको आकस्मिक बाढीले उत्तरी गोरखाको माछाखोला बजार क्षेत्रमा ठूलो क्षति पुर्‍यायो र केराउजा जोड्ने झोलुङ्गे पुल बगायो। पहिरोले नदी थुनेर फेरि फुटेपछि यो बाढी आएको हो। सल्लेरी बजार बगेको र नदी किनारका घर बगेको खबर छ। अवस्था परिवर्तनशील रहेकाले प्रहरीले बासिन्दा र मनास्लु मार्गका पदयात्रीलाई डोभानको त्रिशूली संगमसम्मै किनारबाट टाढा रहन आग्रह गर्‍यो।"}},
+
+  {sev:"danger", tag:{en:"Flood",ne:"बाढी"}, time:"11 Oct 2026", src:"Khabarhub",
+   url:"https://english.khabarhub.com/2026/11/571524/",
+   title:{en:"Budhi Gandaki flood sweeps away 35 houses in Gorkha's Chumanubri",
+          ne:"बुढीगण्डकी बाढीले गोरखाको चुमनुव्रीमा ३५ घर बगायो"},
+   body:{en:"Flooding on the Budhi Gandaki swept away about 35 houses in the Paiyu and Bagar settlements of Chumanubri Rural Municipality, Khabarhub reported.",
+         ne:"बुढीगण्डकीको बाढीले चुमनुव्री गाउँपालिकाका पैयु र बगर बस्तीका करिब ३५ घर बगायो।"},
+   long:{en:"Flooding on the Budhi Gandaki swept away about 35 houses in the Paiyu and Bagar settlements of Chumanubri Rural Municipality in northern Gorkha, Khabarhub reported — a higher count than other early reports, which put the number of homes lost at seven. Differences between outlets are common in the first hours of a disaster as information comes in from scattered settlements. The flood also damaged bridges and market areas along the river. Authorities were still assessing the full scale of the damage and no deaths had been confirmed.",
+         ne:"बुढीगण्डकीको बाढीले उत्तरी गोरखाको चुमनुव्री गाउँपालिकाका पैयु र बगर बस्तीका करिब ३५ घर बगाएको खबरहबले जनायो — अन्य प्रारम्भिक खबरले सात घर भनेकोमा यो बढी संख्या हो। विपद्को सुरुका घण्टामा छरिएका बस्तीबाट सूचना आउँदा यस्तो फरक सामान्य हो। बाढीले नदी किनारका पुल र बजार क्षेत्रमा पनि क्षति पुर्‍यायो। अधिकारीहरूले पूर्ण क्षतिको आकलन गर्दै थिए र कुनै मृत्यु पुष्टि भएको थिएन।"}},
+
+  {sev:"danger", tag:{en:"Bridge",ne:"पुल"}, time:"11 Oct 2026", src:"Ratopati",
+   url:"https://english.ratopati.com/story/83258/budhi-gandaki-flood-reaches-soti-bazaar-washes-away-dobhans-bailey-bridge",
+   title:{en:"Floodwaters reach Soti bazaar, destroy Dobhan's Bailey bridge",
+          ne:"बाढी सोती बजार पुग्यो, डोभानको बेली पुल भत्कियो"},
+   body:{en:"The Budhi Gandaki flood reached Soti bazaar downstream, washing away a bridge and temporary structures, and destroyed the Bailey bridge at Dobhan, Ratopati reported.",
+         ne:"बुढीगण्डकी बाढी तल सोती बजार पुग्दा पुल र अस्थायी संरचना बगायो र डोभानको बेली पुल भत्कायो।"},
+   long:{en:"As the Budhi Gandaki surge moved downstream it reached Soti bazaar, where it washed away a bridge and some temporary structures, and it destroyed the Bailey bridge at Dobhan, Ratopati reported. With bridges gone at Kerauja, Machhakhola, Soti and Dobhan, crossings on the lower river and the Manaslu trekking route were cut. Police repeated their warning for people to stay off the banks all the way down to the Trishuli confluence, where the Budhi Gandaki joins the larger river system, until authorities confirmed the water had settled.",
+         ne:"बुढीगण्डकीको बाढी तलतिर बढ्दै सोती बजार पुग्यो, जहाँ पुल र केही अस्थायी संरचना बगायो र डोभानको बेली पुल भत्कायो। केराउजा, माछाखोला, सोती र डोभानका पुल भत्किएपछि तल्लो नदी र मनास्लु पदमार्गका तर्ने ठाउँ कटे। बुढीगण्डकी ठूलो नदी प्रणालीमा मिसिने त्रिशूली संगमसम्मै, अधिकारीले पानी शान्त भएको पुष्टि नगरेसम्म किनारबाट टाढा रहन प्रहरीले दोहोर्‍यायो।"}},
+
   {sev:"danger", tag:{en:"Rain",ne:"वर्षा"}, time:"27 Sept 2026", src:"NDRRMA via The Tribune / The Kathmandu Post / Nepal News / Onlinekhabar",
    url:"https://www.tribuneindia.com/news/world/at-least-14-people-dead-in-72-hours-as-relentless-rainfall-wreaks-havoc-in-nepal",
    title:{en:"At least 14 dead in 72 hours as heavy rain triggers landslides; 11 highways blocked",
@@ -834,9 +843,12 @@ const I18N = {
   "hero.note.ok":"Status reflects official DHM, NDRRMA and Department of Roads feeds as of {date}. \"No active emergency\" means no nationwide warning is in force — localised hazards can still occur, so check the Weather and Live Alert Map pages before travelling, and always verify with official sources.",
   "la.allclear":"No active warnings","la.allclear.s":"No nationwide warning is currently in force. Open the live Alert Map for district-level river and rainfall conditions. Monitoring continues.",
   "hero.eyebrow":"Active Disaster · Live Situation",
-  "hero.note":"Provisional Nepal-side figures confirmed by Nepal Police and NDRRMA (as of {date}). Counts auto-update and are being revised as search operations continue — not final. Verify against official Nepal Police / NDRRMA bulletins.",
+  "hero.note":"Early, provisional figures from the 11 October Budhi Gandaki flood in Gorkha — counts vary between outlets and will change as surveys continue. Live news and highway notices below update on their own; verify with Nepal Police and the local administration.",
   "hero.help":"Emergency Helplines","hero.report":"Report an Incident",
   "stat.deaths":"Confirmed Deaths","stat.missing":"Reported Missing","stat.foreign":"Foreign Nationals Missing","stat.rescued":"Total Rescued",
+  "stat.bgHomes":"Homes Swept Away","stat.bgBridges":"Bridges Destroyed","stat.bgMarkets":"Market Bazaars Hit","stat.bgDeaths":"Deaths Reported",
+  "hwhome.eye":"Roads · Dashain travel · auto-updating","hwhome.h":"Highway & Travel","hwhome.more":"Full highway status →","hwhome.load":"Loading live road notices…","hwhome.none":"No live road notices right now — confirm your route on 103 before you travel.",
+  "hwhome.note":"The flood is on the Budhi Gandaki in Gorkha, not the main highways — but Dashain traffic is heavy this week and rivers and slopes stay dangerous. Confirm your route with the traffic police (103) before you set off.",
   "stat.sub.deaths":"Nepal Police · rising","stat.sub.missing":"incl. 592 foreign","stat.sub.foreign":"tourists & NRNs","stat.sub.rescued":"NDRRMA · live count","stat.tap":"Tap for breakdown →",
   "sec.hl.eye":"Call for Help · Toll-free 24×7","sec.hl.h":"Emergency Helplines",
   "hl.national":"National","hl.district":"Affected Districts","hl.more":"All helplines →",
@@ -870,9 +882,12 @@ const I18N = {
   "hero.note.ok":"यो अवस्था {date} सम्मको DHM, NDRRMA र सडक विभागका आधिकारिक स्रोतमा आधारित छ। \"कुनै सक्रिय विपद् छैन\" भन्नुको अर्थ देशव्यापी चेतावनी लागू छैन — स्थानीय जोखिम भने हुन सक्छ, त्यसैले यात्रा अघि मौसम र प्रत्यक्ष सतर्कता नक्सा पृष्ठ हेर्नुहोस् र आधिकारिक स्रोतसँग रुजु गर्नुहोस्।",
   "la.allclear":"कुनै सक्रिय चेतावनी छैन","la.allclear.s":"हाल देशव्यापी चेतावनी लागू छैन। जिल्लागत नदी र वर्षाको अवस्थाका लागि प्रत्यक्ष सतर्कता नक्सा खोल्नुहोस्। निगरानी जारी छ।",
   "hero.eyebrow":"सक्रिय विपद् · पछिल्लो अवस्था",
-  "hero.note":"नेपाल प्रहरी र NDRRMA द्वारा पुष्टि गरिएको नेपालतर्फको प्रारम्भिक तथ्यांक ({date} सम्म)। तथ्यांक स्वतः अद्यावधिक हुन्छ र खोजी कार्य जारी रहेकाले संशोधन हुँदैछ — अन्तिम होइन। आधिकारिक नेपाल प्रहरी / NDRRMA विवरणसँग रुजु गर्नुहोस्।",
+  "hero.note":"११ अक्टोबरको गोरखा बुढीगण्डकी बाढीका प्रारम्भिक तथ्यांक — स्रोतपिच्छे फरक छन् र आकलन जारी रहँदा परिवर्तन हुनेछन्। तलका प्रत्यक्ष समाचार र राजमार्ग सूचना आफैं अद्यावधिक हुन्छन्; नेपाल प्रहरी र स्थानीय प्रशासनसँग रुजु गर्नुहोस्।",
   "hero.help":"आपत्कालीन हेल्पलाइन","hero.report":"घटना जानकारी दिनुहोस्",
   "stat.deaths":"पुष्टि भएका मृत्यु","stat.missing":"बेपत्ता","stat.foreign":"बेपत्ता विदेशी नागरिक","stat.rescued":"कुल उद्धार",
+  "stat.bgHomes":"बगेका घर","stat.bgBridges":"भत्किएका पुल","stat.bgMarkets":"प्रभावित बजार","stat.bgDeaths":"मृत्यु खबर",
+  "hwhome.eye":"सडक · दशैं यात्रा · स्वतः अद्यावधिक","hwhome.h":"राजमार्ग र यात्रा","hwhome.more":"पूरा राजमार्ग स्थिति →","hwhome.load":"प्रत्यक्ष सडक सूचना लोड हुँदै…","hwhome.none":"अहिले कुनै प्रत्यक्ष सडक सूचना छैन — यात्रा अघि १०३ मा मार्ग पक्का गर्नुहोस्।",
+  "hwhome.note":"बाढी गोरखाको बुढीगण्डकीमा हो, मुख्य राजमार्गमा होइन — तर यस साता दशैंको भीड उच्च छ र नदी तथा भिर जोखिमपूर्ण छन्। हिँड्नुअघि ट्राफिक प्रहरी (१०३) सँग मार्ग पक्का गर्नुहोस्।",
   "stat.sub.deaths":"नेपाल प्रहरी · बढ्दै","stat.sub.missing":"५९२ विदेशीसहित","stat.sub.foreign":"पर्यटक र गैरआवासीय","stat.sub.rescued":"हवाई · NDRRMA","stat.tap":"विस्तृत विवरण →",
   "sec.hl.eye":"सहयोगका लागि सम्पर्क · निःशुल्क २४×७","sec.hl.h":"आपत्कालीन हेल्पलाइन",
   "hl.national":"राष्ट्रिय","hl.district":"प्रभावित जिल्लाहरू","hl.more":"सबै हेल्पलाइन →",
@@ -975,11 +990,25 @@ function newsDate(n){
   try{ return new Date(n.ts).toLocaleDateString(LANG==="ne"?"ne-NP":"en-GB",{day:"numeric",month:"short",year:"numeric"}); }
   catch(_){ return ""; }
 }
+/* Try the live serverless endpoint first; if it is not reachable (e.g. the site
+   is served as plain static files with no /api), fall back to the committed
+   snapshot in assets/news_cache.json, which a scheduled GitHub Action refreshes
+   every hour and pushes to the repo. Either way the headlines keep moving on
+   their own without anyone editing this file. */
+async function _getFeed(apiPath, cachePath){
+  try{
+    const r=await fetch(apiPath,{signal:AbortSignal.timeout(9000)});
+    if(r.ok){ const j=await r.json(); if(j && Array.isArray(j.items) && j.items.length) return j; }
+  }catch(_){}
+  try{
+    const r=await fetch(cachePath+"?_="+Date.now(),{cache:"no-store",signal:AbortSignal.timeout(9000)});
+    if(r.ok){ const j=await r.json(); if(j && Array.isArray(j.items) && j.items.length) return j; }
+  }catch(_){}
+  return null;
+}
 async function fetchLiveNews(){
   try{
-    const r=await fetch("/api/news",{signal:AbortSignal.timeout(9000)});
-    if(!r.ok) return;
-    const j=await r.json();
+    const j=await _getFeed("/api/news","assets/news_cache.json");
     if(j && Array.isArray(j.items) && j.items.length){
       const firstLoad = !LIVE_NEWS;
       LIVE_NEWS=j.items;
@@ -1043,7 +1072,7 @@ function renderStats(){
   }
   wrap.classList.remove("hero__stats--ok");
   wrap.innerHTML=STATS.map(s=>`
-    <a class="hstat ${s.cls||''}" href="stats.html#${s.key}" aria-label="${esc(t("stat."+s.key))}">
+    <a class="hstat ${s.cls||''}" href="${esc(s.href||("stats.html#"+s.key))}" aria-label="${esc(t("stat."+s.key))}">
       <div class="n mono">${esc(toNepDigits(s.n))}</div>
       <div class="lbl">${esc(t("stat."+s.key))}</div>
       <div class="hstat__go">${esc(t("stat.tap"))}</div>
@@ -2081,6 +2110,7 @@ function wire(){
   setupManualSync();
   fetchLiveNews();                                                // pull live headlines now…
   setInterval(fetchLiveNews, 600000);                            // …and every 10 minutes
+  if($("#hwHomeList")){ renderHomeHighways(); fetchHomeHighways(); setInterval(fetchHomeHighways, 600000); }  // homepage highway band — live road notices every 10 min
   // maybeNewsPopup() used to be reachable ONLY from a successful /api/news
   // response, so whenever the wire feed was down or empty the corner card never
   // appeared — including for a PINNED briefing, which is the one item that most
@@ -4616,7 +4646,7 @@ function setupManualSync(){
   // refresh immediately when the tab becomes visible again (cheap, catches up fast)
   if(!window.__ndVis){
     window.__ndVis=true;
-    const catchUp=()=>{ liveRefresh(); fetchLiveAlerts(); fetchLiveNews(); fetchDistrictWarnings().then(updateWarnReopen); if($("#hwRoot")){ fetchHighways(); fetchHighwayNews(); } };
+    const catchUp=()=>{ liveRefresh(); fetchLiveAlerts(); fetchLiveNews(); fetchHomeHighways(); fetchDistrictWarnings().then(updateWarnReopen); if($("#hwRoot")){ fetchHighways(); fetchHighwayNews(); } };
     document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="visible") catchUp(); });
     // Coming back onto a signal is the other moment worth catching up on, and
     // the one that matters on a phone in a valley. Reset the backoff so the
@@ -4646,8 +4676,30 @@ async function fetchHighways(){
 }
 async function fetchHighwayNews(){
   if(!$("#hwRoot")) return;
-  try{ const r=await fetch("/api/highways",{signal:AbortSignal.timeout(9000)}); if(r.ok){ const j=await r.json(); if(j&&Array.isArray(j.items)) HW_NEWS=j.items; } }catch(_){}
+  const j=await _getFeed("/api/highways","assets/highways_cache.json");
+  if(j&&Array.isArray(j.items)) HW_NEWS=j.items;
   renderHighways();
+}
+/* ---- Homepage highway band: a compact live road-notice list wired to the same
+   /api/highways feed (snapshot fallback), shown above the map so Dashain
+   travellers see it straight away. Self-contained so it never disturbs the full
+   Highway Updates page. ---- */
+let HOME_HW=null;
+function renderHomeHighways(){
+  const g=$("#hwHomeList"); if(!g) return;
+  if(!HOME_HW){ g.innerHTML=`<p class="hwhome__load mono">${esc(t("hwhome.load"))}</p>`; return; }
+  if(!HOME_HW.length){ g.innerHTML=`<p class="hwhome__load mono">${esc(t("hwhome.none"))}</p>`; return; }
+  g.innerHTML=HOME_HW.slice(0,6).map(n=>`
+    <a class="hwhome__row" href="${esc(n.url)}" target="_blank" rel="noopener">
+      <span class="hwhome__src mono">${esc((n.source||"ROAD").toUpperCase().slice(0,18))}</span>
+      <span class="hwhome__t">${esc(n.title)}</span>
+    </a>`).join("");
+}
+async function fetchHomeHighways(){
+  if(!$("#hwHomeList")) return;
+  const j=await _getFeed("/api/highways","assets/highways_cache.json");
+  HOME_HW=(j&&Array.isArray(j.items))?j.items:[];
+  renderHomeHighways();
 }
 const _HW_RANK={closed:0,oneway:1,caution:2,open:3};
 function _hwSevRank(s){ return _HW_RANK[s]!=null?_HW_RANK[s]:3; }
