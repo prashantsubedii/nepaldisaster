@@ -175,6 +175,9 @@ const EVENT = {
   since:"2026-10-11T06:15:00+05:45",   // landslide dam above Chhekampar released around 06:15 NPT, 11 Oct 2026
   title:{en:"2026 Budhi Gandaki Flood", ne:"२०२६ बुढीगण्डकी बाढी"},
   region:{en:"Gorkha · Chumanubri · Budhi Gandaki corridor · downstream to the Trishuli at Dobhan", ne:"गोरखा · चुमनुव्री · बुढीगण्डकी कोरिडोर · तल त्रिशूली (डोभान) सम्म"},
+  // Short line for the top EAS strip — the full account lives in EVENT.eas / the
+  // details page, so the strip stays a one-liner instead of a paragraph.
+  strip:{en:"Active event · Budhi Gandaki flash flood, Gorkha — 11 Oct 2026", ne:"सक्रिय घटना · बुढीगण्डकी आकस्मिक बाढी, गोरखा — ११ अक्टोबर २०२६"},
   // FIRST-PAINT copy, shown for the second or two before assets/live_data.json
   // answers. Keep it word-for-word in step with that file's event.eas — if it
   // drifts, the banner briefly contradicts the hero underneath it, and offline
@@ -257,6 +260,10 @@ const RAINWARN = {
   badge:{en:"ACTIVE EMERGENCY · FLOOD WARNING", ne:"सक्रिय आपत्कालीन · बाढी चेतावनी"},
   title:{en:"Budhi Gandaki flash flood — Gorkha",
          ne:"बुढीगण्डकी आकस्मिक बाढी — गोरखा"},
+  // One-sentence brief for the compact homepage card. The full lead/precautions
+  // show on flood-details.html.
+  brief:{en:"A landslide dam on the Budhi Gandaki burst above Chhekampar early on 11 Oct, washing away Salleri bazaar, homes and bridges through northern Gorkha. No deaths reported yet — stay off the riverbanks down to Dobhan.",
+         ne:"बुढीगण्डकीमा चेकम्पारमाथिको पहिरो-ताल ११ अक्टोबर बिहान फुट्दा उत्तरी गोरखामा सल्लेरी बजार, घर र पुल बगे। अहिलेसम्म मृत्यु खबर छैन — डोभानसम्मै नदी किनारबाट टाढा रहनुहोस्।"},
   lead:{en:"A landslide dammed the Budhi Gandaki above Chhekampar overnight. Water broke through at around 06:15 on Sunday 11 October and surged down through Chumanubri Rural Municipality in northern Gorkha. Salleri bazaar was washed away and houses were swept off at Jagat, Paiyu and Bagar — early counts range from seven to about 35 homes. The Kerauja suspension bridge, the Machhakhola market bridge, a bridge at Soti bazaar and the Bailey bridge at Dobhan have all been destroyed. No human casualties have been reported so far and damage surveys are still under way; helicopters have been mobilised for rescue. The river briefly blocked and reopened again, so further surges are possible downstream.",
         ne:"चेकम्पारमाथि रातभरि पहिरोले बुढीगण्डकी थुनेको थियो। आइतबार ११ अक्टोबर करिब ६:१५ बजे पानी फुटेर उत्तरी गोरखाको चुमनुव्री गाउँपालिका हुँदै बाढी आयो। सल्लेरी बजार बग्यो र जगत, पैयु तथा बगरका घर बगे — प्रारम्भिक विवरणमा सात देखि करिब ३५ घर। केराउजाको झोलुङ्गे पुल, माछाखोला बजारको पुल, सोती बजारको पुल र डोभानको बेली पुल सबै भत्किए। अहिलेसम्म कुनै मानवीय क्षति भएको खबर छैन र क्षति आकलन जारी छ; उद्धारका लागि हेलिकप्टर परिचालन गरिएको छ। नदी केहीबेर थुनिएर फेरि खुलेकाले तल थप बाढीको सम्भावना छ।"},
   today:{en:"Police have asked everyone to stay off the banks of the Budhi Gandaki all the way down to the Trishuli confluence at Dobhan, and to move to higher ground. The surge is linked to the landslide dam releasing and to a sudden rise in the Ugylung and Syar streams that feed the river. Detailed damage figures are still awaited from the district administration.",
@@ -849,6 +856,8 @@ const I18N = {
   "stat.bgHomes":"Homes Swept Away","stat.bgBridges":"Bridges Destroyed","stat.bgMarkets":"Market Bazaars Hit","stat.bgDeaths":"Deaths Reported",
   "hwhome.eye":"Roads · Dashain travel · auto-updating","hwhome.h":"Highway & Travel","hwhome.more":"Full highway status →","hwhome.load":"Loading live road notices…","hwhome.none":"No live road notices right now — confirm your route on 103 before you travel.",
   "hwhome.note":"The flood is on the Budhi Gandaki in Gorkha, not the main highways — but Dashain traffic is heavy this week and rivers and slopes stay dangerous. Confirm your route with the traffic police (103) before you set off.",
+  "briefs.eye":"Latest · auto-updating","briefs.h":"Latest Disaster Briefs","briefs.more":"All news →","briefs.load":"Loading latest briefs…",
+  "fdet.back":"Back to home","fdet.eye":"Active event · full report","fdet.facts.eye":"Verified so far · figures will change","fdet.facts.h":"Key Facts","fdet.note":"Counts vary between outlets in the first hours of a disaster and will change as damage surveys continue. Verify with Nepal Police and the Gorkha district administration before acting.","fdet.src.eye":"Published reporting","fdet.src.h":"Sources",
   "stat.sub.deaths":"Nepal Police · rising","stat.sub.missing":"incl. 592 foreign","stat.sub.foreign":"tourists & NRNs","stat.sub.rescued":"NDRRMA · live count","stat.tap":"Tap for breakdown →",
   "sec.hl.eye":"Call for Help · Toll-free 24×7","sec.hl.h":"Emergency Helplines",
   "hl.national":"National","hl.district":"Affected Districts","hl.more":"All helplines →",
@@ -888,6 +897,8 @@ const I18N = {
   "stat.bgHomes":"बगेका घर","stat.bgBridges":"भत्किएका पुल","stat.bgMarkets":"प्रभावित बजार","stat.bgDeaths":"मृत्यु खबर",
   "hwhome.eye":"सडक · दशैं यात्रा · स्वतः अद्यावधिक","hwhome.h":"राजमार्ग र यात्रा","hwhome.more":"पूरा राजमार्ग स्थिति →","hwhome.load":"प्रत्यक्ष सडक सूचना लोड हुँदै…","hwhome.none":"अहिले कुनै प्रत्यक्ष सडक सूचना छैन — यात्रा अघि १०३ मा मार्ग पक्का गर्नुहोस्।",
   "hwhome.note":"बाढी गोरखाको बुढीगण्डकीमा हो, मुख्य राजमार्गमा होइन — तर यस साता दशैंको भीड उच्च छ र नदी तथा भिर जोखिमपूर्ण छन्। हिँड्नुअघि ट्राफिक प्रहरी (१०३) सँग मार्ग पक्का गर्नुहोस्।",
+  "briefs.eye":"पछिल्लो · स्वतः अद्यावधिक","briefs.h":"पछिल्ला विपद् ब्रिफ","briefs.more":"सबै समाचार →","briefs.load":"पछिल्ला ब्रिफ लोड हुँदै…",
+  "fdet.back":"गृहपृष्ठमा फर्कनुहोस्","fdet.eye":"सक्रिय घटना · पूर्ण विवरण","fdet.facts.eye":"अहिलेसम्म पुष्टि · तथ्यांक परिवर्तन हुनेछन्","fdet.facts.h":"मुख्य तथ्य","fdet.note":"विपद्को सुरुका घण्टामा स्रोतपिच्छे तथ्यांक फरक हुन्छन् र क्षति आकलन जारी रहँदा परिवर्तन हुनेछन्। कार्य गर्नुअघि नेपाल प्रहरी र गोरखा जिल्ला प्रशासनसँग रुजु गर्नुहोस्।","fdet.src.eye":"प्रकाशित रिपोर्टिङ","fdet.src.h":"स्रोतहरू",
   "stat.sub.deaths":"नेपाल प्रहरी · बढ्दै","stat.sub.missing":"५९२ विदेशीसहित","stat.sub.foreign":"पर्यटक र गैरआवासीय","stat.sub.rescued":"हवाई · NDRRMA","stat.tap":"विस्तृत विवरण →",
   "sec.hl.eye":"सहयोगका लागि सम्पर्क · निःशुल्क २४×७","sec.hl.h":"आपत्कालीन हेल्पलाइन",
   "hl.national":"राष्ट्रिय","hl.district":"प्रभावित जिल्लाहरू","hl.more":"सबै हेल्पलाइन →",
@@ -1017,6 +1028,7 @@ async function fetchLiveNews(){
       if(firstLoad && !NEWSPOP_SEEN.size){ LIVE_NEWS.forEach(n=>{ const id=_newsId(n); if(id) NEWSPOP_SEEN.add(id); }); _saveNewsPopSeen(); }
       renderTicker();
       renderNews(document.body.dataset.newsLimit?+document.body.dataset.newsLimit:0);
+      renderBriefs();
       renderNewsPage();
       // Offer the newest headline as a corner card. maybeNewsPopup() had been
       // written but never called from anywhere, so the card could not appear at
@@ -1049,7 +1061,7 @@ function renderEvent(){
     if(eas) eas.classList.add("eas--ok");
     if(hero) hero.classList.add("hero--ok");
   }else{
-    $$("[data-eas]").forEach(e=>e.textContent=TL(EVENT.eas));
+    $$("[data-eas]").forEach(e=>e.textContent=TL(EVENT.strip||EVENT.eas));
     $$("[data-event-title]").forEach(e=>e.textContent=TL(EVENT.title));
     $$("[data-event-region]").forEach(e=>e.textContent=TL(EVENT.region));
     if(lab) lab.textContent=t("eas.label");
@@ -1122,6 +1134,32 @@ document.addEventListener("error", e=>{
   }
 }, true);
 const THUMB_PH='<div class="ph"><svg viewBox="0 0 48 48"><path d="M4 34c4-6 8-6 12 0s8 6 12 0 8-6 12 0"/><path d="M4 24c4-6 8-6 12 0s8 6 12 0 8-6 12 0" opacity=".5"/><path d="M10 14 24 6l14 8"/></svg></div>';
+/* Latest Disaster Briefs — a tight, scannable list of the newest live headlines
+   for the homepage. Live wire first (auto-updating), built-in bulletins as the
+   fallback. Deliberately one line each: the homepage is for briefs, the News and
+   details pages carry the long copy. */
+function renderBriefs(){
+  const g=$("#briefsList"); if(!g) return;
+  if(LIVE_NEWS && LIVE_NEWS.length){
+    g.innerHTML=LIVE_NEWS.slice(0,6).map(n=>`
+      <a class="brief" href="${esc(n.url)}" target="_blank" rel="noopener">
+        <span class="brief__src mono">${esc((n.source||"NEWS").toUpperCase().slice(0,18))}</span>
+        <span class="brief__t">${esc(n.title)}</span>
+        <span class="brief__d mono">${esc(newsDate(n))}</span>
+      </a>`).join("");
+    return;
+  }
+  if(typeof NEWS!=="undefined" && NEWS.length){
+    g.innerHTML=NEWS.slice(0,6).map(n=>{const id=NEWS.indexOf(n);return `
+      <a class="brief" href="news.html?id=${id}">
+        <span class="brief__src mono">${esc((n.src||"NEWS").toUpperCase().slice(0,18))}</span>
+        <span class="brief__t">${esc(TL(n.title))}</span>
+        <span class="brief__d mono">${esc(n.time||"")}</span>
+      </a>`;}).join("");
+    return;
+  }
+  g.innerHTML=`<p class="brief__load mono">${esc(t("briefs.load"))}</p>`;
+}
 function renderNews(limit){
   const g=$("#newsGrid"); if(!g) return;
   // Live headlines take priority — real, dated, auto-updating.
@@ -1654,7 +1692,29 @@ function renderRainWarn(){
     root.innerHTML=""; return;
   }
   const W=RAINWARN;
-  const prec=W.precautions.slice(0,4).map(p=>`<li>${esc(TL(p))}</li>`).join("");
+  // Compact brief for the homepage (root carries data-compact); the full account
+  // renders on the details page, where the root has no data-compact flag.
+  if(root.hasAttribute("data-compact")){
+    root.innerHTML=`
+    <div class="rwarn rwarn--${esc(W.level)} rwarn--brief">
+      <div class="rwarn__in">
+        <div class="rwarn__head">
+          <span class="rwarn__badge">${XTRI}<span>${esc(TL(W.badge))}</span></span>
+          <span class="rwarn__win mono">${esc(toNepDigits(W.window))}</span>
+          <span class="rwarn__ago mono">${esc(_warnAgo(Date.parse(W.updated)))}</span>
+        </div>
+        <h2 class="rwarn__title">${esc(TL(W.title))}</h2>
+        <p class="rwarn__lead">${esc(TL(W.brief||W.lead))}</p>
+        <div class="rwarn__cta">
+          <a class="btn btn--primary btn--sm" href="flood-details.html">${esc(t("rw.details"))}</a>
+          <a class="btn btn--sm" href="#helplines">${esc(t("hero.help"))}</a>
+          <a class="btn btn--sm" href="alerts.html">${esc(t("rw.map"))}</a>
+        </div>
+      </div>
+    </div>`;
+    return;
+  }
+  const prec=W.precautions.map(p=>`<li>${esc(TL(p))}</li>`).join("");
   root.innerHTML=`
     <div class="rwarn rwarn--${esc(W.level)}">
       <div class="rwarn__bar" aria-hidden="true"></div>
@@ -1674,10 +1734,11 @@ function renderRainWarn(){
             <ul>${prec}</ul>
           </div>
         </div>
+        ${W.highway?`<p class="rwarn__hwynote">${esc(TL(W.highway))}</p>`:""}
         <div class="rwarn__cta">
-          <a class="btn btn--primary btn--sm" href="weather.html">${esc(t("rw.view"))}</a>
+          <a class="btn btn--primary btn--sm" href="highway-updates.html">${esc(t("rw.highway"))}</a>
           <a class="btn btn--sm" href="alerts.html">${esc(t("rw.map"))}</a>
-          <a class="btn btn--sm" href="highway-updates.html">${esc(t("rw.highway"))}</a>
+          <a class="btn btn--sm" href="weather.html">${esc(t("rw.view"))}</a>
           ${W.url?`<a class="btn btn--sm" href="${esc(W.url)}" target="_blank" rel="noopener">${esc(t("fpop.report"))}</a>`:""}
         </div>
         <p class="rwarn__src">${esc(t("fpop.source"))} · ${esc(W.source)}</p>
@@ -1899,6 +1960,10 @@ function _rainPopDismiss(){
   const el=$("#rpop"); if(el){ el.classList.add("is-out"); setTimeout(()=>el.remove(),260); }
 }
 function maybeRainPopup(){
+  // Auto corner-card popups were removed (2026-10-11): they stacked with the news
+  // card, overlapped other sections and did not always dismiss. The active alert
+  // now lives in the inline card + the header bell drawer instead.
+  return;
   if(!RAINWARN.active) return;
   if(_rainPopDismissed()) return;
   if(popupBudgetSpent()) return;
@@ -1923,7 +1988,7 @@ function maybeRainPopup(){
 
 function renderAll(){
   renderTicker(); renderEvent(); renderStats(); renderHelplines(); renderRainWarn(); renderWeather(); renderSituation(); renderLatestAlerts();
-  renderNews(document.body.dataset.newsLimit?+document.body.dataset.newsLimit:0);
+  renderNews(document.body.dataset.newsLimit?+document.body.dataset.newsLimit:0); renderBriefs();
   renderHistory(); renderRelief(); renderAlerts(); renderMissing();
   renderNotifs(); renderGallery(); renderFullGallery(); renderNewsPage(); renderStatsPage(); renderMissingSummary(); renderRescuePage(); renderReliefCollected(); renderHighways(); setSync();
   renderOfficialMissing();
@@ -2146,6 +2211,7 @@ function wire(){
   setInterval(()=>{
     renderTicker();
     renderNews(document.body.dataset.newsLimit?+document.body.dataset.newsLimit:0);
+    renderBriefs();
     renderNewsPage();
   }, 600000);
   setInterval(()=>{ _eventImgs=null; renderGallery(); renderFullGallery(); },3600000); // extra images refresh hourly (stable set stays)
@@ -2195,7 +2261,7 @@ Object.assign(I18N.en,{
   "rw.updated":"Updated","rw.view":"View alert","rw.map":"View map",
   "nav.weather":"Weather",
   "rw.precautions":"Precautions",
-  "rw.forecast":"Weather forecast →","rw.allprec":"All precautions","rw.highway":"Highway precautions","rw.riskflag":"HIGH RISK",
+  "rw.forecast":"Weather forecast →","rw.allprec":"All precautions","rw.highway":"Highway precautions","rw.riskflag":"HIGH RISK","rw.details":"Full report & safety →",
   "wx.now.rain":"rain","wx.now.hum":"humidity","wx.hi":"Hi","wx.lo":"Lo","wx.rain":"Rain","wx.pop":"Chance",
   "wx.loading":"Loading the live forecast…","wx.fail":"The live forecast could not be reached right now. Follow the DHM warning above and check dhm.gov.np.",
   "wx.forecast.eye":"5-Day Forecast · Live","wx.forecast.h":"Forecast for flood-hit & at-risk districts",
@@ -2221,7 +2287,7 @@ Object.assign(I18N.ne,{
   "rw.updated":"अद्यावधिक","rw.view":"चेतावनी हेर्नुहोस्","rw.map":"नक्सा हेर्नुहोस्",
   "nav.weather":"मौसम",
   "rw.precautions":"सावधानी",
-  "rw.forecast":"मौसम पूर्वानुमान →","rw.allprec":"सबै सावधानी","rw.highway":"राजमार्ग सावधानी","rw.riskflag":"उच्च जोखिम",
+  "rw.forecast":"मौसम पूर्वानुमान →","rw.allprec":"सबै सावधानी","rw.highway":"राजमार्ग सावधानी","rw.riskflag":"उच्च जोखिम","rw.details":"पूर्ण विवरण र सुरक्षा →",
   "wx.now.rain":"वर्षा","wx.now.hum":"आर्द्रता","wx.hi":"अधि","wx.lo":"न्यून","wx.rain":"वर्षा","wx.pop":"सम्भावना",
   "wx.loading":"प्रत्यक्ष पूर्वानुमान लोड हुँदै…","wx.fail":"अहिले प्रत्यक्ष पूर्वानुमान प्राप्त हुन सकेन। माथिको DHM चेतावनी पालना गर्नुहोस् र dhm.gov.np हेर्नुहोस्।",
   "wx.forecast.eye":"५ दिने पूर्वानुमान · प्रत्यक्ष","wx.forecast.h":"बाढी प्रभावित र जोखिमयुक्त जिल्लाको पूर्वानुमान",
@@ -2687,6 +2753,7 @@ function _freshestNews(){
 
 let _newsPopScheduled=false;
 function maybeNewsPopup(){
+  return;   // auto news corner-card removed (2026-10-11) — see maybeRainPopup()
   if(_newsPopOpenFor || _newsPopScheduled) return;
   if(document.getElementById("newsPop")) return;
   if(sessionStorage.getItem("nd_npop_dismissed")) return;
