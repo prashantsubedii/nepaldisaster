@@ -1,6 +1,13 @@
 {
-  "at": 1791925791724,
+  "at": 1791939955025,
   "items": [
+    {
+      "title": "Traffic resumes on BP Highway",
+      "source": "The Rising Nepal",
+      "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE5wUWlQSFZ3SXl4WVNqTUtqRGJENG0zaEJaTExlcVBveGY1QU54Z0JRM1MzNXVFNmpnbjdFcUxOQ29sa04yN0l4QzVTa09ZaFhz?oc=5",
+      "date": "Tue, 13 Oct 2026 23:15:26 GMT",
+      "ts": 1791933326000
+    },
     {
       "title": "Only 30 percent of Mustang apples reach markets after road disruption",
       "source": "Nepalnews.com",
@@ -93,13 +100,6 @@
       "ts": 1791712158000
     },
     {
-      "title": "Flash flood damages trekking routes in Manaslu region, tourists feared stranded",
-      "source": "Everest Chronicle",
-      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPQldjbTVQR0ZNdUVJSUJKVzJYdjg1QmNiNDEwdXI1dGctQlJrN0pKSE1qNzZ6YWEwbERvSWNha01yQTFFc1pZbkhmOTBkMl94WlM3Z0xSMnVraXpLREdDb2hvWVF6OVF3elFoZ1NlUTdkTGJwVjdUOGw5NXBndFowcm1qZFFnMTRrclhWSUg0aTA2c0dxbkZFZDFCY1lnaDA1RFdpa3VmbGkyVUk?oc=5",
-      "date": "Sun, 11 Oct 2026 08:41:08 GMT",
-      "ts": 1791708068000
-    },
-    {
       "title": "Nepal landslide blocks river, sweeps away homes and bridges",
       "source": "JFeed",
       "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE80ZFp2Rm1JSFhuNnc0d2dJcHZQYTdmYkZ5QXA3LUpPcDdJZ3NNYlZEWGtrQkk1Y0RPM2t6OFlzMW90NnlreVVnSW83dlMtendP?oc=5",
@@ -107,11 +107,11 @@
       "ts": 1791706565000
     },
     {
-      "title": "Mule transport resumes as rains block rural roads",
-      "source": "The Rising Nepal",
-      "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE40cGkwb3lQOGFxSEw5eWY3UmRJcWRLUUJ3bnBGTjhWQVZHVlhVelFCcjlzRHF0SGhESWhscEl4VmR1SGtaaTc4a01GREE2S0lH?oc=5",
-      "date": "Sun, 11 Oct 2026 04:34:52 GMT",
-      "ts": 1791693292000
+      "title": "Flash flood in Gorkha’s Chumnubri, river suspected to be blocked",
+      "source": "OnlineKhabar English News",
+      "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTFBFcXRqMl9fWmRPTXVQSUdnVkVFNlBDSDBrNERCNTctbHlPWElRdk9LZW9sX0dkWXVEYV8tTlVmM0JvRVpDSFkxdHp5M3BNajNXYXNaT2tySlc1ZmdkYV96d0VoRTNKUnJ4U21PazhwdlFsd2J0d3c?oc=5",
+      "date": "Sun, 11 Oct 2026 02:09:49 GMT",
+      "ts": 1791684589000
     }
   ]
 }
