@@ -1,12 +1,19 @@
 {
-  "at": 1792490205613,
+  "at": 1792508150487,
   "items": [
     {
-      "title": "Asia's Premier News Agency - India News, Business & Political, National & International, Bollywood, Sports",
-      "source": "ANI News",
-      "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxPZG9tbW00cFhJQkd6MFlDOUJyWnB2eWR0V212bk1mVWd6bUhPalpCc1R6eWI4SGFobUpTN2RZRF9DYUxKQWFkRmxYbzlwNktFNzBsRmR6Ynh1ekFXYlFzRkNMT19uYUhlbkFHUDhmaFlOVllGamJ2cUJRYUVpQW1HX0M2SmFQVGl5ZmdJ?oc=5",
-      "date": "Tue, 20 Oct 2026 07:45:54 GMT",
-      "ts": 1792482354000
+      "title": "Long Island families left with uncertainty after Nepal ends flood rescue",
+      "source": "Newsday",
+      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPZGZ3dG9NYkk3eFFUeE9uYjhaTFdHYlUxUVQ1Z3BhdlNLQ0hmaEF3Zk9INHdfUnRvMDJxTjMycVo1WFdWZnEyU3V0REJ4alhfaloxTWJ0OGxxSmVHSFlPakhYQ3lZb1g1Y1dSODg4UjNPc3RfazU3RXEtWk83ZkJtQ2M1QS04amM5VWFQem5ud0xSREJvdVMwWDV3?oc=5",
+      "date": "Tue, 20 Oct 2026 11:40:23 GMT",
+      "ts": 1792496423000
+    },
+    {
+      "title": "Nepal-China: Flash floods 2026",
+      "source": "PreventionWeb.net",
+      "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTFBHV0Y2WnBJaXgtZ0U0MDdDM0RUcm9KMDdyQkVZVkVJSDNRYllUNlY2c3kySFNpOVU4V0pBSUczc1lHZ1ZEeUpOQVFkRVpYYk1hQXc5cWdSZ1lpLVlLY3F2TkNKblZIVEFPOWNYSHV6T3RCYTJhd1dza3dyVQ?oc=5",
+      "date": "Tue, 20 Oct 2026 09:44:30 GMT",
+      "ts": 1792489470000
     },
     {
       "title": "Nepal Disaster: Early Warning System Missed Debris Flow",
@@ -14,13 +21,6 @@
       "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxNX3F1RGhIWG9WMDVLam1IbHJKQ3o0dDZwWDRQRVptVnFHc3BRZHgwZ3gxLV9hSVNfWTc1elhvXzl4LXVHYXozdzNWU2JCd05pdjdxQU1iSjNNOWFVbHd1ZGZ1YnFOLUpNR3BsMml4X0xqRm41bWU2REphVnhkNjJHSTgtWnVCVTZn?oc=5",
       "date": "Tue, 20 Oct 2026 03:43:00 GMT",
       "ts": 1792467780000
-    },
-    {
-      "title": "Long Island families left with uncertainty after Nepal ends flood rescue",
-      "source": "Newsday",
-      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPZGZ3dG9NYkk3eFFUeE9uYjhaTFdHYlUxUVQ1Z3BhdlNLQ0hmaEF3Zk9INHdfUnRvMDJxTjMycVo1WFdWZnEyU3V0REJ4alhfaloxTWJ0OGxxSmVHSFlPakhYQ3lZb1g1Y1dSODg4UjNPc3RfazU3RXEtWk83ZkJtQ2M1QS04amM5VWFQem5ud0xSREJvdVMwWDV3?oc=5",
-      "date": "Mon, 19 Oct 2026 21:23:39 GMT",
-      "ts": 1792445019000
     },
     {
       "title": "Tackling the threat of cholera amidst Nepal’s flood disaster",
@@ -49,13 +49,6 @@
       "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE8xOGQzVm9ZZ1g1Vy03T0pjaFhLbjJGNmdPSGVuakpvR3ctc05sQjFDQkNrdEwwMkVjWjNnWDBYSUZuUEVOYWl4UzhJNUZjaDRSSmtISkV1R09aZw?oc=5",
       "date": "Mon, 19 Oct 2026 05:15:00 GMT",
       "ts": 1792386900000
-    },
-    {
-      "title": "Nepal flood disaster puts climate justice under spotlight",
-      "source": "DW.com",
-      "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxNdkYxMXFrbHJDeGhSbnBhUVI5eXo3X2t1Wm50OFZMdTBkTWRjVFV1eE5RcHBPbkFMM2hRMlFiRjI1QlloYm1la1dIcDJwMWRUUW81SnJwcklxcGhnQlFSWS03U1BVMk9JYkNScEt1X3ZITDd1bnkwVWdKR2lGR1NVQ3l0RzRSakxQNDlWS3VoajhfeFlE0gGUAUFVX3lxTFBoLUhGWjNtSFZOaG5SX281c0REb3dsc3J2ZE1MR2dsNERqN0I5anpPa0xVX3JPM21kMzB1WEZHM2pvSGxmYmlLUEt6ZnJMMFAtUHd2Z2NMa2NDM2xzMlU2dm9Jajd2UFdVZ1AtWFEyekY5NVA2TGw4c0RHamJiRFQ2M2o1NVdGZW52Z205OW9CN3FWY2k?oc=5",
-      "date": "Mon, 19 Oct 2026 03:36:33 GMT",
-      "ts": 1792380993000
     },
     {
       "title": "Nepal Needs a River Corridor-Based Disaster Security and Incident Command System",
@@ -149,11 +142,11 @@
       "ts": 1792137923000
     },
     {
-      "title": "Nepal-China: Flash floods 2026",
-      "source": "PreventionWeb.net",
-      "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTFBHV0Y2WnBJaXgtZ0U0MDdDM0RUcm9KMDdyQkVZVkVJSDNRYllUNlY2c3kySFNpOVU4V0pBSUczc1lHZ1ZEeUpOQVFkRVpYYk1hQXc5cWdSZ1lpLVlLY3F2TkNKblZIVEFPOWNYSHV6T3RCYTJhd1dza3dyVQ?oc=5",
-      "date": "Fri, 16 Oct 2026 07:00:00 GMT",
-      "ts": 1792134000000
+      "title": "Nepal’s devastating flood exposes the risks of resettling disaster survivors",
+      "source": "AP News",
+      "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxNbnREUGt5eTdCaE9ScXlLUmNOU3dETm1sTElEQ2d4eWdtTHR2aGNneGdhQmwwbVJoZjc0Y2VYWHNOY3Y0ck15Y1RaWTJjMUgxcXU3WUljYUVoem80LXNBUUhkU1kyOGRlNE9GQlRYSGZVUXNtSTJEbnRxUjRRT0Q5aWIwMno2V1hyOTJ0emhDN0dNZHNuRktVTGZEbDRieEFqNHp3Y29xSQ?oc=5",
+      "date": "Fri, 16 Oct 2026 05:46:49 GMT",
+      "ts": 1792129609000
     },
     {
       "title": "Nepal hit again by devastating flash floods",
@@ -163,27 +156,6 @@
       "ts": 1792125899000
     },
     {
-      "title": "Nepal’s devastating flood exposes the risks of resettling disaster survivors",
-      "source": "AP News",
-      "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxNbnREUGt5eTdCaE9ScXlLUmNOU3dETm1sTElEQ2d4eWdtTHR2aGNneGdhQmwwbVJoZjc0Y2VYWHNOY3Y0ck15Y1RaWTJjMUgxcXU3WUljYUVoem80LXNBUUhkU1kyOGRlNE9GQlRYSGZVUXNtSTJEbnRxUjRRT0Q5aWIwMno2V1hyOTJ0emhDN0dNZHNuRktVTGZEbDRieEFqNHp3Y29xSQ?oc=5",
-      "date": "Fri, 16 Oct 2026 04:16:00 GMT",
-      "ts": 1792124160000
-    },
-    {
-      "title": "Deadly Nepal flood caused by enormous landslide, glacier tumble: Scientist",
-      "source": "ABC11 News",
-      "url": "https://news.google.com/rss/articles/CBMi6wlBVV95cUxOTHdBMG1HS0NZMjllTTFvQVdmdFdLVzNaNWF1aEpsVVo0cWVzdUdNLVh5aHZ1ZjN0QUtweTVjUzV5QjA5ajkxdEtvUXZuS1NkS2dqSmN0cTRrZ3c5eWdlNHdNTFNNdlVTWlJjUGVLM1djRGlTbTd5VmpEUmlpRWJvMl9sUzBYSjFocUhNeDZESzFHc0FTMzRGV3BENVRCTFoyOG84UWVGaUdsaWptYWJuSnJPenJCTVpmOVF4eEFVdTg1ZDRLT3o5Z1NCeGt5VUluUmVMdElTdldvYmpWS0NyQUxfOVcycWtnLTRGM0UwaDFXVTkwNFRPYkwwMHVpTW5uMDFFRmFOdXNjTFc3VE1qWEdYYzdOcEVrMnVvUURPYlZvZ0p4YjlnMTZ6V3dyVGJ3TGtGdXZmaV94Wi1TTXZsNUstalJOY1VyZDNLakNreExIcXA5VFFBVXlaZUxkVXFWTXVRT2F1MEc2SlFQN1g0enlFaG5oYUdWOFpIY1VYMmZvNWVZdFcteFRuMGpDaGFVR2pocEJrb2M5WklZbmlROWpSbVVGVXhRRG45clVfQms3cmV3X2pUWkJCckJDdUpLUU9VdFJxTHZfNDdwOUVXcGJjd09DTEhjUzg4ZmdHQUl2bVppbE5Dc1dVUzFnUV9Hb0wxbUZnQWtEcGFEYy0yc0ZmNWc5MkVGR0NXOE5uNXp3LWIxc1NwSjQyNXBlY3kzVS1UeVhydVZOVWxhS0dlT0pXQldPMmtaeXQwQ2NLakhXbEU1SXR2bUtBV3pSTU50UmY4blNGcS1NNndwUG5sMHpIbThGS2pKSEdmWjY3LV90c0s2Ymt2anRaWFViT2tLSE5PS3h2aU1XM1FCOG8wa19tNkNIMW9abjJPUVdRQU1TTDlScllYYXpEZERVMXMtU3pYNmdzVm5BRVZfaW0xNjVnWm5lNHVSd0FxUHo5eFd5Z0pWeDVzSDc3Rks5VWstMXY4dUtwLXliQnVBV3RUOGE5eFJ4RnNHVlhROVNTTjlfT3RvU3hBT2ZXc09uWDRTcjdKOWJsVzJVeGVVV0xJUUNBWGd1M1VkQjVoZGROXzRaNEZkdWp5Ql9ud1FLdVZzZzJRQUNieVltdmk2Sy1PZEpBY00tRnBMbTJaajRuODBfQUFxTnRpUUkzRlZsUHRORzNuTHpNTFdlRERBYzZoUTFvQW5ET1E2UGtoWEV2UWZ1dDdoR25YQi1VY1JfcUdhbEo2YnlibkVaWVBDUzB0MzBNUUY1TG5UMmVoejNMNjVwY1UwLXNsUHEzUEE2SFhIUGhPUVlmMzh5dEdWQ0pOZHJPRDBLc2QycG4zMUFXTWlkWUhaRmxIOXRzQmlGcElfeVUzOTR4SFB3dTZiZGpPRENtQXZoclZBdnM3MVJfb0JCTk4xcDIyZVFfSEctOW9JclA2alBOQUlrb2M4U2IwR2xMSE1NN1N2WTRHbUw2MHQ4SFI5VE9pekhmd0xzUURIYXk5SzFDXzMteWpMbTI1amFReHN2QVUtYzZ3NXhQYzhMU3ZRaHNmWGFGVEpINHFDMGlBQjA2WWtHWjk1Q3JaV1hOaGxma0RpVHlxaUdpaHJjSjEwOEdRWDh1dlotOFFPdmtIM3dfV0JBa0h0V3RwSFExQ3RGS0M0cm5IR0xtLVN1YVBUeFpKZFFYYw?oc=5",
-      "date": "Fri, 16 Oct 2026 02:16:09 GMT",
-      "ts": 1792116969000
-    },
-    {
-      "title": "ASIA WATCH: Nepal urges global climate action after devastating Himalayan floods",
-      "source": "Japan Wire by Kyodo News",
-      "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE4zOVVRVGhKVFZtLURpX3I2X2tlNVJEX01ZbThlanhoRnJpRUZiRV9SR2E2X204ZUdCWW1KZ0M1TWhTMm1ad1FXc1puSmVjc1N4SkxRa3NPNzUydw?oc=5",
-      "date": "Fri, 16 Oct 2026 01:30:00 GMT",
-      "ts": 1792114200000
-    },
-    {
       "title": "After Nepal Floods, A Long Road to Recovery",
       "source": "unicef usa",
       "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTE9iWGgxWXJzSzRLNUd5cTNad3VBWW5RS3QtWXhFMEw1YWs1OU4tcUFjY01RYmF4cmRRYWF4ZkJoZ1ZwQnJfRGVMcFRXMkZGQUhkRUh6QXlUX0lNZlFrbUhBMDRCdWF1ZkRkaEF3ZXFfU1Zmd3NfV0EzTUJpVQ?oc=5",
@@ -191,11 +163,11 @@
       "ts": 1792099836000
     },
     {
-      "title": "USAID’s Destruction Left Nepal Dangerously Exposed",
-      "source": "Foreign Policy",
-      "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxOMXJyNEMyZ3lPcjlJcG43bVI4N3FJX0FhZEZtZDVyRnVVQmFEeVRWM0pOMjJJNVRXeHMxQ2RDOHhsb0NYck1NWU5Fd2Z5eEhxWVRZNXIxRUI0Z0FQZ1loMG1HSHZFVEZoVVpvTzJRRFVxTk93blU3OWNUTjZxRWwzN09vQ0t1NFhhTEU0?oc=5",
-      "date": "Thu, 15 Oct 2026 17:49:11 GMT",
-      "ts": 1792086551000
+      "title": "After latest Nepal flood, survivors fear for future",
+      "source": "The Standard (HK)",
+      "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxQckxIaTRSb21OX0J2Z3NiTndXNHZwTXB1ZzJsU2liU0djM0lteDZMYlRYU2NjTDBObHRKT25BdV9vcGlmc3BSQTJhYnE0SXpaTGpFbElIVERQVDFZazBZRTBlYUdFV3F0a0RyRzl1S3FXTGg4UkhwTEZ6Mk9IcFZsbVRPQjFsWGlEM0ZISnUyazY5YjJBdHQ2MUJGYUtoekFKdy11QQ?oc=5",
+      "date": "Thu, 15 Oct 2026 11:01:39 GMT",
+      "ts": 1792062099000
     },
     {
       "title": "‘Unprecedented’: how cascading disasters are devastating Nepal",
@@ -210,6 +182,34 @@
       "url": "https://news.google.com/rss/articles/CBMickFVX3lxTFAxZTl4WnVrRFlPRnhYdldPbFdtemdXcWc1UFhkV012SlBVYWlFLXN2aEFOUFJiZ2dzYWVndGhXMy1EalJNYkdxZ3pUcXBxb1J2YTUwMGJvZmhJcTRNRGxZNkVLMFZLcjdaR3FBTy0yaGlOdw?oc=5",
       "date": "Thu, 15 Oct 2026 01:00:01 GMT",
       "ts": 1792026001000
+    },
+    {
+      "title": "Nepal floods of 2026 | Glacier Collapse, Natural Disaster, & Facts",
+      "source": "Britannica",
+      "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE8wVEpuSHFxT3VDWTh4bXJmX1JzdDlFNkFBd3lEVDQ2dFliSjdpZFRLTk96QnNpMUtRem9FV2tFVkx5MEdsMEN1TWJrTWJyTUxSXy1CUllsMnprQnpCcEhCcGk1UQ?oc=5",
+      "date": "Wed, 14 Oct 2026 05:00:00 GMT",
+      "ts": 1791954000000
+    },
+    {
+      "title": "Bridge washed away in Nepal flooding, landslides",
+      "source": "The Weather Channel",
+      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxPa05MM2xnQWpFY1dpYTlNLXF0VVVkQTNfOUZmTDR1TGNWV2xOTVU4cDJnZmZpdXhEN3ZITW50WS1rMzNIUHBLOWFmdkNtSzRXOUtKUjBabnk3clNEOFNyeEgyQncta3BGVWF5c2c2R0dDaHV2WEVwSmVJUHR0MnM5T0kxYUZnZzlkbDZwd2RKdWFSVWloa3M5eU1nOG1HRUgxVFJJZGd5eVREX1la?oc=5",
+      "date": "Mon, 12 Oct 2026 18:57:55 GMT",
+      "ts": 1791831475000
+    },
+    {
+      "title": "Nepal floods are call to action on compound risks",
+      "source": "World Meteorological Organization WMO",
+      "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTE9NVmRMQ0xxMzhKV1VGNGxqX2cxaHVIcEF0TnRoX19HbUJWbjNPczRQenV2eFpoaWhKNFJFYW1nbWhXM2ZFSDJhWTA5WUFfS00wMGVMY1NGenYzVEs1Yy16bzA2UWxJTDlfTWJpNlVDQTdqY05UQTdKZHBR?oc=5",
+      "date": "Mon, 12 Oct 2026 07:00:00 GMT",
+      "ts": 1791788400000
+    },
+    {
+      "title": "Nepal urges villagers to evacuate after flood triggered by landslide, 5 missing",
+      "source": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxNcnllV0stREo0VDlyUHJ4RkwxX2pWZ3RSQTZnbFA5OFMwcERqSXEzSFVZVnl5a3J5NjRoaWZrX2RhOFM5ajE2RkhxYVI0VXE3czN1Wk1pbGk0RVdDMW5SUTVJUnVkbmtibVBzczM0RzVvaXVfa05sUFpJSGV3V1Fxa28xc2dYeTZJZDd6SHFIeGMtQUtmREtLQnlXckJvR25PMzZrZWhWb05TZ1BMQWpKOU1jdGdya2x5aFZKN2lCMA?oc=5",
+      "date": "Mon, 12 Oct 2026 07:00:00 GMT",
+      "ts": 1791788400000
     }
   ]
 }
