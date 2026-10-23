@@ -4,9 +4,9 @@
 User-agent: *
 Allow: /
 
-# Admin dashboard and server APIs are not public content.
-Disallow: /adminprashant
-Disallow: /adminprashant.html
+# Server APIs are not public content. (The admin page is kept out of search by
+# its X-Robots-Tag: noindex header in vercel.json — it is deliberately NOT named
+# here, because robots.txt is public and would advertise where it lives.)
 Disallow: /api/
 
 # Favicons and styles must stay crawlable — Google needs to fetch the icon
@@ -18,7 +18,6 @@ Allow: /assets/
 # Major crawlers: no crawl-delay, this is time-critical emergency information.
 User-agent: Googlebot
 Allow: /
-Disallow: /adminprashant
 Disallow: /api/
 
 User-agent: Googlebot-Image
@@ -29,7 +28,6 @@ Allow: /
 
 User-agent: Bingbot
 Allow: /
-Disallow: /adminprashant
 Disallow: /api/
 
 Sitemap: https://www.nepaldisaster.com/sitemap.xml

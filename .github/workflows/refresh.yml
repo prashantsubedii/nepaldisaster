@@ -2,7 +2,9 @@ name: Refresh live data
 
 # Fetches the latest Nepal hazard / highway headlines every hour and commits the
 # refreshed snapshots (assets/news_cache.json, assets/highways_cache.json) back
-# to the repo, so the site keeps auto-updating even when served as static files.
+# to the repo, along with sitemap.xml and the baked-in headline
+# (tools/build_seo.js), so the site keeps auto-updating even when served as
+# static files.
 on:
   schedule:
     - cron: '7 * * * *'      # every hour, at :07
@@ -20,6 +22,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0     # full history: build_seo.js dates sitemap entries from git log
 
       - uses: actions/setup-node@v4
         with:
@@ -28,13 +32,16 @@ jobs:
       - name: Fetch latest headlines
         run: node tools/refresh_live.js
 
+      - name: Bake headline into HTML and rebuild sitemap
+        run: node tools/build_seo.js
+
       - name: Commit and push if changed
         run: |
           git config user.name  "nepaldisaster-bot"
           git config user.email "actions@users.noreply.github.com"
-          if [ -n "$(git status --porcelain assets/news_cache.json assets/highways_cache.json)" ]; then
-            git add assets/news_cache.json assets/highways_cache.json
-            git commit -m "chore: auto-refresh live news & highway snapshots [skip ci]"
+          if [ -n "$(git status --porcelain assets/news_cache.json assets/highways_cache.json sitemap.xml '*.html')" ]; then
+            git add assets/news_cache.json assets/highways_cache.json sitemap.xml '*.html'
+            git commit -m "chore: auto-refresh live news, highway snapshots & sitemap [skip ci]"
             git push
           else
             echo "No changes to commit."
