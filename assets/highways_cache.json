@@ -1,6 +1,13 @@
 {
-  "at": 1792730002360,
+  "at": 1792749339150,
   "items": [
+    {
+      "title": "Tourists return to Myagdi after Beni-Jomsom road repairs",
+      "source": "myRepublica",
+      "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxPa2NqTWFTTGxPWlp1ZlBuTjBKY2JIcXVfYTlMdjk2cGV1cm1lcFlFRUlzRFFXdmdka3V3bzJtSGZDMURhVGdrcWp3LVlUSkRkWmlabnVBYTRzbXlpVUZaT2h2enEzdTdSX2VtWjQ1VGVmYWt3MHpqbzlTdEJnSU03UUpQeWRxUGtXdS1LOWVCb3pQR1ptc1o1Z1ZwRm93OVp4dHAya1pRYWtMOVRFZVFjN1JBNDBMdw?oc=5",
+      "date": "Fri, 23 Oct 2026 05:16:00 GMT",
+      "ts": 1792732560000
+    },
     {
       "title": "Malaysian banks offer repayment relief to Nepal landslide victims",
       "source": "Malay Mail",
@@ -18,16 +25,9 @@
     {
       "title": "Banks offer repayment deferments to families affected by Nepal landslide",
       "source": "NST Online",
-      "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxQVHlWYXRJdTJrcGtwdUhLY0pfRmhFTmhnbXRRV255b3ZhV2ZjUGlQQ19EU2luRU1KTUxMc1VweE5qSHptVmFDYkd3VW9WbGFfb2ZiNHVPWWR4cG9wTEFlYm1BbGVOWnU2b09VNUo3MTFsSUVoN09idGUtUHBoVDJKbnpxdnFkdUpzY1FNVE5jRHhOc1g1cUZtSGNYRTIxb3NuYll6V2dyRno1NjRGeC1NZ2lzbDU2LUl1?oc=5",
+      "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxOc3RUcUxFNmp0R2NadGRXNkJseldYeVRQOTVWWVQtWWJMWGdtN1VwVzZoZG12RWM1blVYWUFrNU4wV0k0VktJNUl0YUtTN3Vkb1M1U2lEVTJkLTVjRk1WUmZzcVRBZ0JjanhqYjQzdkFldmlGcDdUZTJGMURteWNXeUxNcDRQTEgtWllpQ2lYelBwaWRMZ3dlWGNwbXNjQklfY290WGE3RFpld0dEOGk0YkVWQkx5emJfeHFwWHVBdzFVMVozS1NQamttMNIBvgFBVV95cUxQYkduYjVWWFZjUzZRUks2UGhrdWxCNzVlVXkwdjhHWjRiaGo5UWtLMVhvdnpaOTlUZmRUR01sLW5IdERhQ0pBTnIzUlJCQXF5WFEyQU1VdGZ2RzNXYURMaVE2RkRta0g3ZWdVd0d0X2tGVXV3TEt6UFkzZWtiajlMSUNBYVgtemJ6WUdvV1hvQXBvV1Z6emlIX1ZHbmptNFhsekUyVFZjRmtHR05ld0l0NXAyOW1XVGNjemp5RmZB?oc=5",
       "date": "Thu, 22 Oct 2026 15:06:19 GMT",
       "ts": 1792681579000
-    },
-    {
-      "title": "Floods, landslides disrupt various roadways in Gandaki, Karnali",
-      "source": "Nepali Patro",
-      "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE8yNVB5SXJJNkZ0X01aelBRUUU5NWp4RzFPeXVwQVFGZUZleDQyNEFNT2V6WEFlcXEySEgzTkl0YUt4NU9BdU5kS1hSRkZ5RUJWZjFRZVo2NHhmdw?oc=5",
-      "date": "Thu, 22 Oct 2026 13:07:58 GMT",
-      "ts": 1792674478000
     },
     {
       "title": "Floods, landslides disrupt roads in Gandaki, Karnali",
@@ -35,6 +35,13 @@
       "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxOZjhFMDBSdy1qQWJqY1dtNTZvRGt0NTdXOTlTMk9KM1M2c2dIS3ByTXotbjViQVBES1NTTWVpcmtSeElNc3BOM2RoT3hjdjM4N1dCQkphMkN2MGdaYllMaEFhTVNOX0U2eVN6bGgxeFlTSDRadVN3aXlLTTIwOGhFRWZXVTlDeTFFWFgtaldhd2xENW1ubnFMaUtSaHV2bUt5aHh3MGpDWV8?oc=5",
       "date": "Thu, 22 Oct 2026 08:27:39 GMT",
       "ts": 1792657659000
+    },
+    {
+      "title": "Floods, landslides disrupt various roadways in Gandaki, Karnali",
+      "source": "The Annapurna Express",
+      "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE8yVHhvWlFXRmNvRzUyWldwRlJScDUwYzJMWEZWZUd3MF9iaGlEOEJjQ21nbnltOFJXazlYZ3VHN1JMclRFelZ1MXVILUFrTFNfcGR6cmRfTQ?oc=5",
+      "date": "Thu, 22 Oct 2026 07:09:16 GMT",
+      "ts": 1792652956000
     },
     {
       "title": "Floods and landslides disrupt highways in Gandaki and Karnali provinces",
@@ -72,18 +79,18 @@
       "ts": 1792564200000
     },
     {
-      "title": "Floods and landslides block major highways",
-      "source": "Khabarhub",
-      "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE5TTDZacWpwLVZVb1EycnRyOUJiLV9uSnZKS1BqczdlUWZ3M1VjZVNwQkY1MERqTnhsa0xFRzNDZ1dDcXFiT0kzWFd3QmNOanZ4V2ZMcGVtc1I?oc=5",
-      "date": "Wed, 21 Oct 2026 00:36:32 GMT",
-      "ts": 1792542992000
-    },
-    {
       "title": "Transport resumes in Khandbari-Kimathanka Road",
       "source": "The Rising Nepal",
       "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE9ZVDh1S0JhNTc3N1BKTTVJN0tQdTM1ZnMydXh1ZEpqUGRiRk00QUtyUVVGRk50VEI0d0NuOWx0b1lNX0xEN2pMSmFjVmV0c1Z0?oc=5",
       "date": "Tue, 20 Oct 2026 06:54:41 GMT",
       "ts": 1792479281000
+    },
+    {
+      "title": "Rs 3-4 billion needed to rebuild flood-damaged Beni-Jomsom-Korala road",
+      "source": "The Himalayan Times",
+      "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE5rUTB4UUVWbTJ6OVZ0QmU2NFhBT29BWHFKV25qaDA4VU9DQThvVXZLczUtSjJGcDQzazd1elBJcllrbjFtUEVPa3ZtekxKV0hrc3h2YUQtVFFsaTc20gFcQVVfeXFMTmtRMHhRRVZtMno5VnRCZTY0WEFPb0FYcUpXbmpoMDhVT0NBOG9VdktzNS1KMkZwNDNrN3V6UElyWWtuMW1QRU9rdm16TEpXSGtzeHZhRC1UUWxpNzY?oc=5",
+      "date": "Tue, 20 Oct 2026 06:15:45 GMT",
+      "ts": 1792476945000
     },
     {
       "title": "Khandbari-Kimathanka road resumes operation after restoration",
@@ -105,13 +112,6 @@
       "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxPdF9uZGNYeEFJSkU2NEFrOEZFcENnVUljYlJyclNYMTlRZXktdGdsUk8yb0JOS0xPSFR4ZVF6elhGSHBIeDFsWXY0dnJLSFhpZDJMT19yR1A0NG9PdkpzWjRWdkI2cFU2dWhZLWNFVWxwd1djaTNYT1d1a3RRdGdsVEdR?oc=5",
       "date": "Tue, 20 Oct 2026 04:01:06 GMT",
       "ts": 1792468866000
-    },
-    {
-      "title": "Landslides, floods disrupt roads in three districts",
-      "source": "Khabarhub",
-      "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE1KSnNvbi1rN2RtNWJuUUNUZHZYY1JlSlZ2VXlKZFZOTHJvYzJlWmRhaXdTWUJHaVBzalZSR2ZOVFBkWm1RQ0ZFNlY1LTRyV3phNU9seGllZ2Q?oc=5",
-      "date": "Mon, 19 Oct 2026 09:27:18 GMT",
-      "ts": 1792402038000
     }
   ]
 }
