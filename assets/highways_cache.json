@@ -1,5 +1,5 @@
 {
-  "at": 1792820395741,
+  "at": 1792838812139,
   "items": [
     {
       "title": "Floods and landslides disrupt road traffic across Nepal",
@@ -37,18 +37,18 @@
       "ts": 1792725457000
     },
     {
+      "title": "Floods, landslides disrupt various roadways in Gandaki, Karnali",
+      "source": "Nepali Patro",
+      "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE8yNVB5SXJJNkZ0X01aelBRUUU5NWp4RzFPeXVwQVFGZUZleDQyNEFNT2V6WEFlcXEySEgzTkl0YUt4NU9BdU5kS1hSRkZ5RUJWZjFRZVo2NHhmdw?oc=5",
+      "date": "Thu, 22 Oct 2026 13:07:58 GMT",
+      "ts": 1792674478000
+    },
+    {
       "title": "Floods, landslides disrupt roads in Gandaki, Karnali",
       "source": "myRepublica",
       "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxOZjhFMDBSdy1qQWJqY1dtNTZvRGt0NTdXOTlTMk9KM1M2c2dIS3ByTXotbjViQVBES1NTTWVpcmtSeElNc3BOM2RoT3hjdjM4N1dCQkphMkN2MGdaYllMaEFhTVNOX0U2eVN6bGgxeFlTSDRadVN3aXlLTTIwOGhFRWZXVTlDeTFFWFgtaldhd2xENW1ubnFMaUtSaHV2bUt5aHh3MGpDWV8?oc=5",
       "date": "Thu, 22 Oct 2026 08:27:39 GMT",
       "ts": 1792657659000
-    },
-    {
-      "title": "Floods, landslides disrupt various roadways in Gandaki, Karnali",
-      "source": "The Annapurna Express",
-      "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE8yVHhvWlFXRmNvRzUyWldwRlJScDUwYzJMWEZWZUd3MF9iaGlEOEJjQ21nbnltOFJXazlYZ3VHN1JMclRFelZ1MXVILUFrTFNfcGR6cmRfTQ?oc=5",
-      "date": "Thu, 22 Oct 2026 07:09:16 GMT",
-      "ts": 1792652956000
     },
     {
       "title": "Floods and landslides disrupt highways in Gandaki and Karnali provinces",
@@ -86,18 +86,11 @@
       "ts": 1792564200000
     },
     {
-      "title": "Transport resumes in Khandbari-Kimathanka Road",
-      "source": "The Rising Nepal",
-      "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE9ZVDh1S0JhNTc3N1BKTTVJN0tQdTM1ZnMydXh1ZEpqUGRiRk00QUtyUVVGRk50VEI0d0NuOWx0b1lNX0xEN2pMSmFjVmV0c1Z0?oc=5",
-      "date": "Tue, 20 Oct 2026 06:54:43 GMT",
-      "ts": 1792479283000
-    },
-    {
       "title": "Rs 3-4 billion needed to rebuild flood-damaged Beni-Jomsom-Korala road",
       "source": "The Himalayan Times",
-      "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE5rUTB4UUVWbTJ6OVZ0QmU2NFhBT29BWHFKV25qaDA4VU9DQThvVXZLczUtSjJGcDQzazd1elBJcllrbjFtUEVPa3ZtekxKV0hrc3h2YUQtVFFsaTc20gFcQVVfeXFMTmtRMHhRRVZtMno5VnRCZTY0WEFPb0FYcUpXbmpoMDhVT0NBOG9VdktzNS1KMkZwNDNrN3V6UElyWWtuMW1QRU9rdm16TEpXSGtzeHZhRC1UUWxpNzY?oc=5",
-      "date": "Tue, 20 Oct 2026 06:15:45 GMT",
-      "ts": 1792476945000
+      "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxQVlZwZ1RtbVpxdGtJLXRxYkVMb3E5SVpkNUIwUDJfX0JtekdNRGNxREdHUmxsZUxKNTV3QUlPbmh2NFdzb3dZSWdsVVhBalpXOTB0MG5EYnI3NTMyZkRJODh6cDItSW9oOFVMRk45SUJETThTQ1VyS0RVaHRUSjRncElWRmsxcGduWTJWTVpKRGprM052Ym53aUJZY3NNNF9rU2kyWFJRY3lpZ9IBXEFVX3lxTE5rUTB4UUVWbTJ6OVZ0QmU2NFhBT29BWHFKV25qaDA4VU9DQThvVXZLczUtSjJGcDQzazd1elBJcllrbjFtUEVPa3ZtekxKV0hrc3h2YUQtVFFsaTc2?oc=5",
+      "date": "Tue, 20 Oct 2026 06:14:19 GMT",
+      "ts": 1792476859000
     },
     {
       "title": "Khandbari-Kimathanka road resumes operation after restoration",
@@ -107,11 +100,18 @@
       "ts": 1792469904000
     },
     {
-      "title": "Why Nepal Blocked Ayushmann Khurrana And Sara Ali Khan’s Udta Teer: The India-Pakistan Connection Explained",
-      "source": "NewsX",
-      "url": "https://news.google.com/rss/articles/CBMi4wFBVV95cUxPSzF0RVdYdHlvZjlRZW02ZDczbTZuR1llWThIYzM2ZDFUZC02dUUwUUdXakF2QVc0aWVHdHNRZ2dnb1Aya1BxOWJyZk5aNGRLakp2NzZ6QVM2TjF3bS1OQlIwR01qTWVpV1F1TXpqUDFpcmZGa25fSGpYU0tuQWxpS0lCalItU3k1R0o1NmtTSHFvbE9POUhPa1o4azZQRzB0bmR5eWUxSjNrbUdDMWMxWjBGNWozTDEyeEVXUGN6Xy0yZzVjMjNzWW1ZM3V2R0p0Tk9IWHVIVDBoTlVaZnc5SjFwUdIB6AFBVV95cUxQa0YyZHdGUlY3NWo1NnR4RUR4MWNpbnR1djFrWnpETjVJS29ZUXpXTnVwRGE5VVJTR2FGMERFUGRNSkF4YXctS1g0NW5LamdRYnk1YS1CZjZkR2tmNl8yZEg2bDFiTVJFVzdoOXJZaUt3bmJZWlVsNDhwX3ltTTgzZWZmd25YZElHdU0xb1Qta1ZEYXJVSERMWFVzeV9Bem0xb1h6OXd3RlB4eWNtQnRvWkdGdjBWa3VUMWExOUMyZjFCcHJDaGNMRW8yeVcteUJrTDhGbEc3SnZMVzhzb2xQVXVJdzIwTnJP?oc=5",
-      "date": "Tue, 20 Oct 2026 04:13:59 GMT",
-      "ts": 1792469639000
+      "title": "Main Highways Blocked Due to Disasters in Various Parts of the Country",
+      "source": "Ratopati",
+      "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxPdF9uZGNYeEFJSkU2NEFrOEZFcENnVUljYlJyclNYMTlRZXktdGdsUk8yb0JOS0xPSFR4ZVF6elhGSHBIeDFsWXY0dnJLSFhpZDJMT19yR1A0NG9PdkpzWjRWdkI2cFU2dWhZLWNFVWxwd1djaTNYT1d1a3RRdGdsVEdR?oc=5",
+      "date": "Tue, 20 Oct 2026 04:01:06 GMT",
+      "ts": 1792468866000
+    },
+    {
+      "title": "Khandbari-Kimathanka Road resumes service following restoration efforts",
+      "source": "Nepalnews.com",
+      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOYXZSWW5vWnNOYmVCakRmTDJRMTBOWlFuYlVzd21KTHZkRm5WVmJfLXNSZVFvcm5vMVc5cTZQMHg3NF9Ya1o3RlVtdGpQVTJNNXY2RHVSd2FSM3JjQWcxMGt6UlJXYWxkb25hQzQwWUNFOTZRU0NXSnRvVFpKQUE4cTNjZ2FDdENJb21Ob0hLSnJQcTV0dmRiZFZFQlYtRHNaNXlDVUY5NHU0dDR1cTZQUg?oc=5",
+      "date": "Tue, 20 Oct 2026 02:40:07 GMT",
+      "ts": 1792464007000
     }
   ]
 }
