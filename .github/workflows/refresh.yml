@@ -36,6 +36,7 @@ jobs:
         run: node tools/build_seo.js
 
       - name: Commit and push if changed
+        id: commit
         run: |
           git config user.name  "nepaldisaster-bot"
           git config user.email "actions@users.noreply.github.com"
@@ -43,6 +44,24 @@ jobs:
             git add assets/news_cache.json assets/highways_cache.json sitemap.xml '*.html'
             git commit -m "chore: auto-refresh live news, highway snapshots & sitemap [skip ci]"
             git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
           else
             echo "No changes to commit."
           fi
+
+      # Vercel (Hobby) refuses to deploy commits whose git author is not on the
+      # Vercel project, which includes this bot and any collaborator. A deploy
+      # hook deploys main regardless of author. Create one in Vercel → Project →
+      # Settings → Git → Deploy Hooks (branch: main) and save its URL as the repo
+      # secret VERCEL_DEPLOY_HOOK. Runs after a commit, or on every manual run
+      # (Actions → Refresh live data → Run workflow) to push main live on demand.
+      - name: Deploy to Vercel
+        if: steps.commit.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
+        env:
+          HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then
+            echo "::warning::VERCEL_DEPLOY_HOOK secret not set; skipping deploy."
+            exit 0
+          fi
+          curl -fsS -X POST "$HOOK" > /dev/null && echo "Deploy triggered."
