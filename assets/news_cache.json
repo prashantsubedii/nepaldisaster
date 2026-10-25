@@ -1,5 +1,5 @@
 {
-  "at": 1792926761702,
+  "at": 1792944002548,
   "items": [
     {
       "title": "Magnitude 4.2 earthquake strikes Nepal's Baitadi district",
@@ -23,6 +23,13 @@
       "ts": 1792908376000
     },
     {
+      "title": "Rain forecast across Nepal from Thursday, 29 districts face higher risk",
+      "source": "OnlineKhabar English News",
+      "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE9MdmhxV2xnRnF4a3F2ZGVZc1hSZHJ1UUNKVHJXT0tUWlVVWUdDVEtLQzUwSlJvb29HbS1meHFfUWd4aXJGOWV1Zlh6N2RHQkdpZzdfYmUzdkRlSmQtbXMzd0x0NTNSRWNwcDBEYnZSdG0?oc=5",
+      "date": "Sun, 25 Oct 2026 05:23:05 GMT",
+      "ts": 1792905785000
+    },
+    {
       "title": "Heavy rain and snowfall likely in Nepal from Thursday",
       "source": "Nepalnews.com",
       "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPM1pHeWFHS2QwZk1MZ0NCUDAyN2Z5b1lHck5SLXI2NFJXQVVQdkNHNzg2RjNkZEE4QVVfOXFBdjVpRHNFcll1ZDZ1RnprVUJ5NHJRN1BwS2JLbVA3emJub01vSDcxVnVrM0FKaC1DRE94aU9uWHVyWjVkVWlISnE4RGVxVTJMLThvamNrU1hjY3lWcW8yWHduaEF3?oc=5",
@@ -35,13 +42,6 @@
       "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPeEc2T1RxUW5tbXB3NVJmUklyYV8wdGJnZFlRdEZiYnlFS2lsYUxKZldYUUtRVTdRRWI5WWNrLUNUamJCTHZJaUM1QTc2eGlKcnNDZE4ySFpDR0JmVDV5MUlkd2FrcXVuc3hZMnBYNWtIM1VrLUFxTW9DbUZNSkR6eHY5aFFJUUE3aEp4RmpfQWxtZGZYVXRYUHhyQUpKQVBH?oc=5",
       "date": "Sun, 25 Oct 2026 01:20:03 GMT",
       "ts": 1792891203000
-    },
-    {
-      "title": "20 disaster-related incidents reported across Nepal in 24 hours",
-      "source": "Khabarhub",
-      "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE1CRzdZeVpaNEx2dFNkS2NDWEJxVjdraU44WkhxMFRpSGdxd0FnS2p3a3VTWTNOaDFFeUNsZDdwREVHX3AyYzMxV05tOW9PcnczZDFib3ZCeW0?oc=5",
-      "date": "Sat, 24 Oct 2026 15:58:56 GMT",
-      "ts": 1792857536000
     },
     {
       "title": "A $1.3 Billion Satellite, The Deadly Nepal Flood And A Warning That Came Too Late",
@@ -198,18 +198,18 @@
       "ts": 1792699217000
     },
     {
+      "title": "Loss And Damage Fund Approves $21.6 Million For Nepal For Losses Caused by Bhote Koshi Disaster",
+      "source": "TheWire.in",
+      "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxNUFlKYXo4d1ZzNFNZNW45YjhZVDlJOEpzS19WOUxraXBNSUNzX2MyWVMzbjBrZURlc0s5TVhiMkxfX1dhS3o5bnowaHJ0TUx4ajJFdEJWNHVxbmI2TS1DZ0hkQlFOQ0dzeFF3TEFSNnRlR0t1d2pGdmlTS3FkdVc3eTdSeTFlVDM5cWNVdV91bHphSktXcFNqcjN4Q3E1Nk5JOElhckdELVdQR2lqbGlUM1pYcC1nU29LcElMdEtyMUd2MXc1SGJBdGVmZWlwaVdq0gHWAUFVX3lxTFBFMnNKMndiRnNkQVNSMXQ2N1dkU1JZZFZ2SWtDd1hOM1JTcVUzNHJONTB2b3ZEc1JySmthY0JmYnVQcEFVREFnY1oyQ2w5QzBOanlRR2xhdEdZOHJWUkZLX0c5aHZYbVp3MzU0QzJYQVFIQVZlVnU3SFZMODA4TzR2WmFKOGdDaHJwWjV6M3AzTFNUYTZwejllUHp2X3hlMXVIX3FTUjJtb2ZnYmpBOG00dE1MNGczWGRfVmtVRkh6RHRhdkx5WlB3eTZocTFZQ1U5eTk3Y1E?oc=5",
+      "date": "Thu, 22 Oct 2026 17:44:15 GMT",
+      "ts": 1792691055000
+    },
+    {
       "title": "UN climate damages fund earmarks $20 million to Nepal for August disaster",
       "source": "The Hindu",
       "url": "https://news.google.com/rss/articles/CBMi4wFBVV95cUxQZDZVTldieU1ybEIwVHc4QTZ2eHFNVk1HTV9rRXZPY2Y1LWk3dTA3cWF5d3lWZElvRWpLVk5QS2I4TkdjMzA2SHZ3TExsUHNQU2lscjVVLVM4M1o1YzFPTlVmaUhSOEZjUWJBZGNMTkZ3LWtWMTR2eXB1OFpaMHhKeU1wN2ZzM0g5d1MxY0NkZGlqejhGNVc3bGw4TmZRQ0gzOW8yRm44eXZzbWlMcHR0UVhRQ0FFRjlia0QxLVNmUGUyOWtBQU52U3NzRkg4NlN5M01MQnZmWFk1TTRTX2d1OG9jY9IB6gFBVV95cUxNalE2MGpFSG93VHNmdDZMUTVqajRZZDNMN3RqY01uMlh3bEVmTC16YjA0WE1PLUVGSjZGM3JiZk96TzlGVHlMWkZLdzNoYkh4M3V6UVlFOUI4dEJZYUpPS1hUZjMydTk3WmVhTXJtTDcyaXVpVncwZFM3YWNMTEQ1YVNHV0JFME1zV2Jud2lmOWYzc0tZQlRRWENfbFV3andHd19ZSWVHUzNwd2lCMFEyWkJyZmxNYVJoQzZ5cTQ0Rk41a0hNOEp5ZFBpZ3M0V1l0Y2FVMG1BYndYclhQeFlTQXh2SjQ0alJqUXc?oc=5",
       "date": "Thu, 22 Oct 2026 17:40:28 GMT",
       "ts": 1792690828000
-    },
-    {
-      "title": "When the floodwaters receded: How Iglesia Ni Cristo answered Nepal’s call for help",
-      "source": "INQUIRER.net USA",
-      "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxQOTJqS09saUpIdTJvQUZOSG42Wm5xaE8ycVVBRHB1TExtejNQa0VwTjdHd1VaTGx3WENSTVZMU1drNm5Sd1dMZ3daMm5qMm83cDhFZzhJekdSaHJMT0Iyblp1Q1Exckx2dThJeEdGMXBZMXQ4X2tQTHNMdkJwM01BYXkzRUVUQ2dYSE1iX3YzR2ZPRHZaYmJXZ0tOd0gwVUc0M0hjNnRsZEJNemI2b2VJZXBn?oc=5",
-      "date": "Thu, 22 Oct 2026 17:28:00 GMT",
-      "ts": 1792690080000
     }
   ]
 }
