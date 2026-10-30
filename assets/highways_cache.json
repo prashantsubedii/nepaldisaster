@@ -1,5 +1,5 @@
 {
-  "at": 1793310227048,
+  "at": 1793325033232,
   "items": [
     {
       "title": "Cyclone Arnab’s remnants raise landslide risk on Nepal’s main highways",
@@ -37,20 +37,6 @@
       "ts": 1793084004000
     },
     {
-      "title": "Youth reopen blocked road in two days",
-      "source": "The Rising Nepal",
-      "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE9VSDRkY2h0ckZ0YmJNLWhMYzNsRFNoLWZ2VGR2ejF6OEZ4ZmpHcFE1OXo5QlJweDRjUlpua2Jvemk4dGJBNG0zdXU5dmhsWkhF?oc=5",
-      "date": "Mon, 26 Oct 2026 04:01:46 GMT",
-      "ts": 1792987306000
-    },
-    {
-      "title": "Floods and landslides block major highways",
-      "source": "Khabarhub",
-      "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE5TTDZacWpwLVZVb1EycnRyOUJiLV9uSnZKS1BqczdlUWZ3M1VjZVNwQkY1MERqTnhsa0xFRzNDZ1dDcXFiT0kzWFd3QmNOanZ4V2ZMcGVtc1I?oc=5",
-      "date": "Sun, 25 Oct 2026 23:04:02 GMT",
-      "ts": 1792969442000
-    },
-    {
       "title": "Work to reopen Benighat–Tatopani road completed",
       "source": "Nepalnews.com",
       "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxNUnlyM2ZOczVEM2pZUl9vZkowb1lnYUZrMi10ejdBZWJndl9IcFZTNG1BZVNZdERBdWpMSGR4MGFRVXowTFdRaUhCMnlIUEg3dVQ3MTVBTXJPQl9yRVdfT09zSlgyWE1xUUY0c3R6N0hBX0FDdXY0bncxUnBVZEZzSV8tRkx6UUNvbFF5bWZmUlc?oc=5",
@@ -65,11 +51,25 @@
       "ts": 1792932072000
     },
     {
-      "title": "MBPP halts condo and road projects near fatal Paya Terubong landslide site, orders fresh environmental study",
-      "source": "Malay Mail",
-      "url": "https://news.google.com/rss/articles/CBMi-AFBVV95cUxNSnFnejllOU9qTDJQci00WW9PZmRybUtwNEU3bVlZUW1KWDZLUXVxNm5pT3d0Y196QV92anZiSlBoSmptTEtNVl9Ra3Z6VjZKWm52bi1yZTlMRXFrR3VXMnR3UXVfdk1McnRlRHk0Q0pwSzF1RzNkWGlxbHpkaVJmNy0yckVmdzh3WFRpV1FhSVNRREk5bWZWVXJUdmxRZ2lVQVc0VjBuMXhFYUIxZC0tWGFxUXhiOU5kX2F3U0NWSjNlSzdIUXBRSjJvY3M2WWVGR2hhQlVUT3lqa3g2SVZodDBId3R1cmRLVm43T2o0YjdYZERaMG44WNIB_gFBVV95cUxOVDVxY3RKSHZNamJiNmE3WXJGdjdieV9jaGVtR3FsdmZVS2l1cEdRMHZ6ejc5LTlHREFSWmlFd3NTd3RJSlY2MkRlNUxjbkxPQndQSTk2OFhfM1JCcmI3b1VsRzN1RU1xaUMzc1VnWEwzM0lfTndoZnZkelRDRGh6MnZ3TEh5MHBrYjMxMTBuOWl1YTB2TU9ZQ01sT2VQbmhPVmZESFNHbGhFdzZ3UzFlYURSS21hMzBnNnAwUE8zY3FpVnZGOS1YMDBYQVZLNFhvZWZZYTBjRUU0a2h5NGFOODBrNnRaSGRIYUJEYTJsTDRjdm10UjRTblpMTWY2dw?oc=5",
-      "date": "Sun, 25 Oct 2026 08:40:39 GMT",
-      "ts": 1792917639000
+      "title": "Work underway to reopen flood-damaged Benighat-Arughat-Larke road in Gorkha",
+      "source": "OnlineKhabar English News",
+      "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxNcHlBano0NzZWVnNjR2h6bE1ld2RZVEVmYldLTzhPYVNEbGJmd0cxdmc0TzlrUlVoNWZDdElzbDdTNGxJMWNyVEpxWndCQXNmQ3NrZk5aZHNsWTBvc3I2ZWg4dFpzTHA0cjVYN1pkbzRNdTEtb2F3WG1JRkdUaEJIdlBvWGkwaDZoM2NESG9uRlRsR2k3NllfTzFqbmE1TkV3WGhxWjVIOFBrTERqT29MWlplTQ?oc=5",
+      "date": "Sun, 25 Oct 2026 08:05:27 GMT",
+      "ts": 1792915527000
+    },
+    {
+      "title": "Two Gandaki Province Highways Affected by Natural Disasters",
+      "source": "Ratopati",
+      "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxPT3czWVhQWG5sNy0wZjBCVDUxaldqYXMyS296UEdzVnhldHpkNGtkVVJZYTRmOGpKMEEzbUVYMzdmRm9jRmFoaUdRWkhCX3ViX0dVcDNrLU5ib3FtN0FKWnlITHE2bFNHdkdxeTY5MzZjLUE5Mm52NDVSVGJZSlJMUHBKRFNKa1h2UUdPaG1Mb3l5NDV5UjRuS1Naa1lNeVJnNVRqVXJ6MUM?oc=5",
+      "date": "Sun, 25 Oct 2026 07:00:00 GMT",
+      "ts": 1792911600000
+    },
+    {
+      "title": "Penang Island City Council issues stop-work order for condo, road projects after fatal landslide",
+      "source": "The Edge Malaysia",
+      "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE9XWWFLT0FHOFY1TVFJcjNNMDZYTXZEOHkzUVgzczExcWRPTDVRRVNIckFUZVEzMU5ycWtkYXZNbnJYUWI3S0QyUms3WkZ4S1VF?oc=5",
+      "date": "Sun, 25 Oct 2026 06:06:31 GMT",
+      "ts": 1792908391000
     },
     {
       "title": "Floods and landslides disrupt road traffic across Nepal",
