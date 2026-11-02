@@ -1,13 +1,6 @@
 {
-  "at": 1793564757115,
+  "at": 1793579528574,
   "items": [
-    {
-      "title": "BP Highway open for traffic – Public Service Broadcasting, Radio Nepal",
-      "source": "radionepalonline.com",
-      "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTFBVUHdySTRMVTlDdlB2ekpVSU1yaG1RZWxTWllVM2tGVG5zdlpSRTBxVjdyNFRobTU4aGJmTF9TVGZXTGptNjNOQUcwM25MbndWYzZhRWI3R0I2c1VEazc0NzdwSS0?oc=5",
-      "date": "Sun, 01 Nov 2026 16:19:36 GMT",
-      "ts": 1793549976000
-    },
     {
       "title": "Traffic resumes on BP highway as all blocked roads reopen",
       "source": "Nepalnews.com",
@@ -100,18 +93,25 @@
       "ts": 1793430819000
     },
     {
-      "title": "Heavy rains trigger landslides and block roads in Nepal — Kathmandu Post",
-      "source": "UA.NEWS",
-      "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQQ2FWdHY0QldJY1h1eWFvb196Ujh0MHRoTnZ2VmRrenpwOVc4QXBRME5feGVNc2ZWN3FoUlB6cWFVaXlUTHpTS3Fqc0NKSy03ZW5WaHgzSmhfU1dwYnNQMFQ4dlFaQ2pmN2dobERqMXljcTRiWGR1OGx3R0tOU0RtV2JuYlc4R3RHeERfNnBxWGVxUG5FYm8yWFFNaWVvMTF5?oc=5",
-      "date": "Sat, 31 Oct 2026 07:00:26 GMT",
-      "ts": 1793430026000
-    },
-    {
       "title": "More than 12 road sections blocked by floods, landslides",
       "source": "Khabarhub",
       "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE5LOUd4ZnA5Z0w2bk5jbDk0UmJHSm82Z1JFTlprLXNFS19GWDdYRnVxam9tMmVFWlJ4ZmRUbWlsMVUzM0M3RVg5c2tRMU5ESTNDcktsMXExY2M?oc=5",
       "date": "Sat, 31 Oct 2026 06:41:04 GMT",
       "ts": 1793428864000
+    },
+    {
+      "title": "Rain triggers landslides, washes away roads and disrupts travel across Nepal",
+      "source": "The Kathmandu Post",
+      "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxQZXZOMUVyU2d3RVpuNVRHbHZLUnFZcXk5aDZYSDRwUVpHYkNxOEVhSWNqakIybm8zWEJhV08xNDd2NnEzYjEwWEdJQXVUcm1SYk1DYWl3QVpkam9lbmhTQlNCR0d6M1pBN0l3bjExMGZjYTBTNXM0dUtIY2pFaHhhTnFSYTYwZjAxMlhoSW90QjM2UTNiS0ZSRlNabmx3eVFrVjU0Tk5Ud1dZYmJqem00N0x0V2l5cnF0c1NHM0FB?oc=5",
+      "date": "Sat, 31 Oct 2026 06:06:44 GMT",
+      "ts": 1793426804000
+    },
+    {
+      "title": "Upper Mustang Affected by Heavy Snowfall and Landslides",
+      "source": "Ratopati",
+      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNTUF1Q1hLVm9NS1ktc0FDbW1oTnEyZldqdHh5YkprVnBhdjhIMkt6VFFiSGVJUXFjRlU1anVlV1NDX1pyd2Jxdms3MUU0QTRsOXpDejY4ZzdtU3NoWVdKQ1E4empXb1hhSkhKRXZaelYzdkFObzgyVlUzdUF5cFBGQVUzXy14MkxoVklvdjZuLUpDbVptdHVReEJtWHlxMy1KR0FVanpoMmdIWTU4QWhmWXpnSlY?oc=5",
+      "date": "Sat, 31 Oct 2026 06:02:56 GMT",
+      "ts": 1793426576000
     }
   ]
 }
