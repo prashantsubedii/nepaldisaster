@@ -1,12 +1,33 @@
 {
-  "at": 1794132576880,
+  "at": 1794157175842,
   "items": [
+    {
+      "title": "Kukur Tihar: Leo’s flood rescue service earns him Nepal Police’s top dog award",
+      "source": "Nepalnews.com",
+      "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxOaDNGbHNGT2lGd2toVHJpSzRxS3FDWTc5YWRvUkROd05qUXdqTnNHQ3dSWmQzMzd2cEpKZ2RmX2tVM0JNQzQ0dG1hQTJMTS1FOEJLSE5kZVJhVlVTRDVrUlpKbE40ME5MOUplNG1tT3hTcFVXdTlTZS1sVUFmRlh5NUhHZV9KZVByaG9iaG5vcXVvUWhyYjVIQ3ZiTHM2MnczdHJSUlFYdVBoRXJnRmxDOS13eVpZX1k2aWdZ?oc=5",
+      "date": "Sun, 08 Nov 2026 12:27:12 GMT",
+      "ts": 1794140832000
+    },
+    {
+      "title": "Nepal flood causes Rs 472.66 billion in damage and losses; reconstruction needs estimated at Rs 706.65 billion",
+      "source": "The Annapurna Express",
+      "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE8yMkl2SGRwb1VOaFd1M2pYbjU3MXdZMlI1M0otR1pxV2UwY3NzZ2E4WDc4cUctU1o3ZVlXTWJkNkFCWWJfNWdlN0YtbVpULVJxckVzS3Nqbw?oc=5",
+      "date": "Sun, 08 Nov 2026 11:26:15 GMT",
+      "ts": 1794137175000
+    },
     {
       "title": "Leo to receive award for searching for flood victims in Nepal — Kathmandu Post",
       "source": "UA.NEWS",
       "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxOWEpVUkYwNmpNZUtsRktGbUtHbThvVWIzUGgwNHhMNFoyR0J0b0FxVUFLd3RCME04dmhJa2F5Q1NvMWMwY0h4VzloMFFQZV9tZDVsaG9hTFIzY0tneThIOC1aNElpVEt2bGd5RDJKaW1KTWp4WWNVU0VmM2s1cW5VMlBzSlAwcUVUX3RjLWg1SjctWFRTRlJXUlhNdHdzaWhHZFJfdGVR?oc=5",
       "date": "Sun, 08 Nov 2026 04:00:53 GMT",
       "ts": 1794110453000
+    },
+    {
+      "title": "From flood-hit areas to crime scenes, Nepal’s police dogs sniff out vital clues",
+      "source": "The Kathmandu Post",
+      "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxPamQyN1l6SUwyal9kRVNCQkxhbXJweDhibHhnQWR5T2NaSkhCZlJoemt3Z1oxQzE3dXZheU1hekZHQmlDSUZSS3VzdTBWUFFWdS1KNWpxamxlaXBXQVdwaWRjVFhERFVaMl9GaWpzNms3VFpQV0xGMFZRR1JZTkctQ3lsX0gxemxOaEtrRjhkcmFyNElXTjd4TGg2Qk54MHhGcEFTRTJJczNrT2hGaHJlNHlNeFltdzBwZDBXZUJ5YlNEQQ?oc=5",
+      "date": "Sun, 08 Nov 2026 03:48:19 GMT",
+      "ts": 1794109699000
     },
     {
       "title": "They have gone 10 weeks without answers. Will these families ever know what happened to loved ones missing after Nepal’s floods?",
@@ -77,6 +98,13 @@
       "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxQUC1jc3d1UklJeFhQRGtMYzFjOFR3SlRRdExwSWt3a1htcjhJTkVyTTVfeW5odGk0NmY4OTFIRGc5U1M2UHpSM3M3aHRTbjJjY0ZCc2VJaUxLZmszcnBZZXowaVR2Nm9xcjdiRTQ0WEttUzVNVFRxdnk0aWFmcm1WRjNCaTg?oc=5",
       "date": "Fri, 06 Nov 2026 21:12:04 GMT",
       "ts": 1793999524000
+    },
+    {
+      "title": "Fund the flood warnings that Nepal never got",
+      "source": "Bangkok Post",
+      "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxOdVItbVJ4VXJwTFJkLVFuUG9qREpRQklWandiamtXLTFsWTVMR193UXNuZzJaR01leFhYazlfbm1TZEtWOXNST0JnQlFLbklnR2FLSDd1YldmVkZJRi1tcmNYdWRkb3Z1SXU1TVJwUHJZdC1OZ19IaHVpbDFXTWVyR0JzNFpCamNoMWREZC1qOHBxOHh2OENubmRaSFA?oc=5",
+      "date": "Fri, 06 Nov 2026 18:01:00 GMT",
+      "ts": 1793988060000
     },
     {
       "title": "Disaster Preparedness Saves Lives in Nepal Floods",
@@ -182,34 +210,6 @@
       "url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxOZkhzMC1ieFd4THNHYVhRZjNJbURGWmJTQ0JzTmFxY1hlc0V5cmd2TUgxQzJUdUx4TUxZWDZYTFJxWERRZGtkYnJoekJvWUNKRFp5dDktOW5jelBzNUo0ZlV6eENnRHJzZHRKWERZWV9Oc0UwNmZQZ3JtbFhrdUlpNmNYMVFKRVBKS05Uc09jb21CVkVTY0R3azBNbnl6Ynh5enVxb29SMXlIU09OVkhJR2djX19xcDhBazV4Q1JuV3VGd1R3d19NNUpKLWpmdw?oc=5",
       "date": "Fri, 06 Nov 2026 00:30:55 GMT",
       "ts": 1793925055000
-    },
-    {
-      "title": "Solar panels, not sirens: how ‘perverse’ climate zealots killed thousands in Nepal",
-      "source": "New York Post",
-      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNd0dmSERWd3BZU0I0emJDZXp6WkE0WmhEaGpRdmdsUnowVjN1ZlRBNHBJZEMzUldZeExCbG1PWW9pdmxzc1A4dUtxSjh1ZUFlU1RmM3dUNGpydlNnMHh1VzIxY2JnV1JlTU1Cc1VBcHJKMUVDYXd3LTNHVWJoTldGSWZ2VzZWcFhEMkxham1BSk5oazdvMGZQdExCODhUVmFyQVRrZGtjdnZ0UTFP?oc=5",
-      "date": "Fri, 06 Nov 2026 00:23:00 GMT",
-      "ts": 1793924580000
-    },
-    {
-      "title": "India ready to help Nepal rebuild flood-hit infra, deepen energy ties",
-      "source": "The Economic Times",
-      "url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxNNzJ2YjJOLWgyaEM3NG9kb0pyZWEySHVRa19fOTR2eHRoMlNMZ2lYcDZzek5yQkdxbWE0eVplNUcyOEpzdjNpOXBIUHJlRkhCcDM2WUlRZWFhOE55d0wweldpMEx0bU5UY2xyUU1NREdleEhkVU9JMHVra0d2S08tLWRqN1UtLTJER0FXSVF4NW4xSGl4N1ZpaTkxa2doWUZHUDAwcVZmUmQ5RUVqZDFWN0pqWjJUREctbU9zeGJMTzRDSXMwWXBVbW5yNXQxZ9IB0wFBVV95cUxOek9wQkNhbjlIM3dWdjN1MmVaLVMyZndpVmhxTnMxdE44RnZzS3I5dWJPb1VBU3gtWm5kYWJweTNfX3htWUcwdEVKSjlyM25lY1hxNkpZdjI3MkxRZ2pISXNmSktsR3YzWWhNeVZnSlZ1QVByOTM1aTVMSG9Yc3A4RWRvMU4tZDMyMGthWW5SSWNLUjlXTjZQLXJWUGVFM2dMYUQ0SWV6c3dsNm82LWZFbG9vX0FIZnZTVDM1MWRXMzByUGo3QndpRnNWaHlXTkZNVTFR?oc=5",
-      "date": "Thu, 05 Nov 2026 18:48:20 GMT",
-      "ts": 1793904500000
-    },
-    {
-      "title": "Nepal Thanks India for Flood Aid During Foreign Secretary Misri’s Kathmandu Visit; Key Outcomes of the Official Visit",
-      "source": "Republic World",
-      "url": "https://news.google.com/rss/articles/CBMimgJBVV95cUxOQmJzTDZBZzYzS0NTM3ZVZnYtUGMxYUdudlBiSENKdFRKYVR0dUpobzVNTzRsWHBXM3k0QmRMa0tFck16UVplNjJGSEQzclJmNkhRQU42QnRhTGhIYk15Q0ZkX2loWW8zNGUtdkVpZmRZQmJGSmlGZ3VSZ0d1em1XMkJER0k4a0NXOEtwMzY3VTd4T05rZ0YxN2ExMFhNeFZvdnZSTmJ1QnIzVUlETmlXOXVWdExfQWNzY3ZQSUV2REhsckZLVExFSWtlckxyc0ZoaGNmQzJkVGlZQVA2YmpWRHVYekExYVRvYmNhRS14dlhvdEl2Q2F3OXU4Y045NzhnU2pnZ3BYaGcyUDV5dklISjBQcGxRLTBYR0HSAZ8CQVVfeXFMTUxVTk5HMzRQVXkydjNRUmIyaUs5UnBET1AzMGk4UDVFd1ExVHRHQUFMSlRRUFJpQkFqNmJrTkxQenZkdmc0alA1Q201TTZHRmtEVmdhU055VkI2cjMyNWhkbVlkRjl3c2UxWTAxai10YWxXbDVzZkxZSjM3N0xxUllEOEhIWTF2dDRCQ2dhVUVEQ2tLVWx5aHRkS2xlM1FTLW1DemE0X0hiTVhRWF84YnlMbWtZbHFCVzlVY29VXzN5ek03QkhXTHlTSGQ4Q1VFVnkzYUZlVXc1SkhLNktlckxUR3lmb1RoczM3NTE5R0Z2bnhZbF9oRTdFdUZKOTFuTEVtLTY2WWIwbWJ2UkxRaXdoMnZBeGw5M0lVZEtrTnM?oc=5",
-      "date": "Thu, 05 Nov 2026 14:20:23 GMT",
-      "ts": 1793888423000
-    },
-    {
-      "title": "Families of 54 missing Malaysians seek answers 72 days after Nepal floods",
-      "source": "NST Online",
-      "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxPT2VGdjVfRFF2MWFOdC04eXVKNFBEQVJBN1UwMzV1MDBwMnF0Y0NMOTQxcVpfdEpnWVV1WUh2SkpiU2tpeXlKOW8ydk1Jc0JvSTZvWmhMa0pJT2J2ZWhQa3JVeFZxSGdCdDl6TXNPbUNHZmtITmdUOGdBbWFSUFZfZlB4MkdjLU41VF9WdHlPZ2hSbDdiVXd4bmFxYnBkYzhHVFRDVndwM2hOb0ZnSzRQLVYwX085d291V1pnTmdR0gHDAUFVX3lxTE15SC1NUVFqTm9WTGlvYXc0WjZwVHUtbWloZ0p1WXE0ODZ6dktMYWpFd1IxYUFTRVFURTJ0Mjctb2ZZaFJDTDVlaTZFaW5ZSl90SDVjWFZ5V25TY2JNM0J0WEFmdkhpOEFrcndPbndBUDRDeWY2bk1GekNPRkl2Qm83bWc0OUJQODdMX1hiZEdiVk5LanFrc2tUQlptSnA0dDY4bmJEd0JMYjIzLU5pN0pEZ0VHZGI4dUs3emFhLVZrVXo3MA?oc=5",
-      "date": "Thu, 05 Nov 2026 08:10:48 GMT",
-      "ts": 1793866248000
     }
   ]
 }
