@@ -1,6 +1,13 @@
 {
-  "at": 1794431673797,
+  "at": 1794451784951,
   "items": [
+    {
+      "title": "Roads Blocked Across Nepal Due to Disasters",
+      "source": "Ratopati",
+      "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxOODlVM1ZCci1JdlVkZm9Rak12d3JCbmVEZUFUelVOb2ctNXhWRklBWFFKQnl2LXV1d25kdnJfTVpyZ2FCMTBPcDdiWUZBVTBJQjV3Ti0tTWcwUnZhVDVfdy0wM0Zkdk5nQ0FxaVIxaWlDVDVvOGZmUWZGWG9iV2tNbGZLdjZLMGNEajlRVGFOMnlYc0l1cVZUSEJvWTV1VElOMVVWRTBwNzM2ZFFVaHVUbW9pUHB4Qi04R1E?oc=5",
+      "date": "Thu, 12 Nov 2026 02:32:11 GMT",
+      "ts": 1794450731000
+    },
     {
       "title": "Nepal-Tibet floods showed the need for greater climate finance. Is the world listening?",
       "source": "The Conversation",
@@ -149,25 +156,11 @@
       "ts": 1794051057000
     },
     {
-      "title": "Nepal flood: NDRRMA releases the list of 2,294 missing persons",
-      "source": "The Annapurna Express",
-      "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE1zRnNfem9hdzRuYlFOSlBNMFhqVndXdmU1T2xFZlJXSFZQbnVIMmdfdTJBWktiZFM5bDRDd2lTVk80X0RmUTJQSkZqdjVyNTFUaUVHREg5TQ?oc=5",
-      "date": "Sat, 07 Nov 2026 10:09:29 GMT",
-      "ts": 1794046169000
-    },
-    {
       "title": "Disaster Preparedness Saves Lives in Nepal Floods",
       "source": "unicef usa",
       "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQUXphRnVIVmZUVE9lenc2elNGZ0VJYXRaWVI0dm5aMXNzVC1LeDY4ajlkOFNQRGFyM1ZlOTNEX0c2empUUHNTOUctaFBGZV9uZ1pCalZjWnEyZ0VQN1VadlFYdFh6bDFWT0tGYzZpVEtBOHQyX1dtcTR0bWtWcUhkZnh1NmpSMWM?oc=5",
       "date": "Fri, 06 Nov 2026 15:42:40 GMT",
       "ts": 1793979760000
-    },
-    {
-      "title": "AMDA Emergency Relief #3: Flash Floods in Nepal (6 November 2026)",
-      "source": "ReliefWeb",
-      "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxQNy1waWRGcFdwcmtBUHhuY2RjV3lYM2ZIWVRuSUFmNldCX2R4UlhVcDBIdGNUVTZzVnY1b1IwbExrVGZQWWwwemd1eUE0QWlnWlVUa3JqZ1hlZWNKNFRqMEsyVWVTNExTSlAyTjlEX0hWcGhRbU5ZSFJsbGUzYW5ic3djVzVGclYta0V4WlQ4SWExZ3VpNDdIdw?oc=5",
-      "date": "Fri, 06 Nov 2026 12:35:54 GMT",
-      "ts": 1793968554000
     },
     {
       "title": "IOM Nepal Flood Response Situation Report #8 | 5 November 2026",
@@ -205,11 +198,18 @@
       "ts": 1791529200000
     },
     {
-      "title": "Many Nepalis swept away in the floods aren't officially dead, leaving families in limbo",
-      "source": "BBC",
-      "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE1yOUVxZkQzYVpqZHJrcnI3TGtVU28yUzFqTDhsVTIzaFR0b21qbW9EaG5FcEg1QU14RXNtMnZjR2VMOFAySnlyakdhV2dSWUNPeUdJSkUzcDVJTUE?oc=5",
-      "date": "Tue, 06 Oct 2026 07:00:00 GMT",
-      "ts": 1791270000000
+      "title": "Nepal floods threaten jobs and livelihoods beyond disaster zone: ILO",
+      "source": "UN News",
+      "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE40RlJHTV9pcjRSbE5IenFyUEdBaWo1TEh2ckljZzJsVjQyWGFkQmZocGh0SlVaZm5lNGo2S2podXVNdjhrOXU4MDFlQWR1TEQxejR3aVVCMA?oc=5",
+      "date": "Thu, 01 Oct 2026 07:00:00 GMT",
+      "ts": 1790838000000
+    },
+    {
+      "title": "More Than 1,300 Missing After Torrent Sweeps Away Villages in Nepal and Tibet",
+      "source": "The New York Times",
+      "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE1xYUczYWpscGpLQXZYdm5mNHJUOUM4LXFCeUtkaW83WmhJcGRCRTM3NGwyMjhrczlOTlljRGZ3dUp4MWE1emt6WEdDajRxN1BOX2ZXNkVmazVtWUZqcVl4Q2x4MTAtZWhkd3c?oc=5",
+      "date": "Thu, 01 Oct 2026 07:00:00 GMT",
+      "ts": 1790838000000
     }
   ]
 }
