@@ -1,19 +1,19 @@
 {
-  "at": 1794778756210,
+  "at": 1794821172491,
   "items": [
+    {
+      "title": "Massive landslide sends dust cloud over river in Nepal",
+      "source": "Yahoo",
+      "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxNaEhmNlgtSUZPVHBFNW9KeGpNRm1lU3NBdFVOaTVkWGxoYkM2LTk5cnFHUmxsNGtlaWNhODJVVTNFRUJxdHpucFpCZnFaRDFBcVBaMXNsNXZuOHE0ci1BcVZ0Qm1SczJ4Q1I0Uzd0S1BPb0tuWDJFa0lGWkVpUG9WVUtXdjZ5aERYazN3?oc=5",
+      "date": "Mon, 16 Nov 2026 08:14:49 GMT",
+      "ts": 1794816889000
+    },
     {
       "title": "Dry landslides blocks Kaligandaki Corridor",
       "source": "The Rising Nepal",
       "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE5hamJ6clJuVlVYNXBqZUlxazl5NnpZTkhpSE1BSVBsTE9QRE5wNWdMZk5tMUlZRVRpZ2FGWmNBT3pkSFN2SllMZFFSZmpYZFlL?oc=5",
       "date": "Sun, 15 Nov 2026 15:59:35 GMT",
       "ts": 1794758375000
-    },
-    {
-      "title": "Three die in Mugu road accident",
-      "source": "Nepalnews.com",
-      "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE9kWU9xM0pZLU0zM2liVEpIQkszZ0hqVm5FZm1SZ1RXTmhiU0x0Mzdwb1hXWHlnZGE0eVFyeHA4dHN0QkV6N1Vha09jX3BybHJ6TFlJQnVTUTdQNmotM3RRT2dHeHE1RkJMbDEtZnZ0QTJLTVpLVU02Y3J3RTM?oc=5",
-      "date": "Sun, 15 Nov 2026 14:21:47 GMT",
-      "ts": 1794752507000
     },
     {
       "title": "Over 12 roads networks across the country obstructed",
@@ -32,9 +32,16 @@
     {
       "title": "Massive dry landslide hits Yarubagar in Gorkha",
       "source": "myRepublica",
-      "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxPZVRoa1dnT2w0YVRwWUVKVkp6dHdRSGtrNXhINFlabmM3YWNqOURKU29WbFp3S1VsSW5uZ2s4ZGdzMkJycl9YWWtPSnpMNUtvZ1NBRGdQYUVTSjM0WUEwbXg2V2ptenNEV1pUTWM3TFp5WmpHWDFxUTJBMFMtVFI0Wmd4UlhZVHY5bHZRV3lDZEdMbDNfbWJ3OUFBMWlnZTBNR3o0?oc=5",
+      "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxOdmk5bkZHYV9Rb2pKYmVqQmZXel9qdmhvX3lzMjBpQzNKd0lSS3JhQU9DUllSMXFJMVVTRk9Ob2ZkQmYyVVZwZHRMNU9hVk1HSFdmaDN6QV9GN3RMU3ZkWjdLemozVDZpTVhHcURzaG1hT2VGajhKQ3picV9ueDczMC15Q2FPcmVWSHNZT0NTOVR0OW1rY1RxVUdORWMyZDR5cHlEeDRCVl8?oc=5",
       "date": "Sat, 14 Nov 2026 05:21:04 GMT",
       "ts": 1794633664000
+    },
+    {
+      "title": "Blocked Nara Pass opens",
+      "source": "The Rising Nepal",
+      "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE9Cb1VnRXhxUFRIckpnMDExb1RTNjM3RkwzNHo3QmlKQ2RpY2F0TmY5RElMR0ZzMlU1MVFqNmtGcG5zaW1xT3R5ZlktSXRkVHBh?oc=5",
+      "date": "Sat, 14 Nov 2026 05:18:56 GMT",
+      "ts": 1794633536000
     },
     {
       "title": "Nighttime public transport restricted on Kathmandu-Hetauda road",
@@ -51,13 +58,6 @@
       "ts": 1794572331000
     },
     {
-      "title": "Blocked Nara Pass opens",
-      "source": "The Rising Nepal",
-      "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE9Cb1VnRXhxUFRIckpnMDExb1RTNjM3RkwzNHo3QmlKQ2RpY2F0TmY5RElMR0ZzMlU1MVFqNmtGcG5zaW1xT3R5ZlktSXRkVHBh?oc=5",
-      "date": "Thu, 12 Nov 2026 19:15:10 GMT",
-      "ts": 1794510910000
-    },
-    {
       "title": "Bagmati CM Thapa Magar inspects Bhaktapur road",
       "source": "Nepalnews.com",
       "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTFBaVG8wZm5LOGVhZi0wVTNNcUxPWndxLW5yOFd1dk1MS3NLLVBEd2xpVk1pZ1l4OTA2bUxrMjFHSUZuRnJzTnB3MDczZHVtenZObk9hZzVpdmFGQ3ItVWRoMFMxZ3NSaGhBUzJXSk9jd0twRFNSUnc?oc=5",
@@ -70,6 +70,20 @@
       "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxPLTFJalQ1SWlJQmN2Ukg1eV8zbFVmaFhNeTAtTWlwc0xXeFIwVTRMbHVIa1NCa2F5LUU1RVg0YWxtZWU0MmFCOTl6R2loemFNMDF2bG1QU19IZEk5blNYVUxFOVdIeFJDSk5sVjlIZXMzcDlaNjk0LVZZeXFYUzBiNEdNamd6NVBuX212c3NZT0JyU1dacFQ4WmVERzhzRDRQTlJfYTd3bEM?oc=5",
       "date": "Thu, 12 Nov 2026 13:03:37 GMT",
       "ts": 1794488617000
+    },
+    {
+      "title": "Nagdhunga-Muglin Road Section Partially Operates Amidst Landslide Risk",
+      "source": "Ratopati",
+      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOQ3BSSVhxM0tmblVuMU5EaU9NYVdndFRRbFVHZnBzNFo3YWlxajBwaWxvdnA4ZlMxN0ZwM0tCQVFreXJLUjZPSkltU3lUYUZRQjZYWnpUQmtERlRUdWZwTVhabnJYWWhIaDF6SVIzYWctVWh5MlZmMW1mSkp5cG15cHQ3ODlxcElwMzdUaHlsajllVHhpT3AtbEstUGpiRXhBbVpuQ3VuWDZUX1E?oc=5",
+      "date": "Thu, 12 Nov 2026 12:12:11 GMT",
+      "ts": 1794485531000
+    },
+    {
+      "title": "Kaligandaki Corridor Road in Gulmi Reopens After Landslide Cleared",
+      "source": "Ratopati",
+      "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxPZk5fWGYyd0pYRHdvWW5fWkdWSmVyT2t6ZWlpT25vSFFmQ25ZY2xlanJkMktYcXo3eTZkUWhtUTRoMWJVNzRYNWFyYURfc2VwX2FGMlYySVkwb1ZSMUhrRUM3MnBZczQ2NHc4WE13NUxfZjRCRnZWSDVDMWhCNFczMzUzNzB5QTFBdHNJLTE4QUw?oc=5",
+      "date": "Thu, 12 Nov 2026 11:08:23 GMT",
+      "ts": 1794481703000
     },
     {
       "title": "Dry landslide obstructs Kaligandaki corridor",
@@ -98,20 +112,6 @@
       "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxOODlVM1ZCci1JdlVkZm9Rak12d3JCbmVEZUFUelVOb2ctNXhWRklBWFFKQnl2LXV1d25kdnJfTVpyZ2FCMTBPcDdiWUZBVTBJQjV3Ti0tTWcwUnZhVDVfdy0wM0Zkdk5nQ0FxaVIxaWlDVDVvOGZmUWZGWG9iV2tNbGZLdjZLMGNEajlRVGFOMnlYc0l1cVZUSEJvWTV1VElOMVVWRTBwNzM2ZFFVaHVUbW9pUHB4Qi04R1E?oc=5",
       "date": "Thu, 12 Nov 2026 02:32:11 GMT",
       "ts": 1794450731000
-    },
-    {
-      "title": "BP Highway obstructed",
-      "source": "Nepal Khabar",
-      "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE5ZWTNBVGtrNTlSbHEzb1JLdUdVMTNRanhFRkI0YlVzNVJ0SlB5T0J4Q3hEOW1qajNfWnZlX0NTU1l1YjlZaGViMW9PUUpQbTVoYTktSDQ1Qy0?oc=5",
-      "date": "Thu, 12 Nov 2026 00:00:00 GMT",
-      "ts": 1794441600000
-    },
-    {
-      "title": "Landslide Causes Long Traffic Jam on Narayangadh-Mugling Road",
-      "source": "Ratopati",
-      "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxNdExPSm1WamkyUjNwRHozWXd5SWt4M2VWU09nU19RanRpSWxEYjdIRGROTWQ1RTZvdXNpbkRQTS1zaHZKblVTelBHRTBhejUwVENXbFBjYnFnZVRacUNsTkpXVjZTeFZGZFdoM2lPVC1yd2hpdVAyYTVrdVJuR2oxQjNRM3ppak1GR2Q4aDMwMjlBN1RMeFU2bnFJaFpJaU9QSGlXa3VFRk1TN3lZZ21JOWwwWTZ1LVZCNUVEMDd5Wl9JSUtZdGc?oc=5",
-      "date": "Tue, 10 Nov 2026 09:36:57 GMT",
-      "ts": 1794303417000
     }
   ]
 }
