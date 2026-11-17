@@ -80,7 +80,7 @@
         <div class="navdd__m" role="menu">
         <a href="nepal-floods.html"><b data-i18n="nav.fl.ov">Flood Overview</b><small data-i18n="nav.fl.ov.s">Cause, timeline &amp; affected districts</small></a>
         <a href="stats.html"><b data-i18n="nav.fl.stats">Situation Details</b><small data-i18n="nav.stats.s">Deaths, missing, rescued — official figures</small></a>
-        <a href="missing.html" aria-current="page"><b data-i18n="nav.missing">Missing Persons</b><small data-i18n="nav.missing.s">Search the list or report someone</small></a>
+        <a href="missing.html" aria-current="page"><b data-i18n="nav.missing">Missing Persons</b><small data-i18n="nav.missing.s">Search the list · how to report</small></a>
         <a href="rescue.html"><b data-i18n="nav.rescue">Rescued</b><small data-i18n="nav.rescue.s">Named NDRRMA rescue registry</small></a>
         <a href="relief.html"><b data-i18n="nav.relief">Relief Fund</b><small data-i18n="nav.relief.s">Donate to the PM Disaster Relief Fund</small></a>
         </div>
@@ -100,8 +100,9 @@
 <main id="main"><section><div class="wrap">
   <div class="missing-grid">
     <form class="panel" id="missingForm" autocomplete="off" novalidate>
-      <div class="panel__h"><h3 data-i18n="mf.h">Report a Missing Person</h3></div>
+      <div class="panel__h"><h3 data-i18n="mf.h">Keep a note on a missing person</h3></div>
       <div class="panel__b">
+        <p class="verify" style="margin:0 0 14px" data-i18n="mf.note"></p>
         <div class="field"><label for="mfName" data-i18n="mf.name">Full name</label><input id="mfName" required></div>
         <div class="field field--row">
           <div><label for="mfAge" data-i18n="mf.age">Age</label><input id="mfAge" inputmode="numeric"></div>
@@ -118,8 +119,7 @@
           <label class="dropzone" for="mfPhoto" id="mfDrop"><span data-i18n="mf.drop">Click to attach a recent photo</span><div class="prev" id="mfPrev"><img alt=""></div></label>
           <input id="mfPhoto" type="file" accept="image/*" hidden>
         </div>
-        <button type="submit" class="btn btn--primary" style="width:100%;justify-content:center" data-i18n="mf.submit">Add Unverified Report</button>
-        <p class="verify" style="margin-top:12px" data-i18n="mf.note"></p>
+        <button type="submit" class="btn btn--primary" style="width:100%;justify-content:center" data-i18n="mf.submit">Save note on this device</button>
       </div>
     </form>
 

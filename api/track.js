@@ -8,6 +8,22 @@
 
 const { pipeline } = require('../lib/kv');
 const { canonCity } = require('../lib/geo');
+const { clientIp } = require('../lib/auth');
+
+const PER_MINUTE = 20;   // page views per IP per minute; more than any real reader
+
+/* The beacon is only ever sent by our own pages, so a browser POST always
+   carries our Origin. Scripts can fake it, which is why the per-IP limit below
+   is the real guard — this just drops the cheapest junk without a KV call. */
+function sameSite(req) {
+  const o = String(req.headers.origin || '');
+  if (!o) return req.headers['sec-fetch-site'] === 'same-origin';
+  try {
+    const h = new URL(o).hostname;
+    return h === 'nepaldisaster.com' || h.endsWith('.nepaldisaster.com') ||
+      h.endsWith('.vercel.app') || h === 'localhost';
+  } catch (_) { return false; }
+}
 
 /* Strip anything that isn't a letter/number/basic punctuation, cap length —
    defends the KV key/field space against junk or injection attempts. */
@@ -19,7 +35,14 @@ function clean(s, max) {
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') { res.status(405).end(); return; }
+  if (!sameSite(req)) { res.status(204).end(); return; }
   try {
+    // Per-IP cap (a per-minute counter), so a script looping on this endpoint
+    // can't fake the numbers or burn the KV plan's daily command quota.
+    const rk = 'rl:track:' + clientIp(req) + ':' + new Date().toISOString().slice(0, 16);
+    const [hits] = await pipeline([['INCR', rk], ['EXPIRE', rk, 120]]);
+    if (!(hits <= PER_MINUTE)) { res.status(204).end(); return; }
+
     const country = String(req.headers['x-vercel-ip-country'] || '')
       .toUpperCase().replace(/[^A-Z]/g, '').slice(0, 2) || 'XX';
 

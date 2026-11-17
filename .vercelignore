@@ -1,0 +1,9 @@
+# Repo-only files: never uploaded to Vercel, so they can't be downloaded from
+# the live site. (lib/ must stay: the api/ functions require it. It is blocked
+# by a redirect in vercel.json instead.)
+/tools
+/scripts
+/.github
+/.claude
+/README.md
+/.env.example
