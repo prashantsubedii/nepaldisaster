@@ -7,20 +7,29 @@
 const {
   verifyPassword, verifyEmail, signSession, sessionCookie, clientIp, isConfigured
 } = require('../lib/auth');
-const { cmd } = require('../lib/kv');
+const { cmd, pipeline } = require('../lib/kv');
 
-const MAX_ATTEMPTS = 5;
-const WINDOW = 15 * 60; // 15 minutes
+const MAX_ATTEMPTS = 5;     // per IP
+const MAX_GLOBAL = 30;      // across all IPs — stops guessing spread over many addresses
+const WINDOW = 15 * 60;     // 15 minutes
 
-async function underLimit(ip) {
+/* Returns 'ok', 'limited' or 'unavailable'. Fails CLOSED: if the limiter store
+   can't be reached there is no brute-force protection, so login waits instead
+   (visitors are unaffected — only the admin sign-in pauses). */
+async function checkLimit(ip) {
   try {
-    const key = 'rl:login:' + ip;
-    const n = await cmd(['INCR', key]);
-    if (n === 1) await cmd(['EXPIRE', key, WINDOW]);
-    return n <= MAX_ATTEMPTS;
+    const ipKey = 'rl:login:' + ip;
+    const allKey = 'rl:login:all';
+    const [n, g] = await pipeline([['INCR', ipKey], ['INCR', allKey]]);
+    if (typeof n !== 'number' || typeof g !== 'number') return 'unavailable';
+    // First hit in the window starts the 15-minute clock.
+    const exp = [];
+    if (n === 1) exp.push(['EXPIRE', ipKey, WINDOW]);
+    if (g === 1) exp.push(['EXPIRE', allKey, WINDOW]);
+    if (exp.length) await pipeline(exp);
+    return n <= MAX_ATTEMPTS && g <= MAX_GLOBAL ? 'ok' : 'limited';
   } catch (_) {
-    // If the limiter store is unreachable, don't lock the real admin out.
-    return true;
+    return 'unavailable';
   }
 }
 
@@ -38,8 +47,13 @@ module.exports = async (req, res) => {
   const password = String(body.password || '').slice(0, 200);
 
   const ip = clientIp(req);
-  if (!(await underLimit(ip))) {
+  const limit = await checkLimit(ip);
+  if (limit === 'limited') {
     res.status(429).json({ error: 'Too many attempts. Try again in 15 minutes.' });
+    return;
+  }
+  if (limit === 'unavailable') {
+    res.status(503).json({ error: 'Sign-in is temporarily unavailable. Try again shortly.' });
     return;
   }
 

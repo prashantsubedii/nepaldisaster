@@ -875,7 +875,7 @@ const I18N = {
   "page.relief.h":"Relief Fund","page.relief.p":"Official Prime Minister's relief fund account details, transcribed from the PMO notice. Verify every detail before transferring.",
   "page.history.h":"Disaster History","page.history.p":"Choose any major disaster in Nepal to read a detailed, section-by-section account drawn live from Wikipedia — for record and preparedness.",
   "hist.lives":"Lives lost",
-  "mf.h":"Report a Missing Person","mf.name":"Full name","mf.age":"Age","mf.gender":"Gender","mf.seen":"Last seen location","mf.date":"Last seen (date)","mf.contact":"Contact number","mf.desc":"Identifying details","mf.photo":"Photo","mf.drop":"Click to attach a recent photo","mf.submit":"Add Unverified Report",
+  "mf.h":"Keep a note on a missing person","mf.name":"Full name","mf.age":"Age","mf.gender":"Gender","mf.seen":"Last seen location","mf.date":"Last seen (date)","mf.contact":"Contact number","mf.desc":"Identifying details","mf.photo":"Photo","mf.drop":"Click to attach a recent photo","mf.submit":"Save note on this device",
   "mf.note":"This form does not transmit to authorities. It saves an unverified note in your browser so you can relay details to Nepal Police / ICRC Restoring Family Links. For a life-threatening emergency dial 100.",
   "reg.all":"All","reg.missing":"Missing","reg.found":"Found","reg.search":"Search name or location…",
   "reg.empty.h":"Search official missing-persons channels","reg.empty.p":"For this event, use the official registries — they hold authenticated, current information and can trace people across borders:",
@@ -916,7 +916,7 @@ const I18N = {
   "page.relief.h":"राहत कोष","page.relief.p":"प्रधानमन्त्री कार्यालयको सूचनाबाट सारिएको आधिकारिक राहत कोष खाता विवरण। रकम पठाउनुअघि हरेक विवरण रुजु गर्नुहोस्।",
   "page.history.h":"विपद् इतिहास","page.history.p":"नेपालको कुनै पनि प्रमुख विपद् छानेर विकिपिडियाबाट प्रत्यक्ष रूपमा खण्ड-खण्डको विस्तृत विवरण पढ्नुहोस् — अभिलेख र पूर्वतयारीका लागि।",
   "hist.lives":"ज्यान गुम्यो",
-  "mf.h":"बेपत्ता व्यक्तिको जानकारी","mf.name":"पूरा नाम","mf.age":"उमेर","mf.gender":"लिङ्ग","mf.seen":"अन्तिम देखिएको स्थान","mf.date":"अन्तिम देखिएको मिति","mf.contact":"सम्पर्क नम्बर","mf.desc":"चिनारीका विवरण","mf.photo":"फोटो","mf.drop":"पछिल्लो फोटो संलग्न गर्न क्लिक गर्नुहोस्","mf.submit":"रुजु नभएको जानकारी थप्नुहोस्",
+  "mf.h":"बेपत्ता व्यक्तिको जानकारी","mf.name":"पूरा नाम","mf.age":"उमेर","mf.gender":"लिङ्ग","mf.seen":"अन्तिम देखिएको स्थान","mf.date":"अन्तिम देखिएको मिति","mf.contact":"सम्पर्क नम्बर","mf.desc":"चिनारीका विवरण","mf.photo":"फोटो","mf.drop":"पछिल्लो फोटो संलग्न गर्न क्लिक गर्नुहोस्","mf.submit":"यो उपकरणमा नोट सुरक्षित गर्नुहोस्",
   "mf.note":"यो फारमले अधिकारीलाई पठाउँदैन। तपाईंको ब्राउजरमा रुजु नभएको नोट सुरक्षित गर्छ, ताकि तपाईं नेपाल प्रहरी / ICRC लाई विवरण पठाउन सक्नुहोस्। जीवनको जोखिम भए १०० मा फोन गर्नुहोस्।",
   "reg.all":"सबै","reg.missing":"बेपत्ता","reg.found":"भेटिए","reg.search":"नाम वा स्थान खोज्नुहोस्…",
   "reg.empty.h":"आधिकारिक बेपत्ता-खोजी च्यानल प्रयोग गर्नुहोस्","reg.empty.p":"यस विपद्का लागि आधिकारिक दर्ता प्रयोग गर्नुहोस् — तिनमा रुजु भएको, पछिल्लो जानकारी हुन्छ:",
@@ -932,6 +932,10 @@ const I18N = {
 const $  = (s,el=document)=>el.querySelector(s);
 const $$ = (s,el=document)=>[...el.querySelectorAll(s)];
 const esc = s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+// Links from outside feeds (news, GDACS, BIPAD) go into href: allow http(s),
+// tel/mailto and relative URLs only, so a poisoned feed can't slip in a
+// javascript: link.
+const safeUrl = u=>{ const s=String(u==null?"":u).trim(); return /^[a-z][a-z0-9+.-]*:/i.test(s) && !/^(https?|tel|mailto):/i.test(s) ? "#" : s; };
 let LANG = (()=>{ try{return localStorage.getItem("nd_lang")||"en";}catch(e){return "en";} })();
 const t = k => (I18N[LANG] && I18N[LANG][k]) || (I18N.en[k]||k);
 const TL = o => (o && (o[LANG]||o.en)) || "";
@@ -1084,7 +1088,7 @@ function renderStats(){
   }
   wrap.classList.remove("hero__stats--ok");
   wrap.innerHTML=STATS.map(s=>`
-    <a class="hstat ${s.cls||''}" href="${esc(s.href||("stats.html#"+s.key))}" aria-label="${esc(t("stat."+s.key))}">
+    <a class="hstat ${s.cls||''}" href="${esc(safeUrl(s.href||("stats.html#"+s.key)))}" aria-label="${esc(t("stat."+s.key))}">
       <div class="n mono">${esc(toNepDigits(s.n))}</div>
       <div class="lbl">${esc(t("stat."+s.key))}</div>
       <div class="hstat__go">${esc(t("stat.tap"))}</div>
@@ -1142,7 +1146,7 @@ function renderBriefs(){
   const g=$("#briefsList"); if(!g) return;
   if(LIVE_NEWS && LIVE_NEWS.length){
     g.innerHTML=LIVE_NEWS.slice(0,6).map(n=>`
-      <a class="brief" href="${esc(n.url)}" target="_blank" rel="noopener">
+      <a class="brief" href="${esc(safeUrl(n.url))}" target="_blank" rel="noopener">
         <span class="brief__src mono">${esc((n.source||"NEWS").toUpperCase().slice(0,18))}</span>
         <span class="brief__t">${esc(n.title)}</span>
         <span class="brief__d mono">${esc(newsDate(n))}</span>
@@ -1166,7 +1170,7 @@ function renderNews(limit){
   if(LIVE_NEWS && LIVE_NEWS.length){
     const live = limit?LIVE_NEWS.slice(0,limit):LIVE_NEWS;
     g.innerHTML=live.map(n=>`
-      <a class="news news--watch news--live" href="${esc(n.url)}" target="_blank" rel="noopener" aria-label="${esc(n.title)}">
+      <a class="news news--watch news--live" href="${esc(safeUrl(n.url))}" target="_blank" rel="noopener" aria-label="${esc(n.title)}">
         <div class="news__cover" aria-hidden="true"><span class="news__cover-k">${esc(t("news.live"))}</span><span class="news__cover-t">${esc(n.source||"")}</span><span class="news__cover-d">${esc(newsDate(n))}</span></div>
         <div class="news__body">
           <div class="news__meta"><span class="tagsq tagsq--watch">${esc(t("news.live"))}</span><span class="news__time mono">${esc(newsDate(n))}</span></div>
@@ -1739,7 +1743,7 @@ function renderRainWarn(){
           <a class="btn btn--primary btn--sm" href="highway-updates.html">${esc(t("rw.highway"))}</a>
           <a class="btn btn--sm" href="alerts.html">${esc(t("rw.map"))}</a>
           <a class="btn btn--sm" href="weather.html">${esc(t("rw.view"))}</a>
-          ${W.url?`<a class="btn btn--sm" href="${esc(W.url)}" target="_blank" rel="noopener">${esc(t("fpop.report"))}</a>`:""}
+          ${W.url?`<a class="btn btn--sm" href="${esc(safeUrl(W.url))}" target="_blank" rel="noopener">${esc(t("fpop.report"))}</a>`:""}
         </div>
         <p class="rwarn__src">${esc(t("fpop.source"))} · ${esc(W.source)}</p>
       </div>
@@ -1789,7 +1793,7 @@ function renderLatestAlerts(){
       where:[r.place&&r.place!==r.station?r.place:"", r.district].filter(Boolean).join(" · "),
       note:r.k==="road"?r.reason:(r.status||""), ts:r.ts, href:"alerts.html"}));
   }
-  const card=a=>`<a class="acard acard--${a.sev}" href="${esc(a.href)}">
+  const card=a=>`<a class="acard acard--${a.sev}" href="${esc(safeUrl(a.href))}">
       <div class="acard__top"><span class="acard__sev">${esc(t("sev."+a.sev))}</span><span class="acard__kind">${esc(a.kind)}</span>
         ${a.ts?`<time class="acard__ago mono">${esc(_warnAgo(a.ts))}</time>`:""}</div>
       <h3 class="acard__t">${esc(a.title)}</h3>
@@ -1890,7 +1894,7 @@ function renderWeather(){
       <span class="eyebrow">${esc(t("rw.precautions"))}</span>
       <ul class="wx-warn__prec">${W.precautions.map(p=>`<li>${esc(TL(p))}</li>`).join("")}</ul>
       <p class="wx-warn__hwy">${esc(TL(W.highway))}</p>
-      <p class="rwarn__src">${esc(t("fpop.source"))} · ${esc(W.source)}${W.url?` · <a href="${esc(W.url)}" target="_blank" rel="noopener">${esc(t("fpop.report"))}</a>`:""}</p>
+      <p class="rwarn__src">${esc(t("fpop.source"))} · ${esc(W.source)}${W.url?` · <a href="${esc(safeUrl(W.url))}" target="_blank" rel="noopener">${esc(t("fpop.report"))}</a>`:""}</p>
     </div>` : "";
 
   let cards;
@@ -2026,13 +2030,13 @@ function setBurger(open){
 Object.assign(I18N.en,{
   "nav.flood":"Bhotekoshi Flood","nav.fl.stats":"Situation Details","nav.wx.fc":"Forecast & Rain Warning","nav.wx.fc.s":"5-day forecast · DHM warning · live wind",
   "nav.alerts.s":"Every warned district, plotted automatically","nav.fl.ov":"Flood Overview","nav.fl.ov.s":"Cause, timeline & affected districts",
-  "nav.stats.s":"Deaths, missing, rescued — official figures","nav.missing.s":"Search the list or report someone",
+  "nav.stats.s":"Deaths, missing, rescued — official figures","nav.missing.s":"Search the list · how to report",
   "nav.rescue.s":"Named NDRRMA rescue registry","nav.relief.s":"Donate to the PM Disaster Relief Fund"
 });
 Object.assign(I18N.ne,{
   "nav.flood":"भोटेकोशी बाढी","nav.fl.stats":"अवस्था विवरण","nav.wx.fc":"पूर्वानुमान र वर्षा चेतावनी","nav.wx.fc.s":"५ दिने पूर्वानुमान · DHM चेतावनी · प्रत्यक्ष हावा",
   "nav.alerts.s":"चेतावनी भएका सबै जिल्ला, स्वतः नक्सामा","nav.fl.ov":"बाढीको सारांश","nav.fl.ov.s":"कारण, घटनाक्रम र प्रभावित जिल्ला",
-  "nav.stats.s":"मृत्यु, बेपत्ता, उद्धार — आधिकारिक तथ्यांक","nav.missing.s":"सूची खोज्नुहोस् वा बेपत्ता जानकारी दिनुहोस्",
+  "nav.stats.s":"मृत्यु, बेपत्ता, उद्धार — आधिकारिक तथ्यांक","nav.missing.s":"सूची खोज्नुहोस् · प्रहरीलाई कसरी खबर गर्ने",
   "nav.rescue.s":"NDRRMA उद्धार अभिलेख","nav.relief.s":"प्रधानमन्त्री विपद् राहत कोषमा सहयोग"
 });
 function wireNavDropdowns(){
@@ -2833,7 +2837,7 @@ function openNewsPopup(pick){
       ${figs}
       ${src?`<div class="npop__src">SRC · ${esc(src)}</div>`:""}
       <div class="npop__actions">
-        <a class="btn btn--primary btn--sm" href="${esc(href)}"${ext?' target="_blank" rel="noopener"':''}>${esc(pick.pinned?t("npop.brief.read"):t("npop.read"))}</a>
+        <a class="btn btn--primary btn--sm" href="${esc(safeUrl(href))}"${ext?' target="_blank" rel="noopener"':''}>${esc(pick.pinned?t("npop.brief.read"):t("npop.read"))}</a>
         <a class="btn btn--ghost btn--sm" href="news.html">${esc(t("npop.all"))}</a>
       </div>
       ${pick.extra>0?`<div class="npop__foot">+${pick.extra} ${esc(t("npop.more"))} · ${esc(t("npop.auto"))}</div>`
@@ -2931,7 +2935,7 @@ function renderAlertBar(){
       <span class="abar__msg">${esc(a.title||TL(a.msg)||t("fpop.title"))}</span>
       <span class="abar__acts">
         <button class="abar__link" id="abarMore">${esc(t("fpop.view"))}</button>
-        ${a.url?`<a class="abar__link" href="${esc(a.url)}" target="_blank" rel="noopener">${esc(t("fpop.report"))}</a>`:""}
+        ${a.url?`<a class="abar__link" href="${esc(safeUrl(a.url))}" target="_blank" rel="noopener">${esc(t("fpop.report"))}</a>`:""}
         <button class="abar__x" id="abarX" aria-label="Dismiss">${XICON}</button>
       </span>
     </div>`;
@@ -3468,7 +3472,7 @@ function renderNotifs(){
     <div class="nrow nrow--${n.sev}">
       <div class="nrow__t"><span class="nrow__tag">${esc(TL(n.tag))}</span><span class="nrow__time mono">${esc(n.time)}</span></div>
       <div class="nrow__msg">${esc(TL(n.msg))}</div>
-      <div class="nrow__src">SRC · ${esc(n.src)}${n.url?` · <a href="${esc(n.url)}" target="_blank" rel="noopener" style="color:var(--crimson)">${esc(t("news.source"))}</a>`:""}</div>
+      <div class="nrow__src">SRC · ${esc(n.src)}${n.url?` · <a href="${esc(safeUrl(n.url))}" target="_blank" rel="noopener" style="color:var(--crimson)">${esc(t("news.source"))}</a>`:""}</div>
     </div>`).join("");
 }
 
@@ -3520,12 +3524,12 @@ async function loadHistBody(h){
       ${thumb}
       <p class="histview__lead">${esc(lead)}</p>
       ${sectionHtml}
-      <a class="btn btn--primary btn--sm histview__more" href="${esc(link)}" target="_blank" rel="noopener">${esc(t("hist.readmore"))}</a>`;
+      <a class="btn btn--primary btn--sm histview__more" href="${esc(safeUrl(link))}" target="_blank" rel="noopener">${esc(t("hist.readmore"))}</a>`;
   }catch(err){
     body.innerHTML=`
       <p>${esc(TL(h.desc))}</p>
       <p class="histview__load">${esc(t("hist.err"))}</p>
-      <a class="btn btn--primary btn--sm histview__more" href="${esc(link)}" target="_blank" rel="noopener">${esc(t("hist.readmore"))}</a>`;
+      <a class="btn btn--primary btn--sm histview__more" href="${esc(safeUrl(link))}" target="_blank" rel="noopener">${esc(t("hist.readmore"))}</a>`;
   }
 }
 function initHistoryDetail(){
@@ -3572,7 +3576,7 @@ async function newsDetail(root,id){
       <p>${esc(TL(n.long))}</p>
       <div class="article__src"><span class="livechip"><i></i> ${esc(t("news.overview"))}</span> <span class="mono" style="font-size:.66rem;color:var(--muted)">${esc(t("news.overview.src"))}</span><div id="wikiOv" style="margin-top:8px">…</div></div>
       <div class="row-wrap" style="margin-top:8px">
-        <a class="btn btn--primary" href="${esc(n.url)}" target="_blank" rel="noopener">${esc(t("news.source"))}</a>
+        <a class="btn btn--primary" href="${esc(safeUrl(n.url))}" target="_blank" rel="noopener">${esc(t("news.source"))}</a>
         <button class="btn btn--ghost" id="artBack2">${esc(t("news.back2"))}</button>
       </div>
     </article>`;
@@ -4757,7 +4761,7 @@ function renderHomeHighways(){
   if(!HOME_HW){ g.innerHTML=`<p class="hwhome__load mono">${esc(t("hwhome.load"))}</p>`; return; }
   if(!HOME_HW.length){ g.innerHTML=`<p class="hwhome__load mono">${esc(t("hwhome.none"))}</p>`; return; }
   g.innerHTML=HOME_HW.slice(0,6).map(n=>`
-    <a class="hwhome__row" href="${esc(n.url)}" target="_blank" rel="noopener">
+    <a class="hwhome__row" href="${esc(safeUrl(n.url))}" target="_blank" rel="noopener">
       <span class="hwhome__src mono">${esc((n.source||"ROAD").toUpperCase().slice(0,18))}</span>
       <span class="hwhome__t">${esc(n.title)}</span>
     </a>`).join("");
@@ -4877,7 +4881,7 @@ function renderHighways(){
   if(HW_NEWS && HW_NEWS.length){
     const items=HW_NEWS.slice(0,8).map(n=>{
       let when=""; try{ if(n.ts) when=new Date(n.ts).toLocaleDateString(LANG==="ne"?"ne-NP":"en-GB",{day:"numeric",month:"short"}); }catch(_){}
-      return `<a class="hwnews__row" href="${esc(n.url)}" target="_blank" rel="noopener"><span class="hwnews__t">${esc(n.title)}</span><span class="hwnews__m mono">${esc(n.source||"")}${when?" · "+esc(when):""}</span></a>`;
+      return `<a class="hwnews__row" href="${esc(safeUrl(n.url))}" target="_blank" rel="noopener"><span class="hwnews__t">${esc(n.title)}</span><span class="hwnews__m mono">${esc(n.source||"")}${when?" · "+esc(when):""}</span></a>`;
     }).join("");
     live=`<div class="hwlive"><div class="hwlive__h"><span class="hwsum__eye">${esc(t("hw.live"))}</span><span class="hwlive__src mono">${esc(t("hw.livesrc"))}</span></div>${items}</div>`;
   }
