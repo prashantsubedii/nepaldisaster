@@ -1,5 +1,5 @@
 {
-  "at": 1795345374677,
+  "at": 1795371925106,
   "items": [
     {
       "title": "Khatyad–Rara road remains blocked for two months",
@@ -30,11 +30,25 @@
       "ts": 1795243256000
     },
     {
+      "title": "Armed men seize mining site in Chagai, take former Pakistani security personnel hostage; RCD highway blocked in Khuzdar",
+      "source": "The Tribune",
+      "url": "https://news.google.com/rss/articles/CBMi7wFBVV95cUxNVy0yRW9TZGQwZUZXSkthMlBzSHd1WHN1dzgyUFRZS0pxcWtkWWYzejZxc2V2ejlvcnVSdDlGdWhqNEg5UG0tRENJVHBFS3Q2M0dKNXpwamltS3VhR0ZacGt3OGhGa3A0TFJ2OE9iR3Q0VzNlX2FOSXBpem9XeFczQ252dFFrdjNIWmFkX2VYTFhIVk5yelA3Y21LWWR4Nm5EOXVIZzFhS1U3OEpRQU5tRmM0VkZZdlFnOXlOaTg3Vk16TjV0djRXakpSRWtxNG5BSkM1VG1zbHVkOHluc1NXV3VQdWZZVzNWTWxTMU53ONIB8wFBVV95cUxPTlVTc25yNmZBbUNLSndoZC1nallCaFh5UUtwZFF3YkZ6OXNrRVNQalU0RU05X0hwaFhPOEVyRVNpRGlDWmxtZWlNVlpiVm1hVXVZTUhjTFZqSUo2Z3lCVE9DMmItVTNnWWR3eUdDMXBzeEFPN1FQcXdTWFYwV3FNQWNMdzNqSnpVRkdJakgyU2NOXy1lVWg3dFloWjlyYjdieG1CUGlOVER3bDBwSHJoZGJsSnl3Ui1uaGJwcUlqVTRPR1pPU1ZxcFlQcks3a3dobmxRbnEwRExrVzhMMVIwWlVLOE9xRGJZNDRIZGJDUGFMZlE?oc=5",
+      "date": "Fri, 20 Nov 2026 15:58:03 GMT",
+      "ts": 1795190283000
+    },
+    {
       "title": "Nagdhunga-Muglin Road to remain closed for traffic 5 hours daily",
       "source": "The Rising Nepal",
       "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE1xajl3RndETDkwRkFmSnk0UDREbWt1bkFBZlZBb29jMUh3OHRXMWhYSF9nQmhxNS12NFVkRnRocUp5aDNIS21SMWtkaEd2SmJY?oc=5",
       "date": "Fri, 20 Nov 2026 15:46:36 GMT",
       "ts": 1795189596000
+    },
+    {
+      "title": "Landslide damages NMDC mining waste dump, road in Dantewada; no one hurt",
+      "source": "Rediff",
+      "url": "https://news.google.com/rss/articles/CBMi6gFBVV95cUxNUGJrY2RSNkk3Unp5T2VZRnRucjZBal9ZcUk3N1lGMnBjQ2NBbkozNjFpUGc2MzJ2dlBFWHJaMXBtbzA5SmNZUVloY3dqRExOdHRncHFuTWQwUS14NWoyYVNDLWx3d3NBbDl5eE9JNzJVc2hkNWdzeHpmUnZiemJMWkd6cFpxUWxXamNOYlFnLWdvVzAxeTVOUlN3UExKY0ppcHBzN0tFYzBDR2hLTVdTRElmMEQyYVhqTTZpaGg2RVJQdWtoZWY2b2liMk5aXzlaNUFUTENMQzEzejJMU3JfeEVVRkxrRTZjSUE?oc=5",
+      "date": "Fri, 20 Nov 2026 11:18:47 GMT",
+      "ts": 1795173527000
     },
     {
       "title": "Landslide blocks Prithvi Highway at Ghoptebhir",
@@ -74,9 +88,9 @@
     {
       "title": "Simkot-Hilsa road blocked at Nara Lek due to snowing",
       "source": "The Rising Nepal",
-      "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE9VajQySGRLNVVIVFhZcDBEVUd6RlFxTHl6Z0FGSkZkanBQWXctblhySjRMTTBVcEd0Y295SnFxbHRxQ3pjVEhJV1dzYmF4Rk9v?oc=5",
-      "date": "Tue, 17 Nov 2026 09:58:15 GMT",
-      "ts": 1794909495000
+      "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE9Sa0J5UVFfaEJvOXpLRHJ0d2hGc09lX1FXRkcyc0xfOW5lNjFvcFRCUE9RRkhScGZIU1hKaEZEWS1fenhHN2tHWG9wNk52STVESUdUblln?oc=5",
+      "date": "Tue, 17 Nov 2026 09:57:52 GMT",
+      "ts": 1794909472000
     },
     {
       "title": "Water supply resumes in Beni after a month halt",
@@ -84,13 +98,6 @@
       "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxQX19PeHJWVnUtRllMOFZveTNjRUV0QnRjTEpqNkFVUFNmM3BKYWJWcmpjMHRTb2RhQXM0V2ttTGJwMjQtVndaTkl6ZkNPOG9lLXZlOWNNcDJWSExrSlpFMWEzQzJvdjNtNHpQR2hDMWtkcElzQ3BTa1Q1d0lmT3hzeTdheXpqT2JiWDF4M2hQaWRkUQ?oc=5",
       "date": "Mon, 16 Nov 2026 02:02:54 GMT",
       "ts": 1794794574000
-    },
-    {
-      "title": "Dry landslides blocks Kaligandaki Corridor",
-      "source": "The Rising Nepal",
-      "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE5hamJ6clJuVlVYNXBqZUlxazl5NnpZTkhpSE1BSVBsTE9QRE5wNWdMZk5tMUlZRVRpZ2FGWmNBT3pkSFN2SllMZFFSZmpYZFlL?oc=5",
-      "date": "Sun, 15 Nov 2026 15:59:35 GMT",
-      "ts": 1794758375000
     }
   ]
 }
