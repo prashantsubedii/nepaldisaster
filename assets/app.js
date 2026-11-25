@@ -2028,13 +2028,13 @@ function setBurger(open){
    closes. Inside the mobile burger menu they expand in place.
    ========================================================================= */
 Object.assign(I18N.en,{
-  "nav.flood":"Bhotekoshi Flood","nav.fl.stats":"Situation Details","nav.wx.fc":"Forecast & Rain Warning","nav.wx.fc.s":"5-day forecast · DHM warning · live wind",
+  "nav.flood":"Floods","nav.fl.stats":"Situation Details","nav.wx.fc":"Forecast & Rain Warning","nav.wx.fc.s":"5-day forecast · DHM warning · live wind",
   "nav.alerts.s":"Every warned district, plotted automatically","nav.fl.ov":"Flood Overview","nav.fl.ov.s":"Cause, timeline & affected districts",
   "nav.stats.s":"Deaths, missing, rescued — official figures","nav.missing.s":"Search the list · how to report",
   "nav.rescue.s":"Named NDRRMA rescue registry","nav.relief.s":"Donate to the PM Disaster Relief Fund"
 });
 Object.assign(I18N.ne,{
-  "nav.flood":"भोटेकोशी बाढी","nav.fl.stats":"अवस्था विवरण","nav.wx.fc":"पूर्वानुमान र वर्षा चेतावनी","nav.wx.fc.s":"५ दिने पूर्वानुमान · DHM चेतावनी · प्रत्यक्ष हावा",
+  "nav.flood":"बाढी","nav.fl.stats":"अवस्था विवरण","nav.wx.fc":"पूर्वानुमान र वर्षा चेतावनी","nav.wx.fc.s":"५ दिने पूर्वानुमान · DHM चेतावनी · प्रत्यक्ष हावा",
   "nav.alerts.s":"चेतावनी भएका सबै जिल्ला, स्वतः नक्सामा","nav.fl.ov":"बाढीको सारांश","nav.fl.ov.s":"कारण, घटनाक्रम र प्रभावित जिल्ला",
   "nav.stats.s":"मृत्यु, बेपत्ता, उद्धार — आधिकारिक तथ्यांक","nav.missing.s":"सूची खोज्नुहोस् · प्रहरीलाई कसरी खबर गर्ने",
   "nav.rescue.s":"NDRRMA उद्धार अभिलेख","nav.relief.s":"प्रधानमन्त्री विपद् राहत कोषमा सहयोग"
