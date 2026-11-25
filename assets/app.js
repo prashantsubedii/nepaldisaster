@@ -284,6 +284,16 @@ const RAINWARN = {
            ne:"यात्रा सूचना (दशैं): बाढी उत्तरी गोरखाको बुढीगण्डकीमा हो, पृथ्वी राजमार्गमा होइन, तर यस साता दशैंको भीड मध्यपहाडभर उच्च छ र नदी तथा भिर जोखिमपूर्ण छन्। यात्रा गर्दै हुनुहुन्छ भने हिँड्नुअघि स्थानीय ट्राफिक प्रहरी (१०३) सँग मार्ग पक्का गर्नुहोस्, बढेका नदीबाट टाढा रहनुहोस्, र तल आफैं अद्यावधिक हुने राजमार्ग सूचना हेर्नुहोस्।"}
 };
 
+/* An event nobody has re-confirmed for a week stops being presented as an
+   active emergency: it shows as a "recent event" with its real date and age,
+   and the live BIPAD/DHM feeds carry what is happening now. To keep an event
+   active, bump RAINWARN.updated when the situation is re-checked. */
+const EVENT_STALE_DAYS = 7;
+const RAINWARN_STALE = RAINWARN.active &&
+  Date.now() - Date.parse(RAINWARN.updated) > EVENT_STALE_DAYS*864e5;
+const rwBadge = ()=>RAINWARN_STALE ? t("rw.recent") : TL(RAINWARN.badge);
+const rwLevel = ()=>RAINWARN_STALE ? "recent" : RAINWARN.level;
+
 /* Weather-tab locations: the flood-hit districts plus the provinces named in the
    current DHM warning. lat/lng feed Open-Meteo (free, no API key, no attribution
    token required). `risk` tags a location the warning singles out. */
@@ -845,7 +855,7 @@ const I18N = {
  en:{
   "brand.sub":"National Emergency Information Service",
   "nav.home":"Home","nav.alerts":"Alert Map","nav.missing":"Missing Persons","nav.relief":"Relief Fund","nav.history":"History",
-  "eas.label":"Active Event","eas.status":"National Status","clock.l":"NPT · Kathmandu",
+  "eas.label":"Active Event","eas.recent":"Recent event","eas.status":"National Status","clock.l":"NPT · Kathmandu",
   "nstat.badge":"All clear · Monitoring","nstat.updated":"Updated","nstat.whatwewatch":"What we are watching","nstat.recovery":"Flood recovery →",
   "hero.note.ok":"Status reflects official DHM, NDRRMA and Department of Roads feeds as of {date}. \"No active emergency\" means no nationwide warning is in force — localised hazards can still occur, so check the Weather and Live Alert Map pages before travelling, and always verify with official sources.",
   "la.allclear":"No active warnings","la.allclear.s":"No nationwide warning is currently in force. Open the live Alert Map for district-level river and rainfall conditions. Monitoring continues.",
@@ -886,7 +896,7 @@ const I18N = {
  ne:{
   "brand.sub":"राष्ट्रिय आपत्कालीन सूचना सेवा",
   "nav.home":"गृह","nav.alerts":"चेतावनी नक्सा","nav.missing":"बेपत्ता व्यक्ति","nav.relief":"राहत कोष","nav.history":"इतिहास",
-  "eas.label":"सक्रिय विपद्","eas.status":"राष्ट्रिय अवस्था","clock.l":"नेपाली समय · काठमाडौं",
+  "eas.label":"सक्रिय विपद्","eas.recent":"हालैको घटना","eas.status":"राष्ट्रिय अवस्था","clock.l":"नेपाली समय · काठमाडौं",
   "nstat.badge":"सब ठीक · निगरानीमा","nstat.updated":"अद्यावधिक","nstat.whatwewatch":"हामी के निगरानी गर्दैछौं","nstat.recovery":"बाढी पुनर्लाभ →",
   "hero.note.ok":"यो अवस्था {date} सम्मको DHM, NDRRMA र सडक विभागका आधिकारिक स्रोतमा आधारित छ। \"कुनै सक्रिय विपद् छैन\" भन्नुको अर्थ देशव्यापी चेतावनी लागू छैन — स्थानीय जोखिम भने हुन सक्छ, त्यसैले यात्रा अघि मौसम र प्रत्यक्ष सतर्कता नक्सा पृष्ठ हेर्नुहोस् र आधिकारिक स्रोतसँग रुजु गर्नुहोस्।",
   "la.allclear":"कुनै सक्रिय चेतावनी छैन","la.allclear.s":"हाल देशव्यापी चेतावनी लागू छैन। जिल्लागत नदी र वर्षाको अवस्थाका लागि प्रत्यक्ष सतर्कता नक्सा खोल्नुहोस्। निगरानी जारी छ।",
@@ -1065,13 +1075,19 @@ function renderEvent(){
     if(eas) eas.classList.add("eas--ok");
     if(hero) hero.classList.add("hero--ok");
   }else{
-    $$("[data-eas]").forEach(e=>e.textContent=TL(EVENT.strip||EVENT.eas));
+    $$("[data-eas]").forEach(e=>e.textContent=RAINWARN_STALE
+      ? t("eas.recent")+" · "+TL(RAINWARN.title)+" — "+toNepDigits(RAINWARN.window)
+      : TL(EVENT.strip||EVENT.eas));
     $$("[data-event-title]").forEach(e=>e.textContent=TL(EVENT.title));
     $$("[data-event-region]").forEach(e=>e.textContent=TL(EVENT.region));
-    if(lab) lab.textContent=t("eas.label");
+    if(lab) lab.textContent=t(RAINWARN_STALE?"eas.recent":"eas.label");
+    // Static "Active Event" kickers: re-key them so language switches keep it right.
+    if(RAINWARN_STALE) $$('[data-i18n="eas.label"]').forEach(e=>{ e.setAttribute("data-i18n","eas.recent"); e.textContent=t("eas.recent"); });
     if(eas) eas.classList.remove("eas--ok");
     if(hero) hero.classList.remove("hero--ok");
   }
+  // A recent (stale) event shows its own date, not today's.
+  if(!NATIONAL.normal && RAINWARN_STALE){ $$("[data-event-date]").forEach(e=>{e.textContent=toNepDigits(RAINWARN.window);}); return; }
   $$("[data-event-date]").forEach(e=>{e.textContent=nptNow().toLocaleDateString(LANG==="ne"?"ne-NP":"en-GB",{weekday:"short",day:"2-digit",month:"short",year:"numeric"});});
 }
 function renderStats(){
@@ -1307,7 +1323,8 @@ function _warnAgo(ts){
   if(!ts) return "";
   const mins=Math.max(0,Math.round((Date.now()-ts)/60000));
   if(mins<60) return t("warn.ago.min").replace("{n}",toNepDigits(String(mins)));
-  return t("warn.ago.hr").replace("{n}",toNepDigits(String(Math.round(mins/60))));
+  if(mins<48*60) return t("warn.ago.hr").replace("{n}",toNepDigits(String(Math.round(mins/60))));
+  return t("warn.ago.day").replace("{n}",toNepDigits(String(Math.round(mins/1440))));
 }
 function _warnTrend(s){
   const k=String(s||"").toUpperCase();
@@ -1700,10 +1717,10 @@ function renderRainWarn(){
   // renders on the details page, where the root has no data-compact flag.
   if(root.hasAttribute("data-compact")){
     root.innerHTML=`
-    <div class="rwarn rwarn--${esc(W.level)} rwarn--brief">
+    <div class="rwarn rwarn--${esc(rwLevel())} rwarn--brief">
       <div class="rwarn__in">
         <div class="rwarn__head">
-          <span class="rwarn__badge">${XTRI}<span>${esc(TL(W.badge))}</span></span>
+          <span class="rwarn__badge">${XTRI}<span>${esc(rwBadge())}</span></span>
           <span class="rwarn__win mono">${esc(toNepDigits(W.window))}</span>
           <span class="rwarn__ago mono">${esc(_warnAgo(Date.parse(W.updated)))}</span>
         </div>
@@ -1720,11 +1737,11 @@ function renderRainWarn(){
   }
   const prec=W.precautions.map(p=>`<li>${esc(TL(p))}</li>`).join("");
   root.innerHTML=`
-    <div class="rwarn rwarn--${esc(W.level)}">
+    <div class="rwarn rwarn--${esc(rwLevel())}">
       <div class="rwarn__bar" aria-hidden="true"></div>
       <div class="rwarn__in">
         <div class="rwarn__head">
-          <span class="rwarn__badge">${XTRI}<span>${esc(TL(W.badge))}</span></span>
+          <span class="rwarn__badge">${XTRI}<span>${esc(rwBadge())}</span></span>
           <span class="rwarn__win mono">${esc(toNepDigits(W.window))}</span>
           <span class="rwarn__ago mono">${esc(_warnAgo(Date.parse(W.updated)))}</span>
         </div>
@@ -1882,9 +1899,9 @@ function renderWeather(){
   const root=$("#weatherRoot"); if(!root) return;
   const W=RAINWARN;
   const warnBlock = W.active ? `
-    <div class="wx-warn wx-warn--${esc(W.level)}" id="precautions">
+    <div class="wx-warn wx-warn--${esc(rwLevel())}" id="precautions">
       <div class="wx-warn__head">
-        <span class="rwarn__badge">${XTRI}<span>${esc(TL(W.badge))}</span></span>
+        <span class="rwarn__badge">${XTRI}<span>${esc(rwBadge())}</span></span>
         <span class="rwarn__win mono">${esc(toNepDigits(W.window))}</span>
       </div>
       <h2>${esc(TL(W.title))}</h2>
@@ -2265,7 +2282,7 @@ Object.assign(I18N.en,{
   "rw.updated":"Updated","rw.view":"View alert","rw.map":"View map",
   "nav.weather":"Weather",
   "rw.precautions":"Precautions",
-  "rw.forecast":"Weather forecast →","rw.allprec":"All precautions","rw.highway":"Highway precautions","rw.riskflag":"HIGH RISK","rw.details":"Full report & safety →",
+  "rw.forecast":"Weather forecast →","rw.allprec":"All precautions","rw.highway":"Highway precautions","rw.riskflag":"HIGH RISK","rw.details":"Full report & safety →","rw.recent":"RECENT EVENT · NOT AN ACTIVE WARNING",
   "wx.now.rain":"rain","wx.now.hum":"humidity","wx.hi":"Hi","wx.lo":"Lo","wx.rain":"Rain","wx.pop":"Chance",
   "wx.loading":"Loading the live forecast…","wx.fail":"The live forecast could not be reached right now. Follow the DHM warning above and check dhm.gov.np.",
   "wx.forecast.eye":"5-Day Forecast · Live","wx.forecast.h":"Forecast for flood-hit & at-risk districts",
@@ -2291,7 +2308,7 @@ Object.assign(I18N.ne,{
   "rw.updated":"अद्यावधिक","rw.view":"चेतावनी हेर्नुहोस्","rw.map":"नक्सा हेर्नुहोस्",
   "nav.weather":"मौसम",
   "rw.precautions":"सावधानी",
-  "rw.forecast":"मौसम पूर्वानुमान →","rw.allprec":"सबै सावधानी","rw.highway":"राजमार्ग सावधानी","rw.riskflag":"उच्च जोखिम","rw.details":"पूर्ण विवरण र सुरक्षा →",
+  "rw.forecast":"मौसम पूर्वानुमान →","rw.allprec":"सबै सावधानी","rw.highway":"राजमार्ग सावधानी","rw.riskflag":"उच्च जोखिम","rw.details":"पूर्ण विवरण र सुरक्षा →","rw.recent":"हालैको घटना · सक्रिय चेतावनी होइन",
   "wx.now.rain":"वर्षा","wx.now.hum":"आर्द्रता","wx.hi":"अधि","wx.lo":"न्यून","wx.rain":"वर्षा","wx.pop":"सम्भावना",
   "wx.loading":"प्रत्यक्ष पूर्वानुमान लोड हुँदै…","wx.fail":"अहिले प्रत्यक्ष पूर्वानुमान प्राप्त हुन सकेन। माथिको DHM चेतावनी पालना गर्नुहोस् र dhm.gov.np हेर्नुहोस्।",
   "wx.forecast.eye":"५ दिने पूर्वानुमान · प्रत्यक्ष","wx.forecast.h":"बाढी प्रभावित र जोखिमयुक्त जिल्लाको पूर्वानुमान",
@@ -2323,7 +2340,7 @@ Object.assign(I18N.en,{
   "warn.k.river":"flood","warn.k.rain":"rain","warn.k.road":"road",
   "warn.st.danger":"ABOVE DANGER","warn.st.warn":"ABOVE WARNING","warn.lvl.warn":"warn","warn.lvl.dngr":"danger",
   "warn.trend.rising":"rising","warn.trend.falling":"falling","warn.trend.steady":"steady",
-  "warn.ago.min":"updated {n} min ago","warn.ago.hr":"updated {n} h ago",
+  "warn.ago.min":"updated {n} min ago","warn.ago.hr":"updated {n} h ago","warn.ago.day":"updated {n} days ago",
   "warn.do.h":"What to do:","warn.do.p":"If you are on a riverbank or below a steep slope in one of these districts, move to higher ground now. Do not cross a flooded road or an active landslide. Confirm any journey with the local traffic office on 103.",
   "warn.cta.bipad":"NDRRMA BIPAD portal ↗","warn.cta.dhm":"DHM bulletins ↗","warn.cta.all":"Full alert map",
   "warn.strip":"{r} is above its danger level — {d}. Move off the banks.",
@@ -2445,7 +2462,7 @@ Object.assign(I18N.ne,{
   "warn.k.river":"बाढी","warn.k.rain":"वर्षा","warn.k.road":"सडक",
   "warn.st.danger":"खतरा तह माथि","warn.st.warn":"चेतावनी तह माथि","warn.lvl.warn":"चेतावनी","warn.lvl.dngr":"खतरा",
   "warn.trend.rising":"बढ्दै","warn.trend.falling":"घट्दै","warn.trend.steady":"स्थिर",
-  "warn.ago.min":"{n} मिनेट अघि अद्यावधिक","warn.ago.hr":"{n} घण्टा अघि अद्यावधिक",
+  "warn.ago.min":"{n} मिनेट अघि अद्यावधिक","warn.ago.hr":"{n} घण्टा अघि अद्यावधिक","warn.ago.day":"{n} दिन अघि अद्यावधिक",
   "warn.do.h":"के गर्ने:","warn.do.p":"यी जिल्लामा नदी किनार वा भिरालो पहाडमुनि हुनुहुन्छ भने तुरुन्तै अग्लो सुरक्षित स्थानमा जानुहोस्। बाढी आएको सडक वा सक्रिय पहिरो नकाट्नुहोस्। यात्रा गर्नुअघि स्थानीय ट्राफिक कार्यालय (१०३) मा पुष्टि गर्नुहोस्।",
   "warn.cta.bipad":"NDRRMA बिपद् पोर्टल ↗","warn.cta.dhm":"DHM बुलेटिन ↗","warn.cta.all":"पूर्ण अलर्ट नक्सा",
   "warn.strip":"{r} खतरा तहभन्दा माथि — {d}। नदी किनारबाट टाढा जानुहोस्।",
@@ -4893,7 +4910,7 @@ function renderHighways(){
   // road board, since fresh landslides on the temporary tracks are the biggest
   // threat to these routes right now.
   const rainAdv = RAINWARN.active ? `<div class="hwrain">
-      <span class="hwrain__badge">${XTRI}<span>${esc(TL(RAINWARN.badge))}</span> <span class="mono">${esc(toNepDigits(RAINWARN.window))}</span></span>
+      <span class="hwrain__badge">${XTRI}<span>${esc(rwBadge())}</span> <span class="mono">${esc(toNepDigits(RAINWARN.window))}</span></span>
       <p>${esc(TL(RAINWARN.highway))}</p>
       <a class="btn btn--sm" href="weather.html">${esc(t("rw.forecast"))}</a>
     </div>` : "";
