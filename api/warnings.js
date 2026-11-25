@@ -24,7 +24,7 @@ const W = require('../assets/warn-normalize.js');
 
 const CACHE_KEY = 'cache:warnings:v2';   // v2: stations + districts carry lat/lng
 const DIST_KEY = 'cache:bipad:districts:v1';
-const TTL = 900;            // serve cached for 15 minutes
+const TTL = 30;             // re-check BIPAD at most every 30 s (was 15 min)
 const STALE = 12 * 3600;    // keep a stale copy up to 12h for fallback
 
 const UA = { 'User-Agent': 'nepaldisaster.com/1.0', Accept: 'application/json' };
@@ -53,7 +53,10 @@ async function fresh() {
 }
 
 module.exports = async (req, res) => {
-  res.setHeader('Cache-Control', 'public, max-age=300, s-maxage=300');
+  // Browsers never keep a copy; the CDN keeps one for 15 s and keeps serving it
+  // while it fetches a fresh one in the background, so nobody waits on BIPAD's
+  // ~3 s response and nothing shown is more than about a minute old.
+  res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=15, stale-while-revalidate=60');
   try {
     const c = await cmd(['GET', CACHE_KEY]);
     if (c) { const j = JSON.parse(c); if (Date.now() - j.at < TTL * 1000) { res.status(200).json(j); return; } }
