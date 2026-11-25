@@ -10,7 +10,7 @@ const { cmd } = require('../lib/kv');
 
 const GDACS = 'https://www.gdacs.org/gdacsapi/api/events/geteventlist/SEARCH?eventlist=FL&country=Nepal';
 const CACHE_KEY = 'cache:alerts:v2';   // bumped: recency filter added
-const TTL = 600;          // 10 min
+const TTL = 60;           // re-check GDACS at most every minute (was 10 min)
 const STALE = 6 * 3600;
 const MAX_AGE_MS = 45 * 24 * 3600 * 1000;  // drop events with no activity in the last 45 days
 
@@ -59,7 +59,8 @@ async function fresh() {
 }
 
 module.exports = async (req, res) => {
-  res.setHeader('Cache-Control', 'public, max-age=300, s-maxage=300');
+  // Same pattern as /api/warnings: no browser copy, short CDN copy refreshed in the background.
+  res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=30, stale-while-revalidate=120');
   try {
     const c = await cmd(['GET', CACHE_KEY]);
     if (c) { const j = JSON.parse(c); if (Date.now() - j.at < TTL * 1000) { res.status(200).json(j); return; } }

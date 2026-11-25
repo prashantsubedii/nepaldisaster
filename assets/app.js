@@ -2206,15 +2206,20 @@ function wire(){
   // the call in fetchLiveNews().
   maybeRainPopup();                                              // live weather alert corner card (takes the one-per-session slot first)
   maybeNewsPopup();
+  // Life-safety feeds re-check every minute while the page is in view, and at
+  // once when the reader comes back to the tab (hidden tabs skip, to save data).
+  const whileVisible=(fn,ms)=>setInterval(()=>{ if(!document.hidden) fn(); },ms);
+  const refreshWarnings=()=>fetchDistrictWarnings().then(()=>{ updateWarnReopen(); renderAlertBar(); });
+  document.addEventListener("visibilitychange",()=>{ if(!document.hidden){ fetchLiveAlerts(); refreshWarnings(); } });
   fetchLiveAlerts();                                              // live flood alerts (GDACS)…
-  setInterval(fetchLiveAlerts, 180000);                          // …refreshed every 3 minutes so risky alerts surface fast
+  whileVisible(fetchLiveAlerts, 60000);                           // …every minute (was 3 min)
   // Today's district warnings (BIPAD / NDRRMA). Deliberately does NOT open the
   // dialog: a blocking modal on load is exactly what was removed from this site
   // once already. A river over its danger mark surfaces in the inline alert
   // strip instead, the full panel lives on the alerts page, and the dialog
   // stays user-triggered from the alerts drawer.
-  fetchDistrictWarnings().then(()=>{ updateWarnReopen(); renderAlertBar(); });
-  setInterval(()=>fetchDistrictWarnings().then(()=>{ updateWarnReopen(); renderAlertBar(); }), 900000);   // every 15 min
+  refreshWarnings();
+  whileVisible(refreshWarnings, 60000);                           // every minute (was 15 min)
   if($("#officialMissing")){ renderOfficialMissing(); loadOfficialMissing(2); }   // NDRRMA missing-persons registry
   if($("#hhRoot")){                                              // Helping Hand — community needs & offers board
     renderHelp(); fetchHelp();
