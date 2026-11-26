@@ -49,19 +49,13 @@ jobs:
             echo "No changes to commit."
           fi
 
-      # Vercel (Hobby) refuses to deploy commits whose git author is not on the
-      # Vercel project, which includes this bot and any collaborator. A deploy
-      # hook deploys main regardless of author. Create one in Vercel → Project →
-      # Settings → Git → Deploy Hooks (branch: main) and save its URL as the repo
-      # secret VERCEL_DEPLOY_HOOK. Runs after a commit, or on every manual run
-      # (Actions → Refresh live data → Run workflow) to push main live on demand.
+      # Deploy with the project owner's Vercel token (see scripts/deploy.sh for why
+      # neither git deploys nor the deploy hook work on the Hobby plan). Runs after
+      # a commit, or on every manual run (Actions → Refresh live data → Run workflow).
       - name: Deploy to Vercel
         if: steps.commit.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
         env:
-          HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
-        run: |
-          if [ -z "$HOOK" ]; then
-            echo "::warning::VERCEL_DEPLOY_HOOK secret not set; skipping deploy."
-            exit 0
-          fi
-          curl -fsS -X POST "$HOOK" > /dev/null && echo "Deploy triggered."
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: scripts/deploy.sh
